@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 public class main extends Activity {
     int counter;
-    Button wood, wood2;
+    Button wood, berries;
     TextView maindisplay;
 
     @Override
@@ -26,6 +26,7 @@ public class main extends Activity {
         counter = 0;
         maindisplay = (TextView) findViewById(R.id.maindisplay);
         wood = (Button) findViewById(R.id.wood);
+        berries = (Button) findViewById(R.id.berries);
         final Animation animAlpha = AnimationUtils.loadAnimation(this, R.anim.anim_alpha);
         maindisplay.setTextSize(13);
         maindisplay.setText(" ...W..x..   " +
@@ -39,6 +40,28 @@ public class main extends Activity {
             @Override public void onClick(View v) {
                 counter += 1;
                 maindisplay.setText("Wood:" + counter);
+                // set the color red first.
+                // wood.setBackgroundColor(Color.CONNER_IS_);
+                wood.setEnabled(false);
+                wood.startAnimation(animAlpha);
+
+                // change to original after 5 secs.
+                new Handler().postDelayed(new Runnable() {
+
+                    public void run() {
+                        //wood.setBackgroundColor(Color.WHITE);
+                        wood.setEnabled(true);
+                    }
+                }, 10000);
+
+            };
+
+        });
+
+        berries.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                counter += 1;
+                maindisplay.setText("Berries:" + counter);
                 // set the color red first.
                 // wood.setBackgroundColor(Color.CONNER_IS_);
                 wood.setEnabled(false);
