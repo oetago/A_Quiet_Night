@@ -3,3 +3,11 @@
 /.idea/workspace.xml
 .DS_Store
 /build
+
+.idea/
+AQuietNight.iml
+gradle.properties
+gradlew
+gradlew.bat
+local.properties
+settings.gradle
