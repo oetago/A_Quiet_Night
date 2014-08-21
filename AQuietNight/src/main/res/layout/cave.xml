@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <Button
+    android:id="@+id/fix_walls"
+    style="@drawable/button_shape"
+    android:layout_width="150dp"
+    android:layout_height="100dp"
+    android:layout_marginLeft="20dp"
+    android:layout_marginTop="60dp"
+    android:layout_weight="1"
+    android:text="Fix Walls" />
+
+    <Button
+        android:id="@+id/buildings"
+        style="@drawable/button_shape"
+        android:layout_width="150dp"
+        android:layout_height="100dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="60dp"
+        android:layout_weight="1"
+        android:layout_toRightOf="@id/fix_walls"
+        android:text="Buildings" />
+
+    <Button
+        android:id="@+id/trading"
+        style="@drawable/button_shape"
+        android:layout_width="150dp"
+        android:layout_height="100dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="25dp"
+        android:layout_weight="1"
+        android:layout_below="@id/fix_walls"
+        android:text="Trading" />
+
+
+    <Button
+        android:id="@+id/crafting"
+        style="@drawable/button_shape"
+        android:layout_width="150dp"
+        android:layout_height="100dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="25dp"
+        android:layout_weight="1"
+        android:layout_toRightOf="@id/trading"
+        android:layout_below="@id/buildings"
+        android:text="Crafting" />
+
+
+    <Button
+        android:id="@+id/quests"
+        style="@drawable/button_shape"
+        android:layout_width="150dp"
+        android:layout_height="100dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="25dp"
+        android:layout_weight="1"
+        android:layout_below="@id/trading"
+        android:text="Quests" />
+
+    <TextView
+        android:id="@+id/log"
+        android:layout_width="150dp"
+        android:layout_height="match_parent"
+        android:layout_below="@id/quests"
+        android:fontFamily="sans-serif-bold"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"/>
+
+    <TextView
+        android:id="@+id/storage"
+        android:layout_width="250dp"
+        android:layout_height="500dp"
+        android:fontFamily="sans-serif-bold"
+        android:layout_toRightOf="@id/log"
+        android:layout_marginRight="25dp"
+        android:layout_marginBottom="10dp"
+        android:layout_alignTop="@+id/quests" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</RelativeLayout>

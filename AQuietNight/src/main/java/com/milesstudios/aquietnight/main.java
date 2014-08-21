@@ -15,26 +15,24 @@ import android.widget.TextView;
 
 public class main extends Activity {
     int wood_counter, berries_counter;
-    Button wood, berries;
-    TextView maindisplay, storage;
+    Button fix_walls, buildings, trading, crafting, quests, wood, trap, leaves;
+    TextView log, storage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
+        setContentView(R.layout.cave);
         wood_counter = 0;
         berries_counter = 0;
-        maindisplay = (TextView) findViewById(R.id.maindisplay);
+        log = (TextView) findViewById(R.id.log);
         storage = (TextView) findViewById(R.id.storage);
         wood = (Button) findViewById(R.id.wood);
-        berries = (Button) findViewById(R.id.berries);
+        leaves = (Button) findViewById(R.id.leaves);
         final Animation animAlpha = AnimationUtils.loadAnimation(this, R.anim.anim_alpha);
-        maindisplay.setTextSize(25);
+        log.setTextSize(25);
         storage.setWidth(50);
-        maindisplay.setText(" ...W..x.. " +
-                "Darkness fills the land " +
-                "and you shiver ");
+        log.setText("THIS APP IS FOR TESTING HI!");
         //TODO Check other buttons and scaling
 
 
@@ -61,20 +59,20 @@ public class main extends Activity {
 
         });
 
-        berries.setOnClickListener(new View.OnClickListener() {
+        leaves.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
                 berries_counter += 1;
-                storage.append("Berries:" + berries_counter);
+                storage.append("Leaves:" + berries_counter);
                 // set the color red first.
-                berries.setEnabled(false);
-                berries.startAnimation(animAlpha);
+                leaves.setEnabled(false);
+                leaves.startAnimation(animAlpha);
 
                 // change to original after 5 secs.
                 new Handler().postDelayed(new Runnable() {
 
                     public void run() {
                         //wood.setBackgroundColor(Color.WHITE);
-                        berries.setEnabled(true);
+                        leaves.setEnabled(true);
                     }
                 }, 8000);
 
