@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="2dp"
+        android:orientation="horizontal"
+        android:weightSum="3" >
+
+        <TextView
+            android:id="@+id/maindisplay"
+            android:layout_width="100dp"
+            android:layout_height="348dp"
+            android:fontFamily="sans-serif-bold"
+            android:layout_margin="10dp" />
+
+
+        <LinearLayout
+            android:id="@+id/linearLayout3"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="2dp"
+            android:orientation="vertical"
+            android:layout_gravity="center_vertical">
+
+
+            <Button
+                android:id="@+id/wood"
+                style="@drawable/button_shape"
+                android:layout_width="100dp"
+                android:layout_height="42dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="50dp"
+                android:layout_weight="1"
+                android:text="Wood" />
+
+            <Button
+                android:id="@+id/berries"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="100dp"
+                android:layout_height="42dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:text="Berries" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/storage"
+            android:layout_width="120dp"
+            android:layout_height="233dp"
+            android:fontFamily="DroidSerif-Bold"
+            android:layout_margin="10dp" />
+
+    </LinearLayout>
+
+</RelativeLayout>
