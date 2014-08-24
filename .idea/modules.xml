@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/AQuietNight.iml" filepath="$PROJECT_DIR$/AQuietNight.iml" />
       <module fileurl="file://$PROJECT_DIR$/AQuietNight/AQuietNight-AQuietNight.iml" filepath="$PROJECT_DIR$/AQuietNight/AQuietNight-AQuietNight.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tabsWithSwipeGesture/tabsWithSwipeGesture.iml" filepath="$PROJECT_DIR$/tabsWithSwipeGesture/tabsWithSwipeGesture.iml" />
     </modules>
   </component>
 </project>

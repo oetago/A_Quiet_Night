@@ -3,14 +3,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
+    <ImageButton
+        android:id="@+id/back_arrow"
+        android:layout_width="25dp"
+        android:layout_height="50dp"
+        android:src="@drawable/back_arrow"
+        android:layout_alignTop="@+id/gather_text"
+        android:layout_alignLeft="@+id/storage"
+        android:layout_alignStart="@+id/storage"
+        android:layout_alignBottom="@+id/trap"
+        android:layout_alignRight="@+id/storage"
+        android:layout_alignEnd="@+id/storage" />
     <TextView
         android:id="@+id/gather_text"
         android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:fontFamily="sans-serif-bold"
+        android:layout_height="25dp"
         android:layout_alignLeft="@+id/wood"
         android:layout_alignRight="@+id/wood"
         android:layout_alignEnd="@+id/wood"
+        android:layout_marginTop="35dp"
         android:text="Gather:"
         android:layout_alignParentTop="true" />
 
@@ -25,15 +36,15 @@
         android:text="Wood" />
 
     <Button
-    android:id="@+id/trap"
-    style="@drawable/button_shape"
-    android:layout_width="120dp"
-    android:layout_height="50dp"
-    android:layout_marginLeft="20dp"
-    android:layout_marginTop="20dp"
-    android:layout_below="@id/wood"
-    android:layout_weight="1"
-    android:text="Traps" />
+        android:id="@+id/trap"
+        style="@drawable/button_shape"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/wood"
+        android:layout_weight="1"
+        android:text="Traps" />
 
     <Button
         android:id="@+id/leaves"
