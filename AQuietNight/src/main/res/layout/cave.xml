@@ -82,7 +82,8 @@
         android:layout_toRightOf="@id/log"
         android:layout_marginRight="25dp"
         android:layout_marginBottom="10dp"
-        android:layout_alignTop="@+id/quests" />
+        android:layout_alignTop="@+id/quests"
+        android:editable="true"/>
 
     <com.google.android.gms.ads.AdView
         android:id="@+id/ad"
