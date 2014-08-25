@@ -3,17 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-    <ImageButton
-        android:id="@+id/back_arrow"
-        android:layout_width="25dp"
-        android:layout_height="50dp"
-        android:src="@drawable/back_arrow"
-        android:layout_alignTop="@+id/gather_text"
-        android:layout_alignLeft="@+id/storage"
-        android:layout_alignStart="@+id/storage"
-        android:layout_alignBottom="@+id/trap"
-        android:layout_alignRight="@+id/storage"
-        android:layout_alignEnd="@+id/storage" />
+
     <TextView
         android:id="@+id/gather_text"
         android:layout_width="50dp"

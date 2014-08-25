@@ -11,16 +11,18 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.app.ActionBar;
-import android.app.FragmentTransaction;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.view.ViewPager;
+import android.view.MenuItem;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
+import java.util.concurrent.locks.Condition;
+
 public class main extends Activity {
     Button fix_walls, buildings, trading, crafting, quests;
     TextView log, storage;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,14 +32,17 @@ public class main extends Activity {
         buildings = (Button) findViewById(R.id.buildings);
         log = (TextView) findViewById(R.id.log);
         storage = (TextView) findViewById(R.id.storage);
-        log.setTextSize(25);
-        storage.setWidth(50);
         log.setText("THIS APP IS FOR TESTING HI!");
         // Look up the AdView as a resource and load a request.
+
         AdView adView = (AdView) this.findViewById(R.id.ad);
         AdRequest adRequest = new AdRequest.Builder().build();
         adView.loadAd(adRequest);
+
+
         //TODO Check other buttons and scaling
+
+
 
         buildings.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
@@ -45,7 +50,7 @@ public class main extends Activity {
                 startActivity(openForest);
                 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
 
-            };
+            }
 
         });
 
@@ -55,6 +60,7 @@ public class main extends Activity {
 
 
     }
+
     @Override
     public void onBackPressed() {
         // TODO Auto-generated method stub

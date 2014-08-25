@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.app.Activity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -20,6 +21,22 @@ public class Forest extends Activity {
     Button wood, trap, leaves;
     ImageButton back_arrow;
     TextView log, storage;
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+
+            case android.R.id.home:
+                // Do whatever you want, e.g. finish()
+                Intent openMain = new Intent(Forest.this, main.class);
+                startActivity(openMain);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+                break;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+        return false;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,14 +53,15 @@ public class Forest extends Activity {
         log.setTextSize(25);
         storage.setWidth(50);
         log.setText("THIS APP IS FOR TESTING HI!");
+        getActionBar().setDisplayHomeAsUpEnabled(true);
 
 
         //TODO Check other buttons and scaling
 
 
-
         wood.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
+            @Override
+            public void onClick(View v) {
                 SharedPreferences leaves1_counter = getApplicationContext().getSharedPreferences(null, 0);
                 //Saving
                 SharedPreferences wood1_counter = getApplicationContext().getSharedPreferences("wood", 0);
@@ -70,12 +88,15 @@ public class Forest extends Activity {
                     }
                 }, 6000);
 
-            };
+            }
+
+            ;
 
         });
 
         leaves.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
+            @Override
+            public void onClick(View v) {
                 SharedPreferences wood1_counter = getApplicationContext().getSharedPreferences("wood", 0);
                 int wood_counter = wood1_counter.getInt(null, 0);
                 SharedPreferences leaves1_counter = getApplicationContext().getSharedPreferences(null, 0);
@@ -99,17 +120,9 @@ public class Forest extends Activity {
                     }
                 }, 8000);
 
-            };
+            }
 
-        });
-
-        back_arrow.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
-                Intent openMain = new Intent(Forest.this, main.class);
-                startActivity(openMain);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
-
-            };
+            ;
 
         });
     }
