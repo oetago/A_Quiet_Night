@@ -5,7 +5,23 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     xmlns:ads="http://schemas.android.com/apk/res-auto" >
+<ImageView
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:src="@drawable/cave_tab"
+    android:adjustViewBounds="true"
 
+    android:layout_alignParentTop="true"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentStart="true"
+    android:id="@+id/imageView" />
+    <Button
+        android:background="@android:color/transparent"
+        android:id="@+id/forest_button"
+        android:layout_width="120dp"
+        android:layout_height="200dp"
+        android:layout_alignBottom="@+id/imageView"
+        android:layout_centerHorizontal="true" />
 
     <Button
     android:id="@+id/fix_walls"
@@ -85,17 +101,8 @@
         android:layout_alignTop="@+id/quests"
         android:editable="true"/>
 
-    <com.google.android.gms.ads.AdView
-        android:id="@+id/ad"
-        android:layout_width="400dp"
-        android:layout_height="50dp"
-        ads:adUnitId="ca-app-pub-9558546731862068/5071265234"
-        ads:adSize="BANNER"
-        android:layout_gravity="center"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
-    </com.google.android.gms.ads.AdView>
+
+
 
 
 

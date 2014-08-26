@@ -11,6 +11,8 @@
         <item name="android:windowBackground">@null</item>
         <item name="metaButtonBarStyle">@style/ButtonBar</item>
         <item name="metaButtonBarButtonStyle">@style/ButtonBarButton</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowTitleSize">0dp</item>
     </style>
 
     <style name="ButtonBar">
@@ -19,6 +21,8 @@
         <item name="android:paddingRight">2dp</item>
         <item name="android:paddingBottom">0dp</item>
         <item name="android:background">@android:drawable/bottom_bar</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowTitleSize">0dp</item>
     </style>
 
     <style name="ButtonBarButton" />

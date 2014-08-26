@@ -4,11 +4,13 @@ package com.milesstudios.aquietnight;
  * Created by Ryanm14 on 7/14/2014.
  */
 
+import android.app.ActivityGroup;
 import android.content.Intent;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TabHost;
 import android.widget.TextView;
 import android.app.ActionBar;
 import android.view.MenuItem;
@@ -18,8 +20,8 @@ import com.google.android.gms.ads.AdView;
 
 import java.util.concurrent.locks.Condition;
 
-public class main extends Activity {
-    Button fix_walls, buildings, trading, crafting, quests;
+public class main extends ActivityGroup {
+    Button fix_walls, buildings, trading, crafting, quests, forest_button;
     TextView log, storage;
 
 
@@ -30,21 +32,27 @@ public class main extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cave);
         buildings = (Button) findViewById(R.id.buildings);
+        forest_button = (Button) findViewById(R.id.forest_button);
         log = (TextView) findViewById(R.id.log);
         storage = (TextView) findViewById(R.id.storage);
         log.setText("THIS APP IS FOR TESTING HI!");
+        View f_b = findViewById(R.id.forest_button);
+        f_b.setVisibility(View.VISIBLE);
+        //TODO add on:click white
         // Look up the AdView as a resource and load a request.
 
-        AdView adView = (AdView) this.findViewById(R.id.ad);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        adView.loadAd(adRequest);
+
+        //AdView adView = (AdView) this.findViewById(R.id.ad);
+       // AdRequest adRequest = new AdRequest.Builder().build();
+        //adView.loadAd(adRequest);
+
 
 
         //TODO Check other buttons and scaling
 
 
 
-        buildings.setOnClickListener(new View.OnClickListener() {
+        forest_button.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
                 Intent openForest = new Intent(main.this, Forest.class);
                 startActivity(openForest);
@@ -59,7 +67,10 @@ public class main extends Activity {
 
 
 
+
+
     }
+
 
     @Override
     public void onBackPressed() {
@@ -67,5 +78,6 @@ public class main extends Activity {
         super.onBackPressed();
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
     }
+
 
 }
