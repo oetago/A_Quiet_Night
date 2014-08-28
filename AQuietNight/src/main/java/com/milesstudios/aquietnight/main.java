@@ -6,6 +6,7 @@ package com.milesstudios.aquietnight;
 
 import android.app.ActivityGroup;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.View;
@@ -37,8 +38,9 @@ public class main extends ActivityGroup {
         storage = (TextView) findViewById(R.id.storage);
         log.setText("THIS APP IS FOR TESTING HI!");
         View f_b = findViewById(R.id.forest_button);
-        f_b.setVisibility(View.VISIBLE);
+       // f_b.setVisibility(View.VISIBLE);
         //TODO add on:click white
+        //TODO chnage animation for the 3 of them?
         // Look up the AdView as a resource and load a request.
 
 
@@ -53,7 +55,10 @@ public class main extends ActivityGroup {
 
 
         forest_button.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
+            @Override
+            public void onClick(View v) {
+                forest_button.setBackgroundColor(Color.BLACK);
+                forest_button.getBackground().setAlpha(64);
                 Intent openForest = new Intent(main.this, Forest.class);
                 startActivity(openForest);
                 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
