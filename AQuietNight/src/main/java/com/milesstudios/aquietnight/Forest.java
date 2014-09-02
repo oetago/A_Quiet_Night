@@ -77,6 +77,10 @@ public class Forest extends ActivityGroup {
         leaves_bar.setVisibility(View.INVISIBLE);
         stone_bar = (ProgressBar)findViewById(R.id.stone_bar);
         stone_bar.setVisibility(View.INVISIBLE);
+        int wood_counter = wood1_counter.getInt("wood", 0);
+        int leaves_counter = leaves1_counter.getInt("leaves", 0);
+        int stone_counter = stone1_counter.getInt("stone",0);
+        storage.setText("\t Storage: \n Wood: " + wood_counter + "\n Leaves: " + leaves_counter + "\n Stones: " + stone_counter);
 
 
         View c_b = findViewById(R.id.cave_button);
@@ -116,11 +120,11 @@ public class Forest extends ActivityGroup {
 
                 wood_bar.setVisibility(View.VISIBLE);
                 wood.setEnabled(false);
-                wood_timer=new CountDownTimer(8000,80) {
+                wood_timer=new CountDownTimer(15000,150) {
 
                     @Override
-                    public void onTick(long millisUntilFinished) {
-                        Log.v("Log_tag", "Tick of Progress" + w + " "+millisUntilFinished);
+                    public void onTick(long millisUntilFinishedw) {
+                        Log.w("Log_tag", "Tick of Progress" + w + " "+millisUntilFinishedw);
                         w++;
                         wood_bar.setProgress(w);
 
@@ -162,14 +166,14 @@ public class Forest extends ActivityGroup {
                 SharedPreferences.Editor editor = leaves1_counter.edit();
                 editor.putInt("leaves", leaves_counter);
                 editor.apply();
-                leaves_timer=new CountDownTimer(8000,80) {
+                leaves_timer=new CountDownTimer(9000,90) {
                     //TODO Fix times
 
                     @Override
-                    public void onTick(long millisUntilFinished) {
-                        Log.v("Log_tag", "Tick of Progress" + l + " "+millisUntilFinished);
+                    public void onTick(long millisUntilFinishedl) {
+                        Log.v("Log_tag", "Tick of Progress" + l + " "+millisUntilFinishedl);
                         l++;
-                        leaves_bar.setProgress(w);
+                        leaves_bar.setProgress(l);
 
                     }
 
@@ -209,14 +213,14 @@ public class Forest extends ActivityGroup {
                 stone_bar.setVisibility(View.VISIBLE);
                 stone.setEnabled(false);
 
-                stone_timer=new CountDownTimer(8000,80) {
+                stone_timer=new CountDownTimer(22000,220) {
                     //TODO Fix times
 
                     @Override
-                    public void onTick(long millisUntilFinished) {
-                        Log.v("Log_tag", "Tick of Progress" + s + " "+millisUntilFinished);
+                    public void onTick(long millisUntilFinisheds) {
+                        Log.v("Log_tag", "Tick of Progress" + s + " "+millisUntilFinisheds);
                         s++;
-                        stone_bar.setProgress(w);
+                        stone_bar.setProgress(s);
 
                     }
 

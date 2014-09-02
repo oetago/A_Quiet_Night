@@ -34,12 +34,11 @@ public class main extends ActivityGroup {
         setContentView(R.layout.cave);
         buildings = (Button) findViewById(R.id.buildings);
         forest_button = (Button) findViewById(R.id.forest_button);
+        crafting = (Button) findViewById(R.id.crafting);
         log = (TextView) findViewById(R.id.log);
         storage = (TextView) findViewById(R.id.storage);
         log.setText("THIS APP IS FOR TESTING HI!");
         View f_b = findViewById(R.id.forest_button);
-       // f_b.setVisibility(View.VISIBLE);
-        //TODO add on:click white
         //TODO chnage animation for the 3 of them?
         // Look up the AdView as a resource and load a request.
 
@@ -61,6 +60,17 @@ public class main extends ActivityGroup {
                 forest_button.getBackground().setAlpha(64);
                 Intent openForest = new Intent(main.this, Forest.class);
                 startActivity(openForest);
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
+
+            }
+
+        });
+
+        crafting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent openCrafting = new Intent(main.this, Crafting.class);
+                startActivity(openCrafting);
                 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
 
             }
