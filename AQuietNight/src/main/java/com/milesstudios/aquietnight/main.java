@@ -6,6 +6,7 @@ package com.milesstudios.aquietnight;
 
 import android.app.ActivityGroup;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.app.Activity;
@@ -23,6 +24,7 @@ import java.util.concurrent.locks.Condition;
 
 public class main extends ActivityGroup {
     Button fix_walls, buildings, trading, crafting, quests, forest_button;
+    int wood_counter, leaves_counter, stone_counter;
     TextView log, storage;
 
 
@@ -39,6 +41,13 @@ public class main extends ActivityGroup {
         storage = (TextView) findViewById(R.id.storage);
         log.setText("THIS APP IS FOR TESTING HI!");
         View f_b = findViewById(R.id.forest_button);
+        final SharedPreferences wood1_counter = getApplicationContext().getSharedPreferences("wood", wood_counter);
+        final SharedPreferences leaves1_counter = getApplicationContext().getSharedPreferences("leaves", leaves_counter);
+        final SharedPreferences stone1_counter = getApplicationContext().getSharedPreferences("stone", stone_counter);
+        int wood_counter = wood1_counter.getInt("wood", 0);
+        int leaves_counter = leaves1_counter.getInt("leaves", 0);
+        int stone_counter = stone1_counter.getInt("stone",0);
+        storage.setText("\t Storage: \n Wood: " + wood_counter + "\n Leaves: " + leaves_counter + "\n Stones: " + stone_counter);
         //TODO chnage animation for the 3 of them?
         // Look up the AdView as a resource and load a request.
 
