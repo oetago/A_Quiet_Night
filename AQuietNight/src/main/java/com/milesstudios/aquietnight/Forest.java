@@ -328,4 +328,9 @@ public class Forest extends ActivityGroup {
         });
 
     }
+    @Override
+    public void onBackPressed() {
+
+    }
+
 }

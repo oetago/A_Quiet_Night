@@ -4,6 +4,7 @@ import android.app.ActivityGroup;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -92,10 +93,10 @@ public class Crafting extends ActivityGroup {
                 int leaves_counter = leaves1_counter.getInt("leaves", 0);
                 int stone_counter = stone1_counter.getInt("stone",0);
                 int stone_axeb = stone1_axe.getInt("stone_axe",0);
-                if (stone_counter > 3 && wood_counter > 2){
+                if (stone_counter >= 3 && wood_counter >= 2){
                     log.append("\n You crafted a stone axe!");
-                    wood_counter = wood_counter - 3;
-                    stone_counter = stone_counter - 2;
+                    wood_counter -= 3;
+                    stone_counter -= 2;
                     stone_axe.setEnabled(false);
                     stone_axeb = 1;
 
@@ -127,6 +128,23 @@ public class Crafting extends ActivityGroup {
 
         });
 
+        stone_axe.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                // TODO Auto-generated method stub
+                stone_axe.setText("Stone: 3 \n Wood: 2");
+                new Handler().postDelayed(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        stone_axe.setText("Leaf Armor");
+                    }
+                }, 3000L);
+                return true;
+
+            }
+        });
+
         stone_pick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -134,10 +152,10 @@ public class Crafting extends ActivityGroup {
                 int leaves_counter = leaves1_counter.getInt("leaves", 0);
                 int stone_counter = stone1_counter.getInt("stone",0);
                 int stone_pickb = stone1_pick.getInt("stone_pick",0);
-                if (stone_counter > 3 && wood_counter > 2){
+                if (stone_counter >= 3 && wood_counter >= 4){
                     log.append("\n You crafted a stone pick!");
-                    wood_counter = wood_counter - 2;
-                    stone_counter = stone_counter - 4;
+                    wood_counter -= 2;
+                    stone_counter -= 4;
                     stone_pick.setEnabled(false);
                     stone_pickb = 1;
 
@@ -168,6 +186,22 @@ public class Crafting extends ActivityGroup {
             ;
 
         });
+        stone_pick.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                // TODO Auto-generated method stub
+                stone_pick.setText("Stone: 3 \n Wood: 2");
+                new Handler().postDelayed(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        stone_pick.setText("Leaf Armor");
+                    }
+                }, 3000L);
+                return true;
+
+            }
+        });
 
         leaf_armor.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -176,7 +210,7 @@ public class Crafting extends ActivityGroup {
                 int leaves_counter = leaves1_counter.getInt("leaves", 0);
                 int stone_counter = stone1_counter.getInt("stone",0);
                 int leaf_armorb = leaf1_armor.getInt("leaf_armor",0);
-                if (leaves_counter > 7){
+                if (leaves_counter >= 7){
                     log.append("\n You crafted a stone axe!");
                     leaves_counter -= 7;
                     leaf_armor.setEnabled(false);
@@ -209,6 +243,28 @@ public class Crafting extends ActivityGroup {
             ;
 
         });
+        leaf_armor.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                // TODO Auto-generated method stub
+                leaf_armor.setText("Leaves: 7");
+                new Handler().postDelayed(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        leaf_armor.setText("Leaf Armor");
+                    }
+                }, 3000L);
+                return true;
+
+            }
+        });
+
 
     }
+    @Override
+    public void onBackPressed() {
+
+    }
+
 }

@@ -37,9 +37,10 @@ public class main extends ActivityGroup {
         buildings = (Button) findViewById(R.id.buildings);
         forest_button = (Button) findViewById(R.id.forest_button);
         crafting = (Button) findViewById(R.id.crafting);
+        buildings = (Button) findViewById(R.id.buildings);
         log = (TextView) findViewById(R.id.log);
         storage = (TextView) findViewById(R.id.storage);
-        log.setText("THIS APP IS FOR TESTING HI!");
+        log.setText("THIS APP IS FOR TESTING!");
         View f_b = findViewById(R.id.forest_button);
         final SharedPreferences wood1_counter = getApplicationContext().getSharedPreferences("wood", wood_counter);
         final SharedPreferences leaves1_counter = getApplicationContext().getSharedPreferences("leaves", leaves_counter);
@@ -55,6 +56,7 @@ public class main extends ActivityGroup {
         //AdView adView = (AdView) this.findViewById(R.id.ad);
        // AdRequest adRequest = new AdRequest.Builder().build();
         //adView.loadAd(adRequest);
+
 
 
 
@@ -86,6 +88,17 @@ public class main extends ActivityGroup {
 
         });
 
+        buildings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent openBuildings = new Intent(main.this, Buildings.class);
+                startActivity(openBuildings);
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
+
+            }
+
+        });
+
 
 
 
@@ -98,9 +111,7 @@ public class main extends ActivityGroup {
 
     @Override
     public void onBackPressed() {
-        // TODO Auto-generated method stub
-        super.onBackPressed();
-        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+
     }
 
 
