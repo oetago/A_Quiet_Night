@@ -10,6 +10,9 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.app.Activity;
+import android.preference.PreferenceManager;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TabHost;
@@ -24,7 +27,7 @@ import java.util.concurrent.locks.Condition;
 
 public class main extends ActivityGroup {
     Button fix_walls, buildings, trading, crafting, quests, forest_button;
-    int wood_counter, leaves_counter, stone_counter;
+    int wood_counter, leaves_counter, stone_counter, stone_axeb, stone_pickb, leaf_armorb, hard_wood_counter, workshop_b;
     TextView log, storage;
 
 
@@ -41,10 +44,14 @@ public class main extends ActivityGroup {
         log = (TextView) findViewById(R.id.log);
         storage = (TextView) findViewById(R.id.storage);
         log.setText("THIS APP IS FOR TESTING!");
-        View f_b = findViewById(R.id.forest_button);
         final SharedPreferences wood1_counter = getApplicationContext().getSharedPreferences("wood", wood_counter);
         final SharedPreferences leaves1_counter = getApplicationContext().getSharedPreferences("leaves", leaves_counter);
         final SharedPreferences stone1_counter = getApplicationContext().getSharedPreferences("stone", stone_counter);
+        final SharedPreferences stone1_axe = getApplicationContext().getSharedPreferences("stone_axe", stone_axeb);
+        final SharedPreferences stone1_pick = getApplicationContext().getSharedPreferences("stone_pick", stone_pickb);
+        final SharedPreferences leaf1_armor = getApplicationContext().getSharedPreferences("leaf_armor", leaf_armorb);
+        final SharedPreferences hard_wood_counter_shared = getApplicationContext().getSharedPreferences("hard_wood", hard_wood_counter);
+        final SharedPreferences workshop_shared = getApplicationContext().getSharedPreferences("workshop", workshop_b);
         int wood_counter = wood1_counter.getInt("wood", 0);
         int leaves_counter = leaves1_counter.getInt("leaves", 0);
         int stone_counter = stone1_counter.getInt("stone",0);
@@ -107,6 +114,72 @@ public class main extends ActivityGroup {
 
 
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.activity_main_actions, menu);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Take appropriate action for each action item click
+        switch (item.getItemId()) {
+
+            case R.id.action_settings:
+                // help action
+                Settings();
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    // Delete Shared Prefernces
+
+    public void Settings() {
+        //Temp Bandaid To lazy
+
+         SharedPreferences wood1_counter = getApplicationContext().getSharedPreferences("wood", wood_counter);
+         SharedPreferences leaves1_counter = getApplicationContext().getSharedPreferences("leaves", leaves_counter);
+         SharedPreferences stone1_counter = getApplicationContext().getSharedPreferences("stone", stone_counter);
+         SharedPreferences stone1_axe = getApplicationContext().getSharedPreferences("stone_axe", stone_axeb);
+         SharedPreferences stone1_pick = getApplicationContext().getSharedPreferences("stone_pick", stone_pickb);
+         SharedPreferences leaf1_armor = getApplicationContext().getSharedPreferences("leaf_armor", leaf_armorb);
+         SharedPreferences hard_wood_counter_shared = getApplicationContext().getSharedPreferences("hard_wood", hard_wood_counter);
+         SharedPreferences workshop_shared = getApplicationContext().getSharedPreferences("workshop", workshop_b);
+        int wood_counter = wood1_counter.getInt("wood", 0);
+        int leaves_counter = leaves1_counter.getInt("leaves", 0);
+        int stone_counter = stone1_counter.getInt("stone", 0);
+        int stone_axeb = stone1_axe.getInt("stone_axe", 0);
+        int stone_pickb = stone1_pick.getInt("stone_pick", 0);
+        int leaf_armorb = leaf1_armor.getInt("leaf_armor", 0);
+        int hard_wood_counter= hard_wood_counter_shared.getInt("hard_wood", 0);
+        int workshop_b = workshop_shared.getInt("workshop", 0);
+
+        SharedPreferences.Editor editor = wood1_counter.edit().clear();
+        editor.commit();
+        SharedPreferences.Editor editor2 = stone1_counter.edit().clear();
+        editor2.commit();
+        SharedPreferences.Editor editor3 = leaves1_counter.edit().clear();
+        editor3.commit();
+        SharedPreferences.Editor editor4 = stone1_pick.edit().clear();
+        editor4.commit();
+        SharedPreferences.Editor editor5 = stone1_axe.edit().clear();
+        editor5.commit();
+        SharedPreferences.Editor editor6 = leaf1_armor.edit().clear();
+        editor6.commit();
+        SharedPreferences.Editor editor7 = hard_wood_counter_shared.edit().clear();
+        editor7.commit();
+        SharedPreferences.Editor editor8 = workshop_shared.edit().clear();
+        editor8.commit();
+
+    }
+
+
 
 
     @Override

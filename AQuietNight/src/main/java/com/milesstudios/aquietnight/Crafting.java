@@ -17,8 +17,8 @@ import android.widget.TextView;
  */
 public class Crafting extends ActivityGroup {
 
-    int wood_counter, leaves_counter, stone_counter, stone_axeb, stone_pickb, leaf_armorb;
-    Button stone_axe, leaf_armor, stone_pick;
+    int wood_counter, leaves_counter, stone_counter, stone_axeb, stone_pickb, leaf_armorb, hard_wood_counter, workshop_b;
+    Button stone_axe, leaf_armor, stone_pick, hard_wood;
     TextView log, storage;
 
 
@@ -52,6 +52,7 @@ public class Crafting extends ActivityGroup {
         stone_axe = (Button) findViewById(R.id.stone_axe);
         stone_pick = (Button) findViewById(R.id.stone_pick);
         leaf_armor = (Button) findViewById(R.id.leaf_armor);
+        hard_wood = (Button) findViewById(R.id.hard_wood);
         log.setTextSize(11);
         storage.setTextSize(15);
         //Saving
@@ -61,29 +62,34 @@ public class Crafting extends ActivityGroup {
         final SharedPreferences stone1_axe = getApplicationContext().getSharedPreferences("stone_axe", stone_axeb);
         final SharedPreferences stone1_pick = getApplicationContext().getSharedPreferences("stone_pick", stone_pickb);
         final SharedPreferences leaf1_armor = getApplicationContext().getSharedPreferences("leaf_armor", leaf_armorb);
+        final SharedPreferences hard_wood_counter_shared = getApplicationContext().getSharedPreferences("hard_wood", hard_wood_counter);
+        final SharedPreferences workshop_shared = getApplicationContext().getSharedPreferences("workshop", workshop_b);
         int wood_counter = wood1_counter.getInt("wood", 0);
         int leaves_counter = leaves1_counter.getInt("leaves", 0);
         int stone_counter = stone1_counter.getInt("stone", 0);
         int stone_axeb = stone1_axe.getInt("stone_axe", 0);
         int stone_pickb = stone1_pick.getInt("stone_pick", 0);
         int leaf_armorb = leaf1_armor.getInt("leaf_armor", 0);
+        int hard_wood_counter= hard_wood_counter_shared.getInt("hard_wood", 0);
+        int workshop_b = workshop_shared.getInt("workshop", 0);
 
         if (stone_axeb == 1){
             stone_axe.setEnabled(false);
-        }else{
-
         }
         if (stone_pickb == 1){
             stone_pick.setEnabled(false);
-        }else{
-
         }
         if (leaf_armorb == 1){
             leaf_armor.setEnabled(false);
-        }else{
-
         }
-        storage.setText("\t Storage: \n Wood: " + wood_counter + "\n Leaves: " + leaves_counter + "\n Stones: " + stone_counter);
+        if (workshop_b == 0){
+            hard_wood.setEnabled(false);
+            hard_wood.setVisibility(View.INVISIBLE);
+        }else{
+            hard_wood.setEnabled(true);
+            hard_wood.setVisibility(View.VISIBLE);
+        }
+        storage.setText("\t Storage: \n Wood: " + wood_counter + "\n Leaves: " + leaves_counter + "\n Stones: " + stone_counter + "\n Hard Wood: " + hard_wood_counter);
 
 
         stone_axe.setOnClickListener(new View.OnClickListener() {
@@ -93,16 +99,17 @@ public class Crafting extends ActivityGroup {
                 int leaves_counter = leaves1_counter.getInt("leaves", 0);
                 int stone_counter = stone1_counter.getInt("stone",0);
                 int stone_axeb = stone1_axe.getInt("stone_axe",0);
+                int hard_wood_counter = hard_wood_counter_shared.getInt("hard_wood", 0);
                 if (stone_counter >= 3 && wood_counter >= 2){
                     log.append("\n You crafted a stone axe!");
-                    wood_counter -= 3;
-                    stone_counter -= 2;
+                    stone_counter -= 3;
+                    wood_counter -= 2;
                     stone_axe.setEnabled(false);
                     stone_axeb = 1;
 
-                    storage.setText("\t Storage: \n Wood: " + wood_counter + "\n Leaves: " + leaves_counter + "\n Stones: " + stone_counter);
+                    storage.setText("\t Storage: \n Wood: " + wood_counter + "\n Leaves: " + leaves_counter + "\n Stones: " + stone_counter + "\n Hard Wood: " + hard_wood_counter);
                 }else{
-                    log.append("You don't have enough resources!");
+                    log.append("\n You don't have enough resources!");
                 }
 
 
@@ -137,7 +144,7 @@ public class Crafting extends ActivityGroup {
 
                     @Override
                     public void run() {
-                        stone_axe.setText("Leaf Armor");
+                        stone_axe.setText("Stone Axe");
                     }
                 }, 3000L);
                 return true;
@@ -152,16 +159,17 @@ public class Crafting extends ActivityGroup {
                 int leaves_counter = leaves1_counter.getInt("leaves", 0);
                 int stone_counter = stone1_counter.getInt("stone",0);
                 int stone_pickb = stone1_pick.getInt("stone_pick",0);
+                int hard_wood_counter= hard_wood_counter_shared.getInt("hard_wood", 0);
                 if (stone_counter >= 3 && wood_counter >= 4){
                     log.append("\n You crafted a stone pick!");
-                    wood_counter -= 2;
-                    stone_counter -= 4;
+                    stone_counter -= 3;
+                    wood_counter -= 4;
                     stone_pick.setEnabled(false);
                     stone_pickb = 1;
 
-                    storage.setText("\t Storage: \n Wood: " + wood_counter + "\n Leaves: " + leaves_counter + "\n Stones: " + stone_counter);
+                    storage.setText("\t Storage: \n Wood: " + wood_counter + "\n Leaves: " + leaves_counter + "\n Stones: " + stone_counter + "\n Hard Wood: " + hard_wood_counter);
                 }else{
-                    log.append("You don't have enough resources!");
+                    log.append("\n You don't have enough resources!");
                 }
 
 
@@ -190,12 +198,12 @@ public class Crafting extends ActivityGroup {
             @Override
             public boolean onLongClick(View v) {
                 // TODO Auto-generated method stub
-                stone_pick.setText("Stone: 3 \n Wood: 2");
+                stone_pick.setText("Stone: 3 \n Wood: 4");
                 new Handler().postDelayed(new Runnable() {
 
                     @Override
                     public void run() {
-                        stone_pick.setText("Leaf Armor");
+                        stone_pick.setText("Stone Pick");
                     }
                 }, 3000L);
                 return true;
@@ -210,15 +218,15 @@ public class Crafting extends ActivityGroup {
                 int leaves_counter = leaves1_counter.getInt("leaves", 0);
                 int stone_counter = stone1_counter.getInt("stone",0);
                 int leaf_armorb = leaf1_armor.getInt("leaf_armor",0);
+                int hard_wood_counter= hard_wood_counter_shared.getInt("hard_wood", 0);
                 if (leaves_counter >= 7){
                     log.append("\n You crafted a stone axe!");
                     leaves_counter -= 7;
                     leaf_armor.setEnabled(false);
                     leaf_armorb = 1;
-
-                    storage.setText("\t Storage: \n Wood: " + wood_counter + "\n Leaves: " + leaves_counter + "\n Stones: " + stone_counter);
+                    storage.setText("\t Storage: \n Wood: " + wood_counter + "\n Leaves: " + leaves_counter + "\n Stones: " + stone_counter + "\n Hard Wood: " + hard_wood_counter);
                 }else{
-                    log.append("You don't have enough resources!");
+                    log.append("\n You don't have enough resources!");
                 }
 
 
@@ -253,6 +261,61 @@ public class Crafting extends ActivityGroup {
                     @Override
                     public void run() {
                         leaf_armor.setText("Leaf Armor");
+                    }
+                }, 3000L);
+                return true;
+
+            }
+        });
+
+        hard_wood.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int wood_counter = wood1_counter.getInt("wood", 0);
+                int leaves_counter = leaves1_counter.getInt("leaves", 0);
+                int stone_counter = stone1_counter.getInt("stone",0);
+                int hard_wood_counter = hard_wood_counter_shared.getInt("hard_wood",0);
+                if (wood_counter >= 3){
+                    log.append("\n You crafted a piece of hard wood!");
+                    wood_counter -= 3;
+                    hard_wood_counter += 1;
+                   storage.setText("\t Storage: \n Wood: " + wood_counter + "\n Leaves: " + leaves_counter + "\n Stones: " + stone_counter + "\n Hard Wood: " + hard_wood_counter);
+                }else{
+                    log.append("\n You don't have enough resources!");
+                }
+
+
+                //Save counter
+                SharedPreferences.Editor editor = wood1_counter.edit();
+                editor.putInt("wood", wood_counter);
+                editor.apply();
+                SharedPreferences.Editor editor2 = stone1_counter.edit();
+                editor2.putInt("stone", stone_counter);
+                editor2.apply();
+                SharedPreferences.Editor hard_wood3 = hard_wood_counter_shared.edit();
+                hard_wood3.putInt("hard_wood", hard_wood_counter);
+                hard_wood3.apply();
+
+
+
+
+
+
+            }
+
+            ;
+
+        });
+        hard_wood.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                // TODO Auto-generated method stub
+                hard_wood.setText("Wood: 3");
+                new Handler().postDelayed(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        leaf_armor.setText("Hard Wood");
                     }
                 }, 3000L);
                 return true;
