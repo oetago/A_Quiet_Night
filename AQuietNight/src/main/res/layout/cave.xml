@@ -4,8 +4,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    xmlns:ads="http://schemas.android.com/apk/res-auto" >
+    android:orientation="vertical">
+    <!--xmlns:ads="http://schemas.android.com/apk/res-auto" -->
 <ImageView
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
@@ -27,14 +27,14 @@
     android:layout_centerHorizontal="true" />
 
     <Button
-    android:id="@+id/fix_walls"
+    android:id="@+id/quests"
     style="@drawable/button_shape"
     android:layout_width="150dp"
     android:layout_height="100dp"
     android:layout_marginLeft="20dp"
     android:layout_marginTop="60dp"
     android:layout_weight="1"
-    android:text="Fix Walls" />
+    android:text="Quests" />
 
     <Button
         android:id="@+id/buildings"
@@ -44,7 +44,7 @@
         android:layout_marginLeft="5dp"
         android:layout_marginTop="60dp"
         android:layout_weight="1"
-        android:layout_toRightOf="@id/fix_walls"
+        android:layout_toRightOf="@id/quests"
         android:text="Buildings" />
 
     <Button
@@ -55,7 +55,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginTop="25dp"
         android:layout_weight="1"
-        android:layout_below="@id/fix_walls"
+        android:layout_below="@id/quests"
         android:text="Trading" />
 
 
@@ -72,22 +72,13 @@
         android:text="Crafting" />
 
 
-    <Button
-        android:id="@+id/quests"
-        style="@drawable/button_shape"
-        android:layout_width="150dp"
-        android:layout_height="100dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="25dp"
-        android:layout_weight="1"
-        android:layout_below="@id/trading"
-        android:text="Quests" />
+
 
     <TextView
         android:id="@+id/log"
         android:layout_width="150dp"
         android:layout_height="100dp"
-        android:layout_below="@id/quests"
+        android:layout_below="@id/trading"
         android:fontFamily="sans-serif-bold"
         android:layout_marginLeft="25dp"
         android:layout_marginTop="10dp"
@@ -101,7 +92,7 @@
         android:layout_toRightOf="@id/log"
         android:layout_marginRight="25dp"
         android:layout_marginBottom="10dp"
-        android:layout_alignTop="@+id/quests"
+        android:layout_below="@+id/crafting"
         android:editable="true"/>
 
 

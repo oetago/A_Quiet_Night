@@ -26,8 +26,8 @@ import com.google.android.gms.ads.AdView;
 import java.util.concurrent.locks.Condition;
 
 public class main extends ActivityGroup {
-    Button fix_walls, buildings, trading, crafting, quests, forest_button;
-    int wood_counter, leaves_counter, stone_counter, stone_axeb, stone_pickb, leaf_armorb, hard_wood_counter, workshop_b;
+    Button buildings, trading, crafting, quests, forest_button;
+    int wood_counter, leaves_counter, stone_counter, stone_axeb, stone_pickb, leaf_armorb, hard_wood_counter, workshop_b, trade_post_b;
     TextView log, storage;
 
 
@@ -41,6 +41,8 @@ public class main extends ActivityGroup {
         forest_button = (Button) findViewById(R.id.forest_button);
         crafting = (Button) findViewById(R.id.crafting);
         buildings = (Button) findViewById(R.id.buildings);
+        trading = (Button) findViewById(R.id.trading);
+        quests = (Button) findViewById(R.id.quests);
         log = (TextView) findViewById(R.id.log);
         storage = (TextView) findViewById(R.id.storage);
         log.setText("THIS APP IS FOR TESTING!");
@@ -52,10 +54,20 @@ public class main extends ActivityGroup {
         final SharedPreferences leaf1_armor = getApplicationContext().getSharedPreferences("leaf_armor", leaf_armorb);
         final SharedPreferences hard_wood_counter_shared = getApplicationContext().getSharedPreferences("hard_wood", hard_wood_counter);
         final SharedPreferences workshop_shared = getApplicationContext().getSharedPreferences("workshop", workshop_b);
+        int hard_wood_counter = hard_wood_counter_shared.getInt("hard_wood", 0);
+        final SharedPreferences trade_post_shared = getApplicationContext().getSharedPreferences("trade_post", trade_post_b);
         int wood_counter = wood1_counter.getInt("wood", 0);
         int leaves_counter = leaves1_counter.getInt("leaves", 0);
         int stone_counter = stone1_counter.getInt("stone",0);
-        storage.setText("\t Storage: \n Wood: " + wood_counter + "\n Leaves: " + leaves_counter + "\n Stones: " + stone_counter);
+        int trade_post_b = trade_post_shared.getInt("trade_post", 0);
+        storage.setText("\t Storage: \n Wood: " + wood_counter + "\n Leaves: " + leaves_counter + "\n Stones: " + stone_counter + "\n Hard Wood: " + hard_wood_counter);
+
+        if (trade_post_b == 1){
+            trading.setEnabled(true);
+        }else{
+            trading.setEnabled(false);
+        }
+
         //TODO chnage animation for the 3 of them?
         // Look up the AdView as a resource and load a request.
 
@@ -106,6 +118,27 @@ public class main extends ActivityGroup {
 
         });
 
+        trading.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent openTrade = new Intent(main.this, Trade.class);
+                startActivity(openTrade);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+
+            }
+
+        });
+        quests.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent openQuest = new Intent(main.this, Quest.class);
+                startActivity(openQuest);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+
+            }
+
+        });
+
 
 
 
@@ -143,22 +176,16 @@ public class main extends ActivityGroup {
     public void Settings() {
         //Temp Bandaid To lazy
 
-         SharedPreferences wood1_counter = getApplicationContext().getSharedPreferences("wood", wood_counter);
-         SharedPreferences leaves1_counter = getApplicationContext().getSharedPreferences("leaves", leaves_counter);
-         SharedPreferences stone1_counter = getApplicationContext().getSharedPreferences("stone", stone_counter);
-         SharedPreferences stone1_axe = getApplicationContext().getSharedPreferences("stone_axe", stone_axeb);
-         SharedPreferences stone1_pick = getApplicationContext().getSharedPreferences("stone_pick", stone_pickb);
-         SharedPreferences leaf1_armor = getApplicationContext().getSharedPreferences("leaf_armor", leaf_armorb);
-         SharedPreferences hard_wood_counter_shared = getApplicationContext().getSharedPreferences("hard_wood", hard_wood_counter);
-         SharedPreferences workshop_shared = getApplicationContext().getSharedPreferences("workshop", workshop_b);
-        int wood_counter = wood1_counter.getInt("wood", 0);
-        int leaves_counter = leaves1_counter.getInt("leaves", 0);
-        int stone_counter = stone1_counter.getInt("stone", 0);
-        int stone_axeb = stone1_axe.getInt("stone_axe", 0);
-        int stone_pickb = stone1_pick.getInt("stone_pick", 0);
-        int leaf_armorb = leaf1_armor.getInt("leaf_armor", 0);
-        int hard_wood_counter= hard_wood_counter_shared.getInt("hard_wood", 0);
-        int workshop_b = workshop_shared.getInt("workshop", 0);
+        SharedPreferences wood1_counter = getApplicationContext().getSharedPreferences("wood", wood_counter);
+        SharedPreferences leaves1_counter = getApplicationContext().getSharedPreferences("leaves", leaves_counter);
+        SharedPreferences stone1_counter = getApplicationContext().getSharedPreferences("stone", stone_counter);
+        SharedPreferences stone1_axe = getApplicationContext().getSharedPreferences("stone_axe", stone_axeb);
+        SharedPreferences stone1_pick = getApplicationContext().getSharedPreferences("stone_pick", stone_pickb);
+        SharedPreferences leaf1_armor = getApplicationContext().getSharedPreferences("leaf_armor", leaf_armorb);
+        SharedPreferences hard_wood_counter_shared = getApplicationContext().getSharedPreferences("hard_wood", hard_wood_counter);
+        SharedPreferences workshop_shared = getApplicationContext().getSharedPreferences("workshop", workshop_b);
+        SharedPreferences trade_post_shared = getApplicationContext().getSharedPreferences("trade_post", trade_post_b);
+
 
         SharedPreferences.Editor editor = wood1_counter.edit().clear();
         editor.commit();
@@ -176,6 +203,8 @@ public class main extends ActivityGroup {
         editor7.commit();
         SharedPreferences.Editor editor8 = workshop_shared.edit().clear();
         editor8.commit();
+        SharedPreferences.Editor editor9 = trade_post_shared.edit().clear();
+        editor9.commit();
 
     }
 

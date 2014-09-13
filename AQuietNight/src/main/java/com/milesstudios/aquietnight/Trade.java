@@ -13,12 +13,12 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 /**
- * Created by Ryanm14 on 9/12/2014.
+ * Created by Ryanm14 on 9/13/2014.
  */
-public class Buildings extends ActivityGroup {
+public class Trade extends ActivityGroup {
 
-    int wood_counter, leaves_counter, stone_counter, mine_b, workshop_b, trade_post_b;
-    Button mine, workshop, trade_post;
+    int wood_counter, leaves_counter, stone_counter, hard_wood_counter;
+    Button wood_for_leaves, leaves_for_wood, stone_for_wood;
     TextView log, storage;
 
 
@@ -27,9 +27,9 @@ public class Buildings extends ActivityGroup {
 
             case android.R.id.home:
                 // Do whatever you want, e.g. finish()
-                Intent openMain = new Intent(Buildings.this, main.class);
+                Intent openMain = new Intent(Trade.this, main.class);
                 startActivity(openMain);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
                 break;
 
             default:
@@ -46,55 +46,41 @@ public class Buildings extends ActivityGroup {
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.buildings);
+        setContentView(R.layout.trade);
         log = (TextView) findViewById(R.id.log);
         storage = (TextView) findViewById(R.id.storage);
-        mine = (Button) findViewById(R.id.mine);
-        trade_post = (Button) findViewById(R.id.trade_post);
-        workshop = (Button) findViewById(R.id.workshop);
+        stone_for_wood = (Button) findViewById(R.id.stone_for_wood);
+        leaves_for_wood = (Button) findViewById(R.id.leaves_for_wood);
+        wood_for_leaves = (Button) findViewById(R.id.wood_for_leaves);
         log.setTextSize(11);
         storage.setTextSize(15);
         //Saving
         final SharedPreferences wood1_counter = getApplicationContext().getSharedPreferences("wood", wood_counter);
         final SharedPreferences leaves1_counter = getApplicationContext().getSharedPreferences("leaves", leaves_counter);
         final SharedPreferences stone1_counter = getApplicationContext().getSharedPreferences("stone", stone_counter);
-        final SharedPreferences mine_shared = getApplicationContext().getSharedPreferences("mine", mine_b);
-        final SharedPreferences workshop_shared = getApplicationContext().getSharedPreferences("workshop", workshop_b);
-        final SharedPreferences trade_post_shared = getApplicationContext().getSharedPreferences("trade_post", trade_post_b);
-        int wood_counter = wood1_counter.getInt("wood", 0);
+        final SharedPreferences hard_wood_counter_shared = getApplicationContext().getSharedPreferences("hard_wood", hard_wood_counter);
         int leaves_counter = leaves1_counter.getInt("leaves", 0);
         int stone_counter = stone1_counter.getInt("stone", 0);
-        int mine_b = mine_shared.getInt("mine", 0);
-        int workshop_b = workshop_shared.getInt("workshop", 0);
-        int trade_post_b = trade_post_shared.getInt("trade_post", 0);
-
-        if (mine_b == 1){
-            mine.setEnabled(false);
-        }
-        if (workshop_b == 1){
-            workshop.setEnabled(false);
-        }
-        if (trade_post_b == 1){
-            trade_post.setEnabled(false);
-        }
-        storage.setText("\t Storage: \n Wood: " + wood_counter + "\n Leaves: " + leaves_counter + "\n Stones: " + stone_counter);
+        int hard_wood_counter= hard_wood_counter_shared.getInt("hard_wood", 0);
+        int wood_counter = wood1_counter.getInt("wood", 0);
 
 
-        mine.setOnClickListener(new View.OnClickListener() {
+        storage.setText("\t Storage: \n Wood: " + wood_counter + "\n Leaves: " + leaves_counter + "\n Stones: " + stone_counter + "\n Hard Wood: " + hard_wood_counter);
+
+
+        stone_for_wood.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int wood_counter = wood1_counter.getInt("wood", 0);
                 int stone_counter = stone1_counter.getInt("stone",0);
                 int leaves_counter = leaves1_counter.getInt("stone",0);
-                int mine_b = mine_shared.getInt("mine",0);
-                if (stone_counter >= 12 && wood_counter >= 7){
-                    log.append("\n You dug a mine!");
-                    stone_counter -= 12;
-                    wood_counter -= 7;
-                    mine.setEnabled(false);
-                    mine_b = 1;
+                int hard_wood_counter = hard_wood_counter_shared.getInt("hard_wood", 0);
+                if (wood_counter >= 15){
+                log.append("\n You traded for some stone!");
+                    stone_counter += 10;
+                    wood_counter -= 15;
 
-                    storage.setText("\t Storage: \n Wood: " + wood_counter + "\n Leaves: " + leaves_counter + "\n Stones: " + stone_counter);
+                    storage.setText("\t Storage: \n Wood: " + wood_counter + "\n Leaves: " + leaves_counter + "\n Stones: " + stone_counter + "\n Hard Wood: " + hard_wood_counter);
                 }else{
                     log.append("\n You don't have enough resources!");
                 }
@@ -107,9 +93,6 @@ public class Buildings extends ActivityGroup {
                 SharedPreferences.Editor editor2 = stone1_counter.edit();
                 editor2.putInt("stone", stone_counter);
                 editor2.apply();
-                SharedPreferences.Editor editor3 = mine_shared.edit();
-                editor3.putInt("mine", mine_b);
-                editor3.apply();
 
 
 
@@ -122,16 +105,16 @@ public class Buildings extends ActivityGroup {
 
         });
 
-        mine.setOnLongClickListener(new View.OnLongClickListener() {
+        stone_for_wood.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
                 // TODO Auto-generated method stub
-                mine.setText("Stone: 12 \n Wood: 7");
+                stone_for_wood.setText("Wood: 15");
                 new Handler().postDelayed(new Runnable() {
 
                     @Override
                     public void run() {
-                        mine.setText("Mine");
+                        stone_for_wood.setText("Stone: 10");
                     }
                 }, 3000L);
                 return true;
@@ -139,21 +122,18 @@ public class Buildings extends ActivityGroup {
             }
         });
 
-        workshop.setOnClickListener(new View.OnClickListener() {
+        wood_for_leaves.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int wood_counter = wood1_counter.getInt("wood", 0);
                 int leaves_counter = leaves1_counter.getInt("leaves", 0);
                 int stone_counter = stone1_counter.getInt("stone",0);
-                int workshop_b = workshop_shared.getInt("workshop",0);
-                if (stone_counter >= 5 && wood_counter >= 9){
-                    log.append("\n You built a workshop!");
-                    stone_counter -= 5;
-                    wood_counter -= 9;
-                    workshop.setEnabled(false);
-                    workshop_b = 1;
-
-                    storage.setText("\t Storage: \n Wood: " + wood_counter + "\n Leaves: " + leaves_counter + "\n Stones: " + stone_counter);
+                int hard_wood_counter = hard_wood_counter_shared.getInt("hard_wood", 0);
+                if (leaves_counter >= 7){
+                    log.append("\n You traded for some wood!");
+                    leaves_counter -= 7;
+                    wood_counter += 5;
+                    storage.setText("\t Storage: \n Wood: " + wood_counter + "\n Leaves: " + leaves_counter + "\n Stones: " + stone_counter + "\n Hard Wood: " + hard_wood_counter);
                 }else{
                     log.append("\n You don't have enough resources!");
                 }
@@ -163,16 +143,9 @@ public class Buildings extends ActivityGroup {
                 SharedPreferences.Editor editor = wood1_counter.edit();
                 editor.putInt("wood", wood_counter);
                 editor.apply();
-                SharedPreferences.Editor editor2 = stone1_counter.edit();
-                editor2.putInt("stone", stone_counter);
+                SharedPreferences.Editor editor2 = leaves1_counter.edit();
+                editor2.putInt("leaves", leaves_counter);
                 editor2.apply();
-                SharedPreferences.Editor stone3 = workshop_shared.edit();
-                stone3.putInt("workshop", workshop_b);
-                stone3.apply();
-
-
-
-
 
 
             }
@@ -180,16 +153,16 @@ public class Buildings extends ActivityGroup {
             ;
 
         });
-        workshop.setOnLongClickListener(new View.OnLongClickListener() {
+        wood_for_leaves.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
                 // TODO Auto-generated method stub
-                workshop.setText("Stone: 5 \n Wood: 9");
+                wood_for_leaves.setText("Leaves: 7");
                 new Handler().postDelayed(new Runnable() {
 
                     @Override
                     public void run() {
-                        workshop.setText("Workshop");
+                        wood_for_leaves.setText("Wood: 5");
                     }
                 }, 3000L);
                 return true;
@@ -197,21 +170,21 @@ public class Buildings extends ActivityGroup {
             }
         });
 
-        trade_post.setOnClickListener(new View.OnClickListener() {
+        leaves_for_wood.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int wood_counter = wood1_counter.getInt("wood", 0);
                 int leaves_counter = leaves1_counter.getInt("leaves", 0);
                 int stone_counter = stone1_counter.getInt("stone",0);
-                int trade_post_b = trade_post_shared.getInt("trade_post",0);
-                if (leaves_counter >= 10){
+                int hard_wood_counter = hard_wood_counter_shared.getInt("hard_wood", 0);
+                if (wood_counter >= 5){
                     //TODO Change later items required
-                    log.append("\n You built a trading post!");
-                    leaves_counter -= 10;
-                    trade_post.setEnabled(false);
-                    trade_post_b = 1;
+                    log.append("\n You traded for some leaves!");
+                    leaves_counter += 7;
+                    wood_counter -=5;
 
-                    storage.setText("\t Storage: \n Wood: " + wood_counter + "\n Leaves: " + leaves_counter + "\n Stones: " + stone_counter);
+
+                    storage.setText("\t Storage: \n Wood: " + wood_counter + "\n Leaves: " + leaves_counter + "\n Stones: " + stone_counter + "\n Hard Wood: " + hard_wood_counter);
                 }else{
                     log.append("\n You don't have enough resources!");
                 }
@@ -221,33 +194,24 @@ public class Buildings extends ActivityGroup {
                 SharedPreferences.Editor editor = wood1_counter.edit();
                 editor.putInt("wood", wood_counter);
                 editor.apply();
-                SharedPreferences.Editor editor2 = stone1_counter.edit();
-                editor2.putInt("stone", stone_counter);
+                SharedPreferences.Editor editor2 = leaves1_counter.edit();
+                editor2.putInt("leaves", leaves_counter);
                 editor2.apply();
-                SharedPreferences.Editor leaf3 = trade_post_shared.edit();
-                leaf3.putInt("trade_post", trade_post_b);
-                leaf3.apply();
-
-
-
-
-
-
             }
 
             ;
 
         });
-        trade_post.setOnLongClickListener(new View.OnLongClickListener() {
+        leaves_for_wood.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
                 // TODO Auto-generated method stub
-                trade_post.setText("Leaves: 10");
+                leaves_for_wood.setText("Wood: 5");
                 new Handler().postDelayed(new Runnable() {
 
                     @Override
                     public void run() {
-                        trade_post.setText("Trading Post");
+                        leaves_for_wood.setText("Leaves: 7");
                     }
                 }, 3000L);
                 return true;
