@@ -12,6 +12,7 @@
         android:layout_alignRight="@+id/forest_temple"
         android:layout_alignEnd="@+id/forest_temple"
         android:layout_marginTop="20dp"
+        android:textStyle="bold"
         android:text="Quests:"
         android:layout_alignParentTop="true" />
 
@@ -50,7 +51,7 @@
         android:id="@+id/storage"
         android:layout_width="150dp"
         android:layout_height="200dp"
-        android:fontFamily="sans-serif-bold"
+        android:textStyle="bold"
         android:layout_toEndOf="@+id/log"
         android:layout_alignBottom="@+id/log"
         android:layout_toRightOf="@+id/log" />
@@ -59,6 +60,7 @@
         android:id="@+id/percent_forest_temple"
         android:layout_width="100dp"
         android:layout_height="50dp"
+        android:textStyle="bold"
         android:layout_alignBottom="@+id/forest_temple"
         android:layout_toRightOf="@+id/quest_text"
         android:layout_toEndOf="@+id/quest_text"

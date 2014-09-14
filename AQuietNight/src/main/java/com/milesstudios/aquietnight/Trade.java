@@ -1,6 +1,7 @@
 package com.milesstudios.aquietnight;
 
 import android.app.ActivityGroup;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -27,7 +28,7 @@ public class Trade extends ActivityGroup {
 
             case android.R.id.home:
                 // Do whatever you want, e.g. finish()
-                Intent openMain = new Intent(Trade.this, main.class);
+                Intent openMain = new Intent(Trade.this, Cave.class);
                 startActivity(openMain);
                 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
                 break;
@@ -44,6 +45,7 @@ public class Trade extends ActivityGroup {
         getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
         getActionBar().show();
         getActionBar().setDisplayHomeAsUpEnabled(true);
+        final SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.trade);
@@ -55,45 +57,35 @@ public class Trade extends ActivityGroup {
         log.setTextSize(11);
         storage.setTextSize(15);
         //Saving
-        final SharedPreferences wood1_counter = getApplicationContext().getSharedPreferences("wood", wood_counter);
-        final SharedPreferences leaves1_counter = getApplicationContext().getSharedPreferences("leaves", leaves_counter);
-        final SharedPreferences stone1_counter = getApplicationContext().getSharedPreferences("stone", stone_counter);
-        final SharedPreferences hard_wood_counter_shared = getApplicationContext().getSharedPreferences("hard_wood", hard_wood_counter);
-        int leaves_counter = leaves1_counter.getInt("leaves", 0);
-        int stone_counter = stone1_counter.getInt("stone", 0);
-        int hard_wood_counter= hard_wood_counter_shared.getInt("hard_wood", 0);
-        int wood_counter = wood1_counter.getInt("wood", 0);
 
-
-        storage.setText("\t Storage: \n Wood: " + wood_counter + "\n Leaves: " + leaves_counter + "\n Stones: " + stone_counter + "\n Hard Wood: " + hard_wood_counter);
-
+        int leaves_counter = sharedPref.getInt("leaves", 0);
+        int stone_counter = sharedPref.getInt("stone", 0);
+        int hard_wood_counter= sharedPref.getInt("hard_wood", 0);
+        int wood_counter = sharedPref.getInt("wood", 0);
+        UpdateText();
 
         stone_for_wood.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int wood_counter = wood1_counter.getInt("wood", 0);
-                int stone_counter = stone1_counter.getInt("stone",0);
-                int leaves_counter = leaves1_counter.getInt("stone",0);
-                int hard_wood_counter = hard_wood_counter_shared.getInt("hard_wood", 0);
+                int wood_counter = sharedPref.getInt("wood", 0);
+                int stone_counter = sharedPref.getInt("stone",0);
                 if (wood_counter >= 15){
                 log.append("\n You traded for some stone!");
                     stone_counter += 10;
                     wood_counter -= 15;
-
-                    storage.setText("\t Storage: \n Wood: " + wood_counter + "\n Leaves: " + leaves_counter + "\n Stones: " + stone_counter + "\n Hard Wood: " + hard_wood_counter);
                 }else{
                     log.append("\n You don't have enough resources!");
                 }
 
 
                 //Save counter
-                SharedPreferences.Editor editor = wood1_counter.edit();
+                SharedPreferences.Editor editor = sharedPref.edit();
                 editor.putInt("wood", wood_counter);
                 editor.apply();
-                SharedPreferences.Editor editor2 = stone1_counter.edit();
+                SharedPreferences.Editor editor2 = sharedPref.edit();
                 editor2.putInt("stone", stone_counter);
                 editor2.apply();
-
+                UpdateText();
 
 
 
@@ -125,27 +117,25 @@ public class Trade extends ActivityGroup {
         wood_for_leaves.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int wood_counter = wood1_counter.getInt("wood", 0);
-                int leaves_counter = leaves1_counter.getInt("leaves", 0);
-                int stone_counter = stone1_counter.getInt("stone",0);
-                int hard_wood_counter = hard_wood_counter_shared.getInt("hard_wood", 0);
+                int wood_counter = sharedPref.getInt("wood", 0);
+                int leaves_counter = sharedPref.getInt("leaves", 0);
                 if (leaves_counter >= 7){
                     log.append("\n You traded for some wood!");
                     leaves_counter -= 7;
                     wood_counter += 5;
-                    storage.setText("\t Storage: \n Wood: " + wood_counter + "\n Leaves: " + leaves_counter + "\n Stones: " + stone_counter + "\n Hard Wood: " + hard_wood_counter);
-                }else{
+                    }else{
                     log.append("\n You don't have enough resources!");
                 }
 
 
                 //Save counter
-                SharedPreferences.Editor editor = wood1_counter.edit();
+                SharedPreferences.Editor editor = sharedPref.edit();
                 editor.putInt("wood", wood_counter);
                 editor.apply();
-                SharedPreferences.Editor editor2 = leaves1_counter.edit();
+                SharedPreferences.Editor editor2 = sharedPref.edit();
                 editor2.putInt("leaves", leaves_counter);
                 editor2.apply();
+                UpdateText();
 
 
             }
@@ -173,30 +163,26 @@ public class Trade extends ActivityGroup {
         leaves_for_wood.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int wood_counter = wood1_counter.getInt("wood", 0);
-                int leaves_counter = leaves1_counter.getInt("leaves", 0);
-                int stone_counter = stone1_counter.getInt("stone",0);
-                int hard_wood_counter = hard_wood_counter_shared.getInt("hard_wood", 0);
+                int wood_counter = sharedPref.getInt("wood", 0);
+                int leaves_counter = sharedPref.getInt("leaves", 0);
                 if (wood_counter >= 5){
                     //TODO Change later items required
                     log.append("\n You traded for some leaves!");
                     leaves_counter += 7;
                     wood_counter -=5;
-
-
-                    storage.setText("\t Storage: \n Wood: " + wood_counter + "\n Leaves: " + leaves_counter + "\n Stones: " + stone_counter + "\n Hard Wood: " + hard_wood_counter);
                 }else{
                     log.append("\n You don't have enough resources!");
                 }
 
 
                 //Save counter
-                SharedPreferences.Editor editor = wood1_counter.edit();
+                SharedPreferences.Editor editor = sharedPref.edit();
                 editor.putInt("wood", wood_counter);
                 editor.apply();
-                SharedPreferences.Editor editor2 = leaves1_counter.edit();
+                SharedPreferences.Editor editor2 = sharedPref.edit();
                 editor2.putInt("leaves", leaves_counter);
                 editor2.apply();
+                UpdateText();
             }
 
             ;
@@ -219,6 +205,16 @@ public class Trade extends ActivityGroup {
             }
         });
 
+
+    }
+
+    public void UpdateText(){
+        SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
+        int wood_counter = sharedPref.getInt("wood", 0);
+        int leaves_counter = sharedPref.getInt("leaves", 0);
+        int stone_counter = sharedPref.getInt("stone", 0);
+        int hard_wood_counter = sharedPref.getInt("hard_wood", 0);
+        storage.setText("\t Storage: \n Wood: " + wood_counter + "\n Leaves: " + leaves_counter + "\n Stones: " + stone_counter + "\n Hard Wood:" + hard_wood_counter);
 
     }
     @Override

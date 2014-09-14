@@ -69,7 +69,8 @@
         android:layout_weight="1"
         android:layout_toRightOf="@id/trading"
         android:layout_below="@id/buildings"
-        android:text="Crafting" />
+        android:text="Crafting"
+        />
 
 
 
@@ -79,21 +80,23 @@
         android:layout_width="150dp"
         android:layout_height="100dp"
         android:layout_below="@id/trading"
-        android:fontFamily="sans-serif-bold"
+        android:textStyle="bold"
         android:layout_marginLeft="25dp"
         android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"/>
+        android:layout_marginBottom="10dp"
+        android:layout_alignParentBottom="true"/>
 
     <TextView
         android:id="@+id/storage"
         android:layout_width="250dp"
         android:layout_height="500dp"
-        android:fontFamily="sans-serif-bold"
+        android:textStyle="bold"
         android:layout_toRightOf="@id/log"
         android:layout_marginRight="25dp"
         android:layout_marginBottom="10dp"
         android:layout_below="@+id/crafting"
-        android:editable="true"/>
+        android:editable="true"
+        android:layout_alignParentBottom="true"/>
 
 
 

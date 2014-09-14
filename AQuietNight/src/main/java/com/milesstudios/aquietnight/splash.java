@@ -30,7 +30,7 @@ public class splash extends ActionBarActivity {
                 } catch (InterruptedException e){
                     e.printStackTrace();
                 }finally{
-                    Intent openMain_Screen = new Intent (splash.this, main.class);
+                    Intent openMain_Screen = new Intent (splash.this, Cave.class);
                     startActivity(openMain_Screen);
                     finish();
                     // Finished already with the finish not from on pause

@@ -29,6 +29,7 @@
         android:layout_alignRight="@+id/wood"
         android:layout_alignEnd="@+id/wood"
         android:layout_marginTop="60dp"
+        android:textStyle="bold"
         android:text="Gather:"
         android:layout_alignParentTop="true" />
 
@@ -78,7 +79,7 @@
         android:id="@+id/log"
         android:layout_width="150dp"
         android:layout_height="100dp"
-        android:fontFamily="sans-serif-bold"
+        android:textStyle="bold"
         android:layout_alignParentBottom="true"
         android:layout_alignLeft="@+id/stone"
         android:layout_alignStart="@+id/stone" />
@@ -87,7 +88,7 @@
         android:id="@+id/storage"
         android:layout_width="150dp"
         android:layout_height="200dp"
-        android:fontFamily="sans-serif-bold"
+        android:textStyle="bold"
         android:layout_toEndOf="@+id/log"
         android:layout_alignBottom="@+id/log"
         android:layout_toRightOf="@+id/log" />

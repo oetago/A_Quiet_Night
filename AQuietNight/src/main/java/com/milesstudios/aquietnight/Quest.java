@@ -1,6 +1,7 @@
 package com.milesstudios.aquietnight;
 
 import android.app.ActivityGroup;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -30,7 +31,7 @@ public class Quest extends ActivityGroup {
 
             case android.R.id.home:
 
-                Intent openMain = new Intent(Quest.this, main.class);
+                Intent openMain = new Intent(Quest.this, Cave.class);
                 startActivity(openMain);
                 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
                 break;
@@ -47,6 +48,7 @@ public class Quest extends ActivityGroup {
         getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
         getActionBar().show();
         getActionBar().setDisplayHomeAsUpEnabled(true);
+        final SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data",Context.MODE_PRIVATE);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.quest);
@@ -57,13 +59,10 @@ public class Quest extends ActivityGroup {
         log.setTextSize(11);
         storage.setTextSize(15);
         //Saving
-        final SharedPreferences leaf1_armor = getApplicationContext().getSharedPreferences("leaf_armor", leaf_armorb);
-        final SharedPreferences stone1_axe = getApplicationContext().getSharedPreferences("stone_axe", stone_axeb);
-        final SharedPreferences stone1_pick = getApplicationContext().getSharedPreferences("stone_pick", stone_pickb);
-        int stone_axeb = stone1_axe.getInt("stone_axe", 0);
-        int stone_pickb = stone1_pick.getInt("stone_pick", 0);
-        int leaf_armorb = leaf1_armor.getInt("leaf_armor", 0);
-        storage.setText("\t Gear: \n Leaf Armor: " + leaf_armorb + "\n Stone Axe: " + stone_axeb + "\n Stone Pick: " + stone_pickb);
+        int stone_axeb = sharedPref.getInt("stone_axe", 0);
+        int stone_pickb = sharedPref.getInt("stone_pick", 0);
+        int leaf_armorb = sharedPref.getInt("leaf_armor", 0);
+        UpdateText();
 
         //Calculations
         stone_axeb *= 5;
@@ -94,6 +93,16 @@ public class Quest extends ActivityGroup {
 
         percent_forest_temple_view.setText(percent_forest_temple + "%");
 
+
+    }
+
+    public void UpdateText(){
+        SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
+        int wood_counter = sharedPref.getInt("wood", 0);
+        int leaves_counter = sharedPref.getInt("leaves", 0);
+        int stone_counter = sharedPref.getInt("stone", 0);
+        int hard_wood_counter = sharedPref.getInt("hard_wood", 0);
+        storage.setText("\t Storage: \n Wood: " + wood_counter + "\n Leaves: " + leaves_counter + "\n Stones: " + stone_counter + "\n Hard Wood:" + hard_wood_counter);
 
     }
     @Override

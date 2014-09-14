@@ -1,6 +1,7 @@
 package com.milesstudios.aquietnight;
 
 import android.app.ActivityGroup;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -27,7 +28,7 @@ public class Crafting extends ActivityGroup {
 
             case android.R.id.home:
                 // Do whatever you want, e.g. finish()
-                Intent openMain = new Intent(Crafting.this, main.class);
+                Intent openMain = new Intent(Crafting.this, Cave.class);
                 startActivity(openMain);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
                 break;
@@ -44,6 +45,8 @@ public class Crafting extends ActivityGroup {
         getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
         getActionBar().show();
         getActionBar().setDisplayHomeAsUpEnabled(true);
+        final SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
+
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.crafting);
@@ -56,22 +59,14 @@ public class Crafting extends ActivityGroup {
         log.setTextSize(11);
         storage.setTextSize(15);
         //Saving
-        final SharedPreferences wood1_counter = getApplicationContext().getSharedPreferences("wood", wood_counter);
-        final SharedPreferences leaves1_counter = getApplicationContext().getSharedPreferences("leaves", leaves_counter);
-        final SharedPreferences stone1_counter = getApplicationContext().getSharedPreferences("stone", stone_counter);
-        final SharedPreferences stone1_axe = getApplicationContext().getSharedPreferences("stone_axe", stone_axeb);
-        final SharedPreferences stone1_pick = getApplicationContext().getSharedPreferences("stone_pick", stone_pickb);
-        final SharedPreferences leaf1_armor = getApplicationContext().getSharedPreferences("leaf_armor", leaf_armorb);
-        final SharedPreferences hard_wood_counter_shared = getApplicationContext().getSharedPreferences("hard_wood", hard_wood_counter);
-        final SharedPreferences workshop_shared = getApplicationContext().getSharedPreferences("workshop", workshop_b);
-        int wood_counter = wood1_counter.getInt("wood", 0);
-        int leaves_counter = leaves1_counter.getInt("leaves", 0);
-        int stone_counter = stone1_counter.getInt("stone", 0);
-        int stone_axeb = stone1_axe.getInt("stone_axe", 0);
-        int stone_pickb = stone1_pick.getInt("stone_pick", 0);
-        int leaf_armorb = leaf1_armor.getInt("leaf_armor", 0);
-        int hard_wood_counter= hard_wood_counter_shared.getInt("hard_wood", 0);
-        int workshop_b = workshop_shared.getInt("workshop", 0);
+        int wood_counter = sharedPref.getInt("wood", 0);
+        int leaves_counter = sharedPref.getInt("leaves", 0);
+        int stone_counter = sharedPref.getInt("stone", 0);
+        int stone_axeb = sharedPref.getInt("stone_axe", 0);
+        int stone_pickb = sharedPref.getInt("stone_pick", 0);
+        int leaf_armorb = sharedPref.getInt("leaf_armor", 0);
+        int hard_wood_counter= sharedPref.getInt("hard_wood", 0);
+        int workshop_b = sharedPref.getInt("workshop", 0);
 
         if (stone_axeb == 1){
             stone_axe.setEnabled(false);
@@ -89,40 +84,35 @@ public class Crafting extends ActivityGroup {
             hard_wood.setEnabled(true);
             hard_wood.setVisibility(View.VISIBLE);
         }
-        storage.setText("\t Storage: \n Wood: " + wood_counter + "\n Leaves: " + leaves_counter + "\n Stones: " + stone_counter + "\n Hard Wood: " + hard_wood_counter);
-
+        UpdateText();
 
         stone_axe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int wood_counter = wood1_counter.getInt("wood", 0);
-                int leaves_counter = leaves1_counter.getInt("leaves", 0);
-                int stone_counter = stone1_counter.getInt("stone",0);
-                int stone_axeb = stone1_axe.getInt("stone_axe",0);
-                int hard_wood_counter = hard_wood_counter_shared.getInt("hard_wood", 0);
+                int wood_counter = sharedPref.getInt("wood", 0);
+                int stone_counter = sharedPref.getInt("stone",0);
+                int stone_axeb = sharedPref.getInt("stone_axe",0);
                 if (stone_counter >= 3 && wood_counter >= 2){
                     log.append("\n You crafted a stone axe!");
                     stone_counter -= 3;
                     wood_counter -= 2;
                     stone_axe.setEnabled(false);
-                    stone_axeb = 1;
-
-                    storage.setText("\t Storage: \n Wood: " + wood_counter + "\n Leaves: " + leaves_counter + "\n Stones: " + stone_counter + "\n Hard Wood: " + hard_wood_counter);
                 }else{
                     log.append("\n You don't have enough resources!");
                 }
 
 
                 //Save counter
-                SharedPreferences.Editor editor = wood1_counter.edit();
+                SharedPreferences.Editor editor = sharedPref.edit();
                 editor.putInt("wood", wood_counter);
                 editor.apply();
-                SharedPreferences.Editor editor2 = stone1_counter.edit();
+                SharedPreferences.Editor editor2 = sharedPref.edit();
                 editor2.putInt("stone", stone_counter);
                 editor2.apply();
-                SharedPreferences.Editor editor3 = stone1_axe.edit();
+                SharedPreferences.Editor editor3 = sharedPref.edit();
                 editor3.putInt("stone_axe", stone_axeb);
                 editor3.apply();
+                UpdateText();
 
 
 
@@ -155,34 +145,32 @@ public class Crafting extends ActivityGroup {
         stone_pick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int wood_counter = wood1_counter.getInt("wood", 0);
-                int leaves_counter = leaves1_counter.getInt("leaves", 0);
-                int stone_counter = stone1_counter.getInt("stone",0);
-                int stone_pickb = stone1_pick.getInt("stone_pick",0);
-                int hard_wood_counter= hard_wood_counter_shared.getInt("hard_wood", 0);
-                if (stone_counter >= 3 && wood_counter >= 4){
+                int wood_counter = sharedPref.getInt("wood", 0);
+                int stone_counter = sharedPref.getInt("stone",0);
+                int stone_pickb = sharedPref.getInt("stone_pick",0);
+                int hard_wood_counter= sharedPref.getInt("hard_wood", 0);
+                if (stone_counter >= 3 && hard_wood_counter >= 4){
                     log.append("\n You crafted a stone pick!");
                     stone_counter -= 3;
-                    wood_counter -= 4;
+                    hard_wood_counter -= 4;
                     stone_pick.setEnabled(false);
                     stone_pickb = 1;
-
-                    storage.setText("\t Storage: \n Wood: " + wood_counter + "\n Leaves: " + leaves_counter + "\n Stones: " + stone_counter + "\n Hard Wood: " + hard_wood_counter);
                 }else{
                     log.append("\n You don't have enough resources!");
                 }
 
 
                 //Save counter
-                SharedPreferences.Editor editor = wood1_counter.edit();
-                editor.putInt("wood", wood_counter);
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putInt("hard_wood", hard_wood_counter);
                 editor.apply();
-                SharedPreferences.Editor editor2 = stone1_counter.edit();
+                SharedPreferences.Editor editor2 = sharedPref.edit();
                 editor2.putInt("stone", stone_counter);
                 editor2.apply();
-                SharedPreferences.Editor stone3 = stone1_pick.edit();
+                SharedPreferences.Editor stone3 = sharedPref.edit();
                 stone3.putInt("stone_pick", stone_pickb);
                 stone3.apply();
+                UpdateText();
 
 
 
@@ -198,7 +186,7 @@ public class Crafting extends ActivityGroup {
             @Override
             public boolean onLongClick(View v) {
                 // TODO Auto-generated method stub
-                stone_pick.setText("Stone: 3 \n Wood: 4");
+                stone_pick.setText("Stone: 3 \n Hard Wood: 4");
                 new Handler().postDelayed(new Runnable() {
 
                     @Override
@@ -214,33 +202,26 @@ public class Crafting extends ActivityGroup {
         leaf_armor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int wood_counter = wood1_counter.getInt("wood", 0);
-                int leaves_counter = leaves1_counter.getInt("leaves", 0);
-                int stone_counter = stone1_counter.getInt("stone",0);
-                int leaf_armorb = leaf1_armor.getInt("leaf_armor",0);
-                int hard_wood_counter= hard_wood_counter_shared.getInt("hard_wood", 0);
+                int leaves_counter = sharedPref.getInt("leaves", 0);
+                int leaf_armorb = sharedPref.getInt("leaf_armor",0);
                 if (leaves_counter >= 7){
                     log.append("\n You crafted a stone axe!");
                     leaves_counter -= 7;
                     leaf_armor.setEnabled(false);
                     leaf_armorb = 1;
-                    storage.setText("\t Storage: \n Wood: " + wood_counter + "\n Leaves: " + leaves_counter + "\n Stones: " + stone_counter + "\n Hard Wood: " + hard_wood_counter);
                 }else{
                     log.append("\n You don't have enough resources!");
                 }
 
 
                 //Save counter
-                SharedPreferences.Editor editor = wood1_counter.edit();
-                editor.putInt("wood", wood_counter);
-                editor.apply();
-                SharedPreferences.Editor editor2 = stone1_counter.edit();
-                editor2.putInt("stone", stone_counter);
+                SharedPreferences.Editor editor2 = sharedPref.edit();
+                editor2.putInt("leaves", leaves_counter);
                 editor2.apply();
-                SharedPreferences.Editor leaf3 = leaf1_armor.edit();
+                SharedPreferences.Editor leaf3 = sharedPref.edit();
                 leaf3.putInt("leaf_armor", leaf_armorb);
                 leaf3.apply();
-
+                UpdateText();
 
 
 
@@ -271,30 +252,25 @@ public class Crafting extends ActivityGroup {
         hard_wood.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int wood_counter = wood1_counter.getInt("wood", 0);
-                int leaves_counter = leaves1_counter.getInt("leaves", 0);
-                int stone_counter = stone1_counter.getInt("stone",0);
-                int hard_wood_counter = hard_wood_counter_shared.getInt("hard_wood",0);
+                int wood_counter = sharedPref.getInt("wood", 0);
+                int hard_wood_counter = sharedPref.getInt("hard_wood",0);
                 if (wood_counter >= 3){
                     log.append("\n You crafted a piece of hard wood!");
                     wood_counter -= 3;
                     hard_wood_counter += 1;
-                   storage.setText("\t Storage: \n Wood: " + wood_counter + "\n Leaves: " + leaves_counter + "\n Stones: " + stone_counter + "\n Hard Wood: " + hard_wood_counter);
                 }else{
                     log.append("\n You don't have enough resources!");
                 }
 
 
                 //Save counter
-                SharedPreferences.Editor editor = wood1_counter.edit();
+                SharedPreferences.Editor editor = sharedPref.edit();
                 editor.putInt("wood", wood_counter);
                 editor.apply();
-                SharedPreferences.Editor editor2 = stone1_counter.edit();
-                editor2.putInt("stone", stone_counter);
-                editor2.apply();
-                SharedPreferences.Editor hard_wood3 = hard_wood_counter_shared.edit();
+                SharedPreferences.Editor hard_wood3 = sharedPref.edit();
                 hard_wood3.putInt("hard_wood", hard_wood_counter);
                 hard_wood3.apply();
+                UpdateText();
 
 
 
@@ -323,6 +299,15 @@ public class Crafting extends ActivityGroup {
             }
         });
 
+
+    }
+    public void UpdateText(){
+        SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
+        int wood_counter = sharedPref.getInt("wood", 0);
+        int leaves_counter = sharedPref.getInt("leaves", 0);
+        int stone_counter = sharedPref.getInt("stone", 0);
+        int hard_wood_counter = sharedPref.getInt("hard_wood", 0);
+        storage.setText("\t Storage: \n Wood: " + wood_counter + "\n Leaves: " + leaves_counter + "\n Stones: " + stone_counter + "\n Hard Wood:" + hard_wood_counter);
 
     }
     @Override

@@ -17,6 +17,8 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 
 import android.widget.ProgressBar;
@@ -41,7 +43,7 @@ public class Forest extends ActivityGroup  {
 
             case android.R.id.home:
                 // Do whatever you want, e.g. finish()
-                Intent openMain = new Intent(Forest.this, main.class);
+                Intent openMain = new Intent(Forest.this, Cave.class);
                 startActivity(openMain);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
                 break;
@@ -54,15 +56,16 @@ public class Forest extends ActivityGroup  {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        final SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data",Context.MODE_PRIVATE);
+
         //Acitivates Action Bar
         getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
         getActionBar().show();
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
-        //Decalres xml layout and id's
+        //Decalres xml layout and id's and saving
         super.onCreate(savedInstanceState);
         setContentView(R.layout.forest);
+        final SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data",Context.MODE_PRIVATE);
 
         //Declare Textviews
         log = (TextView) findViewById(R.id.log);
@@ -101,8 +104,8 @@ public class Forest extends ActivityGroup  {
             @Override public void onClick(View v) {
                 cave_button.setBackgroundColor(Color.BLACK);
                 cave_button.getBackground().setAlpha(64);
-                Intent openmain = new Intent(Forest.this, main.class);
-                startActivity(openmain);
+                Intent openCave = new Intent(Forest.this, Cave.class);
+                startActivity(openCave);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
 
             }
@@ -195,6 +198,7 @@ public class Forest extends ActivityGroup  {
             public void onClick(View v) {
                 int leaves_counter = sharedPref.getInt("leaves", 0);
                 log.append("\n You gathered 1 leaf from the ground");
+               // StartAnimations();
                 leaves_counter += 1;
                 leaves_bar.setVisibility(View.VISIBLE);
                 leaves.setEnabled(false);
@@ -249,28 +253,7 @@ public class Forest extends ActivityGroup  {
                   stone.setEnabled(false);
                   UpdateText();
 
-                  stone_timer = new CountDownTimer(22000, 220) {
 
-                      @Override
-                      public void onTick(long millisUntilFinisheds) {
-                          Log.v("Log_tag", "Tick of Progress" + s + " " + millisUntilFinisheds);
-                          s++;
-                          stone_bar.setProgress(s);
-
-                      }
-
-                      @Override
-                      public void onFinish() {
-                          stone.setEnabled(true);
-                          stone_bar.setVisibility(View.INVISIBLE);
-
-                          //Do what you want
-                          s = 0;
-                          stone_bar.setProgress(s);
-
-                      }
-                  };
-                  stone_timer.start();
 
               }else{
                   int stone_counter = sharedPref.getInt("stone", 0);
@@ -316,6 +299,14 @@ public class Forest extends ActivityGroup  {
         });
 
     }
+    private void StartAnimations() {
+        Animation anim = AnimationUtils.loadAnimation(this, R.anim.log);
+        anim.reset();
+        TextView l=(TextView) findViewById(R.id.log);
+        l.clearAnimation();
+        l.startAnimation(anim);
+    }
+
     public void UpdateText(){
         SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data",Context.MODE_PRIVATE);
         int wood_counter = sharedPref.getInt("wood", 0);
@@ -329,5 +320,6 @@ public class Forest extends ActivityGroup  {
     public void onBackPressed() {
 
     }
+
 
 }
