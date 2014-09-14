@@ -49,7 +49,7 @@
 
     <Button
         android:id="@+id/trading"
-        style="@drawable/button_shape"
+
         android:layout_width="150dp"
         android:layout_height="100dp"
         android:layout_marginLeft="20dp"
@@ -61,7 +61,6 @@
 
     <Button
         android:id="@+id/crafting"
-        style="@drawable/button_shape"
         android:layout_width="150dp"
         android:layout_height="100dp"
         android:layout_marginLeft="5dp"
@@ -97,20 +96,6 @@
         android:layout_below="@+id/crafting"
         android:editable="true"
         android:layout_alignParentBottom="true"/>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
