@@ -97,6 +97,7 @@ public class Crafting extends ActivityGroup {
                     stone_counter -= 3;
                     wood_counter -= 2;
                     stone_axe.setEnabled(false);
+                    stone_axeb = 1;
                 }else{
                     log.append("\n You don't have enough resources!");
                 }
@@ -205,7 +206,7 @@ public class Crafting extends ActivityGroup {
                 int leaves_counter = sharedPref.getInt("leaves", 0);
                 int leaf_armorb = sharedPref.getInt("leaf_armor",0);
                 if (leaves_counter >= 7){
-                    log.append("\n You crafted a stone axe!");
+                    log.append("\n You crafted leaf armor!");
                     leaves_counter -= 7;
                     leaf_armor.setEnabled(false);
                     leaf_armorb = 1;
