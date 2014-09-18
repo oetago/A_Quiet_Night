@@ -39,7 +39,7 @@ public class Forest extends ActivityGroup  {
     //Declare Statements
     int wood_counter, leaves_counter, stone_counter, w,l,s, stone_axeb, stone_pickb, hard_wood_counter;
     long wood_update,wood_remaining;
-    long sys_time;
+    long sys_time, wood_remaining2;
     Button wood, stone, leaves, cave_button;
     TextView log, storage;
     ProgressBar wood_bar, leaves_bar, stone_bar;
@@ -110,7 +110,7 @@ public class Forest extends ActivityGroup  {
        final int hard_wood_counter = sharedPref.getInt("hard_wood", 0);
        final long wood_systemtime = sharedPref.getLong("wood_systemtime", 0);
 
-        updateBar();
+        updateWood();
         UpdateText();
 
         //"Tab Button"
@@ -129,20 +129,15 @@ public class Forest extends ActivityGroup  {
         wood.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int wood_counter = sharedPref.getInt("wood", 0);
-                log.append("\n You gathered 1 wood from the ground");
-                wood_counter += 1;
 
-                SharedPreferences.Editor editor = sharedPref.edit();
-                editor.putInt("wood", wood_counter);
-                editor.apply();
                 UpdateText();
 
-                wood_bar.setVisibility(View.VISIBLE);
-                wood.setEnabled(false);
+
 
 
                 if(stone_axeb == 0) {
+                    int wood_counter = sharedPref.getInt("wood", 0);
+                    SharedPreferences.Editor editor = sharedPref.edit();
                     wood_counter = sharedPref.getInt("wood", 0);
                     log.append("\n You gathered 1 wood from the ground");
                     wood_counter += 1;
@@ -150,7 +145,10 @@ public class Forest extends ActivityGroup  {
                     editor = sharedPref.edit();
                     editor.putInt("wood", wood_counter);
                     editor.apply();
+                    editor.putLong("wood_systemtime", System.currentTimeMillis());
+                    editor.apply();
                     UpdateText();
+
 
                     wood_bar.setVisibility(View.VISIBLE);
                     wood.setEnabled(false);
@@ -158,7 +156,7 @@ public class Forest extends ActivityGroup  {
 
                         @Override
                         public void onTick(long millisUntilFinishedw) {
-                            Log.w("Log_tag", "Tick of Progress" + w + " " + millisUntilFinishedw);
+                            Log.v("Log_tag", "Tick of Progress" + w + " "+millisUntilFinishedw / 1000);
                             w++;
                             wood_bar.setProgress(w);
 
@@ -177,6 +175,8 @@ public class Forest extends ActivityGroup  {
                     };
                     wood_timer.start();
                 }else{
+                    int wood_counter = sharedPref.getInt("wood", 0);
+                    SharedPreferences.Editor editor = sharedPref.edit();
                     wood_counter = sharedPref.getInt("wood", 0);
                     log.append("\n You gathered 2 wood from the ground");
                     wood_counter += 2;
@@ -369,30 +369,33 @@ public class Forest extends ActivityGroup  {
         int stone_counter = sharedPref.getInt("stone", 0);
         int hard_wood_counter = sharedPref.getInt("hard_wood", 0);
         storage.setText("\t Storage: \n Wood: " + wood_counter + "\n Leaves: " + leaves_counter + "\n Stones: " + stone_counter + "\n Hard Wood:" + hard_wood_counter);
-        storage.setText("time: " + sys_time);
 
     }
-    public void updateBar() {
+    public void updateWood() {
         final long wood_remaining;
         SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
         long wood_systemtime = sharedPref.getLong("wood_systemtime", 0);
+        Log.w("wood_systemtime", "" + wood_systemtime);
         wood_update = wood_systemtime + 15000;
+        Log.w("wood_update", "" + wood_update);
         if (wood_update >= System.currentTimeMillis()){
             wood.setEnabled(false);
             wood_bar.setVisibility(View.VISIBLE);
             wood_remaining = wood_update - System.currentTimeMillis();
-            w =  15000 / (int)wood_remaining;
-            wood_bar.setProgress(w);
-
-
-            wood_timer = new CountDownTimer(wood_remaining, wood_remaining / 100) {
+            Log.w("wood_remaijing", "" + wood_remaining);
+            w =   (((int)wood_remaining * -1 + 15000) / 150) - 1; //Equation -x + 15000 / 150
+            wood_remaining2 = wood_remaining / (100 - w);
+            Log.w("wood_remaijing2", "" + wood_remaining2);
+            Log.w("w", "" + w);
+            wood_timer = new CountDownTimer(wood_remaining, wood_remaining2) {
 
                 @Override
                 public void onTick(long millisUntilFinishedw) {
-                    //   Log.w("Log_tag", "Tick of Progress" + w + " " + millisUntilFinishedw);
+                     Log.w("Update", "Tick of Progress" + w + " " + millisUntilFinishedw);
 
                     w++;
                     wood_bar.setProgress(w);
+
 
                 }
 
@@ -415,10 +418,7 @@ public class Forest extends ActivityGroup  {
     }
     @Override
     public void onPause(){
-        SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putLong("wood_systemtime", System.currentTimeMillis());
-        editor.apply();
+        wood_timer.cancel();
         super.onPause();
     }
     @Override
