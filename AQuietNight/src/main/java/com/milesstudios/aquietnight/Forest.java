@@ -418,7 +418,10 @@ public class Forest extends ActivityGroup  {
     }
     @Override
     public void onPause(){
-        wood_timer.cancel();
+        if (w > 0){
+            wood_timer.cancel();
+        }
+
         super.onPause();
     }
     @Override
