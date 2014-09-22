@@ -180,7 +180,8 @@ public class Cave extends ActivityGroup {
         int leaves_counter = sharedPref.getInt("leaves", 0);
         int stone_counter = sharedPref.getInt("stone", 0);
         int hard_wood_counter = sharedPref.getInt("hard_wood", 0);
-        storage.setText("\t Storage: \n Wood: " + wood_counter + "\n Leaves: " + leaves_counter + "\n Stones: " + stone_counter + "\n Hard Wood: " + hard_wood_counter);
+        int dirty_water_counter = sharedPref.getInt("dirty_water", 0);
+        storage.setText("\t Storage: \n Wood: " + wood_counter + "\n Leaves: " + leaves_counter + "\n Stones: " + stone_counter + "\n Hard Wood: " + hard_wood_counter + "\n\nDirty Water: " + dirty_water_counter + "L");
 
     }
 

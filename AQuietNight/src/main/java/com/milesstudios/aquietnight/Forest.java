@@ -34,16 +34,16 @@ import java.util.Calendar;
 import java.util.Date;
 
 
-public class Forest extends ActivityGroup  {
+public class Forest extends ActivityGroup {
 
     //Declare Statements
-    int wood_counter, leaves_counter, stone_counter, w,l,s, stone_axeb, stone_pickb, hard_wood_counter;
-    long wood_update,wood_remaining;
+    int wood_counter, leaves_counter, stone_counter, w, l, s,d,f, stone_axeb, stone_pickb, hard_wood_counter, dirty_water_counter, food_counter;
+    long wood_update, wood_remaining;
     long sys_time, wood_remaining2;
-    Button wood, stone, leaves, cave_button;
+    Button wood, stone, leaves, cave_button, dirty_water, hunt;
     TextView log, storage;
-    ProgressBar wood_bar, leaves_bar, stone_bar;
-    CountDownTimer wood_timer, leaves_timer, stone_timer;
+    ProgressBar wood_bar, leaves_bar, stone_bar, dirty_water_bar, hunt_bar;
+    CountDownTimer wood_timer, leaves_timer, stone_timer, dirty_water_timer, hunt_timer;
 
 
     //For setting up back button
@@ -74,7 +74,7 @@ public class Forest extends ActivityGroup  {
         //Decalres xml layout and id's and saving
         super.onCreate(savedInstanceState);
         setContentView(R.layout.forest);
-        final SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data",Context.MODE_PRIVATE);
+        final SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
 
 
         //Declare Textviews
@@ -86,15 +86,15 @@ public class Forest extends ActivityGroup  {
         cave_button = (Button) findViewById(R.id.cave_button);
         stone = (Button) findViewById(R.id.stone);
         leaves = (Button) findViewById(R.id.leaves);
+        dirty_water = (Button) findViewById(R.id.dirty_water);
+        hunt  = (Button) findViewById(R.id.hunt);
 
         //Declare and hide progress bars
-        wood_bar = (ProgressBar)findViewById(R.id.wood_bar);
-
-
-        leaves_bar = (ProgressBar)findViewById(R.id.leaves_bar);
-        leaves_bar.setVisibility(View.INVISIBLE);
-        stone_bar = (ProgressBar)findViewById(R.id.stone_bar);
-        stone_bar.setVisibility(View.INVISIBLE);
+        wood_bar = (ProgressBar) findViewById(R.id.wood_bar);
+        leaves_bar = (ProgressBar) findViewById(R.id.leaves_bar);
+        stone_bar = (ProgressBar) findViewById(R.id.stone_bar);
+        hunt_bar  = (ProgressBar) findViewById(R.id.hunt_bar);
+        dirty_water_bar  = (ProgressBar) findViewById(R.id.dirty_water_bar);
 
         //Setup TextSize and display Storage
         log.setTextSize(12);
@@ -102,20 +102,18 @@ public class Forest extends ActivityGroup  {
 
 
         //Gets crafting and buildings
-       final int stone_axeb = sharedPref.getInt("stone_axe", 0);
-       final int stone_pickb = sharedPref.getInt("wood", 0);
-       final int wood_counter = sharedPref.getInt("wood", 0);
-       final int leaves_counter = sharedPref.getInt("leaves", 0);
-       final int stone_counter = sharedPref.getInt("stone", 0);
-       final int hard_wood_counter = sharedPref.getInt("hard_wood", 0);
-       final long wood_systemtime = sharedPref.getLong("wood_systemtime", 0);
-
-        updateWood();
-        UpdateText();
+        final int stone_axeb = sharedPref.getInt("stone_axe", 0);
+        final int stone_pickb = sharedPref.getInt("wood", 0);
+        final int wood_counter = sharedPref.getInt("wood", 0);
+        final int leaves_counter = sharedPref.getInt("leaves", 0);
+        final int stone_counter = sharedPref.getInt("stone", 0);
+        final int hard_wood_counter = sharedPref.getInt("hard_wood", 0);
+        updateText();
 
         //"Tab Button"
         cave_button.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
+            @Override
+            public void onClick(View v) {
                 cave_button.setBackgroundColor(Color.BLACK);
                 cave_button.getBackground().setAlpha(64);
                 Intent openCave = new Intent(Forest.this, Cave.class);
@@ -130,12 +128,8 @@ public class Forest extends ActivityGroup  {
             @Override
             public void onClick(View v) {
 
-                UpdateText();
 
-
-
-
-                if(stone_axeb == 0) {
+                if (stone_axeb == 0) {
                     int wood_counter = sharedPref.getInt("wood", 0);
                     SharedPreferences.Editor editor = sharedPref.edit();
                     wood_counter = sharedPref.getInt("wood", 0);
@@ -147,7 +141,7 @@ public class Forest extends ActivityGroup  {
                     editor.apply();
                     editor.putLong("wood_systemtime", System.currentTimeMillis());
                     editor.apply();
-                    UpdateText();
+                    updateText();
 
 
                     wood_bar.setVisibility(View.VISIBLE);
@@ -156,7 +150,7 @@ public class Forest extends ActivityGroup  {
 
                         @Override
                         public void onTick(long millisUntilFinishedw) {
-                            Log.v("Log_tag", "Tick of Progress" + w + " "+millisUntilFinishedw / 1000);
+                            //  Log.v("Log_tag", "Tick of Progress" + w + " " + millisUntilFinishedw / 1000);
                             w++;
                             wood_bar.setProgress(w);
 
@@ -174,7 +168,7 @@ public class Forest extends ActivityGroup  {
                         }
                     };
                     wood_timer.start();
-                }else{
+                } else if (stone_axeb == 1) {
                     int wood_counter = sharedPref.getInt("wood", 0);
                     SharedPreferences.Editor editor = sharedPref.edit();
                     wood_counter = sharedPref.getInt("wood", 0);
@@ -185,7 +179,9 @@ public class Forest extends ActivityGroup  {
                     editor = sharedPref.edit();
                     editor.putInt("wood", wood_counter);
                     editor.apply();
-                    UpdateText();
+                    editor.putLong("wood_systemtime", System.currentTimeMillis());
+                    editor.apply();
+                    updateText();
 
                     wood_bar.setVisibility(View.VISIBLE);
                     wood.setEnabled(false);
@@ -217,7 +213,6 @@ public class Forest extends ActivityGroup  {
             }
 
 
-
         });
 
         leaves.setOnClickListener(new View.OnClickListener() {
@@ -225,7 +220,7 @@ public class Forest extends ActivityGroup  {
             public void onClick(View v) {
                 int leaves_counter = sharedPref.getInt("leaves", 0);
                 log.append("\n You gathered 1 leaf from the ground");
-               // StartAnimations();
+                // StartAnimations();
                 leaves_counter += 1;
                 leaves_bar.setVisibility(View.VISIBLE);
                 leaves.setEnabled(false);
@@ -233,13 +228,15 @@ public class Forest extends ActivityGroup  {
                 SharedPreferences.Editor editor = sharedPref.edit();
                 editor.putInt("leaves", leaves_counter);
                 editor.apply();
-                UpdateText();
-                leaves_timer=new CountDownTimer(9000,90) {
+                editor.putLong("leaves_systemtime", System.currentTimeMillis());
+                editor.apply();
+                updateText();
+                leaves_timer = new CountDownTimer(9000, 90) {
 
 
                     @Override
                     public void onTick(long millisUntilFinishedl) {
-                        Log.v("Log_tag", "Tick of Progress" + l + " "+millisUntilFinishedl);
+                        Log.v("Log_tag", "Tick of Progress" + l + " " + millisUntilFinishedl);
                         l++;
                         leaves_bar.setProgress(l);
                     }
@@ -260,168 +257,492 @@ public class Forest extends ActivityGroup  {
 
             }
 
-            ;
-
         });
         stone.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {;
-              if(stone_pickb == 0) {
-                  int stone_counter = sharedPref.getInt("stone", 0);
-                  log.append("\n You gathered 1 stone from the ground");
-                  stone_counter += 1;
+            public void onClick(View v) {
+                ;
+                if (stone_pickb == 0) {
+                    int stone_counter = sharedPref.getInt("stone", 0);
+                    log.append("\n You gathered 1 stone from the ground");
+                    stone_counter += 1;
 
-                  //Save counter
-                  SharedPreferences.Editor editor = sharedPref.edit();
-                  editor.putInt("stone", stone_counter);
-                  editor.apply();
-                  stone_bar.setVisibility(View.VISIBLE);
-                  stone.setEnabled(false);
-                  UpdateText();
+                    //Save counter
+                    SharedPreferences.Editor editor = sharedPref.edit();
+                    editor.putInt("stone", stone_counter);
+                    editor.apply();
+                    editor.putLong("stone_systemtime", System.currentTimeMillis());
+                    editor.apply();
+                    stone_bar.setVisibility(View.VISIBLE);
+                    stone.setEnabled(false);
+                    updateText();
 
-                  stone_timer = new CountDownTimer(2200,22) {
-
-
-                      @Override
-                      public void onTick(long millisUntilFinishedl) {
-                          Log.v("Log_tag", "Tick of Progress" + l + " "+millisUntilFinishedl);
-                          s++;
-                          stone_bar.setProgress(s);
-
-                      }
-
-                      @Override
-                      public void onFinish() {
-                          stone.setEnabled(true);
-                          stone_bar.setVisibility(View.INVISIBLE);
-
-                          //Do what you want
-                          s = 0;
-                          stone_bar.setProgress(l);
-
-                      }
-                  };
-                  stone_timer.start();
+                    stone_timer = new CountDownTimer(22000, 220) {
 
 
+                        @Override
+                        public void onTick(long millisUntilFinishedl) {
+                            Log.v("Log_tag", "Tick of Progress" + l + " " + millisUntilFinishedl);
+                            s++;
+                            stone_bar.setProgress(s);
 
-              }else{
-                  int stone_counter = sharedPref.getInt("stone", 0);
-                  log.append("\n You gathered 2 stone from the ground");
-                  stone_counter += 2;
+                        }
 
-                  //Save counter
-                  SharedPreferences.Editor editor = sharedPref.edit();
-                  editor.putInt("stone", stone_counter);
-                  editor.apply();
-                  stone_bar.setVisibility(View.VISIBLE);
-                  stone.setEnabled(false);
-                  UpdateText();
+                        @Override
+                        public void onFinish() {
+                            stone.setEnabled(true);
+                            stone_bar.setVisibility(View.INVISIBLE);
 
-                  stone_timer = new CountDownTimer(18000, 180) {
+                            //Do what you want
+                            s = 0;
+                            stone_bar.setProgress(l);
 
-                      @Override
-                      
-                      public void onTick(long millisUntilFinisheds) {
-                          Log.v("Log_tag", "Tick of Progress" + s + " " + millisUntilFinisheds);
-                          s++;
-                          stone_bar.setProgress(s);
+                        }
+                    };
+                    stone_timer.start();
 
-                      }
 
-                      @Override
-                      public void onFinish() {
-                          stone.setEnabled(true);
-                          stone_bar.setVisibility(View.INVISIBLE);
+                } else {
+                    int stone_counter = sharedPref.getInt("stone", 0);
+                    log.append("\n You gathered 2 stone from the ground");
+                    stone_counter += 2;
 
-                          //Do what you want
-                          s = 0;
-                          stone_bar.setProgress(s);
+                    //Save counter
+                    SharedPreferences.Editor editor = sharedPref.edit();
+                    editor.putInt("stone", stone_counter);
+                    editor.apply();
+                    editor.putLong("stone_systemtime", System.currentTimeMillis());
+                    editor.apply();
+                    stone_bar.setVisibility(View.VISIBLE);
+                    stone.setEnabled(false);
+                    updateText();
 
-                      }
-                  };
-                  stone_timer.start();
+                    stone_timer = new CountDownTimer(18000, 180) {
 
-              }
+                        @Override
+
+                        public void onTick(long millisUntilFinisheds) {
+                            Log.v("Log_tag", "Tick of Progress" + s + " " + millisUntilFinisheds);
+                            s++;
+                            stone_bar.setProgress(s);
+
+                        }
+
+                        @Override
+                        public void onFinish() {
+                            stone.setEnabled(true);
+                            stone_bar.setVisibility(View.INVISIBLE);
+
+                            //Do what you want
+                            s = 0;
+                            stone_bar.setProgress(s);
+
+                        }
+                    };
+                    stone_timer.start();
+
+                }
             }
 
             ;
 
         });
 
+        dirty_water.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (dirty_water_counter <= 20) {
+
+                    int dirty_water_counter = sharedPref.getInt("dirty_water", 0);
+                    log.append("\n You gathered 1 Liter of dirty water");
+                    dirty_water_counter += 1;
+                    dirty_water_bar.setVisibility(View.VISIBLE);
+                    dirty_water.setEnabled(false);
+
+                    SharedPreferences.Editor editor = sharedPref.edit();
+                    editor.putInt("dirty_water", dirty_water_counter);
+                    editor.apply();
+                    editor.putLong("dirty_water_systemtime", System.currentTimeMillis());
+                    editor.apply();
+                    updateText();
+                     dirty_water_timer = new CountDownTimer(13000, 130) {
+
+
+                        @Override
+                        public void onTick(long millisUntilFinishedu) {
+
+                            d++;
+                            dirty_water_bar.setProgress(d);
+                        }
+
+                        @Override
+                        public void onFinish() {
+                            dirty_water.setEnabled(true);
+                            dirty_water_bar.setVisibility(View.INVISIBLE);
+
+                            //Do what you want
+                            d = 0;
+                            dirty_water_bar.setProgress(d);
+
+                        }
+                    };
+                    dirty_water_timer.start();
+
+
+                }else{
+                    log.append("You can't hold any more water!");
+                }
+            }
+
+        });
+        hunt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (food_counter <= 20) {
+                    int food_counter = sharedPref.getInt("food", 0);
+                    log.append("\n You gathered 1 lb. of Food");
+                    food_counter += 1;
+                    hunt_bar.setVisibility(View.VISIBLE);
+                    hunt.setEnabled(false);
+
+                    SharedPreferences.Editor editor = sharedPref.edit();
+                    editor.putInt("food", food_counter);
+                    editor.apply();
+                    editor.putLong("food_systemtime", System.currentTimeMillis());
+                    editor.apply();
+                    updateText();
+                     hunt_timer = new CountDownTimer(25000, 250) {
+
+
+                        @Override
+                        public void onTick(long millisUntilFinishedf) {
+
+
+                            f++;
+                            hunt_bar.setProgress(f);
+                        }
+
+                        @Override
+                        public void onFinish() {
+                            hunt.setEnabled(true);
+                            hunt_bar.setVisibility(View.INVISIBLE);
+
+                            //Do what you want
+                            f = 0;
+                            hunt_bar.setProgress(f);
+
+                        }
+                    };
+                    hunt_timer.start();
+
+
+                }else{
+                    log.append("You can't hold any more Food!");
+                }
+            }
+
+        });
+
+
+
+
     }
 
 
 
-    private void StartAnimations() {
-        Animation anim = AnimationUtils.loadAnimation(this, R.anim.log);
-        anim.reset();
-        TextView l=(TextView) findViewById(R.id.log);
-        l.clearAnimation();
-        l.startAnimation(anim);
-    }
-
-
-    public void UpdateText(){
-        SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data",Context.MODE_PRIVATE);
+    public void updateText() {
+        SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
         int wood_counter = sharedPref.getInt("wood", 0);
         int leaves_counter = sharedPref.getInt("leaves", 0);
         int stone_counter = sharedPref.getInt("stone", 0);
         int hard_wood_counter = sharedPref.getInt("hard_wood", 0);
-        storage.setText("\t Storage: \n Wood: " + wood_counter + "\n Leaves: " + leaves_counter + "\n Stones: " + stone_counter + "\n Hard Wood:" + hard_wood_counter);
-
+        int dirty_water_counter = sharedPref.getInt("dirty_water", 0);
+        int food_counter = sharedPref.getInt("food", 0);
+        storage.setText("\t Storage: \n Wood: " + wood_counter + "\n Leaves: " + leaves_counter + "\n Stones: " + stone_counter + "\n Hard Wood: " + hard_wood_counter + "\n\n Dirty Water: " + dirty_water_counter + "L" + "\n Food: " + food_counter + "Lbs");
+    }
+    public void updateBars(){
+        updateLeaves();
+        updateStone();
+        updateWood();
+        updateDirtyWater();
+        updateHunt();
     }
     public void updateWood() {
         final long wood_remaining;
         SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
         long wood_systemtime = sharedPref.getLong("wood_systemtime", 0);
-        Log.w("wood_systemtime", "" + wood_systemtime);
-        wood_update = wood_systemtime + 15000;
-        Log.w("wood_update", "" + wood_update);
-        if (wood_update >= System.currentTimeMillis()){
-            wood.setEnabled(false);
-            wood_bar.setVisibility(View.VISIBLE);
-            wood_remaining = wood_update - System.currentTimeMillis();
-            Log.w("wood_remaijing", "" + wood_remaining);
-            w =   (((int)wood_remaining * -1 + 15000) / 150) - 1; //Equation -x + 15000 / 150
-            wood_remaining2 = wood_remaining / (100 - w);
-            Log.w("wood_remaijing2", "" + wood_remaining2);
-            Log.w("w", "" + w);
-            wood_timer = new CountDownTimer(wood_remaining, wood_remaining2) {
+        if (stone_axeb == 0) {
+            wood_update = wood_systemtime + 15000;
+            if (wood_update >= System.currentTimeMillis()) {
+                wood.setEnabled(false);
+                wood_bar.setVisibility(View.VISIBLE);
+                wood_remaining = wood_update - System.currentTimeMillis();
+                w = (((int) wood_remaining * -1 + 15000) / 150) - 1; //Equation -x + 15000 / 150
+                wood_remaining2 = wood_remaining / (100 - w);
+                wood_timer = new CountDownTimer(wood_remaining, wood_remaining2) {
+
+                    @Override
+                    public void onTick(long millisUntilFinishedw) {
+                        // Log.w("Update", "Tick of Progress" + w + " " + millisUntilFinishedw);
+
+                        w++;
+                        wood_bar.setProgress(w);
+
+
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        wood.setEnabled(true);
+                        wood_bar.setVisibility(View.INVISIBLE);
+                        w = 0;
+                        wood_bar.setProgress(w);
+
+                    }
+                };
+                wood_timer.start();
+            } else {
+                wood.setEnabled(true);
+                wood_bar.setVisibility(View.INVISIBLE);
+
+            }
+        } else if (stone_axeb == 1) {
+            wood_update = wood_systemtime + 13000;
+            if (wood_update >= System.currentTimeMillis()) {
+                wood.setEnabled(false);
+                wood_bar.setVisibility(View.VISIBLE);
+                wood_remaining = wood_update - System.currentTimeMillis();
+                w = (((int) wood_remaining * -1 + 13000) / 130) - 1; //Equation -x + 15000 / 150
+                wood_remaining2 = wood_remaining / (100 - w);
+                wood_timer = new CountDownTimer(wood_remaining, wood_remaining2) {
+
+                    @Override
+                    public void onTick(long millisUntilFinishedw) {
+                        // Log.w("Update", "Tick of Progress" + w + " " + millisUntilFinishedw);
+
+                        w++;
+                        wood_bar.setProgress(w);
+
+
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        wood.setEnabled(true);
+                        wood_bar.setVisibility(View.INVISIBLE);
+                        w = 0;
+                        wood_bar.setProgress(w);
+
+                    }
+                };
+                wood_timer.start();
+
+            }
+        }
+    }
+    public void updateStone() {
+        SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
+        long stone_systemtime = sharedPref.getLong("stone_systemtime", 0);
+        if (stone_pickb == 0) {
+            long stone_update = stone_systemtime + 22000;
+            if (stone_update >= System.currentTimeMillis()) {
+                stone.setEnabled(false);
+                stone_bar.setVisibility(View.VISIBLE);
+                long stone_remaining = stone_update - System.currentTimeMillis();
+                s = (((int) stone_remaining * -1 + 22000) / 220) - 1;
+                long stone_remaining2 = stone_remaining / (100 - s);
+                stone_timer = new CountDownTimer(stone_remaining, stone_remaining2) {
+
+                    @Override
+                    public void onTick(long millisUntilFinisheds) {
+                        // Log.w("Update", "Tick of Progress" + w + " " + millisUntilFinishedw);
+
+                        s++;
+                        stone_bar.setProgress(s);
+
+
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        stone.setEnabled(true);
+                        stone_bar.setVisibility(View.INVISIBLE);
+                        s = 0;
+                        stone_bar.setProgress(s);
+
+                    }
+                };
+                stone_timer.start();
+
+            } else {
+                stone.setEnabled(true);
+                stone_bar.setVisibility(View.INVISIBLE);
+
+            }
+        } else if (stone_pickb == 1) {
+            long stone_update = stone_systemtime + 18000;
+            if (stone_update >= System.currentTimeMillis()) {
+                stone.setEnabled(false);
+                stone_bar.setVisibility(View.VISIBLE);
+                long stone_remaining = stone_update - System.currentTimeMillis();
+                s = (((int) stone_remaining * -1 + 18000) / 180) - 1;
+                long stone_remaining2 = stone_remaining / (100 - s);
+                stone_timer = new CountDownTimer(stone_remaining, stone_remaining2) {
+
+                    @Override
+                    public void onTick(long millisUntilFinisheds) {
+                        // Log.w("Update", "Tick of Progress" + w + " " + millisUntilFinishedw);
+
+                        s++;
+                        stone_bar.setProgress(s);
+
+
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        stone.setEnabled(true);
+                        stone_bar.setVisibility(View.INVISIBLE);
+                        s = 0;
+                        stone_bar.setProgress(s);
+
+                    }
+                };
+                stone_timer.start();
+            }
+        }
+    }
+    public void updateLeaves(){
+            SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
+            long leaves_systemtime = sharedPref.getLong("leaves_systemtime", 0);
+                long leaves_update = leaves_systemtime + 9000;
+                if (leaves_update >= System.currentTimeMillis()) {
+                    leaves.setEnabled(false);
+                    leaves_bar.setVisibility(View.VISIBLE);
+                    long leaves_remaining = leaves_update - System.currentTimeMillis();
+                    l = (((int) leaves_remaining * -1 + 9000) / 90) - 1;
+                    long leaves_remaining2 = leaves_remaining / (100 - l);
+                    leaves_timer = new CountDownTimer(leaves_remaining, leaves_remaining2) {
+
+                        @Override
+                        public void onTick(long millisUntilFinishedl) {
+                            // Log.w("Update", "Tick of Progress" + w + " " + millisUntilFinishedw);
+
+                            l++;
+                            leaves_bar.setProgress(l);
+
+
+                        }
+
+                        @Override
+                        public void onFinish() {
+                            leaves.setEnabled(true);
+                            leaves_bar.setVisibility(View.INVISIBLE);
+                            l = 0;
+                            leaves_bar.setProgress(s);
+
+                        }
+                    };
+                    leaves_timer.start();
+
+                } else {
+                    leaves.setEnabled(true);
+                    leaves_bar.setVisibility(View.INVISIBLE);
+
+                }
+            }
+    public void updateDirtyWater(){
+        SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
+        long dirty_water_systemtime = sharedPref.getLong("dirty_water_systemtime", 0);
+        long dirty_water_update = dirty_water_systemtime + 9000;
+        if (dirty_water_update >= System.currentTimeMillis()) {
+            dirty_water.setEnabled(false);
+            dirty_water_bar.setVisibility(View.VISIBLE);
+            long dirty_water_remaining = dirty_water_update - System.currentTimeMillis();
+            d = (((int) dirty_water_remaining * -1 + 9000) / 90) - 1;
+            long dirty_water_remaining2 = dirty_water_remaining / (100 - l);
+            dirty_water_timer = new CountDownTimer(dirty_water_remaining, dirty_water_remaining2) {
 
                 @Override
-                public void onTick(long millisUntilFinishedw) {
-                     Log.w("Update", "Tick of Progress" + w + " " + millisUntilFinishedw);
-
-                    w++;
-                    wood_bar.setProgress(w);
+                public void onTick(long millisUntilFinishedd) {
+                    d++;
+                    dirty_water_bar.setProgress(d);
 
 
                 }
 
                 @Override
                 public void onFinish() {
-                    wood.setEnabled(true);
-                    wood_bar.setVisibility(View.INVISIBLE);
-                    w = 0;
-                    wood_bar.setProgress(w);
+                    dirty_water.setEnabled(true);
+                    dirty_water_bar.setVisibility(View.INVISIBLE);
+                    d = 0;
+                    dirty_water_bar.setProgress(s);
 
                 }
             };
-            wood_timer.start();
+            dirty_water_timer.start();
 
-        }else{
-            wood.setEnabled(true);
-            wood_bar.setVisibility(View.INVISIBLE);
+        } else {
+            dirty_water.setEnabled(true);
+            dirty_water_bar.setVisibility(View.INVISIBLE);
 
         }
     }
+    public void updateHunt(){
+        SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
+        long food_systemtime = sharedPref.getLong("food_systemtime", 0);
+        long hunt_update = food_systemtime + 9000;
+        if (hunt_update >= System.currentTimeMillis()) {
+            hunt.setEnabled(false);
+            hunt_bar.setVisibility(View.VISIBLE);
+            long food_remaining = hunt_update - System.currentTimeMillis();
+            f = (((int) food_remaining * -1 + 25000) / 250) - 1;
+            long food_remaining2 = food_remaining / (100 - l);
+            hunt_timer = new CountDownTimer(food_remaining, food_remaining2) {
+
+                @Override
+                public void onTick(long millisUntilFinishedf) {
+                    f++;
+                    hunt_bar.setProgress(d);
+
+
+                }
+
+                @Override
+                public void onFinish() {
+                    hunt.setEnabled(true);
+                    hunt_bar.setVisibility(View.INVISIBLE);
+                    f = 0;
+                    hunt_bar.setProgress(s);
+
+                }
+            };
+            hunt_timer.start();
+
+        } else {
+           hunt.setEnabled(true);
+           hunt_bar.setVisibility(View.INVISIBLE);
+
+        }
+    }
+
     @Override
     public void onPause(){
         if (w > 0){
             wood_timer.cancel();
         }
-
+        if (s > 0){
+            stone_timer.cancel();
+        }
+        if (l > 0){
+            leaves_timer.cancel();
+        }
+        if (d > 0){
+            dirty_water_timer.cancel();
+        }
+        if (f > 0){
+            hunt_timer.cancel();
+        }
         super.onPause();
     }
     @Override
@@ -436,7 +757,11 @@ public class Forest extends ActivityGroup  {
         super.onStop();
     }
 
+    @Override
+    protected void onStart(){
+        updateBars();
+        super.onStart();
+    }
+
 
 }
-
-

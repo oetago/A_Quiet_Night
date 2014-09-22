@@ -42,7 +42,9 @@
         android:text="Wood"
         android:layout_below="@+id/gather_text"
         android:layout_alignLeft="@+id/stone"
-        android:layout_alignStart="@+id/stone" />
+        android:layout_alignStart="@+id/stone"
+        android:layout_alignRight="@+id/stone"
+        android:layout_alignEnd="@+id/stone" />
 
     <Button
         android:id="@+id/stone"
@@ -65,6 +67,26 @@
         android:layout_below="@id/stone"
         android:layout_weight="1"
         android:text="Leaves" />
+    <Button
+        android:id="@+id/dirty_water"
+        style="@drawable/button_shape"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:layout_weight="1"
+        android:text="Dirty Water"
+        android:layout_below="@+id/gather_text"
+        android:layout_alignLeft="@+id/hunt"
+        android:layout_alignStart="@+id/hunt" />
+    <Button
+        android:id="@+id/hunt"
+        style="@drawable/button_shape"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:layout_weight="1"
+        android:text="Hunt"
+        android:layout_above="@+id/leaves"
+        android:layout_alignLeft="@+id/storage"
+        android:layout_alignStart="@+id/storage" />
 
 
 
@@ -128,5 +150,28 @@
         android:layout_alignStart="@+id/stone"
         android:layout_alignRight="@+id/stone"
         android:layout_alignEnd="@+id/stone" />
+    <ProgressBar
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="20dp"
+        android:layout_height="10dp"
+        android:id="@+id/dirty_water_bar"
+        android:progress="0"
+        android:layout_alignBottom="@+id/dirty_water"
+        android:layout_alignLeft="@+id/dirty_water"
+        android:layout_alignStart="@+id/dirty_water"
+        android:layout_alignTop="@+id/wood_bar"
+        android:layout_alignRight="@+id/dirty_water"
+        android:layout_alignEnd="@+id/dirty_water" />
+    <ProgressBar
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="20dp"
+        android:layout_height="10dp"
+        android:id="@+id/hunt_bar"
+        android:progress="0"
+        android:layout_above="@+id/leaves"
+        android:layout_alignLeft="@+id/hunt"
+        android:layout_alignStart="@+id/hunt"
+        android:layout_alignRight="@+id/hunt"
+        android:layout_alignEnd="@+id/hunt" />
 
 </RelativeLayout>
