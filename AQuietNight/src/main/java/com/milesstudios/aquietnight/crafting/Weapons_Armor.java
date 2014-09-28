@@ -1,4 +1,4 @@
-package com.milesstudios.aquietnight;
+package com.milesstudios.aquietnight.crafting;
 
 import android.app.ActionBar;
 import android.app.ActivityGroup;
@@ -13,30 +13,25 @@ import android.view.View;
 import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ProgressBar;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
-import com.milesstudios.aquietnight.crafting.Food_Water;
-import com.milesstudios.aquietnight.crafting.Tools;
-import com.milesstudios.aquietnight.crafting.Weapons_Armor;
+import com.milesstudios.aquietnight.Cave;
+import com.milesstudios.aquietnight.R;
 
 /**
- * Created by Ryanm14 on 9/1/2014.
+ * Created by Ryan on 9/27/2014.
  */
-public class Crafting extends ActivityGroup {
-
-    int wood_counter, leaves_counter, stone_counter, stone_axeb, stone_pickb, leaf_armorb, hard_wood_counter, workshop_b;
-    Button stone_axe, leaf_armor, stone_pick, hard_wood;
+public class Weapons_Armor extends ActivityGroup {
+    int wood_counter, leaves_counter, stone_counter, stone_swordb, hard_wood_counter, workshop_b, boiled_water_counter, cooked_food_counter;
+    Button stone_sword, leaf_armor;
     TextView log, storage;
-
-
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
 
             case android.R.id.home:
                 // Do whatever you want, e.g. finish()
-                Intent openMain = new Intent(Crafting.this, Cave.class);
+                Intent openMain = new Intent(Weapons_Armor.this, Cave.class);
                 startActivity(openMain);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
                 break;
@@ -66,20 +61,16 @@ public class Crafting extends ActivityGroup {
 
             @Override
             public boolean onNavigationItemSelected(int position, long id) {
-                if(items[position].equals("Crafting")){
-
-                }
                 if(items[position].equals("Weapons and Armor")){
-                    Intent openWeapons_Armor = new Intent(Crafting.this, Weapons_Armor.class);
-                    startActivity(openWeapons_Armor);
-                }
-                if(items[position].equals("Tools")){
-                    Intent openTools = new Intent(Crafting.this, Tools.class);
-                    startActivity(openTools);
                 }
                 if(items[position].equals("Food and Water")){
-                    Intent openFood_Water = new Intent(Crafting.this, Food_Water.class);
+                    Intent openFood_Water = new Intent(Weapons_Armor.this, Food_Water.class);
                     startActivity(openFood_Water);
+                }
+                if(items[position].equals("Tools")){
+                    setContentView(R.layout.crafting_tools);
+                    Intent openTools = new Intent(Weapons_Armor.this, Tools.class);
+                    startActivity(openTools);
                 }
                 Log.d("NavigationItemSelected", items[position]);
                 return true;
@@ -96,36 +87,44 @@ public class Crafting extends ActivityGroup {
 
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.crafting);
+        setContentView(R.layout.crafting_weapons_armor);
         log = (TextView) findViewById(R.id.log);
         storage = (TextView) findViewById(R.id.storage);
-        hard_wood = (Button) findViewById(R.id.hard_wood);
+        stone_sword = (Button) findViewById(R.id.stone_sword);
+        leaf_armor = (Button) findViewById(R.id.leaf_armor);
         log.setTextSize(11);
         storage.setTextSize(15);
         //Saving
         int wood_counter = sharedPref.getInt("wood", 0);
         int leaves_counter = sharedPref.getInt("leaves", 0);
         int stone_counter = sharedPref.getInt("stone", 0);
-        int stone_axeb = sharedPref.getInt("stone_axe", 0);
-        int stone_pickb = sharedPref.getInt("stone_pick", 0);
-        int leaf_armorb = sharedPref.getInt("leaf_armor", 0);
-        int hard_wood_counter= sharedPref.getInt("hard_wood", 0);
         int workshop_b = sharedPref.getInt("workshop", 0);
+        int leaf_armor_b = sharedPref.getInt("leaf_armor", 0);
+        int stone_sword_b = sharedPref.getInt("stone_sword", 0);
+
+        if (stone_sword_b == 1){
+            stone_sword.setEnabled(false);
+            stone_sword.setVisibility(View.INVISIBLE);
+        }
+        if (leaf_armor_b == 1){
+            leaf_armor.setEnabled(false);
+            leaf_armor.setVisibility(View.INVISIBLE);
+        }
 
 
         UpdateText();
 
-
-
-        hard_wood.setOnClickListener(new View.OnClickListener() {
+        stone_sword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int wood_counter = sharedPref.getInt("wood", 0);
-                int hard_wood_counter = sharedPref.getInt("hard_wood",0);
-                if (wood_counter >= 3){
-                    log.append("\n You crafted a piece of hard wood!");
+                int stone_sword_b = sharedPref.getInt("stone_sword", 0);
+                int stone_counter = sharedPref.getInt("stone", 0);
+                if (wood_counter >= 3 && stone_counter >= 4){
+                    log.append("\n You crafted a Stone Sword!");
                     wood_counter -= 3;
-                    hard_wood_counter += 1;
+                    stone_counter -= 4;
+                    stone_sword_b = 1;
                 }else{
                     log.append("\n You don't have enough resources!");
                 }
@@ -135,37 +134,75 @@ public class Crafting extends ActivityGroup {
                 SharedPreferences.Editor editor = sharedPref.edit();
                 editor.putInt("wood", wood_counter);
                 editor.apply();
-                SharedPreferences.Editor hard_wood3 = sharedPref.edit();
-                hard_wood3.putInt("hard_wood", hard_wood_counter);
-                hard_wood3.apply();
+                editor.putInt("stone", stone_counter);
+                editor.apply();
+                editor.putInt("stone_sword", stone_sword_b);
+                editor.apply();
                 UpdateText();
-
-
-
-
-
 
             }
 
-            ;
-
         });
-        hard_wood.setOnLongClickListener(new View.OnLongClickListener() {
+
+        stone_sword.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
                 // TODO Auto-generated method stub
-                hard_wood.setText("Wood: 3");
+                stone_sword.setText("Wood: 3 \n Stone: 4");
                 new Handler().postDelayed(new Runnable() {
 
                     @Override
                     public void run() {
-                        leaf_armor.setText("Hard Wood");
+                        stone_sword.setText("Stone Sword");
                     }
                 }, 3000L);
                 return true;
 
             }
         });
+
+        leaf_armor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int leaf_counter = sharedPref.getInt("leaves", 0);
+                int leaf_armor_b = sharedPref.getInt("hard_wood", 0);
+                if (leaf_counter >= 8) {
+                    log.append("\n You crafted Leaf Armor!");
+                    leaf_counter -= 8;
+                    leaf_armor_b = 1;
+                } else {
+                    log.append("\n You don't have enough resources!");
+                }
+
+
+                //Save counter
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putInt("leaves", leaf_counter);
+                editor.apply();
+                SharedPreferences.Editor editor2 = sharedPref.edit();
+                editor2.putInt("leaf_armor", leaf_armor_b);
+                editor2.apply();
+                UpdateText();
+            }
+
+        });
+        leaf_armor.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                // TODO Auto-generated method stub
+                leaf_armor.setText("Leaves: 8");
+                new Handler().postDelayed(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        leaf_armor.setText("Leaf Armor");
+                    }
+                }, 3000L);
+                return true;
+
+            }
+        });
+
 
 
     }
@@ -215,3 +252,10 @@ public class Crafting extends ActivityGroup {
     }
 
 }
+
+
+
+
+
+
+

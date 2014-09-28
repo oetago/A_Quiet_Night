@@ -18,7 +18,7 @@ import android.widget.TextView;
  */
 public class Trade extends ActivityGroup {
 
-    int wood_counter, leaves_counter, stone_counter, hard_wood_counter;
+    int wood_counter, leaves_counter, stone_counter, hard_wood_counter, quest_map_b;
     Button wood_for_leaves, leaves_for_wood, stone_for_wood;
     TextView log, storage;
 
@@ -67,12 +67,11 @@ public class Trade extends ActivityGroup {
         stone_for_wood.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int wood_counter = sharedPref.getInt("wood", 0);
-                int stone_counter = sharedPref.getInt("stone",0);
-                if (wood_counter >= 15){
-                log.append("\n You traded for some stone!");
-                    stone_counter += 10;
+                int wood_counter = sharedPref.getInt("wood", 0);;
+                if (wood_counter >= 25){
+                log.append("\n You traded for a quest map!");
                     wood_counter -= 15;
+                    quest_map_b += 1;
                 }else{
                     log.append("\n You don't have enough resources!");
                 }
@@ -83,7 +82,7 @@ public class Trade extends ActivityGroup {
                 editor.putInt("wood", wood_counter);
                 editor.apply();
                 SharedPreferences.Editor editor2 = sharedPref.edit();
-                editor2.putInt("stone", stone_counter);
+                editor2.putInt("quest_map", quest_map_b);
                 editor2.apply();
                 UpdateText();
 
@@ -214,9 +213,40 @@ public class Trade extends ActivityGroup {
         int leaves_counter = sharedPref.getInt("leaves", 0);
         int stone_counter = sharedPref.getInt("stone", 0);
         int hard_wood_counter = sharedPref.getInt("hard_wood", 0);
-        storage.setText("\t Storage: \n Wood: " + wood_counter + "\n Leaves: " + leaves_counter + "\n Stones: " + stone_counter + "\n Hard Wood:" + hard_wood_counter);
+        int dirty_water_counter = sharedPref.getInt("dirty_water", 0);
+        int food_counter = sharedPref.getInt("food", 0);
+        int cooked_food_counter = sharedPref.getInt("cooked_food", 0);
+        int boiled_water_counter = sharedPref.getInt("boiled_water", 0);
+
+        storage.setText("\t Storage:");
+        if(wood_counter >= 1){
+            storage.append("\n Wood: " + wood_counter);
+        }
+        if(leaves_counter >= 1){
+            storage.append("\n Leaves: " + leaves_counter);
+        }
+        if(stone_counter >= 1){
+            storage.append("\n Stone: " + stone_counter);
+        }
+        if(hard_wood_counter >= 1){
+            storage.append("\n Hard Wood: " + hard_wood_counter);
+        }
+        if(dirty_water_counter >= 1){
+            storage.append("\n Dirty Water: " + dirty_water_counter + "/20L");
+        }
+        if(food_counter >= 1){
+            storage.append("\n Food: " + food_counter + "/12Lb");
+        }
+        if(cooked_food_counter >= 1){
+            storage.append("\n Cooked Food: " + cooked_food_counter + "/12Lb");
+        }
+        if(boiled_water_counter >= 1){
+            storage.append("\n Boiled Water: " + boiled_water_counter + "/20L");
+        }
+
 
     }
+
     @Override
     public void onBackPressed() {
 

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="actions">
+        <item>Crafting</item>
+        <item>Weapons and Armor</item>
+        <item>Food and Water</item>
+        <item>Tools</item>
+
+    </string-array>
+</resources>

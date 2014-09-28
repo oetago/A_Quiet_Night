@@ -1,34 +1,37 @@
-package com.milesstudios.aquietnight;
+package com.milesstudios.aquietnight.crafting;
 
+import android.app.ActionBar;
 import android.app.ActivityGroup;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ProgressBar;
+import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
+import com.milesstudios.aquietnight.Cave;
+import com.milesstudios.aquietnight.R;
+
 /**
- * Created by Ryanm14 on 9/12/2014.
+ * Created by Ryan on 9/27/2014.
  */
-public class Buildings extends ActivityGroup {
-
-    int wood_counter, leaves_counter, stone_counter, fireplace_b, workshop_b, trade_post_b;
-    Button fireplace, workshop, trade_post;
+public class Food_Water extends ActivityGroup {
+    int wood_counter, leaves_counter, stone_counter, stone_axeb, stone_pickb, hard_wood_counter, workshop_b, boiled_water_counter, cooked_food_counter;
+    Button boil_water, cook_food;
     TextView log, storage;
-
-
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
 
             case android.R.id.home:
                 // Do whatever you want, e.g. finish()
-                Intent openMain = new Intent(Buildings.this, Cave.class);
+                Intent openMain = new Intent(Food_Water.this, Cave.class);
                 startActivity(openMain);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
                 break;
@@ -46,51 +49,77 @@ public class Buildings extends ActivityGroup {
         getActionBar().show();
         getActionBar().setDisplayHomeAsUpEnabled(true);
         final SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
+        // Adapter
+        SpinnerAdapter adapter =
+                ArrayAdapter.createFromResource(this, R.array.actions,
+                        android.R.layout.simple_spinner_dropdown_item);
+
+// Callback
+        ActionBar.OnNavigationListener callback = new ActionBar.OnNavigationListener() {
+
+            String[] items = getResources().getStringArray(R.array.actions); // List items from res
+
+            @Override
+            public boolean onNavigationItemSelected(int position, long id) {
+                if(items[position].equals("Food and Water")){
+                }
+                if(items[position].equals("Weapons and Armor")){
+                    Intent openWepaons_Armor = new Intent(Food_Water.this, Weapons_Armor.class);
+                    startActivity(openWepaons_Armor);
+                }
+                if(items[position].equals("Tools")){
+                    setContentView(R.layout.crafting_tools);
+                    Intent openTools = new Intent(Food_Water.this, Tools.class);
+                    startActivity(openTools);
+                }
+                Log.d("NavigationItemSelected", items[position]);
+                return true;
+
+            }
+
+        };
+
+// Action Bar
+        ActionBar actions = getActionBar();
+        actions.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+        actions.setDisplayShowTitleEnabled(false);
+        actions.setListNavigationCallbacks(adapter, callback);
 
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.buildings);
+        setContentView(R.layout.crafting_food_water);
         log = (TextView) findViewById(R.id.log);
         storage = (TextView) findViewById(R.id.storage);
-        fireplace = (Button) findViewById(R.id.fireplace);
-        trade_post = (Button) findViewById(R.id.trade_post);
-        workshop = (Button) findViewById(R.id.workshop);
+        boil_water = (Button) findViewById(R.id.boil_water);
+        cook_food = (Button) findViewById(R.id.cook_food);
         log.setTextSize(11);
         storage.setTextSize(15);
         //Saving
-
+        int wood_counter = sharedPref.getInt("wood", 0);
         int leaves_counter = sharedPref.getInt("leaves", 0);
         int stone_counter = sharedPref.getInt("stone", 0);
-        int fireplace_b = sharedPref.getInt("fireplace", 0);
         int workshop_b = sharedPref.getInt("workshop", 0);
-        int trade_post_b = sharedPref.getInt("trade_post", 0);
+        int fireplace_b = sharedPref.getInt("fireplace", 0);
 
-        if (fireplace_b == 1){
-            fireplace.setEnabled(false);
-            fireplace.setVisibility(View.INVISIBLE);
+        if (fireplace_b == 0){
+            boil_water.setEnabled(false);
+            boil_water.setVisibility(View.INVISIBLE);
+            cook_food.setEnabled(false);
+            cook_food.setVisibility(View.INVISIBLE);
         }
-        if (workshop_b == 1){
-            workshop.setEnabled(false);
-            workshop.setVisibility(View.INVISIBLE);
-        }
-        if (trade_post_b == 1){
-            trade_post.setEnabled(false);
-            trade_post.setVisibility(View.INVISIBLE);
-        }
+
+
         UpdateText();
 
-        fireplace.setOnClickListener(new View.OnClickListener() {
+        boil_water.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int wood_counter = sharedPref.getInt("wood", 0);
-                int stone_counter = sharedPref.getInt("stone",0);
-                int fireplace_b = sharedPref.getInt("fireplace",0);
-                if (stone_counter >= 12 && wood_counter >= 7){
-                    log.append("\n You lit a Fireplace!");
-                    stone_counter -= 12;
-                    wood_counter -= 7;
-                    fireplace.setEnabled(false);
-                    fireplace_b = 1;
+                int boiled_water_counter = sharedPref.getInt("boiled_water", 0);
+                if (wood_counter >= 1){
+                    log.append("\n You boiled 1L of water!");
+                    wood_counter -= 1;
+                    boiled_water_counter +=1;
                 }else{
                     log.append("\n You don't have enough resources!");
                 }
@@ -100,12 +129,8 @@ public class Buildings extends ActivityGroup {
                 SharedPreferences.Editor editor = sharedPref.edit();
                 editor.putInt("wood", wood_counter);
                 editor.apply();
-                SharedPreferences.Editor editor2 = sharedPref.edit();
-                editor2.putInt("stone", stone_counter);
-                editor2.apply();
-                SharedPreferences.Editor editor3 = sharedPref.edit();
-                editor3.putInt("fireplace", fireplace_b);
-                editor3.apply();
+                editor.putInt("boiled_water", boiled_water_counter);
+                editor.apply();
                 UpdateText();
 
 
@@ -115,20 +140,18 @@ public class Buildings extends ActivityGroup {
 
             }
 
-            ;
-
         });
 
-        fireplace.setOnLongClickListener(new View.OnLongClickListener() {
+        boil_water.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
                 // TODO Auto-generated method stub
-                fireplace.setText("Stone: 12 \n Wood: 7");
+                boil_water.setText("Wood: 1");
                 new Handler().postDelayed(new Runnable() {
 
                     @Override
                     public void run() {
-                        fireplace.setText("Fireplace");
+                        boil_water.setText("Boil Water");
                     }
                 }, 3000L);
                 return true;
@@ -136,19 +159,17 @@ public class Buildings extends ActivityGroup {
             }
         });
 
-        workshop.setOnClickListener(new View.OnClickListener() {
+        cook_food.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int wood_counter = sharedPref.getInt("wood", 0);
-                int stone_counter = sharedPref.getInt("stone",0);
-                int workshop_b = sharedPref.getInt("workshop",0);
-                if (stone_counter >= 2 && wood_counter >= 3){
-                    log.append("\n You built a workshop!");
-                    stone_counter -= 2;
-                    wood_counter -= 3;
-                    workshop.setEnabled(false);
-                    workshop_b = 1;
-                }else{
+                int food_counter = sharedPref.getInt("food", 0);
+                if (wood_counter >= 2) {
+                    log.append("\n You cooked a piece of food!");
+                    wood_counter -= 2;
+                    food_counter -=1;
+                    cooked_food_counter += 1;
+                } else {
                     log.append("\n You don't have enough resources!");
                 }
 
@@ -157,102 +178,35 @@ public class Buildings extends ActivityGroup {
                 SharedPreferences.Editor editor = sharedPref.edit();
                 editor.putInt("wood", wood_counter);
                 editor.apply();
-                SharedPreferences.Editor editor2 = sharedPref.edit();
-                editor2.putInt("stone", stone_counter);
-                editor2.apply();
-                SharedPreferences.Editor stone3 = sharedPref.edit();
-                stone3.putInt("workshop", workshop_b);
-                stone3.apply();
-                UpdateText();
-
-
-
-
-
-
-            }
-
-            ;
-
-        });
-        workshop.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                // TODO Auto-generated method stub
-                workshop.setText("Stone: 3 \n Wood: 2");
-                new Handler().postDelayed(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        workshop.setText("Workshop");
-                    }
-                }, 3000L);
-                return true;
-
-            }
-        });
-
-        trade_post.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int wood_counter = sharedPref.getInt("wood", 0);
-                int leaves_counter = sharedPref.getInt("leaves", 0);
-                int stone_counter = sharedPref.getInt("stone",0);
-                int trade_post_b = sharedPref.getInt("trade_post",0);
-                if (leaves_counter >= 10 && wood_counter >= 12){
-                    //TODO Change later items required
-                    log.append("\n You built a trading post!");
-                    leaves_counter -= 10;
-                    wood_counter -= 12;
-                    trade_post.setEnabled(false);
-                    trade_post_b = 1;
-                }else{
-                    log.append("\n You don't have enough resources!");
-                }
-
-
-                //Save counter
-                SharedPreferences.Editor editor = sharedPref.edit();
-                editor.putInt("wood", wood_counter);
+                editor.putInt("food", food_counter);
                 editor.apply();
                 SharedPreferences.Editor editor2 = sharedPref.edit();
-                editor2.putInt("stone", stone_counter);
+                editor2.putInt("cooked_food", cooked_food_counter);
                 editor2.apply();
-                SharedPreferences.Editor leaf3 = sharedPref.edit();
-                leaf3.putInt("trade_post", trade_post_b);
-                leaf3.apply();
                 UpdateText();
-
-
-
-
-
-
             }
 
-            ;
-
         });
-        trade_post.setOnLongClickListener(new View.OnLongClickListener() {
+        cook_food.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
                 // TODO Auto-generated method stub
-                trade_post.setText("Leaves: 10 \n Wood: 12");
+                cook_food.setText("Wood: 2");
                 new Handler().postDelayed(new Runnable() {
 
                     @Override
                     public void run() {
-                        trade_post.setText("Trading Post");
+                        cook_food.setText("Cook Food");
                     }
                 }, 3000L);
                 return true;
 
             }
         });
+
 
 
     }
-
     public void UpdateText(){
         SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
         int wood_counter = sharedPref.getInt("wood", 0);
@@ -263,7 +217,6 @@ public class Buildings extends ActivityGroup {
         int food_counter = sharedPref.getInt("food", 0);
         int cooked_food_counter = sharedPref.getInt("cooked_food", 0);
         int boiled_water_counter = sharedPref.getInt("boiled_water", 0);
-
         storage.setText("\t Storage:");
         if(wood_counter >= 1){
             storage.append("\n Wood: " + wood_counter);
@@ -299,3 +252,9 @@ public class Buildings extends ActivityGroup {
     }
 
 }
+
+
+
+
+
+

@@ -27,8 +27,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
+//import com.google.android.gms.ads.AdRequest;
+//import com.google.android.gms.ads.AdView;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -38,8 +38,7 @@ public class Forest extends ActivityGroup {
 
     //Declare Statements
     int wood_counter, leaves_counter, stone_counter, w, l, s,d,f, stone_axeb, stone_pickb, hard_wood_counter, dirty_water_counter, food_counter;
-    long wood_update, wood_remaining;
-    long sys_time, wood_remaining2;
+    long wood_update, wood_remaining, sys_time, wood_remaining2;
     Button wood, stone, leaves, cave_button, dirty_water, hunt;
     TextView log, storage;
     ProgressBar wood_bar, leaves_bar, stone_bar, dirty_water_bar, hunt_bar;
@@ -450,7 +449,7 @@ public class Forest extends ActivityGroup {
 
 
 
-    public void updateText() {
+    public void updateText(){
         SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
         int wood_counter = sharedPref.getInt("wood", 0);
         int leaves_counter = sharedPref.getInt("leaves", 0);
@@ -458,7 +457,36 @@ public class Forest extends ActivityGroup {
         int hard_wood_counter = sharedPref.getInt("hard_wood", 0);
         int dirty_water_counter = sharedPref.getInt("dirty_water", 0);
         int food_counter = sharedPref.getInt("food", 0);
-        storage.setText("\t Storage: \n Wood: " + wood_counter + "\n Leaves: " + leaves_counter + "\n Stones: " + stone_counter + "\n Hard Wood: " + hard_wood_counter + "\n\n Dirty Water: " + dirty_water_counter + "L" + "\n Food: " + food_counter + "Lbs");
+        int cooked_food_counter = sharedPref.getInt("cooked_food", 0);
+        int boiled_water_counter = sharedPref.getInt("boiled_water", 0);
+
+        storage.setText("\t Storage:");
+        if(wood_counter >= 1){
+            storage.append("\n Wood: " + wood_counter);
+        }
+        if(leaves_counter >= 1){
+            storage.append("\n Leaves: " + leaves_counter);
+        }
+        if(stone_counter >= 1){
+            storage.append("\n Stone: " + stone_counter);
+        }
+        if(hard_wood_counter >= 1){
+            storage.append("\n Hard Wood: " + hard_wood_counter);
+        }
+        if(dirty_water_counter >= 1){
+            storage.append("\n Dirty Water: " + dirty_water_counter + "/20L");
+        }
+        if(food_counter >= 1){
+            storage.append("\n Food: " + food_counter + "/12Lb");
+        }
+        if(cooked_food_counter >= 1){
+            storage.append("\n Cooked Food: " + cooked_food_counter + "/12Lb");
+        }
+        if(boiled_water_counter >= 1){
+            storage.append("\n Boiled Water: " + boiled_water_counter + "/20L");
+        }
+
+
     }
     public void updateBars(){
         updateLeaves();
