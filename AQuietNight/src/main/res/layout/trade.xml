@@ -8,49 +8,26 @@
         android:id="@+id/trade_text"
         android:layout_width="50dp"
         android:layout_height="25dp"
-        android:layout_alignLeft="@+id/stone_for_wood"
-        android:layout_alignRight="@+id/stone_for_wood"
-        android:layout_alignEnd="@+id/stone_for_wood"
+        android:layout_alignLeft="@+id/quest_map"
+        android:layout_alignRight="@+id/quest_map"
+        android:layout_alignEnd="@+id/quest_map"
         android:layout_marginTop="20dp"
         android:textStyle="bold"
         android:text="Trade:"
         android:layout_alignParentTop="true" />
 
     <Button
-        android:id="@+id/stone_for_wood"
+        android:id="@+id/quest_map"
         style="@drawable/button_shape"
         android:layout_width="120dp"
-        android:layout_height="50dp"
+        android:layout_height="120dp"
         android:layout_weight="1"
-        android:text="10 Stone"
+        android:layout_marginLeft="10dp"
+        android:text="Quest Map"
         android:layout_below="@+id/trade_text"
-        android:layout_alignLeft="@+id/leaves_for_wood"
-        android:layout_alignStart="@+id/leaves_for_wood"
         android:longClickable="true"/>
 
-    <Button
-        android:id="@+id/leaves_for_wood"
-        style="@drawable/button_shape"
-        android:layout_width="120dp"
-        android:layout_height="50dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_below="@id/stone_for_wood"
-        android:layout_weight="1"
-        android:text="5 Leaves"
-        android:longClickable="true"/>
 
-    <Button
-        android:id="@+id/wood_for_leaves"
-        style="@drawable/button_shape"
-        android:layout_width="120dp"
-        android:layout_height="50dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_below="@id/leaves_for_wood"
-        android:layout_weight="1"
-        android:text="5 Wood"
-        android:longClickable="true"/>
 
 
 

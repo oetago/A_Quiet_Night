@@ -23,8 +23,8 @@ import com.milesstudios.aquietnight.R;
  * Created by Ryan on 9/27/2014.
  */
 public class Food_Water extends ActivityGroup {
-    int wood_counter, leaves_counter, stone_counter, stone_axeb, stone_pickb, hard_wood_counter, workshop_b, boiled_water_counter, cooked_food_counter;
-    Button boil_water, cook_food;
+    int wood_counter, leaves_counter, stone_counter, stone_axeb, stone_pickb, hard_wood_counter, workshop_b, boiled_water_counter, cooked_food_counter, water_sac_b;
+    Button boil_water, cook_food, water_sac;
     TextView log, storage;
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -92,6 +92,7 @@ public class Food_Water extends ActivityGroup {
         storage = (TextView) findViewById(R.id.storage);
         boil_water = (Button) findViewById(R.id.boil_water);
         cook_food = (Button) findViewById(R.id.cook_food);
+        water_sac = (Button) findViewById(R.id.water_sac);
         log.setTextSize(11);
         storage.setTextSize(15);
         //Saving
@@ -100,26 +101,42 @@ public class Food_Water extends ActivityGroup {
         int stone_counter = sharedPref.getInt("stone", 0);
         int workshop_b = sharedPref.getInt("workshop", 0);
         int fireplace_b = sharedPref.getInt("fireplace", 0);
+        int water_sac_b = sharedPref.getInt("water_sac", 0);
+        int stone_sword_b = sharedPref.getInt("stone_sword", 0);
 
-        if (fireplace_b == 0){
-            boil_water.setEnabled(false);
-            boil_water.setVisibility(View.INVISIBLE);
+        if (fireplace_b == 1 && stone_sword_b == 1){
+            cook_food.setEnabled(true);
+            cook_food.setVisibility(View.VISIBLE);
+        }else{
             cook_food.setEnabled(false);
             cook_food.setVisibility(View.INVISIBLE);
         }
+        if(fireplace_b == 0 && water_sac_b == 0){
+            boil_water.setEnabled(false);
+            boil_water.setVisibility(View.INVISIBLE);
+        }
+        if(stone_sword_b == 0){
+            water_sac.setEnabled(false);
+            water_sac.setVisibility(View.INVISIBLE);
+        }
+        if(water_sac_b == 1){
+            water_sac.setEnabled(false);
+            water_sac.setVisibility(View.INVISIBLE);
+        }
 
-
-        UpdateText();
+        updateText();
 
         boil_water.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int wood_counter = sharedPref.getInt("wood", 0);
                 int boiled_water_counter = sharedPref.getInt("boiled_water", 0);
-                if (wood_counter >= 1){
+                int dirty_water_counter = sharedPref.getInt("dirty_water", 0);
+                if (wood_counter >= 1 && dirty_water_counter >= 1){
                     log.append("\n You boiled 1L of water!");
                     wood_counter -= 1;
-                    boiled_water_counter +=1;
+                    boiled_water_counter += 1;
+                    dirty_water_counter -= 1;
                 }else{
                     log.append("\n You don't have enough resources!");
                 }
@@ -128,10 +145,10 @@ public class Food_Water extends ActivityGroup {
                 //Save counter
                 SharedPreferences.Editor editor = sharedPref.edit();
                 editor.putInt("wood", wood_counter);
-                editor.apply();
                 editor.putInt("boiled_water", boiled_water_counter);
+                editor.putInt("dirty_water", dirty_water_counter);
                 editor.apply();
-                UpdateText();
+                updateText();
 
 
 
@@ -146,6 +163,7 @@ public class Food_Water extends ActivityGroup {
             @Override
             public boolean onLongClick(View v) {
                 // TODO Auto-generated method stub
+                int dirty_water_counter = sharedPref.getInt("dirty_water", 0);
                 boil_water.setText("Wood: 1");
                 new Handler().postDelayed(new Runnable() {
 
@@ -164,11 +182,12 @@ public class Food_Water extends ActivityGroup {
             public void onClick(View v) {
                 int wood_counter = sharedPref.getInt("wood", 0);
                 int food_counter = sharedPref.getInt("food", 0);
-                if (wood_counter >= 2) {
-                    log.append("\n You cooked a piece of food!");
-                    wood_counter -= 2;
-                    food_counter -=1;
+                int cooked_food_counter = sharedPref.getInt("cooked_food", 0);
+                if (wood_counter >= 1 && food_counter >= 1) {
+                    log.append("\n You cooked 1Lb of food!");
+                    wood_counter -= 1;
                     cooked_food_counter += 1;
+                    food_counter -= 1;
                 } else {
                     log.append("\n You don't have enough resources!");
                 }
@@ -183,20 +202,62 @@ public class Food_Water extends ActivityGroup {
                 SharedPreferences.Editor editor2 = sharedPref.edit();
                 editor2.putInt("cooked_food", cooked_food_counter);
                 editor2.apply();
-                UpdateText();
+                updateText();
             }
 
         });
         cook_food.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                // TODO Auto-generated method stub
-                cook_food.setText("Wood: 2");
+                int food_counter = sharedPref.getInt("food", 0);
+                cook_food.setText("Wood: 1");
                 new Handler().postDelayed(new Runnable() {
 
                     @Override
                     public void run() {
                         cook_food.setText("Cook Food");
+                    }
+                }, 3000L);
+                return true;
+//TODO Add a cook all
+            }
+        });
+        water_sac.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int water_sac_b = sharedPref.getInt("water_sac", 0);
+                int leaves_counter = sharedPref.getInt("leaves", 0);
+                if (leaves_counter >= 6) {
+                    log.append("\n You crafted one Water Sack");
+                    leaves_counter -= 6;
+                    water_sac_b = 1;
+                    water_sac.setEnabled(false);
+                    water_sac.setVisibility(View.INVISIBLE);
+                } else {
+                    log.append("\n You don't have enough resources!");
+                }
+
+
+                //Save counter
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putInt("water_sac", water_sac_b);
+                editor.apply();
+                editor.putInt("leaves", leaves_counter);
+                editor.apply();
+                updateText();
+            }
+
+        });
+        water_sac.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                // TODO Auto-generated method stub
+                water_sac.setText("Leaves: 6");
+                new Handler().postDelayed(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        water_sac.setText("Water Sack");
                     }
                 }, 3000L);
                 return true;
@@ -207,7 +268,7 @@ public class Food_Water extends ActivityGroup {
 
 
     }
-    public void UpdateText(){
+    public void updateText(){
         SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
         int wood_counter = sharedPref.getInt("wood", 0);
         int leaves_counter = sharedPref.getInt("leaves", 0);
@@ -217,6 +278,8 @@ public class Food_Water extends ActivityGroup {
         int food_counter = sharedPref.getInt("food", 0);
         int cooked_food_counter = sharedPref.getInt("cooked_food", 0);
         int boiled_water_counter = sharedPref.getInt("boiled_water", 0);
+        int apple_counter = sharedPref.getInt("apples", 0);
+
         storage.setText("\t Storage:");
         if(wood_counter >= 1){
             storage.append("\n Wood: " + wood_counter);
@@ -242,13 +305,18 @@ public class Food_Water extends ActivityGroup {
         if(boiled_water_counter >= 1){
             storage.append("\n Boiled Water: " + boiled_water_counter + "/20L");
         }
+        if(apple_counter >=1){
+            storage.append("\n Apples: " + apple_counter);
+        }
 
 
     }
 
     @Override
     public void onBackPressed() {
-
+        Intent openMain = new Intent(Food_Water.this, Cave.class);
+        startActivity(openMain);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
     }
 
 }

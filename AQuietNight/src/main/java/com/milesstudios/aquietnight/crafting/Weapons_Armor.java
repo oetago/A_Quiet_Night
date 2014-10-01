@@ -106,10 +106,11 @@ public class Weapons_Armor extends ActivityGroup {
             stone_sword.setEnabled(false);
             stone_sword.setVisibility(View.INVISIBLE);
         }
-        if (leaf_armor_b == 1){
+        if (leaf_armor_b == 1 || stone_sword_b == 0){
             leaf_armor.setEnabled(false);
             leaf_armor.setVisibility(View.INVISIBLE);
         }
+
 
 
         UpdateText();
@@ -125,6 +126,8 @@ public class Weapons_Armor extends ActivityGroup {
                     wood_counter -= 3;
                     stone_counter -= 4;
                     stone_sword_b = 1;
+                    stone_sword.setEnabled(false);
+                    stone_sword.setVisibility(View.INVISIBLE);
                 }else{
                     log.append("\n You don't have enough resources!");
                 }
@@ -170,6 +173,8 @@ public class Weapons_Armor extends ActivityGroup {
                     log.append("\n You crafted Leaf Armor!");
                     leaf_counter -= 8;
                     leaf_armor_b = 1;
+                    leaf_armor.setEnabled(false);
+                    leaf_armor.setVisibility(View.INVISIBLE);
                 } else {
                     log.append("\n You don't have enough resources!");
                 }
@@ -216,6 +221,7 @@ public class Weapons_Armor extends ActivityGroup {
         int food_counter = sharedPref.getInt("food", 0);
         int cooked_food_counter = sharedPref.getInt("cooked_food", 0);
         int boiled_water_counter = sharedPref.getInt("boiled_water", 0);
+        int apple_counter = sharedPref.getInt("apples", 0);
 
         storage.setText("\t Storage:");
         if(wood_counter >= 1){
@@ -241,6 +247,9 @@ public class Weapons_Armor extends ActivityGroup {
         }
         if(boiled_water_counter >= 1){
             storage.append("\n Boiled Water: " + boiled_water_counter + "/20L");
+        }
+        if(apple_counter >=1){
+            storage.append("\n Apples: " + apple_counter);
         }
 
 

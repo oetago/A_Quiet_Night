@@ -241,6 +241,7 @@ public class Tools extends ActivityGroup {
         int food_counter = sharedPref.getInt("food", 0);
         int cooked_food_counter = sharedPref.getInt("cooked_food", 0);
         int boiled_water_counter = sharedPref.getInt("boiled_water", 0);
+        int apple_counter = sharedPref.getInt("apples", 0);
 
         storage.setText("\t Storage:");
         if(wood_counter >= 1){
@@ -267,12 +268,18 @@ public class Tools extends ActivityGroup {
         if(boiled_water_counter >= 1){
             storage.append("\n Boiled Water: " + boiled_water_counter + "/20L");
         }
+        if(apple_counter >=1){
+            storage.append("\n Apples: " + apple_counter);
+        }
 
 
     }
 
     @Override
     public void onBackPressed() {
+        Intent openMain = new Intent(Tools.this, Cave.class);
+        startActivity(openMain);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
 
     }
 

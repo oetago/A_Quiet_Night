@@ -62,13 +62,19 @@ public class Quest extends ActivityGroup {
         int stone_axeb = sharedPref.getInt("stone_axe", 0);
         int stone_pickb = sharedPref.getInt("stone_pick", 0);
         int leaf_armorb = sharedPref.getInt("leaf_armor", 0);
+        int stone_sword_b = sharedPref.getInt("stone_sword", 0);
+        int cooked_food_counter = sharedPref.getInt("cooked_food", 0);
+        int boiled_water_counter = sharedPref.getInt("boiled_water", 0);
         UpdateText();
 
         //Calculations
         stone_axeb *= 5;
         stone_pickb *= 3;
         leaf_armorb *= 10;
-        percent_forest_temple = (stone_axeb + stone_pickb + leaf_armorb) / 20.0;
+        stone_sword_b *= 20;
+        cooked_food_counter *= 2;
+        boiled_water_counter *= 2;
+        percent_forest_temple = (stone_axeb + stone_pickb + leaf_armorb + stone_sword_b + cooked_food_counter + boiled_water_counter) / 108.0;
         percent_forest_temple = Math.round(percent_forest_temple * 100);
 
 
@@ -80,9 +86,9 @@ public class Quest extends ActivityGroup {
                 int forest_temple_chance = rand.nextInt(100);
 
                 if(forest_temple_chance < percent_forest_temple){
-                    log.setText("You won!");
+                    log.append("You won!");
                 }else{
-                    log.setText("You died!");
+                    log.append("You died!");
                 }
 
             }
@@ -91,7 +97,7 @@ public class Quest extends ActivityGroup {
 
         });
 
-        percent_forest_temple_view.setText(percent_forest_temple + "%");
+        percent_forest_temple_view.setText(percent_forest_temple + "% Chance to win");
 
 
     }
@@ -102,7 +108,37 @@ public class Quest extends ActivityGroup {
         int leaves_counter = sharedPref.getInt("leaves", 0);
         int stone_counter = sharedPref.getInt("stone", 0);
         int hard_wood_counter = sharedPref.getInt("hard_wood", 0);
-        storage.setText("\t Storage: \n Wood: " + wood_counter + "\n Leaves: " + leaves_counter + "\n Stones: " + stone_counter + "\n Hard Wood:" + hard_wood_counter);
+        int dirty_water_counter = sharedPref.getInt("dirty_water", 0);
+        int food_counter = sharedPref.getInt("food", 0);
+        int cooked_food_counter = sharedPref.getInt("cooked_food", 0);
+        int boiled_water_counter = sharedPref.getInt("boiled_water", 0);
+
+        storage.setText("\t Storage:");
+        if(wood_counter >= 1){
+            storage.append("\n Wood: " + wood_counter);
+        }
+        if(leaves_counter >= 1){
+            storage.append("\n Leaves: " + leaves_counter);
+        }
+        if(stone_counter >= 1){
+            storage.append("\n Stone: " + stone_counter);
+        }
+        if(hard_wood_counter >= 1){
+            storage.append("\n Hard Wood: " + hard_wood_counter);
+        }
+        if(dirty_water_counter >= 1){
+            storage.append("\n Dirty Water: " + dirty_water_counter + "/20L");
+        }
+        if(food_counter >= 1){
+            storage.append("\n Food: " + food_counter + "/12Lb");
+        }
+        if(cooked_food_counter >= 1){
+            storage.append("\n Cooked Food: " + cooked_food_counter + "/12Lb");
+        }
+        if(boiled_water_counter >= 1){
+            storage.append("\n Boiled Water: " + boiled_water_counter + "/20L");
+        }
+
 
     }
     @Override

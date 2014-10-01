@@ -32,6 +32,7 @@ import android.widget.Toast;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Random;
 
 
 public class Forest extends ActivityGroup {
@@ -99,15 +100,20 @@ public class Forest extends ActivityGroup {
         log.setTextSize(12);
         storage.setTextSize(15);
 
+        final Random rng = new Random();
 
         //Gets crafting and buildings
         final int stone_axeb = sharedPref.getInt("stone_axe", 0);
-        final int stone_pickb = sharedPref.getInt("wood", 0);
+        final int stone_pickb = sharedPref.getInt("stone_pick", 0);
         final int wood_counter = sharedPref.getInt("wood", 0);
         final int leaves_counter = sharedPref.getInt("leaves", 0);
         final int stone_counter = sharedPref.getInt("stone", 0);
         final int hard_wood_counter = sharedPref.getInt("hard_wood", 0);
+        final int stone_sword_b = sharedPref.getInt("stone_sword", 0);
+        final int water_sac_b = sharedPref.getInt("water_sac", 0);
+        final int apple_counter = sharedPref.getInt("apples", 0);
         updateText();
+
 
         //"Tab Button"
         cave_button.setOnClickListener(new View.OnClickListener() {
@@ -123,11 +129,22 @@ public class Forest extends ActivityGroup {
 
         });
 
+        if(water_sac_b == 0){
+            dirty_water.setEnabled(false);
+            dirty_water.setVisibility(View.INVISIBLE);
+        }
+        if(stone_sword_b == 0){
+            hunt.setEnabled(false);
+            hunt.setVisibility(View.INVISIBLE);
+            leaves.setEnabled(false);
+            leaves.setVisibility(View.INVISIBLE);
+        }
+
         wood.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-
+        int apple = 0;
                 if (stone_axeb == 0) {
                     int wood_counter = sharedPref.getInt("wood", 0);
                     SharedPreferences.Editor editor = sharedPref.edit();
@@ -141,7 +158,17 @@ public class Forest extends ActivityGroup {
                     editor.putLong("wood_systemtime", System.currentTimeMillis());
                     editor.apply();
                     updateText();
+                    apple = rng.nextInt(101);
+                    if(apple <= 20){
+                        int apple_counter = sharedPref.getInt("apples",0);
+                        apple_counter += 1;
+                        editor = sharedPref.edit();
+                        editor.putInt("apples", apple_counter);
+                        editor.apply();
+                        log.append("\nYou found an Apple!");
+                        updateText();
 
+                    }
 
                     wood_bar.setVisibility(View.VISIBLE);
                     wood.setEnabled(false);
@@ -173,6 +200,18 @@ public class Forest extends ActivityGroup {
                     wood_counter = sharedPref.getInt("wood", 0);
                     log.append("\n You gathered 2 wood from the ground");
                     wood_counter += 2;
+
+                    apple = rng.nextInt(101);
+                    if(apple <= 35){
+                        int apple_counter = sharedPref.getInt("apples",0);
+                        apple_counter += 1;
+                        editor = sharedPref.edit();
+                        editor.putInt("apples", apple_counter);
+                        editor.apply();
+                        log.append("\nYou found an Apple!");
+                        updateText();
+
+                    }
 
                     //Save counter
                     editor = sharedPref.edit();
@@ -260,7 +299,7 @@ public class Forest extends ActivityGroup {
         stone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ;
+
                 if (stone_pickb == 0) {
                     int stone_counter = sharedPref.getInt("stone", 0);
                     log.append("\n You gathered 1 stone from the ground");
@@ -301,7 +340,7 @@ public class Forest extends ActivityGroup {
                     stone_timer.start();
 
 
-                } else {
+                }else{
                     int stone_counter = sharedPref.getInt("stone", 0);
                     log.append("\n You gathered 2 stone from the ground");
                     stone_counter += 2;
@@ -459,6 +498,7 @@ public class Forest extends ActivityGroup {
         int food_counter = sharedPref.getInt("food", 0);
         int cooked_food_counter = sharedPref.getInt("cooked_food", 0);
         int boiled_water_counter = sharedPref.getInt("boiled_water", 0);
+        int apple_counter = sharedPref.getInt("apples", 0);
 
         storage.setText("\t Storage:");
         if(wood_counter >= 1){
@@ -484,6 +524,9 @@ public class Forest extends ActivityGroup {
         }
         if(boiled_water_counter >= 1){
             storage.append("\n Boiled Water: " + boiled_water_counter + "/20L");
+        }
+        if(apple_counter >=1){
+            storage.append("\n Apples: " + apple_counter);
         }
 
 
@@ -775,7 +818,9 @@ public class Forest extends ActivityGroup {
     }
     @Override
     public void onBackPressed() {
-
+        Intent openMain = new Intent(Forest.this, Cave.class);
+        startActivity(openMain);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
     }
 
 

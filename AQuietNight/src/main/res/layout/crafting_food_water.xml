@@ -27,6 +27,18 @@
         android:text="Cook Food"
         android:longClickable="true"/>
 
+    <Button
+        android:id="@+id/water_sac"
+        style="@drawable/button_shape"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/cook_food"
+        android:layout_weight="1"
+        android:text="Water Sac"
+        android:longClickable="true"/>
+
     <TextView
         android:id="@+id/log"
         android:layout_width="150dp"

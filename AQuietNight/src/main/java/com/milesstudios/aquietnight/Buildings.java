@@ -64,16 +64,28 @@ public class Buildings extends ActivityGroup {
         int fireplace_b = sharedPref.getInt("fireplace", 0);
         int workshop_b = sharedPref.getInt("workshop", 0);
         int trade_post_b = sharedPref.getInt("trade_post", 0);
+        int stone_sword_b = sharedPref.getInt("stone_sword", 0);
 
         if (fireplace_b == 1){
             fireplace.setEnabled(false);
             fireplace.setVisibility(View.INVISIBLE);
         }
-        if (workshop_b == 1){
+        //Fix later
+        if (workshop_b >= 1){
             workshop.setEnabled(false);
             workshop.setVisibility(View.INVISIBLE);
         }
         if (trade_post_b == 1){
+            trade_post.setEnabled(false);
+            trade_post.setVisibility(View.INVISIBLE);
+        }
+        if(workshop_b == 0){
+            trade_post.setEnabled(false);
+            trade_post.setVisibility(View.INVISIBLE);
+            fireplace.setEnabled(false);
+            fireplace.setVisibility(View.INVISIBLE);
+        }
+        if(stone_sword_b == 0){
             trade_post.setEnabled(false);
             trade_post.setVisibility(View.INVISIBLE);
         }
@@ -91,6 +103,8 @@ public class Buildings extends ActivityGroup {
                     wood_counter -= 7;
                     fireplace.setEnabled(false);
                     fireplace_b = 1;
+                    fireplace.setEnabled(false);
+                    fireplace.setVisibility(View.INVISIBLE);
                 }else{
                     log.append("\n You don't have enough resources!");
                 }
@@ -148,6 +162,9 @@ public class Buildings extends ActivityGroup {
                     wood_counter -= 3;
                     workshop.setEnabled(false);
                     workshop_b = 1;
+                    SharedPreferences.Editor stone3 = sharedPref.edit();
+                    stone3.putInt("workshop", workshop_b);
+                    stone3.apply();
                 }else{
                     log.append("\n You don't have enough resources!");
                 }
@@ -160,9 +177,7 @@ public class Buildings extends ActivityGroup {
                 SharedPreferences.Editor editor2 = sharedPref.edit();
                 editor2.putInt("stone", stone_counter);
                 editor2.apply();
-                SharedPreferences.Editor stone3 = sharedPref.edit();
-                stone3.putInt("workshop", workshop_b);
-                stone3.apply();
+
                 UpdateText();
 
 
@@ -206,6 +221,8 @@ public class Buildings extends ActivityGroup {
                     wood_counter -= 12;
                     trade_post.setEnabled(false);
                     trade_post_b = 1;
+                    trade_post.setEnabled(false);
+                    trade_post.setVisibility(View.INVISIBLE);
                 }else{
                     log.append("\n You don't have enough resources!");
                 }
@@ -295,6 +312,9 @@ public class Buildings extends ActivityGroup {
 
     @Override
     public void onBackPressed() {
+        Intent openMain = new Intent(Buildings.this, Cave.class);
+        startActivity(openMain);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
 
     }
 

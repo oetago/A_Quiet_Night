@@ -113,7 +113,7 @@ public class Crafting extends ActivityGroup {
         int workshop_b = sharedPref.getInt("workshop", 0);
 
 
-        UpdateText();
+        updateText();
 
 
 
@@ -138,7 +138,7 @@ public class Crafting extends ActivityGroup {
                 SharedPreferences.Editor hard_wood3 = sharedPref.edit();
                 hard_wood3.putInt("hard_wood", hard_wood_counter);
                 hard_wood3.apply();
-                UpdateText();
+                updateText();
 
 
 
@@ -169,7 +169,7 @@ public class Crafting extends ActivityGroup {
 
 
     }
-    public void UpdateText(){
+    public void updateText(){
         SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
         int wood_counter = sharedPref.getInt("wood", 0);
         int leaves_counter = sharedPref.getInt("leaves", 0);
@@ -179,6 +179,7 @@ public class Crafting extends ActivityGroup {
         int food_counter = sharedPref.getInt("food", 0);
         int cooked_food_counter = sharedPref.getInt("cooked_food", 0);
         int boiled_water_counter = sharedPref.getInt("boiled_water", 0);
+        int apple_counter = sharedPref.getInt("apples", 0);
 
         storage.setText("\t Storage:");
         if(wood_counter >= 1){
@@ -205,12 +206,18 @@ public class Crafting extends ActivityGroup {
         if(boiled_water_counter >= 1){
             storage.append("\n Boiled Water: " + boiled_water_counter + "/20L");
         }
+        if(apple_counter >=1){
+            storage.append("\n Apples: " + apple_counter);
+        }
 
 
     }
 
     @Override
     public void onBackPressed() {
+        Intent openMain = new Intent(Crafting.this, Cave.class);
+        startActivity(openMain);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
 
     }
 
