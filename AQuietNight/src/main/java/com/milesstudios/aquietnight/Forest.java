@@ -23,6 +23,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,6 +45,7 @@ public class Forest extends ActivityGroup {
     TextView log, storage;
     ProgressBar wood_bar, leaves_bar, stone_bar, dirty_water_bar, hunt_bar;
     CountDownTimer wood_timer, leaves_timer, stone_timer, dirty_water_timer, hunt_timer;
+    ImageView log_increase;
 
 
     //For setting up back button
@@ -81,6 +83,9 @@ public class Forest extends ActivityGroup {
         log = (TextView) findViewById(R.id.log);
         storage = (TextView) findViewById(R.id.storage);
 
+        log_increase = (ImageView) findViewById(R.id.increase_wood);
+        log_increase.setVisibility(View.INVISIBLE);
+
         //Declare Buttons
         wood = (Button) findViewById(R.id.wood);
         cave_button = (Button) findViewById(R.id.cave_button);
@@ -114,6 +119,8 @@ public class Forest extends ActivityGroup {
         final int apple_counter = sharedPref.getInt("apples", 0);
         updateText();
 
+       final Animation log_increase_anim = AnimationUtils.loadAnimation(this, R.anim.slide_up);
+
 
         //"Tab Button"
         cave_button.setOnClickListener(new View.OnClickListener() {
@@ -145,6 +152,10 @@ public class Forest extends ActivityGroup {
             public void onClick(View v) {
 
         int apple = 0;
+                log_increase.setVisibility(View.VISIBLE);
+                log_increase.clearAnimation();
+                log_increase.startAnimation(log_increase_anim);
+
                 if (stone_axeb == 0) {
                     int wood_counter = sharedPref.getInt("wood", 0);
                     SharedPreferences.Editor editor = sharedPref.edit();

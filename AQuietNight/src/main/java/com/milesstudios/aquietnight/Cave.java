@@ -24,8 +24,8 @@ import android.widget.TextView;
 import android.app.ActionBar;
 import android.view.MenuItem;
 
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
+//import com.google.android.gms.ads.AdRequest;
+//import com.google.android.gms.ads.AdView;
 
 import java.util.concurrent.locks.Condition;
 
@@ -222,7 +222,7 @@ public class Cave extends ActivityGroup {
         SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.clear();
-        editor.commit();
+        editor.apply();
         UpdateText();
         Intent openMain = new Intent(Cave.this, Cave.class);
         startActivity(openMain);

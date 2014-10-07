@@ -69,6 +69,7 @@
         android:layout_toRightOf="@id/trading"
         android:layout_below="@id/buildings"
         android:text="Crafting"
+        android:background="@drawable/button_shape"
         />
 
 
