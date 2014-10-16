@@ -3,37 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-    <ImageView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:src="@drawable/forest_tab"
-        android:adjustViewBounds="true"
 
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/imageView" />
-
-    <ImageView
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:src="@drawable/wood_increase"
-        android:adjustViewBounds="true"
-        android:id="@+id/increase_wood"
-        android:layout_toEndOf="@+id/gather_text"
-        android:layout_above="@+id/stone"
-        android:layout_toLeftOf="@+id/dirty_water"
-        android:layout_toStartOf="@+id/dirty_water" />
-    <Button
-        android:background="@android:color/transparent"
-        android:textColor="@drawable/button_tab"
-        android:id="@+id/cave_button"
-        android:layout_width="120dp"
-        android:layout_height="200dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignBottom="@+id/imageView" />
     <TextView
         android:id="@+id/gather_text"
         android:layout_width="50dp"
@@ -49,7 +19,7 @@
     <Button
         android:id="@+id/wood"
         style="@drawable/button_shape"
-        android:layout_width="120dp"
+        android:layout_width="140dp"
         android:layout_height="50dp"
         android:layout_weight="1"
         android:text="Wood"
@@ -57,12 +27,13 @@
         android:layout_alignLeft="@+id/stone"
         android:layout_alignStart="@+id/stone"
         android:background="@drawable/button_shape"
-        />
+        android:layout_alignRight="@+id/stone"
+        android:layout_alignEnd="@+id/stone" />
 
     <Button
         android:id="@+id/stone"
         style="@drawable/button_shape"
-        android:layout_width="120dp"
+        android:layout_width="125dp"
         android:layout_height="50dp"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="20dp"
@@ -74,7 +45,7 @@
     <Button
         android:id="@+id/leaves"
         style="@drawable/button_shape"
-        android:layout_width="120dp"
+        android:layout_width="125dp"
         android:layout_height="50dp"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="20dp"
@@ -85,25 +56,25 @@
     <Button
         android:id="@+id/dirty_water"
         style="@drawable/button_shape"
-        android:layout_width="120dp"
+        android:layout_width="125dp"
         android:layout_height="50dp"
         android:layout_weight="1"
         android:text="Dirty Water"
-        android:layout_below="@+id/gather_text"
-        android:layout_alignLeft="@+id/hunt"
-        android:layout_alignStart="@+id/hunt"
-        android:background="@drawable/button_shape" />
+        android:background="@drawable/button_shape"
+        android:layout_toEndOf="@+id/log"
+        android:layout_alignTop="@+id/wood"
+        android:layout_toRightOf="@+id/log" />
     <Button
         android:id="@+id/hunt"
         style="@drawable/button_shape"
-        android:layout_width="120dp"
+        android:layout_width="125dp"
         android:layout_height="50dp"
         android:layout_weight="1"
         android:text="Hunt"
-        android:layout_above="@+id/leaves"
-        android:layout_alignLeft="@+id/storage"
-        android:layout_alignStart="@+id/storage"
-        android:background="@drawable/button_shape"  />
+        android:background="@drawable/button_shape"
+        android:layout_alignBottom="@+id/hunt_bar"
+        android:layout_alignLeft="@+id/dirty_water"
+        android:layout_alignStart="@+id/dirty_water" />
 
 
 
@@ -121,7 +92,9 @@
         android:textStyle="bold"
         android:layout_alignParentBottom="true"
         android:layout_alignLeft="@+id/stone"
-        android:layout_alignStart="@+id/stone" />
+        android:layout_alignStart="@+id/stone"
+        android:maxLines = "20"
+        android:scrollbars = "vertical"/>
 
     <TextView
         android:id="@+id/storage"
@@ -130,7 +103,9 @@
         android:textStyle="bold"
         android:layout_toEndOf="@+id/log"
         android:layout_alignBottom="@+id/log"
-        android:layout_toRightOf="@+id/log" />
+        android:layout_toRightOf="@+id/log"
+        android:maxLines = "400"
+        android:scrollbars = "vertical" />
 
     <ProgressBar
         style="?android:attr/progressBarStyleHorizontal"
@@ -190,5 +165,33 @@
         android:layout_alignStart="@+id/hunt"
         android:layout_alignRight="@+id/hunt"
         android:layout_alignEnd="@+id/hunt" />
+    <TextView
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:text="A Damp Cave"
+        android:id="@+id/cave_tab"
+        android:clickable="true"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignLeft="@+id/wood"
+        android:layout_alignStart="@+id/wood"
+        android:layout_alignRight="@+id/gather_text"
+        android:layout_alignEnd="@+id/gather_text" />
+
+    <TextView
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:text="A Warm Forest"
+        android:id="@+id/forest_tab"
+
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_alignTop="@+id/cave_tab"
+        android:layout_alignLeft="@+id/dirty_water"
+        android:layout_alignStart="@+id/dirty_water"
+        android:layout_alignRight="@+id/dirty_water"
+        android:layout_alignEnd="@+id/dirty_water" />
 
 </RelativeLayout>

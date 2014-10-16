@@ -56,13 +56,13 @@ public class Crafting extends ActivityGroup {
         final SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
         // Adapter
         SpinnerAdapter adapter =
-                ArrayAdapter.createFromResource(this, R.array.actions,
+                ArrayAdapter.createFromResource(this, R.array.crafting,
                         android.R.layout.simple_spinner_dropdown_item);
 
 // Callback
         ActionBar.OnNavigationListener callback = new ActionBar.OnNavigationListener() {
 
-            String[] items = getResources().getStringArray(R.array.actions); // List items from res
+            String[] items = getResources().getStringArray(R.array.crafting); // List items from res
 
             @Override
             public boolean onNavigationItemSelected(int position, long id) {
@@ -111,9 +111,23 @@ public class Crafting extends ActivityGroup {
         int leaf_armorb = sharedPref.getInt("leaf_armor", 0);
         int hard_wood_counter= sharedPref.getInt("hard_wood", 0);
         int workshop_b = sharedPref.getInt("workshop", 0);
-
-
         updateText();
+
+        //Going back to crafting tab
+        int weapons_armor = sharedPref.getInt("weapons_armor", 0);
+        int food_water = sharedPref.getInt("food_water", 0);
+        int tools = sharedPref.getInt("tools", 0);
+        if(weapons_armor == 1){
+            Intent openWeapons_Armor = new Intent(Crafting.this, Weapons_Armor.class);
+            startActivity(openWeapons_Armor);
+        }else if(food_water == 1){
+            Intent openFood_Water = new Intent(Crafting.this, Food_Water.class);
+            startActivity(openFood_Water);
+        }else if(tools == 1){
+            Intent openTools = new Intent(Crafting.this, Tools.class);
+            startActivity(openTools);
+        }
+
 
 
 

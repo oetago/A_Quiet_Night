@@ -1,7 +1,9 @@
 package com.milesstudios.aquietnight;
 
 import android.app.ActivityGroup;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -153,33 +155,48 @@ public class Buildings extends ActivityGroup {
         workshop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int wood_counter = sharedPref.getInt("wood", 0);
-                int stone_counter = sharedPref.getInt("stone",0);
-                int workshop_b = sharedPref.getInt("workshop",0);
-                if (stone_counter >= 2 && wood_counter >= 3){
-                    log.append("\n You built a workshop!");
-                    stone_counter -= 2;
-                    wood_counter -= 3;
-                    workshop.setEnabled(false);
-                    workshop_b = 1;
-                    SharedPreferences.Editor stone3 = sharedPref.edit();
-                    stone3.putInt("workshop", workshop_b);
-                    stone3.apply();
-                }else{
-                    log.append("\n You don't have enough resources!");
-                }
+
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(Buildings.this); //Read Update
+                alertDialog.setTitle("Workshop");
+                alertDialog.setMessage("2 Wood and 3 Stone");
 
 
-                //Save counter
-                SharedPreferences.Editor editor = sharedPref.edit();
-                editor.putInt("wood", wood_counter);
-                editor.apply();
-                SharedPreferences.Editor editor2 = sharedPref.edit();
-                editor2.putInt("stone", stone_counter);
-                editor2.apply();
+                alertDialog.setNegativeButton("Exit", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
 
-                UpdateText();
+                });
+                alertDialog.setPositiveButton("Buy", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        int wood_counter = sharedPref.getInt("wood", 0);
+                        int stone_counter = sharedPref.getInt("stone",0);
+                        int workshop_b = sharedPref.getInt("workshop",0);
+                        if (stone_counter >= 2 && wood_counter >= 3){
+                            log.append("\n You built a workshop!");
+                            stone_counter -= 2;
+                            wood_counter -= 3;
+                            workshop.setEnabled(false);
+                            workshop_b = 1;
+                            SharedPreferences.Editor stone3 = sharedPref.edit();
+                            stone3.putInt("workshop", workshop_b);
+                            stone3.apply();
+                        }else{
+                            log.append("\n You don't have enough resources!");
+                        }
+                        //Save counter
+                        SharedPreferences.Editor editor = sharedPref.edit();
+                        editor.putInt("wood", wood_counter);
+                        editor.apply();
+                        SharedPreferences.Editor editor2 = sharedPref.edit();
+                        editor2.putInt("stone", stone_counter);
+                        editor2.apply();
+                        UpdateText();
+                        dialog.dismiss();
+                    }
 
+                });AlertDialog alert = alertDialog.create();
+                alert.show();
 
 
 
@@ -187,7 +204,6 @@ public class Buildings extends ActivityGroup {
 
             }
 
-            ;
 
         });
         workshop.setOnLongClickListener(new View.OnLongClickListener() {

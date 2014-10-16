@@ -4,5 +4,5 @@
     <string name="app_name">A Quiet Night</string>
     <string name="settings">Clear Data</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
-
+    <string name="cave_tab"> <u>Cave</u> </string>
 </resources>

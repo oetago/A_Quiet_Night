@@ -51,13 +51,13 @@ public class Weapons_Armor extends ActivityGroup {
         final SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
         // Adapter
         SpinnerAdapter adapter =
-                ArrayAdapter.createFromResource(this, R.array.actions,
+                ArrayAdapter.createFromResource(this, R.array.weapons_armor,
                         android.R.layout.simple_spinner_dropdown_item);
 
 // Callback
         ActionBar.OnNavigationListener callback = new ActionBar.OnNavigationListener() {
 
-            String[] items = getResources().getStringArray(R.array.actions); // List items from res
+            String[] items = getResources().getStringArray(R.array.weapons_armor); // List items from res
 
             @Override
             public boolean onNavigationItemSelected(int position, long id) {
@@ -209,7 +209,14 @@ public class Weapons_Armor extends ActivityGroup {
         });
 
 
-
+        SharedPreferences.Editor editor = sharedPref.edit();
+        int food_water = 0;
+        int tools = 0;
+        int weapons_armor = 1;
+        editor.putInt("food_water", food_water);
+        editor.putInt("tools", tools);
+        editor.putInt("weapons_armor", weapons_armor);
+        editor.apply();
     }
     public void UpdateText(){
         SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);

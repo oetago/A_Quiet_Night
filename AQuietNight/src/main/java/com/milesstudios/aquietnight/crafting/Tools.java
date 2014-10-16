@@ -51,13 +51,13 @@ public class Tools extends ActivityGroup {
         final SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
         // Adapter
         SpinnerAdapter adapter =
-                ArrayAdapter.createFromResource(this, R.array.actions,
+                ArrayAdapter.createFromResource(this, R.array.tools,
                         android.R.layout.simple_spinner_dropdown_item);
 
 // Callback
         ActionBar.OnNavigationListener callback = new ActionBar.OnNavigationListener() {
 
-            String[] items = getResources().getStringArray(R.array.actions); // List items from res
+            String[] items = getResources().getStringArray(R.array.tools); // List items from res
 
             @Override
             public boolean onNavigationItemSelected(int position, long id) {
@@ -103,12 +103,14 @@ public class Tools extends ActivityGroup {
         int workshop_b = sharedPref.getInt("workshop", 0);
 
         if (stone_axeb == 1){
-            stone_axe.setEnabled(false);
             stone_axe.setVisibility(View.INVISIBLE);
+            stone_axe.setEnabled(false);
+
         }
         if (stone_pickb == 1){
-            stone_pick.setEnabled(false);
             stone_pick.setVisibility(View.INVISIBLE);
+            stone_pick.setEnabled(false);
+
         }
 
 
@@ -229,7 +231,14 @@ public class Tools extends ActivityGroup {
         });
 
 
-
+        SharedPreferences.Editor editor = sharedPref.edit();
+        int food_water = 0;
+        int tools = 1;
+        int weapons_armor = 0;
+        editor.putInt("food_water", food_water);
+        editor.putInt("tools", tools);
+        editor.putInt("weapons_armor", weapons_armor);
+        editor.apply();
     }
     public void UpdateText(){
         SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);

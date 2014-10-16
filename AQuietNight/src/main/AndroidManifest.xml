@@ -5,7 +5,7 @@
         android:allowBackup="false"
         android:icon="@drawable/ic_aqn"
         android:label="A Quiet Night"
-        android:theme="@style/Theme.AppCompat.Light"
+        android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
         android:screenOrientation="portrait">
 
         <meta-data android:name="com.google.android.gms.version"
@@ -21,7 +21,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Cave" android:label="Cave">
+        <activity android:name=".Cave" android:label="A Damp Cave">
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
@@ -46,7 +46,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".Quest" android:label="Quest">
+        <activity android:name=".quest.Quest_Main" android:label="Quests">
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
@@ -62,6 +62,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".crafting.Weapons_Armor" android:label="Weapons and Armor">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".quest.Bosses" android:label="Bosses">
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>

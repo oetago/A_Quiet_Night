@@ -1,103 +1,130 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-    <!--xmlns:ads="http://schemas.android.com/apk/res-auto" -->
-<ImageView
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:src="@drawable/cave_tab"
-    android:adjustViewBounds="true"
 
-    android:layout_alignParentTop="true"
-    android:layout_alignParentLeft="true"
-    android:layout_alignParentStart="true"
-    android:id="@+id/top_tab" />
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <!--xmlns:ads="http://schemas.android.com/apk/res-auto" -->
 
     <Button
-    android:background="@android:color/transparent"
-    android:textColor="@drawable/button_tab"
-    android:id="@+id/forest_button"
-    android:layout_width="120dp"
-    android:layout_height="200dp"
-        android:layout_centerHorizontal="true"
-        android:layout_alignBottom="@+id/top_tab" />
-
-    <Button
-    android:id="@+id/quests"
-    style="@drawable/button_shape"
-    android:layout_width="150dp"
-    android:layout_height="100dp"
-    android:layout_marginLeft="20dp"
-    android:layout_marginTop="60dp"
-    android:layout_weight="1"
-    android:text="Quests" />
-
-    <Button
-        android:id="@+id/buildings"
-        style="@drawable/button_shape"
-        android:layout_width="150dp"
-        android:layout_height="100dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="60dp"
-        android:layout_weight="1"
-        android:layout_toRightOf="@id/quests"
-        android:text="Buildings" />
-
-    <Button
-        android:id="@+id/trading"
-
-        android:layout_width="150dp"
-        android:layout_height="100dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="25dp"
-        android:layout_weight="1"
-        android:layout_below="@id/quests"
-        android:text="Trading" />
-
-
-    <Button
-        android:id="@+id/crafting"
-        android:layout_width="150dp"
-        android:layout_height="100dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="25dp"
-        android:layout_weight="1"
-        android:layout_toRightOf="@id/trading"
-        android:layout_below="@id/buildings"
-        android:text="Crafting"
+            android:id="@+id/quests"
+            style="@drawable/button_shape"
+            android:layout_width="150dp"
+            android:layout_height="100dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="60dp"
+            android:layout_weight="1"
         android:background="@drawable/button_shape"
-        />
+            android:text="Quests" />
+
+            <Button
+                android:id="@+id/buildings"
+                style="@drawable/button_shape"
+                android:layout_width="150dp"
+                android:layout_height="100dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="60dp"
+                android:layout_weight="1"
+                android:background="@drawable/button_shape"
+                android:layout_toRightOf="@id/quests"
+                android:text="Buildings" />
+
+            <Button
+                android:id="@+id/trading"
+
+                android:layout_width="150dp"
+                android:layout_height="100dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="25dp"
+                android:layout_weight="1"
+                android:background="@drawable/button_shape"
+                android:layout_below="@id/quests"
+                android:text="Trading" />
+
+
+            <Button
+                android:id="@+id/crafting"
+                android:layout_width="150dp"
+                android:layout_height="100dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="25dp"
+                android:layout_weight="1"
+                android:layout_toRightOf="@id/trading"
+                android:layout_below="@id/buildings"
+                android:text="Crafting"
+                android:background="@drawable/button_shape"
+                />
 
 
 
 
-    <TextView
-        android:id="@+id/log"
-        android:layout_width="150dp"
-        android:layout_height="100dp"
-        android:layout_below="@id/trading"
-        android:textStyle="bold"
-        android:layout_marginLeft="25dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:layout_alignParentBottom="true"/>
+            <TextView
+                android:id="@+id/log"
+                android:layout_width="150dp"
+                android:layout_height="100dp"
+                android:textStyle="bold"
+                android:layout_marginLeft="25dp"
+                android:editable="true"
+                android:layout_marginBottom="10dp"
+                android:layout_alignParentBottom="true"/>
 
-    <TextView
-        android:id="@+id/storage"
-        android:layout_width="250dp"
-        android:layout_height="500dp"
-        android:textStyle="bold"
-        android:layout_toRightOf="@id/log"
-        android:layout_marginRight="25dp"
-        android:layout_marginBottom="10dp"
-        android:layout_below="@+id/crafting"
-        android:editable="true"
-        android:layout_alignParentBottom="true"/>
+            <TextView
+                android:id="@+id/storage"
+                android:layout_width="250dp"
+                android:layout_height="150dp"
+                android:textStyle="bold"
+                android:layout_toRightOf="@id/log"
+                android:layout_marginRight="25dp"
+                android:layout_marginBottom="10dp"
+                android:editable="true"
+                android:background="@drawable/button_shape"
+                android:layout_alignParentBottom="true"/>
 
+            <Button
+                android:layout_width="30dp"
+                android:layout_height="50dp"
+                android:text="New Button"
+                android:id="@+id/all_data"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+    <Button
+        android:layout_width="30dp"
+        android:layout_height="50dp"
+        android:text="Storage"
+        android:id="@+id/storage_slide"
+        android:layout_alignBottom="@+id/storage"
+        android:layout_alignRight="@+id/crafting"
+        android:layout_alignEnd="@+id/crafting" />
+
+            <TextView
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                android:text="A Damp Cave"
+                android:clickable="true"
+                android:id="@+id/cave_tab"
+                android:fontFamily="sans-serif"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_marginTop="10dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignLeft="@+id/quests"
+                android:layout_alignStart="@+id/quests" />
+
+            <TextView
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                android:text="A Warm Forest"
+                android:clickable="true"
+                android:id="@+id/forest_tab"
+                android:fontFamily="sans-serif"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_alignTop="@+id/cave_tab"
+                android:layout_alignLeft="@+id/buildings"
+                android:layout_alignStart="@+id/buildings" />
 
 
 </RelativeLayout>

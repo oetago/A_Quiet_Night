@@ -51,13 +51,13 @@ public class Food_Water extends ActivityGroup {
         final SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
         // Adapter
         SpinnerAdapter adapter =
-                ArrayAdapter.createFromResource(this, R.array.actions,
+                ArrayAdapter.createFromResource(this, R.array.food_water,
                         android.R.layout.simple_spinner_dropdown_item);
 
 // Callback
         ActionBar.OnNavigationListener callback = new ActionBar.OnNavigationListener() {
 
-            String[] items = getResources().getStringArray(R.array.actions); // List items from res
+            String[] items = getResources().getStringArray(R.array.food_water); // List items from res
 
             @Override
             public boolean onNavigationItemSelected(int position, long id) {
@@ -266,7 +266,15 @@ public class Food_Water extends ActivityGroup {
         });
 
 
-
+    //Saving Tab
+        SharedPreferences.Editor editor = sharedPref.edit();
+        int food_water = 1;
+        int tools = 0;
+        int weapons_armor = 0;
+        editor.putInt("food_water", food_water);
+        editor.putInt("tools", tools);
+        editor.putInt("weapons_armor", weapons_armor);
+        editor.apply();
     }
     public void updateText(){
         SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);

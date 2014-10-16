@@ -5,13 +5,19 @@ package com.milesstudios.aquietnight;
  */
 
 import android.app.ActivityGroup;
+import android.app.TabActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.app.Activity;
 import android.preference.PreferenceManager;
+import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
@@ -27,14 +33,15 @@ import android.view.MenuItem;
 //import com.google.android.gms.ads.AdRequest;
 //import com.google.android.gms.ads.AdView;
 
+import com.milesstudios.aquietnight.quest.Quest_Main;
+
 import java.util.concurrent.locks.Condition;
 
-public class Cave extends ActivityGroup {
-    Button buildings, trading, crafting, quests, forest_button;
-    int wood_counter, leaves_counter, stone_counter,start_counter, stone_axeb, stone_pickb, leaf_armorb, hard_wood_counter, workshop_b, trade_post_b;
+public class Cave extends Activity{
+    Button buildings, trading, crafting, quests, forest_button, all_data;
+    int wood_counter, leaves_counter, stone_counter, start_counter, stone_axeb, stone_pickb, leaf_armorb, hard_wood_counter, workshop_b, trade_post_b;
     TextView log, storage;
-    ImageView top_tab;
-
+    boolean storage_slide_b = false;
 
 
     @Override
@@ -43,28 +50,47 @@ public class Cave extends ActivityGroup {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cave);
         final SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
-
         buildings = (Button) findViewById(R.id.buildings);
-        forest_button = (Button) findViewById(R.id.forest_button);
+        //Tab
+        int mine_b = sharedPref.getInt("mine", 0);
         crafting = (Button) findViewById(R.id.crafting);
         buildings = (Button) findViewById(R.id.buildings);
         trading = (Button) findViewById(R.id.trading);
         quests = (Button) findViewById(R.id.quests);
+        all_data = (Button) findViewById(R.id.all_data);
         log = (TextView) findViewById(R.id.log);
         storage = (TextView) findViewById(R.id.storage);
-        top_tab = (ImageView) findViewById(R.id.top_tab);
         log.setText("THIS APP IS FOR TESTING!");
         int trade_post_b = sharedPref.getInt("trade_post", 0);
         int workshop_b = sharedPref.getInt("workshop", 0);
         int quest_map_b = sharedPref.getInt("quest_map", 0);
         int start_counter = sharedPref.getInt("start_counter", 0);
-        Animation anim = AnimationUtils.loadAnimation(this, R.anim.log);
+        final Animation anim = AnimationUtils.loadAnimation(this, R.anim.log);
+        final Animation storage_anim_slide = AnimationUtils.loadAnimation(this, R.anim.storage_slide);
+        final Animation storage_anim_slide2 = AnimationUtils.loadAnimation(this, R.anim.storage_slide2);
         SharedPreferences.Editor editor = sharedPref.edit();
+        final TextView cave_tab  = (TextView) findViewById(R.id.cave_tab);
+        final TextView forest_tab  = (TextView) findViewById(R.id.forest_tab);
+        final Button storage_slide = (Button) findViewById(R.id.storage_slide);
+
         UpdateText();
-        if (trade_post_b == 0){
+        cave_tab.setPaintFlags(cave_tab.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        cave_tab.setTextSize(20);
+        //forest_tab.setPaintFlags(forest_tab.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        forest_tab.setTextSize(20);
+        Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(),"fonts/TNRB.ttf");
+        cave_tab.setTypeface(tf);
+        forest_tab.setTypeface(tf);
+        log.setTypeface(tf);
+        storage.setTypeface(tf);
+        storage.setMovementMethod(new ScrollingMovementMethod());
+        // log.setMovementMethod(new ScrollingMovementMethod());
+        log.setTextSize(12);
+        storage.setTextSize(15);
+        if (trade_post_b == 0) {
             trading.setEnabled(false);
             trading.setVisibility(View.INVISIBLE);
-        }else if(trade_post_b == 1){
+        } else if (trade_post_b == 1) {
             trade_post_b += 1;
             editor.putInt("trade_post", trade_post_b);
             editor.apply();
@@ -74,10 +100,10 @@ public class Cave extends ActivityGroup {
 
         }
 
-        if (workshop_b == 0){
+        if (workshop_b == 0) {
             crafting.setEnabled(false);
             crafting.setVisibility(View.INVISIBLE);
-        }else if(workshop_b == 1){
+        } else if (workshop_b == 1) {
             workshop_b += 1;
             editor.putInt("workshop", workshop_b);
             editor.apply();
@@ -86,10 +112,10 @@ public class Cave extends ActivityGroup {
             crafting.startAnimation(anim);
 
         }
-        if (quest_map_b == 0){
+        if (quest_map_b == 0) {
             quests.setEnabled(false);
             quests.setVisibility(View.INVISIBLE);
-        }else if(quest_map_b == 1){
+        } else if (quest_map_b == 1) {
             quest_map_b += 1;
             editor.putInt("quest_map", quest_map_b);
             editor.apply();
@@ -98,19 +124,19 @@ public class Cave extends ActivityGroup {
             quests.startAnimation(anim);
 
         }
-        if (start_counter == 0){
+        if (start_counter == 0) {
             buildings.setEnabled(false);
             buildings.setVisibility(View.INVISIBLE);
             anim.reset();
-            top_tab.clearAnimation();
-            top_tab.startAnimation(anim);
             log.setVisibility(View.INVISIBLE);
             storage.setVisibility(View.INVISIBLE);
         }
-
-        start_counter +=1;
+       // if(mine == 0)
+        start_counter += 1;
         editor.putInt("start_counter", start_counter);
         editor.apply();
+        final String log_text = sharedPref.getString("log_text", "");
+        log.setText(log_text);
 
 
         //TODO chnage animation for the 3 of them?
@@ -122,17 +148,13 @@ public class Cave extends ActivityGroup {
         //adView.loadAd(adRequest);
 
 
-
-
+        // all_data.setVisibility(View.INVISIBLE);
+        all_data.setEnabled(true);
         //TODO Check other buttons and scaling
 
-
-
-        forest_button.setOnClickListener(new View.OnClickListener() {
+        forest_tab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                forest_button.setBackgroundColor(Color.BLACK);
-                forest_button.getBackground().setAlpha(64);
                 Intent openForest = new Intent(Cave.this, Forest.class);
                 startActivity(openForest);
                 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
@@ -151,6 +173,38 @@ public class Cave extends ActivityGroup {
             }
 
         });
+
+
+        if(!storage_slide_b){
+            storage.setVisibility(View.INVISIBLE);
+        }
+
+        storage_slide.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(storage_slide_b){
+                    storage.clearAnimation();
+                    storage.startAnimation(storage_anim_slide2);
+                    storage.setVisibility(View.INVISIBLE);
+                    storage_slide_b = false;
+                }else {
+                    storage.setVisibility(View.INVISIBLE);
+                    storage.clearAnimation();
+                    storage.startAnimation(storage_anim_slide);
+                    storage_slide_b = true;
+                        storage.setVisibility(View.VISIBLE);
+
+
+
+
+                }
+
+
+            }
+
+        });
+
 
         buildings.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -176,7 +230,7 @@ public class Cave extends ActivityGroup {
         quests.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent openQuest = new Intent(Cave.this, Quest.class);
+                Intent openQuest = new Intent(Cave.this, Quest_Main.class);
                 startActivity(openQuest);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
 
@@ -185,10 +239,14 @@ public class Cave extends ActivityGroup {
         });
 
 
+        all_data.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AllData();
 
+            }
 
-
-
+        });
 
 
     }
@@ -229,7 +287,26 @@ public class Cave extends ActivityGroup {
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
     }
 
-    public void UpdateText(){
+    public void AllData() {
+        SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putInt("workshop", 1);
+        editor.putInt("furnace", 1);
+        editor.putInt("quest_map", 1);
+        editor.putInt("wood", 999999);
+        editor.putInt("stone", 999999);
+        editor.putInt("leaves", 999999);
+        editor.putInt("boiled_water", 99999);
+        editor.putInt("cooked_food", 99999);
+        editor.putInt("dirty_water", 999999);
+        editor.putInt("food", 99999);
+        editor.putInt("trading_post", 1);
+        editor.putInt("apples", 99999);
+        editor.apply();
+        UpdateText();
+    }
+
+    public void UpdateText() {
         SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
         int wood_counter = sharedPref.getInt("wood", 0);
         int leaves_counter = sharedPref.getInt("leaves", 0);
@@ -241,34 +318,33 @@ public class Cave extends ActivityGroup {
         int boiled_water_counter = sharedPref.getInt("boiled_water", 0);
 
         storage.setText("\t Storage:");
-        if(wood_counter >= 1){
+        if (wood_counter >= 1) {
             storage.append("\n Wood: " + wood_counter);
         }
-        if(leaves_counter >= 1){
+        if (leaves_counter >= 1) {
             storage.append("\n Leaves: " + leaves_counter);
         }
-        if(stone_counter >= 1){
+        if (stone_counter >= 1) {
             storage.append("\n Stone: " + stone_counter);
         }
-        if(hard_wood_counter >= 1){
+        if (hard_wood_counter >= 1) {
             storage.append("\n Hard Wood: " + hard_wood_counter);
         }
-        if(dirty_water_counter >= 1){
+        if (dirty_water_counter >= 1) {
             storage.append("\n Dirty Water: " + dirty_water_counter + "/20L");
         }
-        if(food_counter >= 1){
+        if (food_counter >= 1) {
             storage.append("\n Food: " + food_counter + "/12Lb");
         }
-        if(cooked_food_counter >= 1){
+        if (cooked_food_counter >= 1) {
             storage.append("\n Cooked Food: " + cooked_food_counter + "/12Lb");
         }
-        if(boiled_water_counter >= 1){
+        if (boiled_water_counter >= 1) {
             storage.append("\n Boiled Water: " + boiled_water_counter + "/20L");
         }
 
 
     }
-
 
 
     @Override

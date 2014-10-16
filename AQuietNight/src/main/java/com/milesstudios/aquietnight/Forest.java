@@ -13,8 +13,12 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.support.v4.app.FragmentActivity;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,6 +29,7 @@ import android.widget.Button;
 
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,7 +41,7 @@ import java.util.Date;
 import java.util.Random;
 
 
-public class Forest extends ActivityGroup {
+public class Forest extends FragmentActivity {
 
     //Declare Statements
     int wood_counter, leaves_counter, stone_counter, w, l, s,d,f, stone_axeb, stone_pickb, hard_wood_counter, dirty_water_counter, food_counter;
@@ -45,7 +50,6 @@ public class Forest extends ActivityGroup {
     TextView log, storage;
     ProgressBar wood_bar, leaves_bar, stone_bar, dirty_water_bar, hunt_bar;
     CountDownTimer wood_timer, leaves_timer, stone_timer, dirty_water_timer, hunt_timer;
-    ImageView log_increase;
 
 
     //For setting up back button
@@ -83,9 +87,6 @@ public class Forest extends ActivityGroup {
         log = (TextView) findViewById(R.id.log);
         storage = (TextView) findViewById(R.id.storage);
 
-        log_increase = (ImageView) findViewById(R.id.increase_wood);
-        log_increase.setVisibility(View.INVISIBLE);
-
         //Declare Buttons
         wood = (Button) findViewById(R.id.wood);
         cave_button = (Button) findViewById(R.id.cave_button);
@@ -102,8 +103,19 @@ public class Forest extends ActivityGroup {
         dirty_water_bar  = (ProgressBar) findViewById(R.id.dirty_water_bar);
 
         //Setup TextSize and display Storage
+        storage.setMovementMethod(new ScrollingMovementMethod());
+       // log.setMovementMethod(new ScrollingMovementMethod());
         log.setTextSize(12);
         storage.setTextSize(15);
+
+        final TextView cave_tab  = (TextView) findViewById(R.id.cave_tab);
+        final TextView forest_tab  = (TextView) findViewById(R.id.forest_tab);
+        cave_tab.setTextSize(20);
+        forest_tab.setPaintFlags(forest_tab.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        forest_tab.setTextSize(20);
+        Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(),"fonts/TNRB.ttf");
+        cave_tab.setTypeface(tf);
+        forest_tab.setTypeface(tf);
 
         final Random rng = new Random();
 
@@ -117,17 +129,16 @@ public class Forest extends ActivityGroup {
         final int stone_sword_b = sharedPref.getInt("stone_sword", 0);
         final int water_sac_b = sharedPref.getInt("water_sac", 0);
         final int apple_counter = sharedPref.getInt("apples", 0);
+        final String log_text = sharedPref.getString("log_text", "HI");
+        log.setText(log_text);
         updateText();
-
-       final Animation log_increase_anim = AnimationUtils.loadAnimation(this, R.anim.slide_up);
+        final Animation log_increase_anim = AnimationUtils.loadAnimation(this, R.anim.slide_up);
 
 
         //"Tab Button"
-        cave_button.setOnClickListener(new View.OnClickListener() {
+        cave_tab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cave_button.setBackgroundColor(Color.BLACK);
-                cave_button.getBackground().setAlpha(64);
                 Intent openCave = new Intent(Forest.this, Cave.class);
                 startActivity(openCave);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
@@ -152,15 +163,13 @@ public class Forest extends ActivityGroup {
             public void onClick(View v) {
 
         int apple = 0;
-                log_increase.setVisibility(View.VISIBLE);
-                log_increase.clearAnimation();
-                log_increase.startAnimation(log_increase_anim);
+
 
                 if (stone_axeb == 0) {
                     int wood_counter = sharedPref.getInt("wood", 0);
                     SharedPreferences.Editor editor = sharedPref.edit();
                     wood_counter = sharedPref.getInt("wood", 0);
-                    log.append("\n You gathered 1 wood from the ground");
+                    log.setText(" You gathered 1 wood from the ground \n" + log.getText());
                     wood_counter += 1;
 
                     editor = sharedPref.edit();
@@ -209,7 +218,7 @@ public class Forest extends ActivityGroup {
                     int wood_counter = sharedPref.getInt("wood", 0);
                     SharedPreferences.Editor editor = sharedPref.edit();
                     wood_counter = sharedPref.getInt("wood", 0);
-                    log.append("\n You gathered 2 wood from the ground");
+                    log.setText(" You gathered 2 wood from the ground \n" + log.getText());
                     wood_counter += 2;
 
                     apple = rng.nextInt(101);
@@ -313,7 +322,7 @@ public class Forest extends ActivityGroup {
 
                 if (stone_pickb == 0) {
                     int stone_counter = sharedPref.getInt("stone", 0);
-                    log.append("\n You gathered 1 stone from the ground");
+                    log.setText(" You gathered 1 stone from the ground \n" + log.getText());
                     stone_counter += 1;
 
                     //Save counter
@@ -491,7 +500,6 @@ public class Forest extends ActivityGroup {
             }
 
         });
-
 
 
 
@@ -825,8 +833,17 @@ public class Forest extends ActivityGroup {
         if (f > 0){
             hunt_timer.cancel();
         }
+        SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
+
+        SharedPreferences.Editor editor = sharedPref.edit();
+        String log_text = log.getText().toString();
+        editor.putString("log_text",log_text);
+        editor.apply();
         super.onPause();
     }
+
+
+
     @Override
     public void onBackPressed() {
         Intent openMain = new Intent(Forest.this, Cave.class);
@@ -846,6 +863,7 @@ public class Forest extends ActivityGroup {
         updateBars();
         super.onStart();
     }
+
 
 
 }

@@ -1,10 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="actions">
+    <string-array name="tools">
+    <item>Tools</item>
+    <item>Weapons and Armor</item>
+    <item>Food and Water</item>
+
+
+</string-array>
+    <string-array name="crafting">
         <item>Crafting</item>
         <item>Weapons and Armor</item>
         <item>Food and Water</item>
         <item>Tools</item>
+
+    </string-array>
+    <string-array name="food_water">
+        <item>Food and Water</item>
+        <item>Weapons and Armor</item>
+        <item>Tools</item>
+
+    </string-array>
+    <string-array name="weapons_armor">
+        <item>Weapons and Armor</item>
+        <item>Food and Water</item>
+        <item>Tools</item>
+
+    </string-array>
+    <string-array name="quest">
+        <item>Quests</item>
+        <item>Bosses</item>
 
     </string-array>
 </resources>
