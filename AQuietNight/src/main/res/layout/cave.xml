@@ -125,6 +125,13 @@
                 android:layout_alignTop="@+id/cave_tab"
                 android:layout_alignLeft="@+id/buildings"
                 android:layout_alignStart="@+id/buildings" />
+            <WebView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:id="@+id/rain"
+                android:layout_alignParentEnd="true"></WebView>
 
 
 </RelativeLayout>

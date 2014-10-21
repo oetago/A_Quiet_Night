@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/forest_tab"
+        android:adjustViewBounds="true"
+
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/imageView" />
+
+    <ImageView
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:src="@drawable/wood_increase"
+        android:adjustViewBounds="true"
+        android:id="@+id/increase_wood"
+        android:layout_above="@+id/stone"
+        android:layout_toLeftOf="@+id/dirty_water"
+        android:layout_toStartOf="@+id/dirty_water"
+        android:contentDescription="" />
+    <Button
+        android:background="@android:color/transparent"
+        android:textColor="@drawable/button_tab"
+        android:id="@+id/cave_button"
+        android:layout_width="120dp"
+        android:layout_height="200dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignBottom="@+id/imageView" />
+    <TextView
+        android:id="@+id/gather_text"
+        android:layout_width="50dp"
+        android:layout_height="25dp"
+        android:layout_alignLeft="@+id/wood"
+        android:layout_alignRight="@+id/wood"
+        android:layout_alignEnd="@+id/wood"
+        android:layout_marginTop="60dp"
+        android:textStyle="bold"
+        android:text="Gather:"
+        android:layout_alignParentTop="true" />
+
+    <Button
+        android:id="@+id/wood"
+        style="@drawable/button_shape"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:layout_weight="1"
+        android:text="Wood"
+        android:layout_below="@+id/gather_text"
+        android:layout_alignLeft="@+id/stone"
+        android:layout_alignStart="@+id/stone"
+        android:background="@drawable/button_shape"
+        />
+
+    <Button
+        android:id="@+id/stone"
+        style="@drawable/button_shape"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/wood"
+        android:layout_weight="1"
+        android:text="Stone"
+        android:background="@drawable/button_shape"/>
+
+    <Button
+        android:id="@+id/leaves"
+        style="@drawable/button_shape"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/stone"
+        android:layout_weight="1"
+        android:text="Leaves"
+        android:background="@drawable/button_shape"/>
+    <Button
+        android:id="@+id/dirty_water"
+        style="@drawable/button_shape"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:layout_weight="1"
+        android:text="Dirty Water"
+        android:layout_below="@+id/gather_text"
+        android:layout_alignLeft="@+id/hunt"
+        android:layout_alignStart="@+id/hunt"
+        android:background="@drawable/button_shape" />
+    <Button
+        android:id="@+id/hunt"
+        style="@drawable/button_shape"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:layout_weight="1"
+        android:text="Hunt"
+        android:layout_above="@+id/leaves"
+        android:layout_alignLeft="@+id/storage"
+        android:layout_alignStart="@+id/storage"
+        android:background="@drawable/button_shape"  />
+
+
+
+
+
+
+
+
+
+
+    <TextView
+        android:id="@+id/log"
+        android:layout_width="150dp"
+        android:layout_height="100dp"
+        android:textStyle="bold"
+        android:layout_alignParentBottom="true"
+        android:layout_alignLeft="@+id/stone"
+        android:layout_alignStart="@+id/stone" />
+
+    <TextView
+        android:id="@+id/storage"
+        android:layout_width="150dp"
+        android:layout_height="200dp"
+        android:textStyle="bold"
+        android:layout_toEndOf="@+id/log"
+        android:layout_alignBottom="@+id/log"
+        android:layout_toRightOf="@+id/log"
+        android:layout_alignTop="@+id/leaves" />
+
+    <ProgressBar
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="20dp"
+        android:layout_height="10dp"
+        android:id="@+id/wood_bar"
+        android:progress="0"
+        android:layout_alignBottom="@+id/wood"
+        android:layout_alignRight="@+id/wood"
+        android:layout_alignEnd="@+id/wood"
+        android:layout_alignLeft="@+id/wood"
+        android:layout_alignStart="@+id/wood"/>
+
+    <ProgressBar
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="20dp"
+        android:layout_height="10dp"
+        android:id="@+id/leaves_bar"
+        android:progress="0"
+        android:layout_alignBottom="@+id/leaves"
+        android:layout_alignLeft="@+id/leaves"
+        android:layout_alignStart="@+id/leaves"
+        android:layout_alignRight="@+id/leaves"
+        android:layout_alignEnd="@+id/leaves" />
+
+    <ProgressBar
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="20dp"
+        android:layout_height="10dp"
+        android:id="@+id/stone_bar"
+        android:progress="0"
+        android:layout_alignBottom="@+id/stone"
+        android:layout_alignLeft="@+id/stone"
+        android:layout_alignStart="@+id/stone"
+        android:layout_alignRight="@+id/stone"
+        android:layout_alignEnd="@+id/stone" />
+    <ProgressBar
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="20dp"
+        android:layout_height="10dp"
+        android:id="@+id/dirty_water_bar"
+        android:progress="0"
+        android:layout_alignBottom="@+id/dirty_water"
+        android:layout_alignLeft="@+id/dirty_water"
+        android:layout_alignStart="@+id/dirty_water"
+        android:layout_alignTop="@+id/wood_bar"
+        android:layout_alignRight="@+id/dirty_water"
+        android:layout_alignEnd="@+id/dirty_water" />
+    <ProgressBar
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="20dp"
+        android:layout_height="10dp"
+        android:id="@+id/hunt_bar"
+        android:progress="0"
+        android:layout_above="@+id/leaves"
+        android:layout_alignLeft="@+id/hunt"
+        android:layout_alignStart="@+id/hunt"
+        android:layout_alignRight="@+id/hunt"
+        android:layout_alignEnd="@+id/hunt" />
+
+</RelativeLayout>

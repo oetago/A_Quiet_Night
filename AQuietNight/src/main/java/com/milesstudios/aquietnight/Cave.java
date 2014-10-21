@@ -11,10 +11,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.graphics.Movie;
 import android.graphics.Paint;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.app.Activity;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
@@ -23,6 +26,7 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TabHost;
@@ -72,6 +76,9 @@ public class Cave extends Activity{
         final TextView cave_tab  = (TextView) findViewById(R.id.cave_tab);
         final TextView forest_tab  = (TextView) findViewById(R.id.forest_tab);
         final Button storage_slide = (Button) findViewById(R.id.storage_slide);
+
+
+
 
         UpdateText();
         cave_tab.setPaintFlags(cave_tab.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
@@ -237,6 +244,21 @@ public class Cave extends Activity{
             }
 
         });
+        final WebView webview = (WebView) findViewById(R.id.rain);
+        webview.setVisibility(View.INVISIBLE);
+        quests.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                // TODO Auto-generated method stub
+                webview.setVisibility(View.VISIBLE);
+                //next line explained below
+                //webview.setWebViewClient(new MyWebViewClient(this));
+                //webview.getSettings().setJavaScriptEnabled(true);
+                webview.loadUrl("http://i.imgur.com/mq4pjzo.gif");
+                return true;
+
+            }
+        });
 
 
         all_data.setOnClickListener(new View.OnClickListener() {
@@ -349,6 +371,9 @@ public class Cave extends Activity{
 
     @Override
     public void onBackPressed() {
+        Intent openMain = new Intent(Cave.this, Cave.class);
+        startActivity(openMain);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
 
     }
 
