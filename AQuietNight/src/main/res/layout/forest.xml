@@ -17,6 +17,7 @@
         android:layout_alignParentTop="true" />
 
     <Button
+        android:minWidth="100dp"
         android:id="@+id/wood"
         style="@drawable/button_shape"
         android:layout_width="140dp"
@@ -28,7 +29,8 @@
         android:layout_alignStart="@+id/stone"
         android:background="@drawable/button_shape"
         android:layout_alignRight="@+id/stone"
-        android:layout_alignEnd="@+id/stone" />
+        android:layout_alignEnd="@+id/stone"
+        android:onClick="buttonWood"/>
 
     <Button
         android:id="@+id/stone"
@@ -40,7 +42,8 @@
         android:layout_below="@id/wood"
         android:layout_weight="1"
         android:text="Stone"
-        android:background="@drawable/button_shape"/>
+        android:background="@drawable/button_shape"
+        android:onClick="buttonStone"/>
 
     <Button
         android:id="@+id/leaves"
@@ -52,7 +55,8 @@
         android:layout_below="@id/stone"
         android:layout_weight="1"
         android:text="Leaves"
-        android:background="@drawable/button_shape"/>
+        android:background="@drawable/button_shape"
+        android:onClick="buttonLeaves"/>
     <Button
         android:id="@+id/dirty_water"
         style="@drawable/button_shape"
@@ -63,10 +67,10 @@
         android:background="@drawable/button_shape"
         android:layout_toEndOf="@+id/log"
         android:layout_alignTop="@+id/wood"
-        android:layout_toRightOf="@+id/log" />
+        android:layout_toRightOf="@+id/log"
+        android:onClick="buttonDirtyWater"/>
     <Button
         android:id="@+id/hunt"
-        style="@drawable/button_shape"
         android:layout_width="125dp"
         android:layout_height="50dp"
         android:layout_weight="1"
@@ -74,7 +78,8 @@
         android:background="@drawable/button_shape"
         android:layout_alignBottom="@+id/hunt_bar"
         android:layout_alignLeft="@+id/dirty_water"
-        android:layout_alignStart="@+id/dirty_water" />
+        android:layout_alignStart="@+id/dirty_water"
+        android:onClick="buttonHunt"/>
 
 
 

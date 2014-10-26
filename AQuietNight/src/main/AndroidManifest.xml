@@ -1,5 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.milesstudios.aquietnight">
+    package="com.milesstudios.aquietnight"
+    android:versionName="0.02">
 
     <application
         android:allowBackup="false"
@@ -67,6 +68,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".quest.Bosses" android:label="Bosses">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".Intro">
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>

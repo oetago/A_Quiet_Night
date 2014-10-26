@@ -20,12 +20,36 @@
         android:id="@+id/quest_map"
         style="@drawable/button_shape"
         android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:layout_weight="1"
+        android:layout_height="60dp"
+        android:background="@drawable/button_shape"
         android:layout_marginLeft="10dp"
         android:text="Quest Map"
         android:layout_below="@+id/trade_text"
-        android:longClickable="true"/>
+        android:onClick="buttonQuestMap"/>
+
+    <Button
+        android:id="@+id/rusty_sword"
+        style="@drawable/button_shape"
+        android:layout_width="120dp"
+        android:layout_height="60dp"
+        android:background="@drawable/button_shape"
+        android:layout_marginLeft="10dp"
+        android:text="Rusty Sword"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/quest_map"
+        android:onClick="buttonRustySword"/>
+
+    <Button
+        android:id="@+id/chain_armor"
+        style="@drawable/button_shape"
+        android:layout_width="120dp"
+        android:layout_height="60dp"
+        android:background="@drawable/button_shape"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:text="Chain Armor"
+        android:layout_below="@+id/rusty_sword"
+        android:onClick="buttonChainArmor"/>
 
 
 

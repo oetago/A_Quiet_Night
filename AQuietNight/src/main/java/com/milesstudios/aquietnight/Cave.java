@@ -4,42 +4,29 @@ package com.milesstudios.aquietnight;
  * Created by Ryanm14 on 7/14/2014.
  */
 
-import android.app.ActivityGroup;
-import android.app.TabActivity;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
-import android.graphics.Color;
-import android.graphics.Movie;
 import android.graphics.Paint;
 import android.graphics.Typeface;
-import android.net.Uri;
 import android.os.Bundle;
-import android.app.Activity;
-import android.os.Handler;
-import android.preference.PreferenceManager;
 import android.text.method.ScrollingMovementMethod;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.webkit.WebView;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TabHost;
 import android.widget.TextView;
-import android.app.ActionBar;
-import android.view.MenuItem;
+
+import com.milesstudios.aquietnight.quest.Quest_Main;
+import com.milesstudios.aquietnight.util.ChangeLog;
 
 //import com.google.android.gms.ads.AdRequest;
 //import com.google.android.gms.ads.AdView;
-
-import com.milesstudios.aquietnight.quest.Quest_Main;
-
-import java.util.concurrent.locks.Condition;
 
 public class Cave extends Activity{
     Button buildings, trading, crafting, quests, forest_button, all_data;
@@ -55,6 +42,11 @@ public class Cave extends Activity{
         setContentView(R.layout.cave);
         final SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
         buildings = (Button) findViewById(R.id.buildings);
+        //TODO Fix version names
+        ChangeLog cl = new ChangeLog(this);
+        if (cl.firstRun())
+            cl.getLogDialog().show();
+        //cl.getFullLogDialog().show();
         //Tab
         int mine_b = sharedPref.getInt("mine", 0);
         crafting = (Button) findViewById(R.id.crafting);
@@ -64,7 +56,6 @@ public class Cave extends Activity{
         all_data = (Button) findViewById(R.id.all_data);
         log = (TextView) findViewById(R.id.log);
         storage = (TextView) findViewById(R.id.storage);
-        log.setText("THIS APP IS FOR TESTING!");
         int trade_post_b = sharedPref.getInt("trade_post", 0);
         int workshop_b = sharedPref.getInt("workshop", 0);
         int quest_map_b = sharedPref.getInt("quest_map", 0);
@@ -94,18 +85,27 @@ public class Cave extends Activity{
         // log.setMovementMethod(new ScrollingMovementMethod());
         log.setTextSize(12);
         storage.setTextSize(15);
-        if (trade_post_b == 0) {
-            trading.setEnabled(false);
+
+        boolean intro = false;
+        editor.putBoolean("intro", intro);
+        editor.apply();
+
+        if(trade_post_b ==0){
             trading.setVisibility(View.INVISIBLE);
-        } else if (trade_post_b == 1) {
-            trade_post_b += 1;
-            editor.putInt("trade_post", trade_post_b);
-            editor.apply();
+            trading.setEnabled(false);
+        }else{
             anim.reset();
             trading.clearAnimation();
             trading.startAnimation(anim);
-
         }
+        all_data.setVisibility(View.INVISIBLE);
+        all_data.setEnabled(false);
+        if (start_counter == 0) {
+            quests.setEnabled(false);
+            quests.setVisibility(View.INVISIBLE);
+        }
+
+
 
         if (workshop_b == 0) {
             crafting.setEnabled(false);
@@ -119,18 +119,7 @@ public class Cave extends Activity{
             crafting.startAnimation(anim);
 
         }
-        if (quest_map_b == 0) {
-            quests.setEnabled(false);
-            quests.setVisibility(View.INVISIBLE);
-        } else if (quest_map_b == 1) {
-            quest_map_b += 1;
-            editor.putInt("quest_map", quest_map_b);
-            editor.apply();
-            anim.reset();
-            quests.clearAnimation();
-            quests.startAnimation(anim);
 
-        }
         if (start_counter == 0) {
             buildings.setEnabled(false);
             buildings.setVisibility(View.INVISIBLE);
@@ -185,11 +174,10 @@ public class Cave extends Activity{
         if(!storage_slide_b){
             storage.setVisibility(View.INVISIBLE);
         }
-
         storage_slide.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+               // new PathAnimation(storage).animate();
                 if(storage_slide_b){
                     storage.clearAnimation();
                     storage.startAnimation(storage_anim_slide2);
@@ -201,9 +189,6 @@ public class Cave extends Activity{
                     storage.startAnimation(storage_anim_slide);
                     storage_slide_b = true;
                         storage.setVisibility(View.VISIBLE);
-
-
-
 
                 }
 
@@ -322,13 +307,13 @@ public class Cave extends Activity{
         editor.putInt("cooked_food", 99999);
         editor.putInt("dirty_water", 999999);
         editor.putInt("food", 99999);
-        editor.putInt("trading_post", 1);
+        editor.putInt("trade_post", 1);
         editor.putInt("apples", 99999);
         editor.apply();
         UpdateText();
     }
 
-    public void UpdateText() {
+    public void UpdateText(){
         SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
         int wood_counter = sharedPref.getInt("wood", 0);
         int leaves_counter = sharedPref.getInt("leaves", 0);
@@ -338,31 +323,41 @@ public class Cave extends Activity{
         int food_counter = sharedPref.getInt("food", 0);
         int cooked_food_counter = sharedPref.getInt("cooked_food", 0);
         int boiled_water_counter = sharedPref.getInt("boiled_water", 0);
+        int apple_counter = sharedPref.getInt("apples", 0);
+        int coin_counter = sharedPref.getInt("coins",0);
 
         storage.setText("\t Storage:");
-        if (wood_counter >= 1) {
+        if(wood_counter >= 1){
             storage.append("\n Wood: " + wood_counter);
         }
-        if (leaves_counter >= 1) {
+        if(leaves_counter >= 1){
             storage.append("\n Leaves: " + leaves_counter);
         }
-        if (stone_counter >= 1) {
+        if(stone_counter >= 1){
             storage.append("\n Stone: " + stone_counter);
         }
-        if (hard_wood_counter >= 1) {
+        if(hard_wood_counter >= 1){
             storage.append("\n Hard Wood: " + hard_wood_counter);
         }
-        if (dirty_water_counter >= 1) {
+        if(dirty_water_counter >= 1){
             storage.append("\n Dirty Water: " + dirty_water_counter + "/20L");
         }
-        if (food_counter >= 1) {
+        if(food_counter >= 1){
             storage.append("\n Food: " + food_counter + "/12Lb");
         }
-        if (cooked_food_counter >= 1) {
+        if(cooked_food_counter >= 1){
             storage.append("\n Cooked Food: " + cooked_food_counter + "/12Lb");
         }
-        if (boiled_water_counter >= 1) {
+        if(boiled_water_counter >= 1){
             storage.append("\n Boiled Water: " + boiled_water_counter + "/20L");
+        }
+        if(apple_counter >=1){
+            storage.append("\n Apples: " + apple_counter);
+        }
+
+
+        if(coin_counter >=1){
+            storage.append("\n \n \n Coins: " + coin_counter);
         }
 
 

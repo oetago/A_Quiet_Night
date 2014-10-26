@@ -1,0 +1,44 @@
+<html>
+  <head>
+    <style type='text/css'>
+      a            { color:#a0a0e0 }
+      div.title    {
+          color:#C0F0C0;
+          font-size:1.2em;
+          font-weight:bold;
+          margin-top:1em;
+          margin-bottom:0.5em;
+          text-align:center }
+      div.subtitle {
+          color:#C0F0C0;
+          font-size:0.8em;
+          margin-bottom:1em;
+          text-align:center }
+      div.freetext { color:#F0F0F0 }
+      div.list     { color:#C0C0F0 }
+    </style>
+  </head>
+  <body>
+$ 2.1.1
+  % Version A 0.02 
+  _ 2014-10-25
+    * New AlertDialogs
+    * Intro story (Ty Tose!)
+	* Optimzed Buttons in Code
+	* More Quests
+	* A Change Log!
+	* New animations
+	* More Quests
+	* Coins
+	* Quests to start out
+	* New Quests Xml
+	* New Sword/Armor
+$ 2.0.8
+  % Version A 0.01
+  _ 2014-10-0
+    * <span style="font-family:monospace">cl.isFirstRunEver()</span> added
+    * Previous App
+
+$ END_OF_CHANGE_LOG
+  </body>
+</html>

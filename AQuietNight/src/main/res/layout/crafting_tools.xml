@@ -13,7 +13,8 @@
         android:text="Stone Pick"
         android:layout_alignLeft="@+id/stone_axe"
         android:layout_alignStart="@+id/stone_axe"
-        android:longClickable="true"/>
+        android:onClick="buttonStonePick"
+        android:background="@drawable/button_shape"/>
 
     <Button
         android:id="@+id/stone_axe"
@@ -25,7 +26,8 @@
         android:layout_below="@id/stone_pick"
         android:layout_weight="1"
         android:text="Stone Axe"
-        android:longClickable="true"/>
+        android:onClick="buttonStoneAxe"
+        android:background="@drawable/button_shape"/>
 
     <TextView
         android:id="@+id/log"

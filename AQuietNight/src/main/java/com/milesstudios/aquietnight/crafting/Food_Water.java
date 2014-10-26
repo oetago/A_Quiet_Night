@@ -2,11 +2,12 @@ package com.milesstudios.aquietnight.crafting;
 
 import android.app.ActionBar;
 import android.app.ActivityGroup;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,8 +24,8 @@ import com.milesstudios.aquietnight.R;
  * Created by Ryan on 9/27/2014.
  */
 public class Food_Water extends ActivityGroup {
-    int wood_counter, leaves_counter, stone_counter, stone_axeb, stone_pickb, hard_wood_counter, workshop_b, boiled_water_counter, cooked_food_counter, water_sac_b;
-    Button boil_water, cook_food, water_sac;
+    int wood_counter, leaves_counter, stone_counter, stone_axeb, stone_pickb, hard_wood_counter, workshop_b, boiled_water_counter, cooked_food_counter, leaf_canteen_b;
+    Button boil_water, cook_food, leaf_canteen;
     TextView log, storage;
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -92,7 +93,7 @@ public class Food_Water extends ActivityGroup {
         storage = (TextView) findViewById(R.id.storage);
         boil_water = (Button) findViewById(R.id.boil_water);
         cook_food = (Button) findViewById(R.id.cook_food);
-        water_sac = (Button) findViewById(R.id.water_sac);
+        final Button leaf_canteen = (Button) findViewById(R.id.leaf_canteen);
         log.setTextSize(11);
         storage.setTextSize(15);
         //Saving
@@ -101,8 +102,9 @@ public class Food_Water extends ActivityGroup {
         int stone_counter = sharedPref.getInt("stone", 0);
         int workshop_b = sharedPref.getInt("workshop", 0);
         int fireplace_b = sharedPref.getInt("fireplace", 0);
-        int water_sac_b = sharedPref.getInt("water_sac", 0);
+        int leaf_canteen_b = sharedPref.getInt("leaf_canteen", 0);
         int stone_sword_b = sharedPref.getInt("stone_sword", 0);
+
 
         if (fireplace_b == 1 && stone_sword_b == 1){
             cook_food.setEnabled(true);
@@ -111,160 +113,21 @@ public class Food_Water extends ActivityGroup {
             cook_food.setEnabled(false);
             cook_food.setVisibility(View.INVISIBLE);
         }
-        if(fireplace_b == 0 && water_sac_b == 0){
+        if(fireplace_b == 0 && leaf_canteen_b == 0){
             boil_water.setEnabled(false);
             boil_water.setVisibility(View.INVISIBLE);
         }
         if(stone_sword_b == 0){
-            water_sac.setEnabled(false);
-            water_sac.setVisibility(View.INVISIBLE);
+            leaf_canteen.setEnabled(false);
+            leaf_canteen.setVisibility(View.INVISIBLE);
         }
-        if(water_sac_b == 1){
-            water_sac.setEnabled(false);
-            water_sac.setVisibility(View.INVISIBLE);
+        if(leaf_canteen_b == 1){
+            leaf_canteen.setEnabled(false);
+            leaf_canteen.setVisibility(View.INVISIBLE);
         }
-
+        final String log_text = sharedPref.getString("log_text", "");
+        log.setText(log_text);
         updateText();
-
-        boil_water.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int wood_counter = sharedPref.getInt("wood", 0);
-                int boiled_water_counter = sharedPref.getInt("boiled_water", 0);
-                int dirty_water_counter = sharedPref.getInt("dirty_water", 0);
-                if (wood_counter >= 1 && dirty_water_counter >= 1){
-                    log.append("\n You boiled 1L of water!");
-                    wood_counter -= 1;
-                    boiled_water_counter += 1;
-                    dirty_water_counter -= 1;
-                }else{
-                    log.append("\n You don't have enough resources!");
-                }
-
-
-                //Save counter
-                SharedPreferences.Editor editor = sharedPref.edit();
-                editor.putInt("wood", wood_counter);
-                editor.putInt("boiled_water", boiled_water_counter);
-                editor.putInt("dirty_water", dirty_water_counter);
-                editor.apply();
-                updateText();
-
-
-
-
-
-
-            }
-
-        });
-
-        boil_water.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                // TODO Auto-generated method stub
-                int dirty_water_counter = sharedPref.getInt("dirty_water", 0);
-                boil_water.setText("Wood: 1");
-                new Handler().postDelayed(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        boil_water.setText("Boil Water");
-                    }
-                }, 3000L);
-                return true;
-
-            }
-        });
-
-        cook_food.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int wood_counter = sharedPref.getInt("wood", 0);
-                int food_counter = sharedPref.getInt("food", 0);
-                int cooked_food_counter = sharedPref.getInt("cooked_food", 0);
-                if (wood_counter >= 1 && food_counter >= 1) {
-                    log.append("\n You cooked 1Lb of food!");
-                    wood_counter -= 1;
-                    cooked_food_counter += 1;
-                    food_counter -= 1;
-                } else {
-                    log.append("\n You don't have enough resources!");
-                }
-
-
-                //Save counter
-                SharedPreferences.Editor editor = sharedPref.edit();
-                editor.putInt("wood", wood_counter);
-                editor.apply();
-                editor.putInt("food", food_counter);
-                editor.apply();
-                SharedPreferences.Editor editor2 = sharedPref.edit();
-                editor2.putInt("cooked_food", cooked_food_counter);
-                editor2.apply();
-                updateText();
-            }
-
-        });
-        cook_food.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                int food_counter = sharedPref.getInt("food", 0);
-                cook_food.setText("Wood: 1");
-                new Handler().postDelayed(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        cook_food.setText("Cook Food");
-                    }
-                }, 3000L);
-                return true;
-//TODO Add a cook all
-            }
-        });
-        water_sac.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int water_sac_b = sharedPref.getInt("water_sac", 0);
-                int leaves_counter = sharedPref.getInt("leaves", 0);
-                if (leaves_counter >= 6) {
-                    log.append("\n You crafted one Water Sack");
-                    leaves_counter -= 6;
-                    water_sac_b = 1;
-                    water_sac.setEnabled(false);
-                    water_sac.setVisibility(View.INVISIBLE);
-                } else {
-                    log.append("\n You don't have enough resources!");
-                }
-
-
-                //Save counter
-                SharedPreferences.Editor editor = sharedPref.edit();
-                editor.putInt("water_sac", water_sac_b);
-                editor.apply();
-                editor.putInt("leaves", leaves_counter);
-                editor.apply();
-                updateText();
-            }
-
-        });
-        water_sac.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                // TODO Auto-generated method stub
-                water_sac.setText("Leaves: 6");
-                new Handler().postDelayed(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        water_sac.setText("Water Sack");
-                    }
-                }, 3000L);
-                return true;
-
-            }
-        });
-
 
     //Saving Tab
         SharedPreferences.Editor editor = sharedPref.edit();
@@ -287,6 +150,7 @@ public class Food_Water extends ActivityGroup {
         int cooked_food_counter = sharedPref.getInt("cooked_food", 0);
         int boiled_water_counter = sharedPref.getInt("boiled_water", 0);
         int apple_counter = sharedPref.getInt("apples", 0);
+        int coin_counter = sharedPref.getInt("coins",0);
 
         storage.setText("\t Storage:");
         if(wood_counter >= 1){
@@ -318,16 +182,191 @@ public class Food_Water extends ActivityGroup {
         }
 
 
-    }
+        if(coin_counter >=1){
+            storage.append("\n \n \n Coins: " + coin_counter);
+        }
 
+
+    }
     @Override
     public void onBackPressed() {
         Intent openMain = new Intent(Food_Water.this, Cave.class);
         startActivity(openMain);
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
     }
+    @Override
+    public void onPause(){
+        SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        String log_text = log.getText().toString();
+        editor.putString("log_text",log_text);
+        editor.apply();
+        super.onPause();
+    }
+    //Buttons
+    public void buttonBoilWater(View v) {
+        final SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(Food_Water.this);
+        alertDialog.setTitle("Boil Water");
+        alertDialog.setMessage("Wood: 1 (Per L)");
+        alertDialog.setNegativeButton("Exit", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
 
-}
+        });
+        alertDialog.setNeutralButton("Boil 1L", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                int wood_counter = sharedPref.getInt("wood", 0);
+                int boiled_water_counter = sharedPref.getInt("boiled_water", 0);
+                int dirty_water_counter = sharedPref.getInt("dirty_water", 0);
+                if (wood_counter >= 1 && dirty_water_counter >= 1){
+                    log.append("\n You boiled 1L of water!");
+                    wood_counter -= 1;
+                    boiled_water_counter += 1;
+                    dirty_water_counter -= 1;
+                }else{
+                    log.append("\n You don't have enough resources!");
+                }
+                //Save counter
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putInt("wood", wood_counter);
+                editor.putInt("boiled_water", boiled_water_counter);
+                editor.putInt("dirty_water", dirty_water_counter);
+                editor.apply();
+                updateText();
+            }
+
+        });
+        int dirty_water_counter = sharedPref.getInt("dirty_water", 0);
+        alertDialog.setPositiveButton("Boil All ("+ dirty_water_counter + " L)" , new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                int wood_counter = sharedPref.getInt("wood", 0);
+                int boiled_water_counter = sharedPref.getInt("boiled_water", 0);
+                int dirty_water_counter = sharedPref.getInt("dirty_water", 0);
+                if (dirty_water_counter >= wood_counter){
+                    log.append("\n You boiled " + dirty_water_counter + " L of water!");
+                    wood_counter -= dirty_water_counter;
+                    boiled_water_counter += dirty_water_counter;
+                    dirty_water_counter = 0;
+                }else{
+                    log.append("\n You don't have enough resources!");
+                }
+                //Save counter
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putInt("wood", wood_counter);
+                editor.putInt("boiled_water", boiled_water_counter);
+                editor.putInt("dirty_water", dirty_water_counter);
+                editor.apply();
+                updateText();
+            }
+
+        });
+        AlertDialog alert = alertDialog.create();
+        alert.show();
+
+    }
+    public void buttonCookFood(View v) {
+        final SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(Food_Water.this);
+        alertDialog.setTitle("Cook Food");
+        alertDialog.setMessage("Wood: 1 (Per Lb)");
+        alertDialog.setNegativeButton("Exit", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+
+        });
+        alertDialog.setNeutralButton("Boil 1L", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                int wood_counter = sharedPref.getInt("wood", 0);
+                int food_counter = sharedPref.getInt("food", 0);
+                int cooked_food_counter = sharedPref.getInt("cooked_food", 0);
+                if (wood_counter >= 1 && food_counter >= 1) {
+                    log.append("\n You cooked 1Lb of food!");
+                    wood_counter -= 1;
+                    cooked_food_counter += 1;
+                    food_counter -= 1;
+                } else {
+                    log.append("\n You don't have enough resources!");
+                }
+                //Save counter
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putInt("wood", wood_counter);
+                editor.putInt("food", food_counter);
+                editor.putInt("cooked_food", cooked_food_counter);
+                editor.apply();
+                updateText();
+            }
+
+        });
+        int food_counter = sharedPref.getInt("food", 0);
+        alertDialog.setPositiveButton("Cook All ("+ food_counter + " Lb)" , new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                int wood_counter = sharedPref.getInt("wood", 0);
+                int food_counter = sharedPref.getInt("food", 0);
+                int cooked_food_counter = sharedPref.getInt("cooked_food", 0);
+                if (food_counter >= wood_counter){
+                    log.append("\n You cooked " + food_counter + " Lbs of food!");
+                    wood_counter -= food_counter;
+                    cooked_food_counter += food_counter;
+                    food_counter = 0;
+                }else{
+                    log.append("\n You don't have enough resources!");
+                }
+                //Save counter
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putInt("wood", wood_counter);
+                editor.putInt("food", food_counter);
+                editor.putInt("cooked_food", cooked_food_counter);
+                editor.apply();
+                updateText();
+            }
+
+        });
+        AlertDialog alert = alertDialog.create();
+        alert.show();
+    }
+    public void buttonLeafCanteen(View v) {
+        final SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(Food_Water.this);
+        alertDialog.setTitle("Craft: Leaf Canteen");
+        alertDialog.setMessage("Leaves: 6");
+        alertDialog.setNegativeButton("Exit", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+
+        });
+        alertDialog.setPositiveButton("Craft" , new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                int leaf_canteen_b = sharedPref.getInt("leaf_canteen", 0);
+                int leaves_counter = sharedPref.getInt("leaves", 0);
+                if (leaves_counter >= 6) {
+                    log.append("\n You crafted a Leaf Canteen");
+                    leaves_counter -= 6;
+                    leaf_canteen_b = 1;
+                    leaf_canteen.setEnabled(false);
+                    leaf_canteen.setVisibility(View.INVISIBLE);
+                } else {
+                    log.append("\n You don't have enough resources!");
+                }
+            }
+
+        });
+        AlertDialog alert = alertDialog.create();
+        alert.show();
+
+
+                //Save counter
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putInt("leaf_canteen", leaf_canteen_b);
+                editor.putInt("leaves", leaves_counter);
+                editor.apply();
+                updateText();
+            }
+    }
+
 
 
 

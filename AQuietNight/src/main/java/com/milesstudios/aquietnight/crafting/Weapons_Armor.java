@@ -2,7 +2,9 @@ package com.milesstudios.aquietnight.crafting;
 
 import android.app.ActionBar;
 import android.app.ActivityGroup;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -94,6 +96,8 @@ public class Weapons_Armor extends ActivityGroup {
         leaf_armor = (Button) findViewById(R.id.leaf_armor);
         log.setTextSize(11);
         storage.setTextSize(15);
+        final String log_text = sharedPref.getString("log_text", "");
+        log.setText(log_text);
         //Saving
         int wood_counter = sharedPref.getInt("wood", 0);
         int leaves_counter = sharedPref.getInt("leaves", 0);
@@ -110,42 +114,8 @@ public class Weapons_Armor extends ActivityGroup {
             leaf_armor.setEnabled(false);
             leaf_armor.setVisibility(View.INVISIBLE);
         }
-
-
-
         UpdateText();
 
-        stone_sword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int wood_counter = sharedPref.getInt("wood", 0);
-                int stone_sword_b = sharedPref.getInt("stone_sword", 0);
-                int stone_counter = sharedPref.getInt("stone", 0);
-                if (wood_counter >= 3 && stone_counter >= 4){
-                    log.append("\n You crafted a Stone Sword!");
-                    wood_counter -= 3;
-                    stone_counter -= 4;
-                    stone_sword_b = 1;
-                    stone_sword.setEnabled(false);
-                    stone_sword.setVisibility(View.INVISIBLE);
-                }else{
-                    log.append("\n You don't have enough resources!");
-                }
-
-
-                //Save counter
-                SharedPreferences.Editor editor = sharedPref.edit();
-                editor.putInt("wood", wood_counter);
-                editor.apply();
-                editor.putInt("stone", stone_counter);
-                editor.apply();
-                editor.putInt("stone_sword", stone_sword_b);
-                editor.apply();
-                UpdateText();
-
-            }
-
-        });
 
         stone_sword.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -164,33 +134,7 @@ public class Weapons_Armor extends ActivityGroup {
             }
         });
 
-        leaf_armor.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int leaf_counter = sharedPref.getInt("leaves", 0);
-                int leaf_armor_b = sharedPref.getInt("hard_wood", 0);
-                if (leaf_counter >= 8) {
-                    log.append("\n You crafted Leaf Armor!");
-                    leaf_counter -= 8;
-                    leaf_armor_b = 1;
-                    leaf_armor.setEnabled(false);
-                    leaf_armor.setVisibility(View.INVISIBLE);
-                } else {
-                    log.append("\n You don't have enough resources!");
-                }
 
-
-                //Save counter
-                SharedPreferences.Editor editor = sharedPref.edit();
-                editor.putInt("leaves", leaf_counter);
-                editor.apply();
-                SharedPreferences.Editor editor2 = sharedPref.edit();
-                editor2.putInt("leaf_armor", leaf_armor_b);
-                editor2.apply();
-                UpdateText();
-            }
-
-        });
         leaf_armor.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
@@ -229,6 +173,7 @@ public class Weapons_Armor extends ActivityGroup {
         int cooked_food_counter = sharedPref.getInt("cooked_food", 0);
         int boiled_water_counter = sharedPref.getInt("boiled_water", 0);
         int apple_counter = sharedPref.getInt("apples", 0);
+        int coin_counter = sharedPref.getInt("coins",0);
 
         storage.setText("\t Storage:");
         if(wood_counter >= 1){
@@ -260,13 +205,99 @@ public class Weapons_Armor extends ActivityGroup {
         }
 
 
-    }
+        if(coin_counter >=1){
+            storage.append("\n \n \n Coins: " + coin_counter);
+        }
 
+
+    }
     @Override
     public void onBackPressed() {
 
     }
+    @Override
+    public void onPause(){
+        SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        String log_text = log.getText().toString();
+        editor.putString("log_text",log_text);
+        editor.apply();
+        super.onPause();
+    }
+    public void buttonStoneSword(View v) {
+        final SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(Weapons_Armor.this);
+        alertDialog.setTitle("Craft Stone Sword ");
+        alertDialog.setMessage("Wood: 3 \nStone: 4");
+        alertDialog.setNegativeButton("Exit", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        alertDialog.setPositiveButton("Craft", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                int wood_counter = sharedPref.getInt("wood", 0);
+                int stone_sword_b = sharedPref.getInt("stone_sword", 0);
+                int stone_counter = sharedPref.getInt("stone", 0);
+                if (wood_counter >= 3 && stone_counter >= 4) {
+                    log.append("\n You crafted a Stone Sword!");
+                    wood_counter -= 3;
+                    stone_counter -= 4;
+                    stone_sword_b = 1;
+                    stone_sword.setEnabled(false);
+                    stone_sword.setVisibility(View.INVISIBLE);
+                } else {
+                    log.append("\n You don't have enough resources!");
+                }
+                //Save counter
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putInt("wood", wood_counter);
+                editor.putInt("stone", stone_counter);
+                editor.putInt("stone_sword", stone_sword_b);
+                editor.apply();
+                UpdateText();
 
+            }
+
+        });
+        AlertDialog alert = alertDialog.create();
+        alert.show();
+    }
+
+    public void buttonLeafArmor(View v) {
+        final SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(Weapons_Armor.this);
+        alertDialog.setTitle("Craft Leaf Armor");
+        alertDialog.setMessage("Leaves: 8");
+        alertDialog.setNegativeButton("Exit", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        alertDialog.setPositiveButton("Craft", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                int leaf_counter = sharedPref.getInt("leaves", 0);
+                int leaf_armor_b = sharedPref.getInt("hard_wood", 0);
+                if (leaf_counter >= 8) {
+                    log.append("\n You crafted Leaf Armor!");
+                    leaf_counter -= 8;
+                    leaf_armor_b = 1;
+                    leaf_armor.setEnabled(false);
+                    leaf_armor.setVisibility(View.INVISIBLE);
+                } else {
+                    log.append("\n You don't have enough resources!");
+                }
+                //Save counter
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putInt("leaves", leaf_counter);
+                editor.putInt("leaf_armor", leaf_armor_b);
+                editor.apply();
+                UpdateText();
+            }
+        });
+        AlertDialog alert = alertDialog.create();
+        alert.show();
+    }
 }
 
 

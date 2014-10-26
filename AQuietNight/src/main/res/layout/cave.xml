@@ -128,10 +128,10 @@
             <WebView
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentRight="true"
                 android:id="@+id/rain"
-                android:layout_alignParentEnd="true"></WebView>
+                android:layout_above="@+id/trading"
+                android:layout_toLeftOf="@+id/storage_slide"
+                android:layout_toStartOf="@+id/storage_slide"></WebView>
 
 
 </RelativeLayout>

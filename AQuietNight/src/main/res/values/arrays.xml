@@ -31,4 +31,8 @@
         <item>Bosses</item>
 
     </string-array>
+    <string-array name="quest2">
+        <item>Quests</item>
+
+    </string-array>
 </resources>

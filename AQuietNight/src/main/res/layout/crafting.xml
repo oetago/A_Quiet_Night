@@ -19,17 +19,7 @@
 
 
 
-    <Button
-        android:id="@+id/hard_wood"
-        style="@drawable/button_shape"
-        android:layout_width="120dp"
-        android:layout_height="50dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_below="@id/craft_text"
-        android:layout_weight="1"
-        android:text="Hard Wood"
-        android:longClickable="true"/>
+
 
 
 

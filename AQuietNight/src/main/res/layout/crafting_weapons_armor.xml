@@ -9,9 +9,9 @@
         android:layout_height="50dp"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="20dp"
-        android:layout_weight="1"
         android:text="Leaf Armor"
-        android:longClickable="true"/>
+        android:onClick="buttonLeafArmor"
+        android:background="@drawable/button_shape"/>
     <Button
         android:id="@+id/stone_sword"
         style="@drawable/button_shape"
@@ -20,9 +20,9 @@
         android:layout_marginLeft="20dp"
         android:layout_marginTop="20dp"
         android:layout_below="@id/leaf_armor"
-        android:layout_weight="1"
         android:text="Stone Sword"
-        android:longClickable="true"/>
+        android:onClick="buttonStoneSword"
+        android:background="@drawable/button_shape"/>
 
     <TextView
         android:id="@+id/log"

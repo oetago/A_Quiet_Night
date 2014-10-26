@@ -6,14 +6,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ProgressBar;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
@@ -93,8 +90,6 @@ public class Crafting extends ActivityGroup {
         actions.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
         actions.setDisplayShowTitleEnabled(false);
         actions.setListNavigationCallbacks(adapter, callback);
-
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.crafting);
         log = (TextView) findViewById(R.id.log);
@@ -111,6 +106,7 @@ public class Crafting extends ActivityGroup {
         int leaf_armorb = sharedPref.getInt("leaf_armor", 0);
         int hard_wood_counter= sharedPref.getInt("hard_wood", 0);
         int workshop_b = sharedPref.getInt("workshop", 0);
+
         updateText();
 
         //Going back to crafting tab
@@ -129,57 +125,6 @@ public class Crafting extends ActivityGroup {
         }
 
 
-
-
-        hard_wood.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int wood_counter = sharedPref.getInt("wood", 0);
-                int hard_wood_counter = sharedPref.getInt("hard_wood",0);
-                if (wood_counter >= 3){
-                    log.append("\n You crafted a piece of hard wood!");
-                    wood_counter -= 3;
-                    hard_wood_counter += 1;
-                }else{
-                    log.append("\n You don't have enough resources!");
-                }
-
-
-                //Save counter
-                SharedPreferences.Editor editor = sharedPref.edit();
-                editor.putInt("wood", wood_counter);
-                editor.apply();
-                SharedPreferences.Editor hard_wood3 = sharedPref.edit();
-                hard_wood3.putInt("hard_wood", hard_wood_counter);
-                hard_wood3.apply();
-                updateText();
-
-
-
-
-
-
-            }
-
-            ;
-
-        });
-        hard_wood.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                // TODO Auto-generated method stub
-                hard_wood.setText("Wood: 3");
-                new Handler().postDelayed(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        leaf_armor.setText("Hard Wood");
-                    }
-                }, 3000L);
-                return true;
-
-            }
-        });
 
 
     }

@@ -17,7 +17,6 @@ import android.widget.TextView;
 
 import com.milesstudios.aquietnight.Cave;
 import com.milesstudios.aquietnight.R;
-import com.milesstudios.aquietnight.crafting.Weapons_Armor;
 
 import java.util.Random;
 
@@ -99,16 +98,27 @@ public class Bosses extends Activity {
         int stone_sword_b = sharedPref.getInt("stone_sword", 0);
         int cooked_food_counter = sharedPref.getInt("cooked_food", 0);
         int boiled_water_counter = sharedPref.getInt("boiled_water", 0);
+        int quest_map_b = sharedPref.getInt("quest_map", 0);
+        int rusty_sword_b = sharedPref.getInt("rusty_sword_b", 0);
+        int chain_armor_b = sharedPref.getInt("chain_armor_b", 0);
         UpdateText();
+
+        if(quest_map_b == 0){
+            forest_temple.setVisibility(View.INVISIBLE);
+            forest_temple.setEnabled(false);
+        }
 
         //Calculations
         stone_axeb *= 5;
         stone_pickb *= 3;
         leaf_armorb *= 10;
-        stone_sword_b *= 20;
+        stone_sword_b *= 10;
+        //TODO make it not add stone/leaf
+        rusty_sword_b *= 20;
+        chain_armor_b *= 20;
         cooked_food_counter *= 2;
         boiled_water_counter *= 2;
-        percent_forest_temple = (stone_axeb + stone_pickb + leaf_armorb + stone_sword_b + cooked_food_counter + boiled_water_counter) / 108.0;
+        percent_forest_temple = (stone_axeb+ chain_armor_b + rusty_sword_b + stone_pickb + leaf_armorb + stone_sword_b + cooked_food_counter + boiled_water_counter) / 108.0;
         percent_forest_temple = Math.round(percent_forest_temple * 100);
 
 
@@ -134,8 +144,16 @@ public class Bosses extends Activity {
 
 
     }
-
-    public void UpdateText() {
+    @Override
+    public void onPause(){
+        SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        String log_text = log.getText().toString();
+        editor.putString("log_text",log_text);
+        editor.apply();
+        super.onPause();
+    }
+    public void UpdateText(){
         SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
         int wood_counter = sharedPref.getInt("wood", 0);
         int leaves_counter = sharedPref.getInt("leaves", 0);
@@ -145,31 +163,41 @@ public class Bosses extends Activity {
         int food_counter = sharedPref.getInt("food", 0);
         int cooked_food_counter = sharedPref.getInt("cooked_food", 0);
         int boiled_water_counter = sharedPref.getInt("boiled_water", 0);
+        int apple_counter = sharedPref.getInt("apples", 0);
+        int coin_counter = sharedPref.getInt("coins",0);
 
         storage.setText("\t Storage:");
-        if (wood_counter >= 1) {
+        if(wood_counter >= 1){
             storage.append("\n Wood: " + wood_counter);
         }
-        if (leaves_counter >= 1) {
+        if(leaves_counter >= 1){
             storage.append("\n Leaves: " + leaves_counter);
         }
-        if (stone_counter >= 1) {
+        if(stone_counter >= 1){
             storage.append("\n Stone: " + stone_counter);
         }
-        if (hard_wood_counter >= 1) {
+        if(hard_wood_counter >= 1){
             storage.append("\n Hard Wood: " + hard_wood_counter);
         }
-        if (dirty_water_counter >= 1) {
+        if(dirty_water_counter >= 1){
             storage.append("\n Dirty Water: " + dirty_water_counter + "/20L");
         }
-        if (food_counter >= 1) {
+        if(food_counter >= 1){
             storage.append("\n Food: " + food_counter + "/12Lb");
         }
-        if (cooked_food_counter >= 1) {
+        if(cooked_food_counter >= 1){
             storage.append("\n Cooked Food: " + cooked_food_counter + "/12Lb");
         }
-        if (boiled_water_counter >= 1) {
+        if(boiled_water_counter >= 1){
             storage.append("\n Boiled Water: " + boiled_water_counter + "/20L");
+        }
+        if(apple_counter >=1){
+            storage.append("\n Apples: " + apple_counter);
+        }
+
+
+        if(coin_counter >=1){
+            storage.append("\n \n \n Coins: " + coin_counter);
         }
 
 

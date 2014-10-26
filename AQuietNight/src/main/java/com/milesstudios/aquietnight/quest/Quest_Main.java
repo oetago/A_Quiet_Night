@@ -2,33 +2,31 @@ package com.milesstudios.aquietnight.quest;
 
 import android.app.ActionBar;
 import android.app.Activity;
-import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.ArrayAdapter;
-
 import android.widget.Button;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
 import com.milesstudios.aquietnight.Cave;
-import com.milesstudios.aquietnight.Crafting;
 import com.milesstudios.aquietnight.R;
-import com.milesstudios.aquietnight.crafting.Weapons_Armor;
 
 /**
  * Created by Ryanm14 on 10/15/2014.
  */
 public class Quest_Main extends Activity {
-Button storage;
+Button storage,wood_chopper,apple_collector,leaf_collector,hunter,purifier;
+int wood_counter,apple_counter,coin_counter;
+Boolean purifier_b,hunter_b,apple_collector_b,wood_chopper_b,leaf_collector_b;
+TextView log;
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
 
@@ -52,6 +50,7 @@ Button storage;
         getActionBar().show();
         getActionBar().setDisplayHomeAsUpEnabled(true);
         final SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
+
         // Adapter
         SpinnerAdapter adapter =
                 ArrayAdapter.createFromResource(this, R.array.quest,
@@ -87,76 +86,75 @@ Button storage;
         final TextView log = (TextView) findViewById(R.id.log);
         TextView storage = (TextView) findViewById(R.id.storage);
         final Button apple_collector = (Button) findViewById(R.id.quest_apple_collector);
-        final Button wood_chopper = (Button) findViewById(R.id.quest_wood_chooper);
+        final Button wood_chopper = (Button) findViewById(R.id.quest_wood_chopper);
+        final Button hunter = (Button) findViewById(R.id.hunter);
+        final Button purifier = (Button) findViewById(R.id.purifier);
+        final Button leaf_collector = (Button) findViewById(R.id.leaf_collector);
         //Saving
         final int wood_counter = sharedPref.getInt("wood", 0);
-        int leaves_counter = sharedPref.getInt("leaves", 0);
-        int stone_counter = sharedPref.getInt("stone", 0);
-        int stone_axeb = sharedPref.getInt("stone_axe", 0);
-        int stone_pickb = sharedPref.getInt("stone_pick", 0);
-        int leaf_armorb = sharedPref.getInt("leaf_armor", 0);
-        int hard_wood_counter= sharedPref.getInt("hard_wood", 0);
-        int workshop_b = sharedPref.getInt("workshop", 0);
+         hunter_b = sharedPref.getBoolean("hunter", false);
+         purifier_b = sharedPref.getBoolean("purifier", false);
+         wood_chopper_b = sharedPref.getBoolean("wood_chopper", false);
+         apple_collector_b = sharedPref.getBoolean("apple_collector", false);
+         leaf_collector_b = sharedPref.getBoolean("leaf_collector", false);
+         int hard_wood_counter= sharedPref.getInt("hard_wood", 0);
+        int stone_sword_b = sharedPref.getInt("stone_sword", 0);
+        int water_canteen_b = sharedPref.getInt("water_canteen", 0);
+
+        if(stone_sword_b == 0){
+            hunter.setVisibility(View.INVISIBLE);
+            hunter.setEnabled(false);
+            leaf_collector.setVisibility(View.INVISIBLE);
+            leaf_collector.setEnabled(false);
+
+        }
+        if(wood_chopper_b){
+            wood_chopper.setVisibility(View.INVISIBLE);
+            wood_chopper.setEnabled(false);
+        }
+        if(apple_collector_b){
+            apple_collector.setVisibility(View.INVISIBLE);
+            apple_collector.setEnabled(false);
+        }
+        if(leaf_collector_b){
+            leaf_collector.setVisibility(View.INVISIBLE);
+            leaf_collector.setEnabled(false);
+        }
+        if(hunter_b){
+            hunter.setVisibility(View.INVISIBLE);
+            hunter.setEnabled(false);
+        }
+        if(purifier_b){
+            purifier.setVisibility(View.INVISIBLE);
+            purifier.setEnabled(false);
+        }
+        if(water_canteen_b == 0){
+            purifier.setVisibility(View.INVISIBLE);
+            purifier.setEnabled(false);
+        }
         //UpdateText();
 
 
-        wood_chopper.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                AlertDialog.Builder alertDialog = new AlertDialog.Builder(Quest_Main.this); //Read Update
-                alertDialog.setTitle("Quest: Wood Chopper");
-                alertDialog.setMessage("Hello! I seem to have misplaced my wood can you go chop some for me? I will glady pay you\n Needs: 7 Wood");
-                alertDialog.setCancelable(true);
-                alertDialog.setInverseBackgroundForced(true);
-                LayoutInflater factory = LayoutInflater.from(Quest_Main.this);
-                final View view = factory.inflate(R.layout.image, null);
-                alertDialog.setView(view);
-                alertDialog.setNegativeButton("Be back soon", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-
-                });
-                alertDialog.setPositiveButton("Give him the items", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        int wood_counter = sharedPref.getInt("wood", 0);
-                        if (wood_counter >= 7) {
-                            log.append("\n You built a workshop!");
-                            wood_counter -= 7;
-                            wood_chopper.setEnabled(false);
-                            wood_chopper.setVisibility(View.INVISIBLE);
-                            SharedPreferences.Editor wood = sharedPref.edit();
-                            wood.putInt("wood", wood_counter);
-                            wood.apply();
-                        } else {
-                            log.append("\n You don't have enough resources!");
-                        }
-                        //UpdateText();
-                        dialog.dismiss();
-                    }
-
-                });
-                AlertDialog alert = alertDialog.create();
-                alert.show();
-
-
-            }
-        });
     }
 
-
-
-            @Override
-            public void onBackPressed() {
+     @Override
+     public void onBackPressed() {
                 Intent openMain = new Intent(Quest_Main.this, Cave.class);
                 startActivity(openMain);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
 
             }
+    @Override
+    public void onPause(){
+        SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+       // String log_text = log.getText().toString();
+       // editor.putString("log_text",log_text);
+        //editor.apply();
+        super.onPause();
+    }
 
-
-    public void UpdateText() {
+    public void UpdateText(){
         SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
         int wood_counter = sharedPref.getInt("wood", 0);
         int leaves_counter = sharedPref.getInt("leaves", 0);
@@ -167,37 +165,279 @@ Button storage;
         int cooked_food_counter = sharedPref.getInt("cooked_food", 0);
         int boiled_water_counter = sharedPref.getInt("boiled_water", 0);
         int apple_counter = sharedPref.getInt("apples", 0);
+        int coin_counter = sharedPref.getInt("coins",0);
 
         storage.setText("\t Storage:");
-        if (wood_counter >= 1) {
+        if(wood_counter >= 1){
             storage.append("\n Wood: " + wood_counter);
         }
-        if (leaves_counter >= 1) {
+        if(leaves_counter >= 1){
             storage.append("\n Leaves: " + leaves_counter);
         }
-        if (stone_counter >= 1) {
+        if(stone_counter >= 1){
             storage.append("\n Stone: " + stone_counter);
         }
-        if (hard_wood_counter >= 1) {
+        if(hard_wood_counter >= 1){
             storage.append("\n Hard Wood: " + hard_wood_counter);
         }
-        if (dirty_water_counter >= 1) {
+        if(dirty_water_counter >= 1){
             storage.append("\n Dirty Water: " + dirty_water_counter + "/20L");
         }
-        if (food_counter >= 1) {
+        if(food_counter >= 1){
             storage.append("\n Food: " + food_counter + "/12Lb");
         }
-        if (cooked_food_counter >= 1) {
+        if(cooked_food_counter >= 1){
             storage.append("\n Cooked Food: " + cooked_food_counter + "/12Lb");
         }
-        if (boiled_water_counter >= 1) {
+        if(boiled_water_counter >= 1){
             storage.append("\n Boiled Water: " + boiled_water_counter + "/20L");
         }
-        if (apple_counter >= 1) {
+        if(apple_counter >=1){
             storage.append("\n Apples: " + apple_counter);
         }
 
 
+        if(coin_counter >=1){
+            storage.append("\n \n \n Coins: " + coin_counter);
+        }
+
+
     }
+
+    public void buttonWoodChopper(View v) {
+        final SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
+                final Dialog dialog = new Dialog(Quest_Main.this);
+                dialog.setContentView(R.layout.quests_dialog);
+
+                TextView title = (TextView) dialog.findViewById(R.id.title);
+                TextView desc = (TextView) dialog.findViewById(R.id.desc);
+                Button accept = (Button) dialog.findViewById(R.id.accept);
+                Button decline = (Button) dialog.findViewById(R.id.decline);
+                final Button wood_chopper = (Button) findViewById(R.id.quest_wood_chopper);
+                final TextView log = (TextView) findViewById(R.id.log);
+                title.setText("Quest: Wood Chopper");
+                desc.setText("Hello! I seem to have misplaced my wood can you go chop some for me? I will glady pay you\n\n Needs: 7 Wood\n Reward: 3 Coins");
+                decline.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+
+                });
+                accept.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        int coin_counter = sharedPref.getInt("coins", 0);
+                        int wood_counter = sharedPref.getInt("wood", 0);
+                        if (wood_counter >= 7) {
+                            log.append("\n You earned 3 Coins!");
+                            wood_counter -= 7;
+                            coin_counter += 3;
+                            wood_chopper.setEnabled(false);
+                            wood_chopper.setVisibility(View.INVISIBLE);
+                            wood_chopper_b = true;
+                            SharedPreferences.Editor wood = sharedPref.edit();
+                            wood.putInt("coins",coin_counter);
+                            wood.putBoolean("wood_chopper",wood_chopper_b);
+                            wood.putInt("wood", wood_counter);
+                            wood.apply();
+                        } else {
+                            log.append("\n You don't have enough resources!");
+                        }
+                        dialog.dismiss();
+                    }
+                });
+                 dialog.show();
+
+
+            }
+    public void buttonAppleCollector(View v) {
+        final SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
+        final Dialog dialog = new Dialog(Quest_Main.this);
+        final TextView log = (TextView) findViewById(R.id.log);
+
+        dialog.setContentView(R.layout.quests_dialog);
+        final Button apple_collector = (Button) findViewById(R.id.quest_apple_collector);
+        TextView title = (TextView) dialog.findViewById(R.id.title);
+        TextView desc = (TextView) dialog.findViewById(R.id.desc);
+        Button accept = (Button) dialog.findViewById(R.id.accept);
+        Button decline = (Button) dialog.findViewById(R.id.decline);
+        title.setText("Quest: Apple Collector");
+        desc.setText("Hello! I seem to have misplaced my apples can you go chop some for me? I will glady pay you\n\n Needs: 3 Apples\n Reward: 6 Coins");
+        decline.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+
+        });
+        accept.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int apple_counter = sharedPref.getInt("apples", 0);
+                int coin_counter = sharedPref.getInt("coins", 0);
+                if (apple_counter >= 3) {
+                    log.append("\n You earned 6 Coins!");
+                    apple_counter -= 3;
+                    coin_counter += 6;
+                    apple_collector.setEnabled(false);
+                    apple_collector.setVisibility(View.INVISIBLE);
+                    apple_collector_b = true;
+                    SharedPreferences.Editor wood = sharedPref.edit();
+                    wood.putBoolean("apple_collector", apple_collector_b);
+                    wood.putInt("coins",coin_counter);
+                    wood.putInt("apples", apple_counter);
+                    wood.apply();
+                } else {
+                    log.append("\n You don't have enough resources!");
+                }
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+
+
+    }
+    public void buttonHunter(View v){
+        final SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
+        final Dialog dialog = new Dialog(Quest_Main.this);
+        dialog.setContentView(R.layout.quests_dialog);
+
+        TextView title = (TextView) dialog.findViewById(R.id.title);
+        TextView desc = (TextView) dialog.findViewById(R.id.desc);
+        Button accept = (Button) dialog.findViewById(R.id.accept);
+        Button decline = (Button) dialog.findViewById(R.id.decline);
+        final Button wood_chopper = (Button) findViewById(R.id.quest_wood_chopper);
+        final TextView log = (TextView) findViewById(R.id.log);
+        title.setText("Quest: Hunter");
+        desc.setText("I lost all my meat to the wolves, and my family are starving can you help me?\n\n Needs: 5 Cooked Meat\n Reward: 6 Coins");
+        decline.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+
+        });
+        accept.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int coin_counter = sharedPref.getInt("coins", 0);
+                int cooked_meat_counter = sharedPref.getInt("cooked_meat", 0);
+                if (cooked_meat_counter >= 5) {
+                    log.append("\n You earned 6 Coins!");
+                    cooked_meat_counter -= 5;
+                    coin_counter += 6;
+                    hunter.setEnabled(false);
+                    hunter.setVisibility(View.INVISIBLE);
+                    hunter_b = true;
+                    SharedPreferences.Editor wood = sharedPref.edit();
+                    wood.putInt("coins",coin_counter);
+                    wood.putBoolean("hunter", hunter_b);
+                    wood.putInt("cooked_meat", cooked_meat_counter);
+                    wood.apply();
+                } else {
+                    log.append("\n You don't have enough resources!");
+                }
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+
+
+    }
+    public void buttonLeafCollector(View v){
+        final SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
+        final Dialog dialog = new Dialog(Quest_Main.this);
+        dialog.setContentView(R.layout.quests_dialog);
+
+        TextView title = (TextView) dialog.findViewById(R.id.title);
+        TextView desc = (TextView) dialog.findViewById(R.id.desc);
+        Button accept = (Button) dialog.findViewById(R.id.accept);
+        Button decline = (Button) dialog.findViewById(R.id.decline);
+        final Button wood_chopper = (Button) findViewById(R.id.quest_wood_chopper);
+        final TextView log = (TextView) findViewById(R.id.log);
+        title.setText("Quest: Leaf Collector");
+        desc.setText("I only need 4 more leaves to complete my project, but I am tired can you get them for me?\n\n Needs: 4 Leaves\n Reward: 2 Coins");
+        decline.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+
+        });
+        accept.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int coin_counter = sharedPref.getInt("coins", 0);
+                int leaves_counter = sharedPref.getInt("leaves", 0);
+                if (leaves_counter >= 4) {
+                    log.append("\n You earned 6 Coins!");
+                    leaves_counter -= 4;
+                    coin_counter += 2;
+                    leaf_collector_b = true;
+                    leaf_collector.setEnabled(false);
+                    leaf_collector.setVisibility(View.INVISIBLE);
+                    SharedPreferences.Editor wood = sharedPref.edit();
+                    wood.putInt("coins",coin_counter);
+                    wood.putInt("leaves", leaves_counter);
+                    wood.putBoolean("leaf_collector",leaf_collector_b);
+                    wood.apply();
+                } else {
+                    log.append("\n You don't have enough resources!");
+                }
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+
+    }
+    public void buttonPurifier(View v){
+        final SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
+        final Dialog dialog = new Dialog(Quest_Main.this);
+        dialog.setContentView(R.layout.quests_dialog);
+
+        TextView title = (TextView) dialog.findViewById(R.id.title);
+        TextView desc = (TextView) dialog.findViewById(R.id.desc);
+        Button accept = (Button) dialog.findViewById(R.id.accept);
+        Button decline = (Button) dialog.findViewById(R.id.decline);
+        final Button wood_chopper = (Button) findViewById(R.id.quest_wood_chopper);
+        final TextView log = (TextView) findViewById(R.id.log);
+        title.setText("Quest: Purifier");
+        desc.setText("Someone took my clean water can you bring me 6L of clean water?\n\n Needs: 6L of Clean Water\n Reward: 6 Coins");
+        decline.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+
+        });
+        accept.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int coin_counter = sharedPref.getInt("coins", 0);
+                int clean_water_counter = sharedPref.getInt("clean_water",0);
+                if (clean_water_counter >= 6) {
+                    log.append("\n You earned 6 Coins!");
+                    clean_water_counter -= 6;
+                    coin_counter += 6;
+                    purifier.setEnabled(false);
+                    purifier_b = true;
+                    purifier.setVisibility(View.INVISIBLE);
+                    SharedPreferences.Editor wood = sharedPref.edit();
+                    wood.putInt("coins",coin_counter);
+                    wood.putInt("clean_water", clean_water_counter);
+                    wood.putBoolean("purifier", purifier_b);
+                    wood.apply();
+                } else {
+                    log.append("\n You don't have enough resources!");
+                }
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+    }
+
+
+
 }
 

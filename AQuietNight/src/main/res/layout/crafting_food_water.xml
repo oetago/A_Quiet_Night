@@ -8,12 +8,12 @@
         style="@drawable/button_shape"
         android:layout_width="120dp"
         android:layout_height="50dp"
-        android:layout_weight="1"
         android:layout_marginTop="20dp"
         android:text="Boil Water"
         android:layout_alignLeft="@+id/cook_food"
         android:layout_alignStart="@+id/cook_food"
-        android:longClickable="true"/>
+        android:onClick="buttonBoilWater"
+        android:background="@drawable/button_shape"/>
 
     <Button
         android:id="@+id/cook_food"
@@ -23,21 +23,21 @@
         android:layout_marginLeft="20dp"
         android:layout_marginTop="20dp"
         android:layout_below="@id/boil_water"
-        android:layout_weight="1"
         android:text="Cook Food"
-        android:longClickable="true"/>
+        android:background="@drawable/button_shape"
+        android:onClick="buttonCookFood"/>
 
     <Button
-        android:id="@+id/water_sac"
+        android:id="@+id/leaf_canteen"
         style="@drawable/button_shape"
         android:layout_width="120dp"
-        android:layout_height="50dp"
+        android:layout_height="57dp"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="20dp"
         android:layout_below="@id/cook_food"
-        android:layout_weight="1"
-        android:text="Water Sac"
-        android:longClickable="true"/>
+        android:text="Leaf Canteen"
+        android:background="@drawable/button_shape"
+        android:onClick="buttonLeafCanteen"/>
 
     <TextView
         android:id="@+id/log"

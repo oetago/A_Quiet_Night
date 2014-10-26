@@ -14,19 +14,19 @@
         android:textStyle="bold"
         android:layout_marginTop="20dp"
         android:text="Build:"
-        android:layout_alignParentTop="true" />
+        android:layout_alignParentTop="true"/>
 
     <Button
         android:id="@+id/fireplace"
         style="@drawable/button_shape"
         android:layout_width="120dp"
         android:layout_height="50dp"
-        android:layout_weight="1"
         android:text="Fireplace"
         android:layout_below="@+id/build_text"
         android:layout_alignLeft="@+id/workshop"
         android:layout_alignStart="@+id/workshop"
-        android:longClickable="true"/>
+        android:onClick="buttonFireplace"
+        android:background="@drawable/button_shape"/>
 
     <Button
         android:id="@+id/workshop"
@@ -36,21 +36,20 @@
         android:layout_marginLeft="20dp"
         android:layout_marginTop="20dp"
         android:layout_below="@id/fireplace"
-        android:layout_weight="1"
         android:text="Workshop"
-        android:longClickable="true"/>
+        android:onClick="buttonWorkshop"
+        android:background="@drawable/button_shape"/>
 
     <Button
         android:id="@+id/trade_post"
-        style="@drawable/button_shape"
+        android:background="@drawable/button_shape"
         android:layout_width="120dp"
         android:layout_height="50dp"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="20dp"
         android:layout_below="@id/workshop"
-        android:layout_weight="1"
         android:text="Trade Post"
-        android:longClickable="true"/>
+        android:onClick="buttonTradePost" />
 
 
 

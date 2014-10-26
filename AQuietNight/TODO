@@ -1,9 +1,9 @@
 ######## TODO LIST ##################
 For next patch
 
-1  More quests/fights
-2. Xml for quests and buildings
-3. Button styles / Button dim
-4. Log saved
-5. Animations
-6. New method class http://stackoverflow.com/questions/4153517/how-exactly-does-the-androidonclick-xml-attribute-differ-from-setonclicklistene
+1. Full storage for all items
+2. Append Text ontop of log
+3. Implement coins//
+4. Quests at the start//
+5. need map for first boss//
+
