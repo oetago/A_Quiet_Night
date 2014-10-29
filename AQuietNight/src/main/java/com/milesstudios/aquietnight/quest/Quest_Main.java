@@ -87,9 +87,9 @@ TextView log;
         TextView storage = (TextView) findViewById(R.id.storage);
         final Button apple_collector = (Button) findViewById(R.id.quest_apple_collector);
         final Button wood_chopper = (Button) findViewById(R.id.quest_wood_chopper);
-        final Button hunter = (Button) findViewById(R.id.hunter);
-        final Button purifier = (Button) findViewById(R.id.purifier);
-        final Button leaf_collector = (Button) findViewById(R.id.leaf_collector);
+        hunter = (Button) findViewById(R.id.hunter);
+        purifier = (Button) findViewById(R.id.purifier);
+        leaf_collector = (Button) findViewById(R.id.leaf_collector);
         //Saving
         final int wood_counter = sharedPref.getInt("wood", 0);
          hunter_b = sharedPref.getBoolean("hunter", false);
@@ -322,10 +322,10 @@ TextView log;
             @Override
             public void onClick(View v) {
                 int coin_counter = sharedPref.getInt("coins", 0);
-                int cooked_meat_counter = sharedPref.getInt("cooked_meat", 0);
-                if (cooked_meat_counter >= 5) {
+                int cooked_food_counter = sharedPref.getInt("cooked_food", 0);
+                if (cooked_food_counter >= 5) {
                     log.append("\n You earned 6 Coins!");
-                    cooked_meat_counter -= 5;
+                    cooked_food_counter -= 5;
                     coin_counter += 6;
                     hunter.setEnabled(false);
                     hunter.setVisibility(View.INVISIBLE);
@@ -333,7 +333,7 @@ TextView log;
                     SharedPreferences.Editor wood = sharedPref.edit();
                     wood.putInt("coins",coin_counter);
                     wood.putBoolean("hunter", hunter_b);
-                    wood.putInt("cooked_meat", cooked_meat_counter);
+                    wood.putInt("cooked_food", cooked_food_counter);
                     wood.apply();
                 } else {
                     log.append("\n You don't have enough resources!");
@@ -375,10 +375,11 @@ TextView log;
                     leaves_counter -= 4;
                     coin_counter += 2;
                     leaf_collector_b = true;
+                    //TODO Crashes
                     leaf_collector.setEnabled(false);
                     leaf_collector.setVisibility(View.INVISIBLE);
                     SharedPreferences.Editor wood = sharedPref.edit();
-                    wood.putInt("coins",coin_counter);
+                    wood.putInt("coins", coin_counter);
                     wood.putInt("leaves", leaves_counter);
                     wood.putBoolean("leaf_collector",leaf_collector_b);
                     wood.apply();

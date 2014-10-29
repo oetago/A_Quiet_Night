@@ -277,7 +277,7 @@ public class Food_Water extends ActivityGroup {
             }
 
         });
-        alertDialog.setNeutralButton("Boil 1L", new DialogInterface.OnClickListener() {
+        alertDialog.setNeutralButton("Cook 1L", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 int wood_counter = sharedPref.getInt("wood", 0);
                 int food_counter = sharedPref.getInt("food", 0);
@@ -340,6 +340,8 @@ public class Food_Water extends ActivityGroup {
         });
         alertDialog.setPositiveButton("Craft" , new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
+                Button leaf_canteen = (Button) findViewById(R.id.leaf_canteen);
+
                 int leaf_canteen_b = sharedPref.getInt("leaf_canteen", 0);
                 int leaves_counter = sharedPref.getInt("leaves", 0);
                 if (leaves_counter >= 6) {
@@ -348,6 +350,14 @@ public class Food_Water extends ActivityGroup {
                     leaf_canteen_b = 1;
                     leaf_canteen.setEnabled(false);
                     leaf_canteen.setVisibility(View.INVISIBLE);
+
+
+                    //Save counter
+                    SharedPreferences.Editor editor = sharedPref.edit();
+                    editor.putInt("leaf_canteen", leaf_canteen_b);
+                    editor.putInt("leaves", leaves_counter);
+                    editor.apply();
+                    updateText();
                 } else {
                     log.append("\n You don't have enough resources!");
                 }
@@ -357,13 +367,6 @@ public class Food_Water extends ActivityGroup {
         AlertDialog alert = alertDialog.create();
         alert.show();
 
-
-                //Save counter
-                SharedPreferences.Editor editor = sharedPref.edit();
-                editor.putInt("leaf_canteen", leaf_canteen_b);
-                editor.putInt("leaves", leaves_counter);
-                editor.apply();
-                updateText();
             }
     }
 

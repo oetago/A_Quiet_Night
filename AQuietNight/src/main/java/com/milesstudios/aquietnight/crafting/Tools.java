@@ -25,7 +25,8 @@ import com.milesstudios.aquietnight.R;
  */
 public class Tools extends ActivityGroup {
     int wood_counter, leaves_counter, stone_counter, stone_axeb, stone_pickb, hard_wood_counter, workshop_b;
-    Button stone_axe, stone_pick;
+    Button stone_axe, stone_pick, anvil, copper_pick, copper_axe;
+    Boolean anvil_b,copper_axe_b,copper_pick_b;
     TextView log, storage;
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -93,6 +94,9 @@ public class Tools extends ActivityGroup {
         storage = (TextView) findViewById(R.id.storage);
         stone_axe = (Button) findViewById(R.id.stone_axe);
         stone_pick = (Button) findViewById(R.id.stone_pick);
+        anvil= (Button) findViewById(R.id.anvil);
+        copper_pick= (Button) findViewById(R.id.copper_pick);
+        copper_axe= (Button) findViewById(R.id.copper_axe);
         log.setTextSize(11);
         storage.setTextSize(15);
         //Saving
@@ -102,9 +106,29 @@ public class Tools extends ActivityGroup {
         int stone_axeb = sharedPref.getInt("stone_axe", 0);
         int stone_pickb = sharedPref.getInt("stone_pick", 0);
         int workshop_b = sharedPref.getInt("workshop", 0);
+
+        Boolean anvil_b = sharedPref.getBoolean("anvil", false);
+        Boolean copper_pick_b = sharedPref.getBoolean("copper_pick", false);
+        Boolean copper_axe_b = sharedPref.getBoolean("copper_axe", false);
         final String log_text = sharedPref.getString("log_text", "");
+        Boolean forest_temple_b = sharedPref.getBoolean("forest_temple", false);
         log.setText(log_text);
 
+        if (anvil_b || !forest_temple_b){
+            anvil.setVisibility(View.INVISIBLE);
+            anvil.setEnabled(false);
+
+        }
+        if (copper_pick_b || !forest_temple_b){
+            copper_pick.setVisibility(View.INVISIBLE);
+            copper_pick.setEnabled(false);
+
+        }
+        if (copper_axe_b || !forest_temple_b){
+            copper_axe.setVisibility(View.INVISIBLE);
+            copper_axe.setEnabled(false);
+
+        }
         if (stone_axeb == 1){
             stone_axe.setVisibility(View.INVISIBLE);
             stone_axe.setEnabled(false);
@@ -262,6 +286,125 @@ public class Tools extends ActivityGroup {
                 editor.putInt("wood", wood_counter);
                 editor.putInt("stone_pick", stone_pickb);
                 editor.putInt("stone", stone_counter);
+                editor.apply();
+                UpdateText();
+            }
+
+            ;
+
+        });
+        AlertDialog alert = alertDialog.create();
+        alert.show();
+    }
+    public void buttonAnvil(View v) {
+        final SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(Tools.this);
+        alertDialog.setTitle("Craft: Anvil");
+        alertDialog.setMessage("Copper: 5");
+        alertDialog.setNegativeButton("Exit", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+
+        });
+        alertDialog.setPositiveButton("Craft" , new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                int copper_counter = sharedPref.getInt("copper", 0);
+                Boolean anvil_b = sharedPref.getBoolean("anvil",false);
+                if (copper_counter >= 5){
+                    log.append("\n You crafted an Anvil!");
+                    copper_counter -= 5;
+                    anvil.setEnabled(false);
+                    anvil.setVisibility(View.INVISIBLE);
+                    anvil_b = true;
+                }else{
+                    log.append("\n You don't have enough resources!");
+                }
+                //Save counter
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putInt("copper", copper_counter);
+                editor.putBoolean("anvil", anvil_b);
+                editor.apply();
+                UpdateText();
+            }
+
+            ;
+
+        });
+        AlertDialog alert = alertDialog.create();
+        alert.show();
+    }
+    //TODO  Add function to the tools
+    public void buttonCopperPick(View v) {
+        final SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(Tools.this);
+        alertDialog.setTitle("Craft: Copper Pick");
+        alertDialog.setMessage("Wood: 3 \nCopper: 4");
+        alertDialog.setNegativeButton("Exit", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+
+        });
+        alertDialog.setPositiveButton("Craft" , new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                int wood_counter = sharedPref.getInt("wood", 0);
+                int copper_counter = sharedPref.getInt("copper",0);
+                if (copper_counter >= 4 && wood_counter >= 3){
+                    log.append("\n You crafted a Copper Pick!");
+                    copper_counter -= 4;
+                    wood_counter -= 3;
+                    copper_pick.setEnabled(false);
+                    copper_pick.setVisibility(View.INVISIBLE);
+                    copper_pick_b = true;
+                }else{
+                    log.append("\n You don't have enough resources!");
+                }
+                //Save counter
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putInt("wood", wood_counter);
+                editor.putBoolean("copper_pick", copper_pick_b);
+                editor.putInt("copper", copper_counter);
+                editor.apply();
+                UpdateText();
+            }
+
+            ;
+
+        });
+        AlertDialog alert = alertDialog.create();
+        alert.show();
+    }
+    public void buttonCopperAxe(View v) {
+        final SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(Tools.this);
+        alertDialog.setTitle("Craft: Copper Axe");
+        alertDialog.setMessage("Wood: 2 \nCopper: 4");
+        alertDialog.setNegativeButton("Exit", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+
+        });
+        alertDialog.setPositiveButton("Craft" , new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                int wood_counter = sharedPref.getInt("wood", 0);
+                int copper_counter = sharedPref.getInt("copper",0);
+                if (copper_counter >= 4 && wood_counter >= 2){
+                    log.append("\n You crafted a Copper Axe!");
+                    copper_counter -= 4;
+                    wood_counter -= 2;
+                    copper_axe.setEnabled(false);
+                    copper_axe.setVisibility(View.INVISIBLE);
+                    copper_axe_b = true;
+                }else{
+                    log.append("\n You don't have enough resources!");
+                }
+                //Save counter
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putInt("wood", wood_counter);
+                editor.putBoolean("copper_axe", copper_axe_b);
+                editor.putInt("copper", copper_counter);
                 editor.apply();
                 UpdateText();
             }

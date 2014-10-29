@@ -19,7 +19,7 @@
     </style>
   </head>
   <body>
-$ 2.1.1
+$ 1
   % Version A 0.02 
   _ 2014-10-25
     * New AlertDialogs
@@ -33,10 +33,10 @@ $ 2.1.1
 	* Quests to start out
 	* New Quests Xml
 	* New Sword/Armor
-$ 2.0.8
+	* More Items and Buildings
+$ 0.01
   % Version A 0.01
   _ 2014-10-0
-    * <span style="font-family:monospace">cl.isFirstRunEver()</span> added
     * Previous App
 
 $ END_OF_CHANGE_LOG

@@ -18,7 +18,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -60,19 +59,23 @@ public class Cave extends Activity{
         int workshop_b = sharedPref.getInt("workshop", 0);
         int quest_map_b = sharedPref.getInt("quest_map", 0);
         int start_counter = sharedPref.getInt("start_counter", 0);
+        Boolean forest_temple_b = sharedPref.getBoolean("forest_temple",false);
         final Animation anim = AnimationUtils.loadAnimation(this, R.anim.log);
         final Animation storage_anim_slide = AnimationUtils.loadAnimation(this, R.anim.storage_slide);
         final Animation storage_anim_slide2 = AnimationUtils.loadAnimation(this, R.anim.storage_slide2);
         SharedPreferences.Editor editor = sharedPref.edit();
         final TextView cave_tab  = (TextView) findViewById(R.id.cave_tab);
         final TextView forest_tab  = (TextView) findViewById(R.id.forest_tab);
+        final TextView cave_tab_wmine  = (TextView) findViewById(R.id.cave_tab_wmine);
+        final TextView forest_tab_wmine  = (TextView) findViewById(R.id.forest_tab_wmine);
+        final TextView mine_tab  = (TextView) findViewById(R.id.mine_tab);
         final Button storage_slide = (Button) findViewById(R.id.storage_slide);
 
 
 
 
         UpdateText();
-        cave_tab.setPaintFlags(cave_tab.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+         cave_tab.setPaintFlags(cave_tab.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         cave_tab.setTextSize(20);
         //forest_tab.setPaintFlags(forest_tab.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         forest_tab.setTextSize(20);
@@ -85,6 +88,20 @@ public class Cave extends Activity{
         // log.setMovementMethod(new ScrollingMovementMethod());
         log.setTextSize(12);
         storage.setTextSize(15);
+
+        if(forest_temple_b == false){
+            cave_tab_wmine.setEnabled(false);
+            cave_tab_wmine.setVisibility(View.INVISIBLE);
+            forest_tab_wmine.setEnabled(false);
+            forest_tab_wmine.setVisibility(View.INVISIBLE);
+            mine_tab.setEnabled(false);
+            mine_tab.setVisibility(View.INVISIBLE);
+        }else{
+            cave_tab.setEnabled(false);
+            cave_tab.setVisibility(View.INVISIBLE);
+            forest_tab.setEnabled(false);
+            forest_tab.setVisibility(View.INVISIBLE);
+        }
 
         boolean intro = false;
         editor.putBoolean("intro", intro);
@@ -149,6 +166,26 @@ public class Cave extends Activity{
         //TODO Check other buttons and scaling
 
         forest_tab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent openForest = new Intent(Cave.this, Forest.class);
+                startActivity(openForest);
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
+
+            }
+
+        });
+        mine_tab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent openForest = new Intent(Cave.this, Mine.class);
+                startActivity(openForest);
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
+
+            }
+
+        });
+        forest_tab_wmine.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent openForest = new Intent(Cave.this, Forest.class);
@@ -229,21 +266,7 @@ public class Cave extends Activity{
             }
 
         });
-        final WebView webview = (WebView) findViewById(R.id.rain);
-        webview.setVisibility(View.INVISIBLE);
-        quests.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                // TODO Auto-generated method stub
-                webview.setVisibility(View.VISIBLE);
-                //next line explained below
-                //webview.setWebViewClient(new MyWebViewClient(this));
-                //webview.getSettings().setJavaScriptEnabled(true);
-                webview.loadUrl("http://i.imgur.com/mq4pjzo.gif");
-                return true;
 
-            }
-        });
 
 
         all_data.setOnClickListener(new View.OnClickListener() {
@@ -289,7 +312,7 @@ public class Cave extends Activity{
         editor.clear();
         editor.apply();
         UpdateText();
-        Intent openMain = new Intent(Cave.this, Cave.class);
+        Intent openMain = new Intent(Cave.this, splash.class);
         startActivity(openMain);
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
     }

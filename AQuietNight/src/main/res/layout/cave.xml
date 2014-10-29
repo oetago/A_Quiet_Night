@@ -7,7 +7,32 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
         <!--xmlns:ads="http://schemas.android.com/apk/res-auto" -->
+    <TextView
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:text="A Damp Cave"
+        android:id="@+id/cave_tab"
+        android:clickable="true"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignLeft="@+id/quests"
+        android:layout_alignStart="@+id/quests" />
 
+    <TextView
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:text="A Warm Forest"
+        android:id="@+id/forest_tab"
+
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_alignTop="@+id/cave_tab"
+        android:layout_alignLeft="@+id/buildings"
+        android:layout_alignStart="@+id/buildings"
+        android:layout_alignRight="@+id/buildings"
+        android:layout_alignEnd="@+id/buildings" />
     <Button
             android:id="@+id/quests"
             style="@drawable/button_shape"
@@ -99,39 +124,45 @@
         android:layout_alignRight="@+id/crafting"
         android:layout_alignEnd="@+id/crafting" />
 
-            <TextView
-                android:layout_width="150dp"
-                android:layout_height="50dp"
-                android:text="A Damp Cave"
-                android:clickable="true"
-                android:id="@+id/cave_tab"
-                android:fontFamily="sans-serif"
-                android:textStyle="bold"
-                android:gravity="center"
-                android:layout_marginTop="10dp"
-                android:layout_alignParentTop="true"
-                android:layout_alignLeft="@+id/quests"
-                android:layout_alignStart="@+id/quests" />
 
-            <TextView
-                android:layout_width="150dp"
-                android:layout_height="50dp"
-                android:text="A Warm Forest"
-                android:clickable="true"
-                android:id="@+id/forest_tab"
-                android:fontFamily="sans-serif"
-                android:textStyle="bold"
-                android:gravity="center"
-                android:layout_alignTop="@+id/cave_tab"
-                android:layout_alignLeft="@+id/buildings"
-                android:layout_alignStart="@+id/buildings" />
-            <WebView
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:id="@+id/rain"
-                android:layout_above="@+id/trading"
-                android:layout_toLeftOf="@+id/storage_slide"
-                android:layout_toStartOf="@+id/storage_slide"></WebView>
+    <TextView
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:text="A Damp Cave"
+        android:clickable="true"
+        android:layout_marginTop="7dp"
+        android:id="@+id/cave_tab_wmine"
+        android:fontFamily="sans-serif"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/forest_tab_wmine"
+        android:layout_toStartOf="@+id/forest_tab_wmine" />
+
+    <TextView
+        android:layout_width="125dp"
+        android:layout_height="50dp"
+        android:text="A Warm Forest"
+        android:clickable="true"
+        android:layout_marginTop="7dp"
+        android:id="@+id/forest_tab_wmine"
+        android:fontFamily="sans-serif"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_centerHorizontal="true" />
+    <TextView
+        android:layout_width="125dp"
+        android:layout_height="50dp"
+        android:text="A Old Mine"
+        android:layout_marginTop="7dp"
+        android:clickable="true"
+        android:id="@+id/mine_tab"
+        android:fontFamily="sans-serif"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
 
 
 </RelativeLayout>

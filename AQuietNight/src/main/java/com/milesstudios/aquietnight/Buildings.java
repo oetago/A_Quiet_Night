@@ -17,8 +17,9 @@ import android.widget.TextView;
 public class Buildings extends ActivityGroup {
 
     int wood_counter, leaves_counter, stone_counter, fireplace_b, workshop_b, trade_post_b;
-    Button fireplace, workshop, trade_post;
+    Button fireplace, workshop, trade_post, rebuild_mine, smithery, tannery;
     TextView log, storage;
+    Boolean mine_b, tannery_b, smithery_b;
 
 
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -53,6 +54,9 @@ public class Buildings extends ActivityGroup {
         fireplace = (Button) findViewById(R.id.fireplace);
         trade_post = (Button) findViewById(R.id.trade_post);
         workshop = (Button) findViewById(R.id.workshop);
+         rebuild_mine = (Button) findViewById(R.id.rebuild_mine);
+         smithery = (Button) findViewById(R.id.smithery);
+         tannery = (Button) findViewById(R.id.tannery);
         log.setTextSize(11);
         storage.setTextSize(15);
         //Saving
@@ -64,6 +68,31 @@ public class Buildings extends ActivityGroup {
         int workshop_b = sharedPref.getInt("workshop", 0);
         int trade_post_b = sharedPref.getInt("trade_post", 0);
         int stone_sword_b = sharedPref.getInt("stone_sword", 0);
+        smithery_b = sharedPref.getBoolean("smithery", false);
+        tannery_b = sharedPref.getBoolean("tannery", false);
+        Boolean forest_temple_b = sharedPref.getBoolean("forest_temple",false);
+        mine_b = sharedPref.getBoolean("mine",false);
+
+        if(forest_temple_b == false){
+            rebuild_mine.setEnabled(false);
+            rebuild_mine.setVisibility(View.INVISIBLE);
+            smithery.setEnabled(false);
+            smithery.setVisibility(View.INVISIBLE);
+            tannery.setEnabled(false);
+            tannery.setVisibility(View.INVISIBLE);
+        }
+        if(mine_b == true){
+            rebuild_mine.setEnabled(false);
+            rebuild_mine.setVisibility(View.INVISIBLE);
+        }
+        if(tannery_b == true){
+            tannery.setEnabled(false);
+            tannery.setVisibility(View.INVISIBLE);
+        }
+        if(smithery_b == true){
+            smithery.setEnabled(false);
+            smithery.setVisibility(View.INVISIBLE);
+        }
 
         if (fireplace_b == 1) {
             fireplace.setEnabled(false);
@@ -276,6 +305,126 @@ public class Buildings extends ActivityGroup {
                 editor.putInt("wood", wood_counter);
                 editor.putInt("trade_post", trade_post_b);
                 editor.putInt("leaves", leaves_counter);
+                editor.apply();
+                UpdateText();
+                dialog.dismiss();
+            }
+        });
+        AlertDialog alert = alertDialog.create();
+        alert.show();
+    }
+
+    public void buttonRebuildMine(View v) {
+        final SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(Buildings.this);
+        alertDialog.setTitle("Build: Mine");
+        alertDialog.setMessage("Wood: 20 \n Stone: 15");
+        alertDialog.setNegativeButton("Exit", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        alertDialog.setPositiveButton("Build", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                int wood_counter = sharedPref.getInt("wood", 0);
+                int stone_counter = sharedPref.getInt("stone", 0);
+                if (stone_counter >= 15 && wood_counter >= 20) {
+                    //TODO Change later items required
+                    log.append("\n You rebuilt the mine!");
+                    stone_counter -= 15;
+                    wood_counter -= 20;
+                    mine_b = true;
+                    rebuild_mine.setEnabled(false);
+                    rebuild_mine.setVisibility(View.INVISIBLE);
+                } else {
+                    log.append("\n You don't have enough resources!");
+                }
+                //Save counter
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putInt("wood", wood_counter);
+                editor.putBoolean("mine", mine_b);
+                editor.putInt("stone", stone_counter);
+                editor.apply();
+                UpdateText();
+                dialog.dismiss();
+            }
+        });
+        AlertDialog alert = alertDialog.create();
+        alert.show();
+    }
+
+    public void buttonTannery(View v) {
+        final SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(Buildings.this);
+        alertDialog.setTitle("Build: Tannery");
+        alertDialog.setMessage("Wood: 10 \n Stone: 15 \n Leaves: 10");
+        alertDialog.setNegativeButton("Exit", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        alertDialog.setPositiveButton("Build", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                int wood_counter = sharedPref.getInt("wood", 0);
+                int stone_counter = sharedPref.getInt("stone", 0);
+                int leaves_counter = sharedPref.getInt("leaves", 0);
+                if (stone_counter >= 15 && wood_counter >= 10 && leaves_counter >= 10) {
+                    //TODO Change later items required
+                    log.append("\n You built a Tannery!");
+                    stone_counter -= 15;
+                    wood_counter -= 10;
+                    leaves_counter -= 10;
+                    Boolean tannery_b = true;
+                    tannery.setEnabled(false);
+                    tannery.setVisibility(View.INVISIBLE);
+                } else {
+                    log.append("\n You don't have enough resources!");
+                }
+                //Save counter
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putInt("wood", wood_counter);
+                editor.putBoolean("tannery", tannery_b);
+                editor.putInt("stone", stone_counter);
+                editor.putInt("leaves", leaves_counter);
+                editor.apply();
+                UpdateText();
+                dialog.dismiss();
+            }
+        });
+        AlertDialog alert = alertDialog.create();
+        alert.show();
+    }
+
+    public void buttonSmithery(View v) {
+        final SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(Buildings.this);
+        alertDialog.setTitle("Build: Smithery");
+        alertDialog.setMessage("Wood: 15 \n Stone: 25");
+        alertDialog.setNegativeButton("Exit", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        alertDialog.setPositiveButton("Build", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                int wood_counter = sharedPref.getInt("wood", 0);
+                int stone_counter = sharedPref.getInt("stone", 0);
+                if (stone_counter >= 25 && wood_counter >= 15) {
+                    //TODO Change later items required
+                    log.append("\n You built a Tannery!");
+                    stone_counter -= 25;
+                    wood_counter -= 15;
+                    Boolean smithery_b = true;
+                    smithery.setEnabled(false);
+                    smithery.setVisibility(View.INVISIBLE);
+                } else {
+                    log.append("\n You don't have enough resources!");
+                }
+                //Save counter
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putInt("wood", wood_counter);
+                editor.putBoolean("smithery", smithery_b);
+                editor.putInt("stone", stone_counter);
                 editor.apply();
                 UpdateText();
                 dialog.dismiss();

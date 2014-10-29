@@ -236,7 +236,7 @@ public class Trade extends ActivityGroup {
                 int coins_counter = sharedPref.getInt("coins", 0);
                 int chain_armor_b = sharedPref.getInt("chain_armor",0);
                 if (coins_counter >= 5){
-                    log.append("\n You traded for a quest map!");
+                    log.append("\n You traded for Chain Armor!");
                     coins_counter -= 5;
                     chain_armor_b = 1;
                     SharedPreferences.Editor editor = sharedPref.edit();

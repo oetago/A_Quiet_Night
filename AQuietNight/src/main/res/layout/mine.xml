@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/gather_text"
+        android:layout_width="50dp"
+        android:layout_height="25dp"
+        android:layout_alignLeft="@+id/copper"
+        android:layout_alignRight="@+id/copper"
+        android:layout_alignEnd="@+id/copper"
+        android:layout_marginTop="60dp"
+        android:textStyle="bold"
+        android:text="Mine:"
+        android:layout_alignParentTop="true" />
+
+    <Button
+        android:minWidth="100dp"
+        android:id="@+id/copper"
+        style="@drawable/button_shape"
+        android:layout_width="140dp"
+        android:layout_height="50dp"
+        android:layout_weight="1"
+        android:text="Copper"
+        android:layout_below="@+id/gather_text"
+        android:layout_alignLeft="@+id/coal"
+        android:layout_alignStart="@+id/coal"
+        android:background="@drawable/button_shape"
+        android:layout_alignRight="@+id/coal"
+        android:layout_alignEnd="@+id/coal"
+        android:onClick="buttonCopper"/>
+
+    <Button
+        android:id="@+id/coal"
+        style="@drawable/button_shape"
+        android:layout_width="125dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/copper"
+        android:layout_weight="1"
+        android:text="Coal"
+        android:background="@drawable/button_shape"
+        android:onClick="buttonCoal"/>
+
+
+
+
+
+
+
+
+
+
+
+    <TextView
+        android:id="@+id/log"
+        android:layout_width="150dp"
+        android:layout_height="100dp"
+        android:textStyle="bold"
+        android:layout_alignParentBottom="true"
+        android:layout_alignLeft="@+id/coal"
+        android:layout_alignStart="@+id/coal"
+        android:maxLines = "20"
+        android:scrollbars = "vertical"/>
+
+    <TextView
+        android:id="@+id/storage"
+        android:layout_width="150dp"
+        android:layout_height="200dp"
+        android:textStyle="bold"
+        android:layout_toEndOf="@+id/log"
+        android:layout_alignBottom="@+id/log"
+        android:layout_toRightOf="@+id/log"
+        android:maxLines = "400"
+        android:scrollbars = "vertical" />
+
+    <ProgressBar
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="20dp"
+        android:layout_height="10dp"
+        android:id="@+id/wood_bar"
+        android:progress="0"
+        android:layout_alignBottom="@+id/copper"
+        android:layout_alignRight="@+id/copper"
+        android:layout_alignEnd="@+id/copper"
+        android:layout_alignLeft="@+id/copper"
+        android:layout_alignStart="@+id/copper"/>
+
+    <ProgressBar
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="20dp"
+        android:layout_height="10dp"
+        android:id="@+id/leaves_bar"
+        android:progress="0"
+        android:layout_alignBottom="@+id/coal"
+        android:layout_alignLeft="@+id/coal"
+        android:layout_alignStart="@+id/coal"
+        android:layout_alignRight="@+id/coal"
+        android:layout_alignEnd="@+id/coal" />
+
+
+    <TextView
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:text="A Damp Cave"
+        android:clickable="true"
+        android:id="@+id/cave_tab"
+        android:fontFamily="sans-serif"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentTop="true"/>
+
+    <TextView
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:text="A Warm Forest"
+        android:clickable="true"
+        android:id="@+id/forest_tab"
+        android:fontFamily="sans-serif"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_alignTop="@+id/forest_tab_wmine"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:text="A Damp Cave"
+        android:clickable="true"
+        android:layout_marginTop="7dp"
+        android:id="@+id/cave_tab_wmine"
+        android:fontFamily="sans-serif"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/forest_tab_wmine"
+        android:layout_toStartOf="@+id/forest_tab_wmine" />
+
+    <TextView
+        android:layout_width="125dp"
+        android:layout_height="50dp"
+        android:text="A Warm Forest"
+        android:clickable="true"
+        android:layout_marginTop="7dp"
+        android:id="@+id/forest_tab_wmine"
+        android:fontFamily="sans-serif"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_centerHorizontal="true" />
+    <TextView
+        android:layout_width="125dp"
+        android:layout_height="50dp"
+        android:text="A Old Mine"
+        android:layout_marginTop="7dp"
+        android:clickable="true"
+        android:id="@+id/mine_tab"
+        android:fontFamily="sans-serif"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+
+
+
+</RelativeLayout>

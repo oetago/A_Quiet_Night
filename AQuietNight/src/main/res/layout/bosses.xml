@@ -24,7 +24,8 @@
         android:layout_weight="1"
         android:text="Forest Temple"
         android:layout_below="@+id/quest_text"
-        android:longClickable="true"/>
+        android:longClickable="true"
+        android:background="@drawable/button_shape"/>
 
 
 

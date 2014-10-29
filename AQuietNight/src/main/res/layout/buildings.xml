@@ -27,6 +27,17 @@
         android:layout_alignStart="@+id/workshop"
         android:onClick="buttonFireplace"
         android:background="@drawable/button_shape"/>
+    <Button
+        android:id="@+id/rebuild_mine"
+        style="@drawable/button_shape"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:text="Rebuild Mine"
+        android:layout_below="@+id/build_text"
+        android:layout_alignLeft="@+id/workshop"
+        android:layout_alignStart="@+id/workshop"
+        android:onClick="buttonRebuildMine"
+        android:background="@drawable/button_shape"/>
 
     <Button
         android:id="@+id/workshop"
@@ -41,6 +52,18 @@
         android:background="@drawable/button_shape"/>
 
     <Button
+        android:id="@+id/smithery"
+        style="@drawable/button_shape"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/fireplace"
+        android:text="Smithery"
+        android:onClick="buttonSmithery"
+        android:background="@drawable/button_shape"/>
+
+    <Button
         android:id="@+id/trade_post"
         android:background="@drawable/button_shape"
         android:layout_width="120dp"
@@ -50,6 +73,16 @@
         android:layout_below="@id/workshop"
         android:text="Trade Post"
         android:onClick="buttonTradePost" />
+    <Button
+        android:id="@+id/tannery"
+        android:background="@drawable/button_shape"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/workshop"
+        android:text="Tannery"
+        android:onClick="buttonTannery" />
 
 
 

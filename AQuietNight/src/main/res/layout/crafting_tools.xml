@@ -17,6 +17,19 @@
         android:background="@drawable/button_shape"/>
 
     <Button
+        android:id="@+id/anvil"
+        style="@drawable/button_shape"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:layout_weight="1"
+        android:layout_marginTop="20dp"
+        android:text="Anvil"
+        android:layout_alignLeft="@+id/stone_axe"
+        android:layout_alignStart="@+id/stone_axe"
+        android:onClick="buttonAnvil"
+        android:background="@drawable/button_shape"/>
+
+    <Button
         android:id="@+id/stone_axe"
         style="@drawable/button_shape"
         android:layout_width="120dp"
@@ -28,6 +41,32 @@
         android:text="Stone Axe"
         android:onClick="buttonStoneAxe"
         android:background="@drawable/button_shape"/>
+    <Button
+        android:id="@+id/copper_pick"
+        style="@drawable/button_shape"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/stone_pick"
+        android:layout_weight="1"
+        android:text="Copper Pick"
+        android:onClick="buttonCopperPick"
+        android:background="@drawable/button_shape"/>
+
+    <Button
+        android:id="@+id/copper_axe"
+        style="@drawable/button_shape"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/copper_pick"
+        android:layout_weight="1"
+        android:text="Copper Axe"
+        android:onClick="buttonCopperAxe"
+        android:background="@drawable/button_shape"/>
+
 
     <TextView
         android:id="@+id/log"

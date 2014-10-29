@@ -28,6 +28,7 @@ public class Bosses extends Activity {
     int stone_pickb, stone_axeb, leaf_armorb;
     double percent_forest_temple;
     Button forest_temple;
+    Boolean forest_temple_b;
     TextView log, storage, percent_forest_temple_view;
 
 
@@ -91,6 +92,8 @@ public class Bosses extends Activity {
         percent_forest_temple_view = (TextView) findViewById(R.id.percent_forest_temple);
         log.setTextSize(11);
         storage.setTextSize(15);
+        //True = completed
+        forest_temple_b = sharedPref.getBoolean("forest_temple",false);
         //Saving
         int stone_axeb = sharedPref.getInt("stone_axe", 0);
         int stone_pickb = sharedPref.getInt("stone_pick", 0);
@@ -103,7 +106,7 @@ public class Bosses extends Activity {
         int chain_armor_b = sharedPref.getInt("chain_armor_b", 0);
         UpdateText();
 
-        if(quest_map_b == 0){
+        if(quest_map_b == 0 || forest_temple_b == true){
             forest_temple.setVisibility(View.INVISIBLE);
             forest_temple.setEnabled(false);
         }
@@ -130,6 +133,22 @@ public class Bosses extends Activity {
 
                 if (forest_temple_chance < percent_forest_temple) {
                     log.append("You won!");
+                    log.append("You found some wood, stone, and coins");
+                    int wood_counter = sharedPref.getInt("wood",0);
+                    int stone_counter = sharedPref.getInt("stone",0);
+                    int coin_counter = sharedPref.getInt("coins",0);
+                    wood_counter += 5;
+                    stone_counter += 6;
+                    coin_counter += 5;
+                    forest_temple.setEnabled(false);
+                    forest_temple.setVisibility(View.INVISIBLE);
+                    forest_temple_b = true;
+                    SharedPreferences.Editor wood = sharedPref.edit();
+                    wood.putBoolean("forest_temple", forest_temple_b);
+                    wood.putInt("stone", stone_counter);
+                    wood.putInt("wood", wood_counter);
+                    wood.putInt("coins",coin_counter);
+                    wood.apply();
                 } else {
                     log.append("You died!");
                 }
