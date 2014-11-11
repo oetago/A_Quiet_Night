@@ -73,7 +73,7 @@ public class Buildings extends ActivityGroup {
         Boolean forest_temple_b = sharedPref.getBoolean("forest_temple",false);
         mine_b = sharedPref.getBoolean("mine",false);
 
-        if(forest_temple_b == false){
+        if(!forest_temple_b){
             rebuild_mine.setEnabled(false);
             rebuild_mine.setVisibility(View.INVISIBLE);
             smithery.setEnabled(false);
@@ -81,15 +81,15 @@ public class Buildings extends ActivityGroup {
             tannery.setEnabled(false);
             tannery.setVisibility(View.INVISIBLE);
         }
-        if(mine_b == true){
+        if(mine_b){
             rebuild_mine.setEnabled(false);
             rebuild_mine.setVisibility(View.INVISIBLE);
         }
-        if(tannery_b == true){
+        if(tannery_b){
             tannery.setEnabled(false);
             tannery.setVisibility(View.INVISIBLE);
         }
-        if(smithery_b == true){
+        if(smithery_b){
             smithery.setEnabled(false);
             smithery.setVisibility(View.INVISIBLE);
         }
@@ -113,16 +113,13 @@ public class Buildings extends ActivityGroup {
             fireplace.setEnabled(false);
             fireplace.setVisibility(View.INVISIBLE);
         }
-        if (stone_sword_b == 0) {
-            trade_post.setEnabled(false);
-            trade_post.setVisibility(View.INVISIBLE);
-        }
-        UpdateText();
+
+        updateText();
 
 
     }
 
-    public void UpdateText(){
+    public void updateText() {
         SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
         int wood_counter = sharedPref.getInt("wood", 0);
         int leaves_counter = sharedPref.getInt("leaves", 0);
@@ -133,39 +130,48 @@ public class Buildings extends ActivityGroup {
         int cooked_food_counter = sharedPref.getInt("cooked_food", 0);
         int boiled_water_counter = sharedPref.getInt("boiled_water", 0);
         int apple_counter = sharedPref.getInt("apples", 0);
-        int coin_counter = sharedPref.getInt("coins",0);
+        int coin_counter = sharedPref.getInt("coins", 0);
+        int copper_counter = sharedPref.getInt("copper",0);
+        int r_copper_counter = sharedPref.getInt("r_copper",0);
+        int coal_counter = sharedPref.getInt("coal",0);
 
         storage.setText("\t Storage:");
-        if(wood_counter >= 1){
+        if (wood_counter >= 1) {
             storage.append("\n Wood: " + wood_counter);
         }
-        if(leaves_counter >= 1){
+        if (leaves_counter >= 1) {
             storage.append("\n Leaves: " + leaves_counter);
         }
-        if(stone_counter >= 1){
+        if (stone_counter >= 1) {
             storage.append("\n Stone: " + stone_counter);
         }
-        if(hard_wood_counter >= 1){
-            storage.append("\n Hard Wood: " + hard_wood_counter);
+        if (copper_counter >= 1) {
+            storage.append("\n Raw Copper: " + copper_counter);
         }
-        if(dirty_water_counter >= 1){
+        if (r_copper_counter >= 1) {
+            storage.append("\n Refined Copper: " + r_copper_counter);
+        }
+        if (coal_counter >= 1) {
+            storage.append("\n Coal: " + coal_counter);
+        }
+        if (dirty_water_counter >= 1) {
             storage.append("\n Dirty Water: " + dirty_water_counter + "/20L");
         }
-        if(food_counter >= 1){
+        if (food_counter >= 1) {
             storage.append("\n Food: " + food_counter + "/12Lb");
         }
-        if(cooked_food_counter >= 1){
+        if (cooked_food_counter >= 1) {
             storage.append("\n Cooked Food: " + cooked_food_counter + "/12Lb");
         }
-        if(boiled_water_counter >= 1){
+        if (boiled_water_counter >= 1) {
             storage.append("\n Boiled Water: " + boiled_water_counter + "/20L");
         }
-        if(apple_counter >=1){
+        if (apple_counter >= 1) {
             storage.append("\n Apples: " + apple_counter);
         }
 
 
-        if(coin_counter >=1){
+        if (coin_counter >= 1) {
             storage.append("\n \n \n Coins: " + coin_counter);
         }
 
@@ -205,10 +211,10 @@ public class Buildings extends ActivityGroup {
                 int wood_counter = sharedPref.getInt("wood", 0);
                 int stone_counter = sharedPref.getInt("stone", 0);
                 int fireplace_b = sharedPref.getInt("fireplace", 0);
-                if (stone_counter >= 12 && wood_counter >= 7) {
+                if (stone_counter >= 7 && wood_counter >= 12) {
                     log.append("\n You lit a Fireplace!");
-                    stone_counter -= 12;
-                    wood_counter -= 7;
+                    stone_counter -= 7;
+                    wood_counter -= 12;
                     fireplace_b = 1;
                     fireplace.setEnabled(false);
                     fireplace.setVisibility(View.INVISIBLE);
@@ -223,7 +229,7 @@ public class Buildings extends ActivityGroup {
                 editor.putInt("stone", stone_counter);
                 editor.putInt("fireplace", fireplace_b);
                 editor.apply();
-                UpdateText();
+                updateText();
                 dialog.dismiss();
             }
 
@@ -265,7 +271,7 @@ public class Buildings extends ActivityGroup {
                 editor.putInt("stone", stone_counter);
                 editor.putInt("workshop", workshop_b);
                 editor.apply();
-                UpdateText();
+                updateText();
                 dialog.dismiss();
             }
 
@@ -306,7 +312,7 @@ public class Buildings extends ActivityGroup {
                 editor.putInt("trade_post", trade_post_b);
                 editor.putInt("leaves", leaves_counter);
                 editor.apply();
-                UpdateText();
+                updateText();
                 dialog.dismiss();
             }
         });
@@ -345,7 +351,7 @@ public class Buildings extends ActivityGroup {
                 editor.putBoolean("mine", mine_b);
                 editor.putInt("stone", stone_counter);
                 editor.apply();
-                UpdateText();
+                updateText();
                 dialog.dismiss();
             }
         });
@@ -387,7 +393,7 @@ public class Buildings extends ActivityGroup {
                 editor.putInt("stone", stone_counter);
                 editor.putInt("leaves", leaves_counter);
                 editor.apply();
-                UpdateText();
+                updateText();
                 dialog.dismiss();
             }
         });
@@ -426,7 +432,7 @@ public class Buildings extends ActivityGroup {
                 editor.putBoolean("smithery", smithery_b);
                 editor.putInt("stone", stone_counter);
                 editor.apply();
-                UpdateText();
+                updateText();
                 dialog.dismiss();
             }
         });

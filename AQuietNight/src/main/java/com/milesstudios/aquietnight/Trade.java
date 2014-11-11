@@ -69,12 +69,10 @@ public class Trade extends ActivityGroup {
             quest_map.setEnabled(false);
         }
         if(rusty_sword_b == 1){
-            quest_map.setVisibility(View.INVISIBLE);
-            quest_map.setEnabled(false);
+            rusty_sword.setVisibility(View.GONE);
         }
         if(chain_armor_b == 1){
-            quest_map.setVisibility(View.INVISIBLE);
-            quest_map.setEnabled(false);
+            chain_armor.setVisibility(View.GONE);
         }
 
 
@@ -84,7 +82,7 @@ public class Trade extends ActivityGroup {
     }
 
 
-    public void updateText(){
+    public void updateText() {
         SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
         int wood_counter = sharedPref.getInt("wood", 0);
         int leaves_counter = sharedPref.getInt("leaves", 0);
@@ -95,39 +93,48 @@ public class Trade extends ActivityGroup {
         int cooked_food_counter = sharedPref.getInt("cooked_food", 0);
         int boiled_water_counter = sharedPref.getInt("boiled_water", 0);
         int apple_counter = sharedPref.getInt("apples", 0);
-        int coin_counter = sharedPref.getInt("coins",0);
+        int coin_counter = sharedPref.getInt("coins", 0);
+        int copper_counter = sharedPref.getInt("copper",0);
+        int r_copper_counter = sharedPref.getInt("r_copper",0);
+        int coal_counter = sharedPref.getInt("coal",0);
 
         storage.setText("\t Storage:");
-        if(wood_counter >= 1){
+        if (wood_counter >= 1) {
             storage.append("\n Wood: " + wood_counter);
         }
-        if(leaves_counter >= 1){
+        if (leaves_counter >= 1) {
             storage.append("\n Leaves: " + leaves_counter);
         }
-        if(stone_counter >= 1){
+        if (stone_counter >= 1) {
             storage.append("\n Stone: " + stone_counter);
         }
-        if(hard_wood_counter >= 1){
-            storage.append("\n Hard Wood: " + hard_wood_counter);
+        if (copper_counter >= 1) {
+            storage.append("\n Raw Copper: " + copper_counter);
         }
-        if(dirty_water_counter >= 1){
+        if (r_copper_counter >= 1) {
+            storage.append("\n Refined Copper: " + r_copper_counter);
+        }
+        if (coal_counter >= 1) {
+            storage.append("\n Coal: " + coal_counter);
+        }
+        if (dirty_water_counter >= 1) {
             storage.append("\n Dirty Water: " + dirty_water_counter + "/20L");
         }
-        if(food_counter >= 1){
+        if (food_counter >= 1) {
             storage.append("\n Food: " + food_counter + "/12Lb");
         }
-        if(cooked_food_counter >= 1){
+        if (cooked_food_counter >= 1) {
             storage.append("\n Cooked Food: " + cooked_food_counter + "/12Lb");
         }
-        if(boiled_water_counter >= 1){
+        if (boiled_water_counter >= 1) {
             storage.append("\n Boiled Water: " + boiled_water_counter + "/20L");
         }
-        if(apple_counter >=1){
+        if (apple_counter >= 1) {
             storage.append("\n Apples: " + apple_counter);
         }
 
 
-        if(coin_counter >=1){
+        if (coin_counter >= 1) {
             storage.append("\n \n \n Coins: " + coin_counter);
         }
 
@@ -199,7 +206,7 @@ public class Trade extends ActivityGroup {
                 int coins_counter = sharedPref.getInt("coins", 0);
                 int rusty_sword_b = sharedPref.getInt("rusty_sword",0);
                 if (coins_counter >= 7){
-                    log.append("\n You traded for a quest map!");
+                    log.append("\n You traded for a Rusty Sword!");
                     coins_counter -= 7;
                     rusty_sword_b = 1;
                     SharedPreferences.Editor editor = sharedPref.edit();

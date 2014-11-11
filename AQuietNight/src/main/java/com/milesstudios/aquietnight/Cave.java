@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Paint;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.view.Menu;
@@ -47,7 +48,7 @@ public class Cave extends Activity{
             cl.getLogDialog().show();
         //cl.getFullLogDialog().show();
         //Tab
-        int mine_b = sharedPref.getInt("mine", 0);
+        //Boolean mine_b = sharedPref.getBoolean("mine", false);
         crafting = (Button) findViewById(R.id.crafting);
         buildings = (Button) findViewById(R.id.buildings);
         trading = (Button) findViewById(R.id.trading);
@@ -60,6 +61,7 @@ public class Cave extends Activity{
         int quest_map_b = sharedPref.getInt("quest_map", 0);
         int start_counter = sharedPref.getInt("start_counter", 0);
         Boolean forest_temple_b = sharedPref.getBoolean("forest_temple",false);
+        Boolean rebuild_mine_b = sharedPref.getBoolean("mine",false);
         final Animation anim = AnimationUtils.loadAnimation(this, R.anim.log);
         final Animation storage_anim_slide = AnimationUtils.loadAnimation(this, R.anim.storage_slide);
         final Animation storage_anim_slide2 = AnimationUtils.loadAnimation(this, R.anim.storage_slide2);
@@ -74,7 +76,7 @@ public class Cave extends Activity{
 
 
 
-        UpdateText();
+        updateText();
          cave_tab.setPaintFlags(cave_tab.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         cave_tab.setTextSize(20);
         //forest_tab.setPaintFlags(forest_tab.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
@@ -89,7 +91,7 @@ public class Cave extends Activity{
         log.setTextSize(12);
         storage.setTextSize(15);
 
-        if(forest_temple_b == false){
+        if(!rebuild_mine_b){
             cave_tab_wmine.setEnabled(false);
             cave_tab_wmine.setVisibility(View.INVISIBLE);
             forest_tab_wmine.setEnabled(false);
@@ -107,13 +109,17 @@ public class Cave extends Activity{
         editor.putBoolean("intro", intro);
         editor.apply();
 
-        if(trade_post_b ==0){
+        if(trade_post_b == 0){
             trading.setVisibility(View.INVISIBLE);
             trading.setEnabled(false);
-        }else{
+        }else if (trade_post_b == 1) {
+            trade_post_b += 1;
+            editor.putInt("trade_post", trade_post_b);
+            editor.apply();
             anim.reset();
             trading.clearAnimation();
             trading.startAnimation(anim);
+
         }
         all_data.setVisibility(View.INVISIBLE);
         all_data.setEnabled(false);
@@ -298,6 +304,13 @@ public class Cave extends Activity{
                 // help action
                 Clear_Data();
                 return true;
+            case R.id.action_data:
+                // help action
+                AllData();
+                return true;
+            case R.id.action_share:
+                sendEmail();
+                return true;
 
             default:
                 return super.onOptionsItemSelected(item);
@@ -311,7 +324,7 @@ public class Cave extends Activity{
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.clear();
         editor.apply();
-        UpdateText();
+        updateText();
         Intent openMain = new Intent(Cave.this, splash.class);
         startActivity(openMain);
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
@@ -333,10 +346,10 @@ public class Cave extends Activity{
         editor.putInt("trade_post", 1);
         editor.putInt("apples", 99999);
         editor.apply();
-        UpdateText();
+        updateText();
     }
 
-    public void UpdateText(){
+    public void updateText() {
         SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
         int wood_counter = sharedPref.getInt("wood", 0);
         int leaves_counter = sharedPref.getInt("leaves", 0);
@@ -347,39 +360,48 @@ public class Cave extends Activity{
         int cooked_food_counter = sharedPref.getInt("cooked_food", 0);
         int boiled_water_counter = sharedPref.getInt("boiled_water", 0);
         int apple_counter = sharedPref.getInt("apples", 0);
-        int coin_counter = sharedPref.getInt("coins",0);
+        int coin_counter = sharedPref.getInt("coins", 0);
+        int copper_counter = sharedPref.getInt("copper",0);
+        int r_copper_counter = sharedPref.getInt("r_copper",0);
+        int coal_counter = sharedPref.getInt("coal",0);
 
         storage.setText("\t Storage:");
-        if(wood_counter >= 1){
+        if (wood_counter >= 1) {
             storage.append("\n Wood: " + wood_counter);
         }
-        if(leaves_counter >= 1){
+        if (leaves_counter >= 1) {
             storage.append("\n Leaves: " + leaves_counter);
         }
-        if(stone_counter >= 1){
+        if (stone_counter >= 1) {
             storage.append("\n Stone: " + stone_counter);
         }
-        if(hard_wood_counter >= 1){
-            storage.append("\n Hard Wood: " + hard_wood_counter);
+        if (copper_counter >= 1) {
+            storage.append("\n Raw Copper: " + copper_counter);
         }
-        if(dirty_water_counter >= 1){
+        if (r_copper_counter >= 1) {
+            storage.append("\n Refined Copper: " + r_copper_counter);
+        }
+        if (coal_counter >= 1) {
+            storage.append("\n Coal: " + coal_counter);
+        }
+        if (dirty_water_counter >= 1) {
             storage.append("\n Dirty Water: " + dirty_water_counter + "/20L");
         }
-        if(food_counter >= 1){
+        if (food_counter >= 1) {
             storage.append("\n Food: " + food_counter + "/12Lb");
         }
-        if(cooked_food_counter >= 1){
+        if (cooked_food_counter >= 1) {
             storage.append("\n Cooked Food: " + cooked_food_counter + "/12Lb");
         }
-        if(boiled_water_counter >= 1){
+        if (boiled_water_counter >= 1) {
             storage.append("\n Boiled Water: " + boiled_water_counter + "/20L");
         }
-        if(apple_counter >=1){
+        if (apple_counter >= 1) {
             storage.append("\n Apples: " + apple_counter);
         }
 
 
-        if(coin_counter >=1){
+        if (coin_counter >= 1) {
             storage.append("\n \n \n Coins: " + coin_counter);
         }
 
@@ -395,5 +417,14 @@ public class Cave extends Activity{
 
     }
 
+    public void sendEmail(){
+        Intent intent = new Intent(Intent.ACTION_SENDTO); // it's not ACTION_SEND
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_SUBJECT, "Bugs and Feedback");
+        intent.putExtra(Intent.EXTRA_TEXT, "I found bugs/feeback: \n *");
+        intent.setData(Uri.parse("mailto:ryanm1114@gmail.com")); // or just "mailto:" for blank
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); // this will make such that when user returns to your app, your app is displayed, instead of the email app.
+        startActivity(intent);
+    }
 
 }

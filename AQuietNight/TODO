@@ -1,22 +1,30 @@
 ######## TODO LIST ##################
 For next patch
+2 different verions for debug (clear,allitems)
 
-1. Full storage for all items
+
+
+
+
+Check:
+12. Hunter quest not accepting enoguh resources
+
+Later:
+9. Can get more than 12/ waer food (later)
+4. Cutsceene after forest Temple
 2. Append Text ontop of log
 3. Intro Font
-4. Cutsceene after forest Temple
+1. Full storage for all items
+20. Visiblity gone
+21. craft anvil first
+22.chnage raw copper just to copper
+
+Complted:
 5. Adjust timeings of coal and copper and add text
-6. Buttons slide up
 7. Dialog and counter for axe/pick sonte/ wood
 8. hunt bar broken when switching
-9. Can get more than 12/ waer food
+13. Loop on trading Fading in
 10. check for canteen before boilig
 11. LEaf canteen crashes
-12. Hunter quest not accepting enoguh resources
-13. Loop on trading Fading in
-14. trsding after bought make them invis
-15. tradin not saving
-16. smelt copper first?
-17. quest to hard?
 18. copper pick and axe crash
 19. rebuild mine first

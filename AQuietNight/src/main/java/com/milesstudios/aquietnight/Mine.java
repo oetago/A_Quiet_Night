@@ -9,7 +9,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Paint;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v4.app.FragmentActivity;
@@ -85,17 +84,12 @@ public class Mine extends FragmentActivity {
         storage.setTextSize(15);
 
         //TODO UNDERLINELING
-        final TextView cave_tab = (TextView) findViewById(R.id.cave_tab);
-        final TextView forest_tab = (TextView) findViewById(R.id.forest_tab);
         final TextView cave_tab_wmine = (TextView) findViewById(R.id.cave_tab_wmine);
         final TextView forest_tab_wmine = (TextView) findViewById(R.id.forest_tab_wmine);
         final TextView mine_tab = (TextView) findViewById(R.id.mine_tab);
-        cave_tab.setTextSize(20);
-        forest_tab.setPaintFlags(forest_tab.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-        forest_tab.setTextSize(20);
-        Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/TNRB.ttf");
-        cave_tab.setTypeface(tf);
-        forest_tab.setTypeface(tf);
+
+        mine_tab.setPaintFlags(mine_tab.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+
 
         //Gets crafting and buildings
         final int stone_axeb = sharedPref.getInt("stone_axe", 0);
@@ -112,10 +106,20 @@ public class Mine extends FragmentActivity {
         updateText();
 
         //"Tab Button"
-        cave_tab.setOnClickListener(new View.OnClickListener() {
+        cave_tab_wmine.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent openCave = new Intent(Mine.this, Cave.class);
+                startActivity(openCave);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+
+            }
+
+        });
+        forest_tab_wmine.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent openCave = new Intent(Mine.this, Forest.class);
                 startActivity(openCave);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
 
@@ -176,6 +180,9 @@ public class Mine extends FragmentActivity {
         int boiled_water_counter = sharedPref.getInt("boiled_water", 0);
         int apple_counter = sharedPref.getInt("apples", 0);
         int coin_counter = sharedPref.getInt("coins", 0);
+        int copper_counter = sharedPref.getInt("copper",0);
+        int r_copper_counter = sharedPref.getInt("r_copper",0);
+        int coal_counter = sharedPref.getInt("coal",0);
 
         storage.setText("\t Storage:");
         if (wood_counter >= 1) {
@@ -187,8 +194,14 @@ public class Mine extends FragmentActivity {
         if (stone_counter >= 1) {
             storage.append("\n Stone: " + stone_counter);
         }
-        if (hard_wood_counter >= 1) {
-            storage.append("\n Hard Wood: " + hard_wood_counter);
+        if (copper_counter >= 1) {
+            storage.append("\n Raw Copper: " + copper_counter);
+        }
+        if (r_copper_counter >= 1) {
+            storage.append("\n Refined Copper: " + r_copper_counter);
+        }
+        if (coal_counter >= 1) {
+            storage.append("\n Coal: " + coal_counter);
         }
         if (dirty_water_counter >= 1) {
             storage.append("\n Dirty Water: " + dirty_water_counter + "/20L");
@@ -222,23 +235,19 @@ public class Mine extends FragmentActivity {
     public void updateCoal() {
         SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
         long coal_systemtime = sharedPref.getLong("coal_systemtime", 0);
-        long coal_update = coal_systemtime + 9000;
+        long coal_update = coal_systemtime + 13000;
         if (coal_update >= System.currentTimeMillis()) {
             coal.setEnabled(false);
             coal_bar.setVisibility(View.VISIBLE);
             long coal_remaining = coal_update - System.currentTimeMillis();
-            s = (((int) coal_remaining * -1 + 9000) / 90) - 1;
+            s = (((int) coal_remaining * -1 + 13000) / 130) - 1;
             long coal_remaining2 = coal_remaining / (100 - s);
             coal_timer = new CountDownTimer(coal_remaining, coal_remaining2) {
 
                 @Override
                 public void onTick(long millisUntilFinishedl) {
-                    // Log.w("Update", "Tick of Progress" + w + " " + millisUntilFinishedw);
-
                     s++;
                     coal_bar.setProgress(s);
-
-
                 }
 
                 @Override
@@ -247,7 +256,6 @@ public class Mine extends FragmentActivity {
                     coal_bar.setVisibility(View.INVISIBLE);
                     s = 0;
                     coal_bar.setProgress(s);
-
                 }
             };
             coal_timer.start();
@@ -262,12 +270,12 @@ public class Mine extends FragmentActivity {
     public void updateCopper() {
         SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
         long copper_systemtime = sharedPref.getLong("copper_systemtime", 0);
-        long copper_update = copper_systemtime + 9000;
+        long copper_update = copper_systemtime + 18000;
         if (copper_update >= System.currentTimeMillis()) {
             copper.setEnabled(false);
             copper_bar.setVisibility(View.VISIBLE);
             long copper_remaining = copper_update - System.currentTimeMillis();
-            w = (((int) copper_remaining * -1 + 9000) / 90) - 1;
+            w = (((int) copper_remaining * -1 + 18000) / 180) - 1;
             long copper_remaining2 = copper_remaining / (100 - w);
             copper_timer = new CountDownTimer(copper_remaining, copper_remaining2) {
 
@@ -275,7 +283,6 @@ public class Mine extends FragmentActivity {
                 public void onTick(long millisUntilFinishedd) {
                     w++;
                     copper_bar.setProgress(w);
-
 
                 }
 
@@ -309,11 +316,10 @@ public class Mine extends FragmentActivity {
 
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putInt("copper", copper_counter);
-        editor.apply();
         editor.putLong("copper_systemtime", System.currentTimeMillis());
         editor.apply();
         updateText();
-        copper_timer = new CountDownTimer(9000, 90) {
+        copper_timer = new CountDownTimer(18000, 180) {
 
 
             @Override
@@ -327,8 +333,6 @@ public class Mine extends FragmentActivity {
             public void onFinish() {
                 copper.setEnabled(true);
                 copper_bar.setVisibility(View.INVISIBLE);
-
-                //Do what you want
                 w = 0;
                 copper_bar.setProgress(w);
 

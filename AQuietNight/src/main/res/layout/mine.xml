@@ -107,31 +107,6 @@
         android:layout_height="50dp"
         android:text="A Damp Cave"
         android:clickable="true"
-        android:id="@+id/cave_tab"
-        android:fontFamily="sans-serif"
-        android:textStyle="bold"
-        android:gravity="center"
-        android:layout_marginTop="10dp"
-        android:layout_alignParentTop="true"/>
-
-    <TextView
-        android:layout_width="150dp"
-        android:layout_height="50dp"
-        android:text="A Warm Forest"
-        android:clickable="true"
-        android:id="@+id/forest_tab"
-        android:fontFamily="sans-serif"
-        android:textStyle="bold"
-        android:gravity="center"
-        android:layout_alignTop="@+id/forest_tab_wmine"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-
-    <TextView
-        android:layout_width="150dp"
-        android:layout_height="50dp"
-        android:text="A Damp Cave"
-        android:clickable="true"
         android:layout_marginTop="7dp"
         android:id="@+id/cave_tab_wmine"
         android:fontFamily="sans-serif"

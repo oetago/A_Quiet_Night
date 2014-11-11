@@ -21,7 +21,7 @@
   <body>
 $ 1
   % Version A 0.02 
-  _ 2014-10-25
+  _ 2014-11-11
     * New AlertDialogs
     * Intro story (Ty Tose!)
 	* Optimzed Buttons in Code
@@ -34,6 +34,8 @@ $ 1
 	* New Quests Xml
 	* New Sword/Armor
 	* More Items and Buildings
+	* Added feedback
+	* Better Distr.
 $ 0.01
   % Version A 0.01
   _ 2014-10-0

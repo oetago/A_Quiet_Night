@@ -198,5 +198,42 @@
         android:layout_alignStart="@+id/dirty_water"
         android:layout_alignRight="@+id/dirty_water"
         android:layout_alignEnd="@+id/dirty_water" />
+    <TextView
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:text="A Damp Cave"
+        android:clickable="true"
+        android:layout_marginTop="7dp"
+        android:id="@+id/cave_tab_wmine"
+        android:fontFamily="sans-serif"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/forest_tab_wmine"
+        android:layout_toStartOf="@+id/forest_tab_wmine" />
+
+    <TextView
+        android:layout_width="125dp"
+        android:layout_height="50dp"
+        android:text="A Warm Forest"
+        android:clickable="true"
+        android:layout_marginTop="7dp"
+        android:id="@+id/forest_tab_wmine"
+        android:fontFamily="sans-serif"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_centerHorizontal="true" />
+    <TextView
+        android:layout_width="125dp"
+        android:layout_height="50dp"
+        android:text="A Old Mine"
+        android:layout_marginTop="7dp"
+        android:clickable="true"
+        android:id="@+id/mine_tab"
+        android:fontFamily="sans-serif"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>
