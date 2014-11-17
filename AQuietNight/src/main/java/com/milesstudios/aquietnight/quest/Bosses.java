@@ -133,7 +133,7 @@ public class Bosses extends Activity {
 
                 if (forest_temple_chance < percent_forest_temple) {
                     log.append("You won!");
-                    log.append("You found some wood, stone, and coins");
+                    log.append("You found some wood, stones, and coins");
                     int wood_counter = sharedPref.getInt("wood",0);
                     int stone_counter = sharedPref.getInt("stone",0);
                     int coin_counter = sharedPref.getInt("coins",0);

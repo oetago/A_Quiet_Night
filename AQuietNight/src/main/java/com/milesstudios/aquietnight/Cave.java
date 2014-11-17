@@ -24,9 +24,8 @@ import android.widget.TextView;
 
 import com.milesstudios.aquietnight.quest.Quest_Main;
 import com.milesstudios.aquietnight.util.ChangeLog;
-
-//import com.google.android.gms.ads.AdRequest;
-//import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 public class Cave extends Activity{
     Button buildings, trading, crafting, quests, forest_button, all_data;
@@ -53,7 +52,6 @@ public class Cave extends Activity{
         buildings = (Button) findViewById(R.id.buildings);
         trading = (Button) findViewById(R.id.trading);
         quests = (Button) findViewById(R.id.quests);
-        all_data = (Button) findViewById(R.id.all_data);
         log = (TextView) findViewById(R.id.log);
         storage = (TextView) findViewById(R.id.storage);
         int trade_post_b = sharedPref.getInt("trade_post", 0);
@@ -71,7 +69,6 @@ public class Cave extends Activity{
         final TextView cave_tab_wmine  = (TextView) findViewById(R.id.cave_tab_wmine);
         final TextView forest_tab_wmine  = (TextView) findViewById(R.id.forest_tab_wmine);
         final TextView mine_tab  = (TextView) findViewById(R.id.mine_tab);
-        final Button storage_slide = (Button) findViewById(R.id.storage_slide);
 
 
 
@@ -121,8 +118,7 @@ public class Cave extends Activity{
             trading.startAnimation(anim);
 
         }
-        all_data.setVisibility(View.INVISIBLE);
-        all_data.setEnabled(false);
+
         if (start_counter == 0) {
             quests.setEnabled(false);
             quests.setVisibility(View.INVISIBLE);
@@ -158,18 +154,13 @@ public class Cave extends Activity{
         log.setText(log_text);
 
 
-        //TODO chnage animation for the 3 of them?
-        // Look up the AdView as a resource and load a request.
+        AdView adView = (AdView) this.findViewById(R.id.ad);
+         AdRequest adRequest = new AdRequest.Builder()
+                 .addTestDevice("50FD485A980BE577B48D1D26061025A1")
+                 .tagForChildDirectedTreatment(true)
+                 .build();
 
-
-        //AdView adView = (AdView) this.findViewById(R.id.ad);
-        // AdRequest adRequest = new AdRequest.Builder().build();
-        //adView.loadAd(adRequest);
-
-
-        // all_data.setVisibility(View.INVISIBLE);
-        all_data.setEnabled(true);
-        //TODO Check other buttons and scaling
+        adView.loadAd(adRequest);
 
         forest_tab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -214,31 +205,6 @@ public class Cave extends Activity{
         });
 
 
-        if(!storage_slide_b){
-            storage.setVisibility(View.INVISIBLE);
-        }
-        storage_slide.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-               // new PathAnimation(storage).animate();
-                if(storage_slide_b){
-                    storage.clearAnimation();
-                    storage.startAnimation(storage_anim_slide2);
-                    storage.setVisibility(View.INVISIBLE);
-                    storage_slide_b = false;
-                }else {
-                    storage.setVisibility(View.INVISIBLE);
-                    storage.clearAnimation();
-                    storage.startAnimation(storage_anim_slide);
-                    storage_slide_b = true;
-                        storage.setVisibility(View.VISIBLE);
-
-                }
-
-
-            }
-
-        });
 
 
         buildings.setOnClickListener(new View.OnClickListener() {
@@ -273,16 +239,6 @@ public class Cave extends Activity{
 
         });
 
-
-
-        all_data.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AllData();
-
-            }
-
-        });
 
 
     }
@@ -407,7 +363,6 @@ public class Cave extends Activity{
 
 
     }
-
 
     @Override
     public void onBackPressed() {

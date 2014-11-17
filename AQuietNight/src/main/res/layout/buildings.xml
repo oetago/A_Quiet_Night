@@ -12,7 +12,7 @@
         android:layout_alignRight="@+id/fireplace"
         android:layout_alignEnd="@+id/fireplace"
         android:textStyle="bold"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:text="Build:"
         android:layout_alignParentTop="true"/>
 
@@ -32,8 +32,9 @@
         style="@drawable/button_shape"
         android:layout_width="120dp"
         android:layout_height="50dp"
-        android:text="Rebuild Mine"
-        android:layout_below="@+id/build_text"
+        android:text="Mine"
+        android:layout_below="@+id/trade_post"
+        android:layout_marginTop="10dp"
         android:layout_alignLeft="@+id/workshop"
         android:layout_alignStart="@+id/workshop"
         android:onClick="buttonRebuildMine"
@@ -45,7 +46,7 @@
         android:layout_width="120dp"
         android:layout_height="50dp"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_below="@id/fireplace"
         android:text="Workshop"
         android:onClick="buttonWorkshop"
@@ -57,8 +58,8 @@
         android:layout_width="120dp"
         android:layout_height="50dp"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_below="@id/fireplace"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/rebuild_mine"
         android:text="Smithery"
         android:onClick="buttonSmithery"
         android:background="@drawable/button_shape"/>
@@ -69,7 +70,7 @@
         android:layout_width="120dp"
         android:layout_height="50dp"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_below="@id/workshop"
         android:text="Trade Post"
         android:onClick="buttonTradePost" />
@@ -79,8 +80,8 @@
         android:layout_width="120dp"
         android:layout_height="50dp"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_below="@id/workshop"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/smithery"
         android:text="Tannery"
         android:onClick="buttonTannery" />
 

@@ -15,7 +15,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
-
 import com.milesstudios.aquietnight.Cave;
 import com.milesstudios.aquietnight.R;
 
