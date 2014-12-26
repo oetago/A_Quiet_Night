@@ -63,18 +63,18 @@ public class Crafting extends ActivityGroup {
 
             @Override
             public boolean onNavigationItemSelected(int position, long id) {
-                if(items[position].equals("Crafting")){
+                if (items[position].equals("Crafting")) {
 
                 }
-                if(items[position].equals("Weapons and Armor")){
+                if (items[position].equals("Weapons and Armor")) {
                     Intent openWeapons_Armor = new Intent(Crafting.this, Weapons_Armor.class);
                     startActivity(openWeapons_Armor);
                 }
-                if(items[position].equals("Tools")){
+                if (items[position].equals("Tools")) {
                     Intent openTools = new Intent(Crafting.this, Tools.class);
                     startActivity(openTools);
                 }
-                if(items[position].equals("Food and Water")){
+                if (items[position].equals("Food and Water")) {
                     Intent openFood_Water = new Intent(Crafting.this, Food_Water.class);
                     startActivity(openFood_Water);
                 }
@@ -103,7 +103,7 @@ public class Crafting extends ActivityGroup {
         int stone_axeb = sharedPref.getInt("stone_axe", 0);
         int stone_pickb = sharedPref.getInt("stone_pick", 0);
         int leaf_armorb = sharedPref.getInt("leaf_armor", 0);
-        int hard_wood_counter= sharedPref.getInt("hard_wood", 0);
+        int hard_wood_counter = sharedPref.getInt("hard_wood", 0);
         int workshop_b = sharedPref.getInt("workshop", 0);
 
         updateText();
@@ -111,22 +111,21 @@ public class Crafting extends ActivityGroup {
         //Going back to crafting tab
         int weapons_armor = sharedPref.getInt("weapons_armor", 0);
         int food_water = sharedPref.getInt("food_water", 0);
-        int tools = sharedPref.getInt("tools", 0);
-        if(weapons_armor == 1){
+        int tools = sharedPref.getInt("tools", 1);
+        if (weapons_armor == 1) {
             Intent openWeapons_Armor = new Intent(Crafting.this, Weapons_Armor.class);
             startActivity(openWeapons_Armor);
-        }else if(food_water == 1){
+        } else if (food_water == 1) {
             Intent openFood_Water = new Intent(Crafting.this, Food_Water.class);
             startActivity(openFood_Water);
-        }else if(tools == 1){
+        } else if (tools == 1) {
             Intent openTools = new Intent(Crafting.this, Tools.class);
             startActivity(openTools);
         }
 
 
-
-
     }
+
     public void updateText() {
         SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
         int wood_counter = sharedPref.getInt("wood", 0);
@@ -139,9 +138,9 @@ public class Crafting extends ActivityGroup {
         int boiled_water_counter = sharedPref.getInt("boiled_water", 0);
         int apple_counter = sharedPref.getInt("apples", 0);
         int coin_counter = sharedPref.getInt("coins", 0);
-        int copper_counter = sharedPref.getInt("copper",0);
-        int r_copper_counter = sharedPref.getInt("r_copper",0);
-        int coal_counter = sharedPref.getInt("coal",0);
+        int copper_counter = sharedPref.getInt("copper", 0);
+        int r_copper_counter = sharedPref.getInt("r_copper", 0);
+        int coal_counter = sharedPref.getInt("coal", 0);
 
         storage.setText("\t Storage:");
         if (wood_counter >= 1) {

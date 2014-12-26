@@ -19,6 +19,15 @@
     </style>
   </head>
   <body>
+  $ 2
+    % Version A 0.03
+    _ 2014-11-24
+    * Quest Update
+  	    * Quests have new graphics
+  	    * Added Death
+  	    * Added Wait time
+  	    * Cleaned up small bugs
+  	    *
 $ 1
   % Version A 0.02 
   _ 2014-11-11

@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:layout_width="150dp"
+        android:layout_height="75dp"
+        android:text="Stab"
+        android:id="@+id/stab"
+        android:layout_margin="10dp"
+        android:background="@drawable/button_shape"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:onClick="Stab"/>
+    <TextView
+        android:layout_width="135dp"
+        android:layout_height="75dp"
+        android:text=""
+        android:id="@+id/quest_log"
+        android:layout_margin="10dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+    <Button
+        android:layout_width="150dp"
+        android:layout_height="75dp"
+        android:text="Swing"
+        android:background="@drawable/button_shape"
+        android:id="@+id/swing"
+        android:layout_margin="10dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:onClick="Swing"/>
+    <TextView
+        android:layout_width="135dp"
+        android:layout_height="75dp"
+        android:text="Storage:"
+        android:layout_margin="10dp"
+        android:id="@+id/quest_storage"
+        android:layout_alignRight="@+id/enemy"
+        android:layout_alignEnd="@+id/enemy" />
+    <Button
+        android:layout_width="150dp"
+        android:layout_height="75dp"
+        android:text="Strong Attack"
+        android:background="@drawable/button_shape"
+        android:id="@+id/strong"
+        android:layout_above="@id/swing"
+        android:layout_margin="10dp"
+        android:onClick="Strong"/>
+    <Button
+        android:layout_width="150dp"
+        android:layout_height="75dp"
+        android:text="Eat"
+        android:background="@drawable/button_shape"
+        android:id="@+id/eat"
+        android:onClick="eat"
+        android:layout_alignBottom="@+id/strong_bar"
+        android:layout_alignLeft="@+id/swing"
+        android:layout_alignStart="@+id/swing" />
+    <TextView
+        android:layout_width="150dp"
+        android:layout_height="100dp"
+        android:id="@+id/player"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="10dp"
+        android:text="P"
+        android:gravity="center"
+        android:layout_below="@id/quest_log"
+        />
+
+    <TextView
+        android:layout_width="150dp"
+        android:layout_height="100dp"
+        android:id="@+id/enemy"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="10dp"
+        android:layout_below="@+id/quest_storage"
+        android:gravity="center"
+        android:layout_alignRight="@+id/swing"/>
+
+
+
+    <ProgressBar
+        android:id="@+id/enemy_health_bar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="145dp"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/enemy"
+        android:layout_alignLeft="@+id/quest_storage"
+        android:layout_alignStart="@+id/quest_storage" />
+
+    <ProgressBar
+        android:id="@+id/player_health_bar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="145dp"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/player"
+        android:layout_alignLeft="@+id/player"
+        android:layout_alignStart="@+id/player" />
+    <ProgressBar
+        android:id="@+id/stab_bar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="145dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/stab"
+        android:layout_alignRight="@+id/stab"
+        android:layout_alignEnd="@+id/stab" />
+    <ProgressBar
+        android:id="@+id/strong_bar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="145dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/strong"
+        android:layout_alignRight="@+id/strong"
+        android:layout_alignEnd="@+id/strong" />
+    <ProgressBar
+        android:id="@+id/swing_bar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="145dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/swing"
+        android:layout_alignRight="@+id/swing"
+        android:layout_alignEnd="@+id/swing" />
+    <ProgressBar
+        android:id="@+id/eat_bar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="145dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/eat"
+        android:layout_alignRight="@+id/eat"
+        android:layout_alignEnd="@+id/eat" />
+
+</RelativeLayout>

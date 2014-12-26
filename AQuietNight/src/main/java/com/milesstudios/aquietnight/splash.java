@@ -14,6 +14,7 @@ import android.support.v7.app.ActionBarActivity;
 public class splash extends ActionBarActivity {
 
     MediaPlayer SplashSong;
+
     @Override
     protected void onCreate(Bundle MilesStudios) {
         // TODO Auto-generated method stub
@@ -22,19 +23,19 @@ public class splash extends ActionBarActivity {
         SplashSong = MediaPlayer.create(splash.this, R.raw.splash_sound);
         SplashSong.start();
 
-        Thread timer = new Thread(){
-            public void run(){
-                try{
+        Thread timer = new Thread() {
+            public void run() {
+                try {
                     sleep(5000);
-                } catch (InterruptedException e){
+                } catch (InterruptedException e) {
                     e.printStackTrace();
-                }finally{
+                } finally {
                     final SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
-                    Boolean intro = sharedPref.getBoolean("intro",true);
-                    if(intro) {
+                    Boolean intro = sharedPref.getBoolean("intro", true);
+                    if (intro) {
                         Intent openMain_Screen = new Intent(splash.this, Intro.class);
                         startActivity(openMain_Screen);
-                    }else{
+                    } else {
                         Intent openMain_Screen = new Intent(splash.this, Cave.class);
                         startActivity(openMain_Screen);
                     }

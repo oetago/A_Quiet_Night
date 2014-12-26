@@ -180,9 +180,9 @@ public class Mine extends FragmentActivity {
         int boiled_water_counter = sharedPref.getInt("boiled_water", 0);
         int apple_counter = sharedPref.getInt("apples", 0);
         int coin_counter = sharedPref.getInt("coins", 0);
-        int copper_counter = sharedPref.getInt("copper",0);
-        int r_copper_counter = sharedPref.getInt("r_copper",0);
-        int coal_counter = sharedPref.getInt("coal",0);
+        int copper_counter = sharedPref.getInt("copper", 0);
+        int r_copper_counter = sharedPref.getInt("r_copper", 0);
+        int coal_counter = sharedPref.getInt("coal", 0);
 
         storage.setText("\t Storage:");
         if (wood_counter >= 1) {

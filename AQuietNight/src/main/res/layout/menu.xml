@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/menu_frame"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent" >
+
+    <TextView
+        android:layout_width="244dp"
+        android:layout_height="120dp"
+        android:id="@+id/full_storage"
+        android:textSize="25dp"
+        android:text="THIS IS FOR THE MAN THE MYTH THE LEGEND JASON RUSSEL"/>
+
+    <ImageView
+    android:layout_marginTop="150dp"
+    android:layout_width="200dp"
+    android:layout_height="200dp"
+    android:id="@+id/imageView3"
+    android:background="@drawable/mf"
+    android:layout_gravity="left|bottom" />
+
+    <ImageView
+        android:layout_marginTop="150dp"
+        android:layout_width="142dp"
+        android:layout_height="178dp"
+        android:id="@+id/taco"
+        android:background="@drawable/obama"
+        android:layout_gravity="left|top" />
+
+    <ImageView
+        android:layout_marginTop="150dp"
+        android:layout_width="142dp"
+        android:layout_height="178dp"
+        android:id="@+id/f"
+        android:layout_marginLeft="18dp"
+        android:background="@drawable/quarters"
+        android:layout_gravity="center_horizontal|top" />
+
+</FrameLayout>

@@ -27,6 +27,7 @@ public class Food_Water extends ActivityGroup {
     int wood_counter, leaves_counter, stone_counter, stone_axeb, stone_pickb, hard_wood_counter, workshop_b, boiled_water_counter, cooked_food_counter, leaf_canteen_b;
     Button boil_water, cook_food, leaf_canteen;
     TextView log, storage;
+
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
 
@@ -53,7 +54,7 @@ public class Food_Water extends ActivityGroup {
         // Adapter
         SpinnerAdapter adapter =
                 ArrayAdapter.createFromResource(this, R.array.food_water,
-                        android.R.layout.simple_spinner_dropdown_item);
+                        R.layout.spinner_item);
 
 // Callback
         ActionBar.OnNavigationListener callback = new ActionBar.OnNavigationListener() {
@@ -62,13 +63,13 @@ public class Food_Water extends ActivityGroup {
 
             @Override
             public boolean onNavigationItemSelected(int position, long id) {
-                if(items[position].equals("Food and Water")){
+                if (items[position].equals("Food and Water")) {
                 }
-                if(items[position].equals("Weapons and Armor")){
+                if (items[position].equals("Weapons and Armor")) {
                     Intent openWepaons_Armor = new Intent(Food_Water.this, Weapons_Armor.class);
                     startActivity(openWepaons_Armor);
                 }
-                if(items[position].equals("Tools")){
+                if (items[position].equals("Tools")) {
                     setContentView(R.layout.crafting_tools);
                     Intent openTools = new Intent(Food_Water.this, Tools.class);
                     startActivity(openTools);
@@ -106,22 +107,22 @@ public class Food_Water extends ActivityGroup {
         int stone_sword_b = sharedPref.getInt("stone_sword", 0);
 
 
-        if (fireplace_b == 1 && stone_sword_b == 1){
+        if (fireplace_b == 1 && stone_sword_b == 1) {
             cook_food.setEnabled(true);
             cook_food.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             cook_food.setEnabled(false);
             cook_food.setVisibility(View.INVISIBLE);
         }
-        if(fireplace_b == 0 || leaf_canteen_b == 0){
+        if (fireplace_b == 0 || leaf_canteen_b == 0) {
             boil_water.setEnabled(false);
             boil_water.setVisibility(View.INVISIBLE);
         }
-        if(stone_sword_b == 0){
+        if (stone_sword_b == 0) {
             leaf_canteen.setEnabled(false);
             leaf_canteen.setVisibility(View.INVISIBLE);
         }
-        if(leaf_canteen_b == 1){
+        if (leaf_canteen_b == 1) {
             leaf_canteen.setEnabled(false);
             leaf_canteen.setVisibility(View.INVISIBLE);
         }
@@ -129,7 +130,7 @@ public class Food_Water extends ActivityGroup {
         log.setText(log_text);
         updateText();
 
-    //Saving Tab
+        //Saving Tab
         SharedPreferences.Editor editor = sharedPref.edit();
         int food_water = 1;
         int tools = 0;
@@ -139,6 +140,7 @@ public class Food_Water extends ActivityGroup {
         editor.putInt("weapons_armor", weapons_armor);
         editor.apply();
     }
+
     public void updateText() {
         SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
         int wood_counter = sharedPref.getInt("wood", 0);
@@ -151,9 +153,9 @@ public class Food_Water extends ActivityGroup {
         int boiled_water_counter = sharedPref.getInt("boiled_water", 0);
         int apple_counter = sharedPref.getInt("apples", 0);
         int coin_counter = sharedPref.getInt("coins", 0);
-        int copper_counter = sharedPref.getInt("copper",0);
-        int r_copper_counter = sharedPref.getInt("r_copper",0);
-        int coal_counter = sharedPref.getInt("coal",0);
+        int copper_counter = sharedPref.getInt("copper", 0);
+        int r_copper_counter = sharedPref.getInt("r_copper", 0);
+        int coal_counter = sharedPref.getInt("coal", 0);
 
         storage.setText("\t Storage:");
         if (wood_counter >= 1) {
@@ -197,21 +199,24 @@ public class Food_Water extends ActivityGroup {
 
 
     }
+
     @Override
     public void onBackPressed() {
         Intent openMain = new Intent(Food_Water.this, Cave.class);
         startActivity(openMain);
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
     }
+
     @Override
-    public void onPause(){
+    public void onPause() {
         SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         String log_text = log.getText().toString();
-        editor.putString("log_text",log_text);
+        editor.putString("log_text", log_text);
         editor.apply();
         super.onPause();
     }
+
     //Buttons
     public void buttonBoilWater(View v) {
         final SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
@@ -229,13 +234,13 @@ public class Food_Water extends ActivityGroup {
                 int wood_counter = sharedPref.getInt("wood", 0);
                 int boiled_water_counter = sharedPref.getInt("boiled_water", 0);
                 int dirty_water_counter = sharedPref.getInt("dirty_water", 0);
-                if (wood_counter >= 1 && dirty_water_counter >= 1){
-                    log.append("\n You boiled 1L of water!");
+                if (wood_counter >= 1 && dirty_water_counter >= 1) {
+                    log.setText(" You boiled 1L of Water! \n" + log.getText());
                     wood_counter -= 1;
                     boiled_water_counter += 1;
                     dirty_water_counter -= 1;
-                }else{
-                    log.append("\n You don't have enough resources!");
+                } else {
+                    log.setText(" You don't have enough resources! \n" + log.getText());
                 }
                 //Save counter
                 SharedPreferences.Editor editor = sharedPref.edit();
@@ -248,18 +253,18 @@ public class Food_Water extends ActivityGroup {
 
         });
         int dirty_water_counter = sharedPref.getInt("dirty_water", 0);
-        alertDialog.setPositiveButton("Boil All ("+ dirty_water_counter + " L)" , new DialogInterface.OnClickListener() {
+        alertDialog.setPositiveButton("Boil All (" + dirty_water_counter + " L)", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 int wood_counter = sharedPref.getInt("wood", 0);
                 int boiled_water_counter = sharedPref.getInt("boiled_water", 0);
                 int dirty_water_counter = sharedPref.getInt("dirty_water", 0);
-                if (dirty_water_counter >= wood_counter){
-                    log.append("\n You boiled " + dirty_water_counter + " L of water!");
+                if (dirty_water_counter <= wood_counter) {
+                    log.setText(" You boiled " + dirty_water_counter + " L of Water! \n" + log.getText());
                     wood_counter -= dirty_water_counter;
                     boiled_water_counter += dirty_water_counter;
                     dirty_water_counter = 0;
-                }else{
-                    log.append("\n You don't have enough resources!");
+                } else {
+                    log.setText(" You don't have enough resources! \n" + log.getText());
                 }
                 //Save counter
                 SharedPreferences.Editor editor = sharedPref.edit();
@@ -275,6 +280,7 @@ public class Food_Water extends ActivityGroup {
         alert.show();
 
     }
+
     public void buttonCookFood(View v) {
         final SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(Food_Water.this);
@@ -286,18 +292,18 @@ public class Food_Water extends ActivityGroup {
             }
 
         });
-        alertDialog.setNeutralButton("Cook 1L", new DialogInterface.OnClickListener() {
+        alertDialog.setNeutralButton("Cook 1Lb", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 int wood_counter = sharedPref.getInt("wood", 0);
                 int food_counter = sharedPref.getInt("food", 0);
                 int cooked_food_counter = sharedPref.getInt("cooked_food", 0);
                 if (wood_counter >= 1 && food_counter >= 1) {
-                    log.append("\n You cooked 1Lb of food!");
+                    log.setText(" You cooked 1Lb of Food! \n" + log.getText());;
                     wood_counter -= 1;
                     cooked_food_counter += 1;
                     food_counter -= 1;
                 } else {
-                    log.append("\n You don't have enough resources!");
+                    log.setText(" You don't have enough resources! \n" + log.getText());
                 }
                 //Save counter
                 SharedPreferences.Editor editor = sharedPref.edit();
@@ -310,18 +316,18 @@ public class Food_Water extends ActivityGroup {
 
         });
         int food_counter = sharedPref.getInt("food", 0);
-        alertDialog.setPositiveButton("Cook All ("+ food_counter + " Lb)" , new DialogInterface.OnClickListener() {
+        alertDialog.setPositiveButton("Cook All (" + food_counter + " Lb)", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 int wood_counter = sharedPref.getInt("wood", 0);
                 int food_counter = sharedPref.getInt("food", 0);
                 int cooked_food_counter = sharedPref.getInt("cooked_food", 0);
-                if (food_counter >= wood_counter){
-                    log.append("\n You cooked " + food_counter + " Lbs of food!");
+                if (food_counter >= wood_counter) {
+                    log.setText(" You cooked " + cooked_food_counter + " Lbs of Food! \n" + log.getText());
                     wood_counter -= food_counter;
                     cooked_food_counter += food_counter;
                     food_counter = 0;
-                }else{
-                    log.append("\n You don't have enough resources!");
+                } else {
+                    log.setText(" You don't have enough resources! \n" + log.getText());
                 }
                 //Save counter
                 SharedPreferences.Editor editor = sharedPref.edit();
@@ -336,6 +342,7 @@ public class Food_Water extends ActivityGroup {
         AlertDialog alert = alertDialog.create();
         alert.show();
     }
+
     public void buttonLeafCanteen(View v) {
         final SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(Food_Water.this);
@@ -347,10 +354,10 @@ public class Food_Water extends ActivityGroup {
             }
 
         });
-        alertDialog.setPositiveButton("Craft" , new DialogInterface.OnClickListener() {
+        alertDialog.setPositiveButton("Craft", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 Button leaf_canteen = (Button) findViewById(R.id.leaf_canteen);
-             
+
                 int leaves_counter = sharedPref.getInt("leaves", 0);
                 if (leaves_counter >= 6) {
                     log.setText(" You crafted a Leaf Canteen \n" + log.getText());
@@ -364,7 +371,7 @@ public class Food_Water extends ActivityGroup {
                     editor.apply();
                     updateText();
                 } else {
-                    log.append("\n You don't have enough resources!");
+                    log.setText(" You don't have enough resources! \n" + log.getText());
                 }
             }
 
@@ -372,8 +379,8 @@ public class Food_Water extends ActivityGroup {
         AlertDialog alert = alertDialog.create();
         alert.show();
 
-            }
     }
+}
 
 
 

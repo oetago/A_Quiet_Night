@@ -15,11 +15,11 @@ import android.view.View;
  * {@link #getInstance} will return a {@link SystemUiHiderHoneycomb} instance,
  * while on older devices {@link #getInstance} will return a
  * {@link SystemUiHiderBase} instance.
- * <p>
+ * <p/>
  * For more on system bars, see <a href=
  * "http://developer.android.com/design/get-started/ui-overview.html#system-bars"
  * > System Bars</a>.
- * 
+ *
  * @see android.view.View#setSystemUiVisibility(int)
  * @see android.view.WindowManager.LayoutParams#FLAG_FULLSCREEN
  */
@@ -30,7 +30,7 @@ public abstract class SystemUiHider {
      * flag will be set on older devices, making the status bar "float" on top
      * of the activity layout. This is most useful when there are no controls at
      * the top of the activity layout.
-     * <p>
+     * <p/>
      * This flag isn't used on newer devices because the <a
      * href="http://developer.android.com/design/patterns/actionbar.html">action
      * bar</a>, the most important structural element of an Android app, should
@@ -65,7 +65,7 @@ public abstract class SystemUiHider {
 
     /**
      * The current UI hider flags.
-     * 
+     *
      * @see #FLAG_FULLSCREEN
      * @see #FLAG_HIDE_NAVIGATION
      * @see #FLAG_LAYOUT_IN_SCREEN_OLDER_DEVICES
@@ -82,14 +82,14 @@ public abstract class SystemUiHider {
      * appropriate for this device. The object will be either a
      * {@link SystemUiHiderBase} or {@link SystemUiHiderHoneycomb} depending on
      * the device.
-     * 
-     * @param activity The activity whose window's system UI should be
-     *            controlled by this class.
+     *
+     * @param activity   The activity whose window's system UI should be
+     *                   controlled by this class.
      * @param anchorView The view on which
-     *            {@link View#setSystemUiVisibility(int)} will be called.
-     * @param flags Either 0 or any combination of {@link #FLAG_FULLSCREEN},
-     *            {@link #FLAG_HIDE_NAVIGATION}, and
-     *            {@link #FLAG_LAYOUT_IN_SCREEN_OLDER_DEVICES}.
+     *                   {@link View#setSystemUiVisibility(int)} will be called.
+     * @param flags      Either 0 or any combination of {@link #FLAG_FULLSCREEN},
+     *                   {@link #FLAG_HIDE_NAVIGATION}, and
+     *                   {@link #FLAG_LAYOUT_IN_SCREEN_OLDER_DEVICES}.
      */
     public static SystemUiHider getInstance(Activity activity, View anchorView, int flags) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
@@ -164,7 +164,7 @@ public abstract class SystemUiHider {
     public interface OnVisibilityChangeListener {
         /**
          * Called when the system UI visibility has changed.
-         * 
+         *
          * @param visible True if the system UI is visible.
          */
         public void onVisibilityChange(boolean visible);

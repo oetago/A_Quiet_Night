@@ -22,12 +22,13 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.milesstudios.aquietnight.quest.Quest_Main;
-import com.milesstudios.aquietnight.util.ChangeLog;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
+import com.milesstudios.aquietnight.quest.Quest_Main;
+import com.milesstudios.aquietnight.util.ChangeLog;
 
-public class Cave extends Activity{
+public class Cave extends Activity {
     Button buildings, trading, crafting, quests, forest_button, all_data;
     int wood_counter, leaves_counter, stone_counter, start_counter, stone_axeb, stone_pickb, leaf_armorb, hard_wood_counter, workshop_b, trade_post_b;
     TextView log, storage;
@@ -58,44 +59,51 @@ public class Cave extends Activity{
         int workshop_b = sharedPref.getInt("workshop", 0);
         int quest_map_b = sharedPref.getInt("quest_map", 0);
         int start_counter = sharedPref.getInt("start_counter", 0);
-        Boolean forest_temple_b = sharedPref.getBoolean("forest_temple",false);
-        Boolean rebuild_mine_b = sharedPref.getBoolean("mine",false);
+        Boolean forest_temple_b = sharedPref.getBoolean("forest_temple", false);
+        Boolean rebuild_mine_b = sharedPref.getBoolean("mine", false);
         final Animation anim = AnimationUtils.loadAnimation(this, R.anim.log);
         final Animation storage_anim_slide = AnimationUtils.loadAnimation(this, R.anim.storage_slide);
         final Animation storage_anim_slide2 = AnimationUtils.loadAnimation(this, R.anim.storage_slide2);
         SharedPreferences.Editor editor = sharedPref.edit();
-        final TextView cave_tab  = (TextView) findViewById(R.id.cave_tab);
-        final TextView forest_tab  = (TextView) findViewById(R.id.forest_tab);
-        final TextView cave_tab_wmine  = (TextView) findViewById(R.id.cave_tab_wmine);
-        final TextView forest_tab_wmine  = (TextView) findViewById(R.id.forest_tab_wmine);
-        final TextView mine_tab  = (TextView) findViewById(R.id.mine_tab);
+        final TextView cave_tab = (TextView) findViewById(R.id.cave_tab);
+        final TextView forest_tab = (TextView) findViewById(R.id.forest_tab);
+        final TextView cave_tab_wmine = (TextView) findViewById(R.id.cave_tab_wmine);
+        final TextView forest_tab_wmine = (TextView) findViewById(R.id.forest_tab_wmine);
+        final TextView mine_tab = (TextView) findViewById(R.id.mine_tab);
 
-
+        //fullStorage();
+        SlidingMenu menu;
+        menu = new SlidingMenu(this);
+        menu.setMode(SlidingMenu.LEFT);
+        menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+        menu.setShadowWidth(5);
+        menu.setFadeDegree(0.0f);
+        menu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
+        menu.setBehindWidth(900);
+        menu.setMenu(R.layout.menu);
 
 
         updateText();
-         cave_tab.setPaintFlags(cave_tab.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        cave_tab.setPaintFlags(cave_tab.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         cave_tab.setTextSize(20);
         //forest_tab.setPaintFlags(forest_tab.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         forest_tab.setTextSize(20);
-        Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(),"fonts/TNRB.ttf");
+        Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/TNRB.ttf");
         cave_tab.setTypeface(tf);
         forest_tab.setTypeface(tf);
-        log.setTypeface(tf);
-        storage.setTypeface(tf);
         storage.setMovementMethod(new ScrollingMovementMethod());
         // log.setMovementMethod(new ScrollingMovementMethod());
         log.setTextSize(12);
         storage.setTextSize(15);
 
-        if(!rebuild_mine_b){
+        if (!rebuild_mine_b) {
             cave_tab_wmine.setEnabled(false);
             cave_tab_wmine.setVisibility(View.INVISIBLE);
             forest_tab_wmine.setEnabled(false);
             forest_tab_wmine.setVisibility(View.INVISIBLE);
             mine_tab.setEnabled(false);
             mine_tab.setVisibility(View.INVISIBLE);
-        }else{
+        } else {
             cave_tab.setEnabled(false);
             cave_tab.setVisibility(View.INVISIBLE);
             forest_tab.setEnabled(false);
@@ -106,10 +114,10 @@ public class Cave extends Activity{
         editor.putBoolean("intro", intro);
         editor.apply();
 
-        if(trade_post_b == 0){
+        if (trade_post_b == 0) {
             trading.setVisibility(View.INVISIBLE);
             trading.setEnabled(false);
-        }else if (trade_post_b == 1) {
+        } else if (trade_post_b == 1) {
             trade_post_b += 1;
             editor.putInt("trade_post", trade_post_b);
             editor.apply();
@@ -123,7 +131,6 @@ public class Cave extends Activity{
             quests.setEnabled(false);
             quests.setVisibility(View.INVISIBLE);
         }
-
 
 
         if (workshop_b == 0) {
@@ -146,7 +153,7 @@ public class Cave extends Activity{
             log.setVisibility(View.INVISIBLE);
             storage.setVisibility(View.INVISIBLE);
         }
-       // if(mine == 0)
+        // if(mine == 0)
         start_counter += 1;
         editor.putInt("start_counter", start_counter);
         editor.apply();
@@ -155,10 +162,10 @@ public class Cave extends Activity{
 
 
         AdView adView = (AdView) this.findViewById(R.id.ad);
-         AdRequest adRequest = new AdRequest.Builder()
-                 .addTestDevice("50FD485A980BE577B48D1D26061025A1")
-                 .tagForChildDirectedTreatment(true)
-                 .build();
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice("50FD485A980BE577B48D1D26061025A1")
+                .tagForChildDirectedTreatment(true)
+                .build();
 
         adView.loadAd(adRequest);
 
@@ -205,8 +212,6 @@ public class Cave extends Activity{
         });
 
 
-
-
         buildings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -240,6 +245,72 @@ public class Cave extends Activity{
         });
 
 
+    }
+
+    private void fullStorage() {
+        final TextView full_storage = (TextView) findViewById(R.id.full_storage);
+        SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
+        int wood_counter = sharedPref.getInt("wood", 0);
+        int leaves_counter = sharedPref.getInt("leaves", 0);
+        int stone_counter = sharedPref.getInt("stone", 0);
+        int hard_wood_counter = sharedPref.getInt("hard_wood", 0);
+        int dirty_water_counter = sharedPref.getInt("dirty_water", 0);
+        int food_counter = sharedPref.getInt("food", 0);
+        int cooked_food_counter = sharedPref.getInt("cooked_food", 0);
+        int boiled_water_counter = sharedPref.getInt("boiled_water", 0);
+        int apple_counter = sharedPref.getInt("apples", 0);
+        int coin_counter = sharedPref.getInt("coins", 0);
+        int copper_counter = sharedPref.getInt("copper", 0);
+        int r_copper_counter = sharedPref.getInt("r_copper", 0);
+        int coal_counter = sharedPref.getInt("coal", 0);
+
+        full_storage.setText("\t Full Storage:");
+        full_storage.append("\n Materials:");
+        if (wood_counter >= 1) {
+            full_storage.append("\n Wood: " + wood_counter);
+        }
+        if (leaves_counter >= 1) {
+            full_storage.append("\n Leaves: " + leaves_counter);
+        }
+        if (stone_counter >= 1) {
+            full_storage.append("\n Stone: " + stone_counter);
+        }
+        if (copper_counter >= 1) {
+            full_storage.append("\n Raw Copper: " + copper_counter);
+        }
+        if (r_copper_counter >= 1) {
+            full_storage.append("\n Refined Copper: " + r_copper_counter);
+        }
+        if (coal_counter >= 1) {
+            full_storage.append("\n Coal: " + coal_counter);
+        }
+
+        if (apple_counter >= 1) {
+            full_storage.append("\n Apples: " + apple_counter);
+        }
+
+        if (coin_counter >= 1) {
+            full_storage.append("\n Coins: " + coin_counter);
+        }
+
+        full_storage.append("\n \n Food & Water:");
+
+        if (dirty_water_counter >= 1) {
+            full_storage.append("\n Dirty Water: " + dirty_water_counter + "/20L");
+        }
+        if (food_counter >= 1) {
+            full_storage.append("\n Food: " + food_counter + "/12Lb");
+        }
+        if (cooked_food_counter >= 1) {
+            full_storage.append("\n Cooked Food: " + cooked_food_counter + "/12Lb");
+        }
+        if (boiled_water_counter >= 1) {
+            full_storage.append("\n Boiled Water: " + boiled_water_counter + "/20L");
+        }
+        full_storage.append("\n\n Weapons & Armor");
+        if (dirty_water_counter >= 1) {
+            full_storage.append("\n Dirty Water: " + dirty_water_counter + "/20L");
+        }
 
     }
 
@@ -317,9 +388,9 @@ public class Cave extends Activity{
         int boiled_water_counter = sharedPref.getInt("boiled_water", 0);
         int apple_counter = sharedPref.getInt("apples", 0);
         int coin_counter = sharedPref.getInt("coins", 0);
-        int copper_counter = sharedPref.getInt("copper",0);
-        int r_copper_counter = sharedPref.getInt("r_copper",0);
-        int coal_counter = sharedPref.getInt("coal",0);
+        int copper_counter = sharedPref.getInt("copper", 0);
+        int r_copper_counter = sharedPref.getInt("r_copper", 0);
+        int coal_counter = sharedPref.getInt("coal", 0);
 
         storage.setText("\t Storage:");
         if (wood_counter >= 1) {
@@ -372,7 +443,7 @@ public class Cave extends Activity{
 
     }
 
-    public void sendEmail(){
+    public void sendEmail() {
         Intent intent = new Intent(Intent.ACTION_SENDTO); // it's not ACTION_SEND
         intent.setType("text/plain");
         intent.putExtra(Intent.EXTRA_SUBJECT, "Bugs and Feedback");
@@ -381,5 +452,6 @@ public class Cave extends Activity{
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); // this will make such that when user returns to your app, your app is displayed, instead of the email app.
         startActivity(intent);
     }
+
 
 }

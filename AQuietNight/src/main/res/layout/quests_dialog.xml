@@ -35,8 +35,8 @@
     <Button
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:text="Accept"
-        android:id="@+id/accept"
+        android:text="Decline"
+        android:id="@+id/decline"
         android:textColor="#5DBCD2"
         android:background="@android:color/white"
         android:layout_alignParentBottom="true"
@@ -46,14 +46,13 @@
     <Button
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:text="Decline"
-        android:id="@+id/decline"
-        android:layout_alignBottom="@+id/accept"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="false"
+        android:text="Accept"
+        android:id="@+id/accept"
         android:textColor="#5DBCD2"
         android:background="@android:color/white"
- />
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
     <ImageView
         android:layout_width="75dp"

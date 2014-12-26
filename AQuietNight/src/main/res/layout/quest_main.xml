@@ -20,35 +20,42 @@
         android:layout_width="150dp"
         android:layout_height="100dp"
         android:textStyle="bold"
-        android:layout_alignParentBottom="true"
-
-        />
+        android:editable="true"
+        android:layout_marginLeft="25dp"
+        android:layout_alignParentBottom="true" />
 
     <TextView
         android:id="@+id/storage"
-        android:layout_width="150dp"
-        android:layout_height="200dp"
+        android:layout_width="250dp"
+        android:layout_height="150dp"
         android:textStyle="bold"
+        android:editable="true"
+        android:layout_marginRight="25dp"
+        android:background="@drawable/button_shape"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_toEndOf="@+id/log"
+        android:layout_alignLeft="@+id/purifier"
+        android:layout_alignStart="@+id/purifier" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Apple Collector"
+        android:layout_marginLeft="20dp"
         android:id="@+id/quest_apple_collector"
-        android:layout_toStartOf="@+id/storage"
         android:layout_below="@+id/quest_text"
         android:background="@drawable/button_shape"
         android:onClick="buttonAppleCollector"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/log"
+        android:layout_alignEnd="@+id/log" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Wood Chopper"
+        android:layout_marginLeft="20dp"
         android:id="@+id/quest_wood_chopper"
         android:layout_marginTop="30dp"
         android:background="@drawable/button_shape"
@@ -64,6 +71,7 @@
         android:text="Hunter"
         android:id="@+id/hunter"
         android:layout_marginTop="30dp"
+        android:layout_marginLeft="20dp"
         android:background="@drawable/button_shape"
         android:onClick="buttonHunter"
         android:layout_below="@+id/quest_wood_chopper"
@@ -76,27 +84,24 @@
         android:layout_height="wrap_content"
         android:text="Purifier"
         android:id="@+id/purifier"
-        android:layout_marginTop="30dp"
+        android:layout_marginRight="20dp"
         android:background="@drawable/button_shape"
         android:onClick="buttonPurifier"
-        android:layout_below="@+id/hunter"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignRight="@+id/quest_apple_collector"
-        android:layout_alignEnd="@+id/quest_apple_collector" />
+        android:layout_alignTop="@+id/quest_wood_chopper"
+        android:layout_alignLeft="@+id/leaf_collector"
+        android:layout_alignStart="@+id/leaf_collector" />
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:text="Leaf Collector"
         android:id="@+id/leaf_collector"
-        android:layout_marginTop="30dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="20dp"
         android:background="@drawable/button_shape"
         android:onClick="buttonLeafCollector"
-        android:layout_below="@+id/purifier"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignRight="@+id/quest_apple_collector"
-        android:layout_alignEnd="@+id/quest_apple_collector" />
+        android:layout_above="@+id/quest_wood_chopper"
+        android:layout_alignParentRight="true"
+/>
 
 
 

@@ -20,11 +20,12 @@ import android.widget.ViewSwitcher;
 public class Intro extends Activity {
     private TextSwitcher intro_text;
     Button buttonNext;
-     String textToShow[]={"You stood up against Valeon’s evil king. Rose up against a tyrannicl regime.","But you were exiled. You were disgraced. Defeated.","Forced to wander the wilderness. With only a cave as your home.",
-            "But you will take back what is right.","You will fix what is wrong. And you will take the crown.","But until then, here you are. You slowly come to your senses.","The early light blinds your eyes. "};
-    int messageCount=textToShow.length;
+    String textToShow[] = {"You stood up against Valeon’s evil king. Rose up against a tyrannicl regime.", "But you were exiled. You were disgraced. Defeated.", "Forced to wander the wilderness. With only a cave as your home.",
+            "But you will take back what is right.", "You will fix what is wrong. And you will take the crown.", "But until then, here you are. You slowly come to your senses.", "The early light blinds your eyes. "};
+    int messageCount = textToShow.length;
     // to keep current Index of text
-    int currentIndex=0;
+    int currentIndex = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,10 +46,10 @@ public class Intro extends Activity {
         });
         // Declare the in and out animations and initialize them
         Animation in = AnimationUtils.loadAnimation(this, R.anim.fadein);
-        Animation out = AnimationUtils.loadAnimation(this,R.anim.fadeout);
+        Animation out = AnimationUtils.loadAnimation(this, R.anim.fadeout);
         intro_text.setText(textToShow[currentIndex]);
         // set the animation type of textSwitcher
-        Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(),"fonts/WalterTurncoat.ttf");
+        Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/WalterTurncoat.ttf");
         intro_text.setInAnimation(in);
         intro_text.setOutAnimation(out);
         buttonNext.setOnClickListener(new View.OnClickListener() {
@@ -56,32 +57,31 @@ public class Intro extends Activity {
                 // TODO Auto-generated method stub
                 currentIndex++;
                 // If inreaches maximum reset it
-                if(currentIndex==messageCount) {
+                if (currentIndex == messageCount) {
                     intro_text.clearAnimation();
                     final Intent openMain_Screen = new Intent(Intro.this, Cave.class);
                     startActivity(openMain_Screen);
-                   //overridePendingTransition(R.anim.fadeout, R.anim.fadein);
-                   // intro_text.setText(textToShow[currentIndex]);
-                }else{
-                intro_text.setText(textToShow[currentIndex]); }
-           }
+                    //overridePendingTransition(R.anim.fadeout, R.anim.fadein);
+                    // intro_text.setText(textToShow[currentIndex]);
+                } else {
+                    intro_text.setText(textToShow[currentIndex]);
+                }
+            }
         });
 
     }
 
 
-
-        @Override
-        public void onBackPressed() {
-        }
-
+    @Override
+    public void onBackPressed() {
+    }
 
 
-    public void Launch(){
+    public void Launch() {
 
     }
 
-    }
+}
 
 
 

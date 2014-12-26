@@ -44,7 +44,7 @@ public class ChangeLog {
 
     /**
      * Constructor
-     *
+     * <p/>
      * Retrieves the version names and stores the new version name in
      * SharedPreferences
      *
@@ -56,13 +56,12 @@ public class ChangeLog {
 
     /**
      * Constructor
-     *
+     * <p/>
      * Retrieves the version names and stores the new version name in
      * SharedPreferences
      *
      * @param context
-     * @param sp
-     *            the shared preferences to store the last version name into
+     * @param sp      the shared preferences to store the last version name into
      */
     public ChangeLog(Context context, SharedPreferences sp) {
         this.context = context;
@@ -83,10 +82,10 @@ public class ChangeLog {
 
     /**
      * @return The version name of the last installation of this app (as
-     *         described in the former manifest). This will be the same as
-     *         returned by <code>getThisVersion()</code> the second time this
-     *         version of the app is launched (more precisely: the second time
-     *         ChangeLog is instantiated).
+     * described in the former manifest). This will be the same as
+     * returned by <code>getThisVersion()</code> the second time this
+     * version of the app is launched (more precisely: the second time
+     * ChangeLog is instantiated).
      * @see AndroidManifest.xml#android:versionName
      */
     public String getLastVersion() {
@@ -103,7 +102,7 @@ public class ChangeLog {
 
     /**
      * @return <code>true</code> if this version of your app is started the
-     *         first time
+     * first time
      */
     public boolean firstRun() {
         return !this.lastVersion.equals(this.thisVersion);
@@ -111,8 +110,8 @@ public class ChangeLog {
 
     /**
      * @return <code>true</code> if your app including ChangeLog is started the
-     *         first time ever. Also <code>true</code> if your app was
-     *         deinstalled and installed again.
+     * first time ever. Also <code>true</code> if your app was
+     * deinstalled and installed again.
      */
     public boolean firstRunEver() {
         return NO_VERSION.equals(this.lastVersion);
@@ -120,9 +119,9 @@ public class ChangeLog {
 
     /**
      * @return An AlertDialog displaying the changes since the previous
-     *         installed version of your app (what's new). But when this is the
-     *         first run of your app including ChangeLog then the full log
-     *         dialog is show.
+     * installed version of your app (what's new). But when this is the
+     * first run of your app including ChangeLog then the full log
+     * dialog is show.
      */
     public AlertDialog getLogDialog() {
         return this.getDialog(this.firstRunEver());
@@ -192,7 +191,7 @@ public class ChangeLog {
 
     /**
      * @return HTML displaying the changes since the previous installed version
-     *         of your app (what's new)
+     * of your app (what's new)
      */
     public String getLog() {
         return this.getLog(false);
@@ -205,10 +204,14 @@ public class ChangeLog {
         return this.getLog(true);
     }
 
-    /** modes for HTML-Lists (bullet, numbered) */
+    /**
+     * modes for HTML-Lists (bullet, numbered)
+     */
     private enum Listmode {
         NONE, ORDERED, UNORDERED,
-    };
+    }
+
+    ;
 
     private Listmode listMode = Listmode.NONE;
     private StringBuffer sb = null;

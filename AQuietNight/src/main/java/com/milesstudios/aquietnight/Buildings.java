@@ -1,4 +1,5 @@
 package com.milesstudios.aquietnight;
+
 import android.app.ActivityGroup;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
+
 /**
  * Created by Ryanm14 on 9/12/2014.
  */
@@ -54,9 +56,9 @@ public class Buildings extends ActivityGroup {
         fireplace = (Button) findViewById(R.id.fireplace);
         trade_post = (Button) findViewById(R.id.trade_post);
         workshop = (Button) findViewById(R.id.workshop);
-         rebuild_mine = (Button) findViewById(R.id.rebuild_mine);
-         smithery = (Button) findViewById(R.id.smithery);
-         tannery = (Button) findViewById(R.id.tannery);
+        rebuild_mine = (Button) findViewById(R.id.rebuild_mine);
+        smithery = (Button) findViewById(R.id.smithery);
+        tannery = (Button) findViewById(R.id.tannery);
         log.setTextSize(11);
         storage.setTextSize(15);
         //Saving
@@ -70,10 +72,30 @@ public class Buildings extends ActivityGroup {
         int stone_sword_b = sharedPref.getInt("stone_sword", 0);
         smithery_b = sharedPref.getBoolean("smithery", false);
         tannery_b = sharedPref.getBoolean("tannery", false);
-        Boolean forest_temple_b = sharedPref.getBoolean("forest_temple",false);
-        mine_b = sharedPref.getBoolean("mine",false);
+        Boolean forest_temple_b = sharedPref.getBoolean("forest_temple", false);
+        mine_b = sharedPref.getBoolean("mine", false);
 
-        if(!forest_temple_b){
+
+        updateText();
+        updateButtons();
+
+
+    }
+
+    private void updateButtons() {
+        final SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
+        int fireplace_b = sharedPref.getInt("fireplace", 0);
+        int workshop_b = sharedPref.getInt("workshop", 0);
+        int trade_post_b = sharedPref.getInt("trade_post", 0);
+        int stone_sword_b = sharedPref.getInt("stone_sword", 0);
+        smithery_b = sharedPref.getBoolean("smithery", false);
+        tannery_b = sharedPref.getBoolean("tannery", false);
+        Boolean forest_temple_b = sharedPref.getBoolean("forest_temple", false);
+        mine_b = sharedPref.getBoolean("mine", false);
+
+
+
+        if (!forest_temple_b) {
             rebuild_mine.setEnabled(false);
             rebuild_mine.setVisibility(View.INVISIBLE);
             smithery.setEnabled(false);
@@ -81,33 +103,30 @@ public class Buildings extends ActivityGroup {
             tannery.setEnabled(false);
             tannery.setVisibility(View.INVISIBLE);
         }
-        if(mine_b){
-            rebuild_mine.setEnabled(false);
+        if (mine_b) {
+            rebuild_mine.setVisibility(View.INVISIBLE);
         }
-        if(tannery_b){
-            tannery.setEnabled(false);
+        if (tannery_b) {
+            tannery.setVisibility(View.INVISIBLE);
         }
-        if(smithery_b){
-            smithery.setEnabled(false);
+        if (smithery_b) {
+            smithery.setVisibility(View.INVISIBLE);
         }
 
         if (fireplace_b == 1) {
-            fireplace.setEnabled(false);
+            fireplace.setVisibility(View.INVISIBLE);
         }
         //Fix later
         if (workshop_b >= 1) {
-            workshop.setEnabled(false);
+            workshop.setVisibility(View.INVISIBLE);
         }
         if (trade_post_b == 1) {
-            trade_post.setEnabled(false);
+            trade_post.setVisibility(View.INVISIBLE);
         }
         if (workshop_b == 0) {
             trade_post.setEnabled(false);
             fireplace.setEnabled(false);
         }
-
-        updateText();
-
 
     }
 
@@ -123,9 +142,9 @@ public class Buildings extends ActivityGroup {
         int boiled_water_counter = sharedPref.getInt("boiled_water", 0);
         int apple_counter = sharedPref.getInt("apples", 0);
         int coin_counter = sharedPref.getInt("coins", 0);
-        int copper_counter = sharedPref.getInt("copper",0);
-        int r_copper_counter = sharedPref.getInt("r_copper",0);
-        int coal_counter = sharedPref.getInt("coal",0);
+        int copper_counter = sharedPref.getInt("copper", 0);
+        int r_copper_counter = sharedPref.getInt("r_copper", 0);
+        int coal_counter = sharedPref.getInt("coal", 0);
 
         storage.setText("\t Storage:");
         if (wood_counter >= 1) {
@@ -177,20 +196,22 @@ public class Buildings extends ActivityGroup {
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
 
     }
+
     @Override
-    public void onPause(){
+    public void onPause() {
         SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         String log_text = log.getText().toString();
-        editor.putString("log_text",log_text);
+        editor.putString("log_text", log_text);
         editor.apply();
         super.onPause();
     }
+
     //Buttons
     public void buttonFireplace(View v) {
         final SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(Buildings.this);
-        alertDialog.setTitle("Build: FirePlace");
+        alertDialog.setTitle("Build: Bonfire");
         alertDialog.setMessage("Wood: 12 \n Stone: 7");
         alertDialog.setNegativeButton("Exit", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
@@ -204,14 +225,14 @@ public class Buildings extends ActivityGroup {
                 int stone_counter = sharedPref.getInt("stone", 0);
                 int fireplace_b = sharedPref.getInt("fireplace", 0);
                 if (stone_counter >= 7 && wood_counter >= 12) {
-                    log.append("\n You lit a Fireplace!");
+                    log.setText(" You lit a Bonfire! \n" + log.getText());
                     stone_counter -= 7;
                     wood_counter -= 12;
                     fireplace_b = 1;
                     fireplace.setEnabled(false);
                     fireplace.setVisibility(View.INVISIBLE);
                 } else {
-                    log.append("\n You don't have enough resources!");
+                    log.setText(" You don't have enough resources! \n" + log.getText());
                 }
 
 
@@ -236,7 +257,7 @@ public class Buildings extends ActivityGroup {
         final SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(Buildings.this);
         alertDialog.setTitle("Build: Workshop");
-        alertDialog.setMessage("2 Wood and 3 Stone");
+        alertDialog.setMessage("3 Wood \n2 Stone");
         alertDialog.setNegativeButton("Exit", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
@@ -249,13 +270,13 @@ public class Buildings extends ActivityGroup {
                 int stone_counter = sharedPref.getInt("stone", 0);
                 int workshop_b = sharedPref.getInt("workshop", 0);
                 if (stone_counter >= 2 && wood_counter >= 3) {
-                    log.append("\n You built a workshop!");
+                    log.setText(" You built a Workshop! \n" + log.getText());
                     stone_counter -= 2;
                     wood_counter -= 3;
                     workshop.setEnabled(false);
                     workshop_b = 1;
                 } else {
-                    log.append("\n You don't have enough resources!");
+                    log.setText(" You don't have enough resources! \n" + log.getText());
                 }
                 //Save counter
                 SharedPreferences.Editor editor = sharedPref.edit();
@@ -276,7 +297,7 @@ public class Buildings extends ActivityGroup {
         final SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(Buildings.this);
         alertDialog.setTitle("Build: Trade Post");
-        alertDialog.setMessage("Wood: 12 \n Leaves: 7");
+        alertDialog.setMessage("Wood: 12 \nLeaves: 7");
         alertDialog.setNegativeButton("Exit", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
@@ -287,16 +308,16 @@ public class Buildings extends ActivityGroup {
                 int wood_counter = sharedPref.getInt("wood", 0);
                 int leaves_counter = sharedPref.getInt("leaves", 0);
                 int trade_post_b = sharedPref.getInt("trade_post", 0);
-                if (leaves_counter >= 10 && wood_counter >= 12) {
+                if (leaves_counter >= 7 && wood_counter >= 12) {
                     //TODO Change later items required
-                    log.append("\n You built a trading post!");
-                    leaves_counter -= 10;
+                    log.setText(" You built a Trade Post! \n" + log.getText());
+                    leaves_counter -= 7;
                     wood_counter -= 12;
                     trade_post_b = 1;
                     trade_post.setEnabled(false);
                     trade_post.setVisibility(View.INVISIBLE);
                 } else {
-                    log.append("\n You don't have enough resources!");
+                    log.setText(" You don't have enough resources! \n" + log.getText());
                 }
                 //Save counter
                 SharedPreferences.Editor editor = sharedPref.edit();
@@ -328,14 +349,14 @@ public class Buildings extends ActivityGroup {
                 int stone_counter = sharedPref.getInt("stone", 0);
                 if (stone_counter >= 15 && wood_counter >= 20) {
                     //TODO Change later items required
-                    log.append("\n You rebuilt the mine!");
+                    log.setText(" You rebuilt the Mine! \n" + log.getText());
                     stone_counter -= 15;
                     wood_counter -= 20;
                     mine_b = true;
                     rebuild_mine.setEnabled(false);
                     rebuild_mine.setVisibility(View.INVISIBLE);
                 } else {
-                    log.append("\n You don't have enough resources!");
+                    log.setText(" You don't have enough resources! \n" + log.getText());
                 }
                 //Save counter
                 SharedPreferences.Editor editor = sharedPref.edit();
@@ -368,7 +389,7 @@ public class Buildings extends ActivityGroup {
                 int leaves_counter = sharedPref.getInt("leaves", 0);
                 if (stone_counter >= 15 && wood_counter >= 10 && leaves_counter >= 10) {
                     //TODO Change later items required
-                    log.append("\n You built a Tannery!");
+                    log.setText(" You built a Tannery! \n" + log.getText());
                     stone_counter -= 15;
                     wood_counter -= 10;
                     leaves_counter -= 10;
@@ -376,7 +397,7 @@ public class Buildings extends ActivityGroup {
                     tannery.setEnabled(false);
                     tannery.setVisibility(View.INVISIBLE);
                 } else {
-                    log.append("\n You don't have enough resources!");
+                    log.setText(" You built a Tannery! \n" + log.getText());
                 }
                 //Save counter
                 SharedPreferences.Editor editor = sharedPref.edit();
@@ -409,14 +430,14 @@ public class Buildings extends ActivityGroup {
                 int stone_counter = sharedPref.getInt("stone", 0);
                 if (stone_counter >= 25 && wood_counter >= 15) {
                     //TODO Change later items required
-                    log.append("\n You built a Tannery!");
+                    log.setText(" You lit a Smithery! \n" + log.getText());
                     stone_counter -= 25;
                     wood_counter -= 15;
                     Boolean smithery_b = true;
                     smithery.setEnabled(false);
                     smithery.setVisibility(View.INVISIBLE);
                 } else {
-                    log.append("\n You don't have enough resources!");
+                    log.setText(" You don't have enough resources! \n" + log.getText());
                 }
                 //Save counter
                 SharedPreferences.Editor editor = sharedPref.edit();

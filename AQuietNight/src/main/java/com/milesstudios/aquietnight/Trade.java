@@ -19,8 +19,9 @@ import android.widget.TextView;
 public class Trade extends ActivityGroup {
 
     int wood_counter, leaves_counter, stone_counter, hard_wood_counter;
-    Button quest_map,rusty_sword,chain_armor;
+    Button quest_map, rusty_sword, chain_armor;
     TextView log, storage;
+
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
 
@@ -36,6 +37,7 @@ public class Trade extends ActivityGroup {
         }
         return false;
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //Saving
@@ -57,26 +59,23 @@ public class Trade extends ActivityGroup {
 
         int leaves_counter = sharedPref.getInt("leaves", 0);
         int stone_counter = sharedPref.getInt("stone", 0);
-        int hard_wood_counter= sharedPref.getInt("hard_wood", 0);
+        int hard_wood_counter = sharedPref.getInt("hard_wood", 0);
         int wood_counter = sharedPref.getInt("wood", 0);
-        int quest_map_b = sharedPref.getInt("quest_map",0);
-        int rusty_sword_b = sharedPref.getInt("rusty_sword",0);
-        int chain_armor_b= sharedPref.getInt("chain_armor",0);
+        int quest_map_b = sharedPref.getInt("quest_map", 0);
+        int rusty_sword_b = sharedPref.getInt("rusty_sword", 0);
+        int chain_armor_b = sharedPref.getInt("chain_armor", 0);
         updateText();
 
-        if(quest_map_b == 1){
+        if (quest_map_b == 1) {
             quest_map.setVisibility(View.INVISIBLE);
             quest_map.setEnabled(false);
         }
-        if(rusty_sword_b == 1){
+        if (rusty_sword_b == 1) {
             rusty_sword.setVisibility(View.GONE);
         }
-        if(chain_armor_b == 1){
+        if (chain_armor_b == 1) {
             chain_armor.setVisibility(View.GONE);
         }
-
-
-
 
 
     }
@@ -94,9 +93,9 @@ public class Trade extends ActivityGroup {
         int boiled_water_counter = sharedPref.getInt("boiled_water", 0);
         int apple_counter = sharedPref.getInt("apples", 0);
         int coin_counter = sharedPref.getInt("coins", 0);
-        int copper_counter = sharedPref.getInt("copper",0);
-        int r_copper_counter = sharedPref.getInt("r_copper",0);
-        int coal_counter = sharedPref.getInt("coal",0);
+        int copper_counter = sharedPref.getInt("copper", 0);
+        int r_copper_counter = sharedPref.getInt("r_copper", 0);
+        int coal_counter = sharedPref.getInt("coal", 0);
 
         storage.setText("\t Storage:");
         if (wood_counter >= 1) {
@@ -140,58 +139,62 @@ public class Trade extends ActivityGroup {
 
 
     }
+
     @Override
     public void onBackPressed() {
 
     }
+
     @Override
-    public void onPause(){
+    public void onPause() {
         SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         String log_text = log.getText().toString();
-        editor.putString("log_text",log_text);
+        editor.putString("log_text", log_text);
         editor.apply();
         super.onPause();
     }
+
     //Buttons
-    public void buttonQuestMap(View v){
-            final SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
-            AlertDialog.Builder alertDialog = new AlertDialog.Builder(Trade.this);
-            alertDialog.setTitle("Trade: Quest Map");
-            alertDialog.setMessage("Golden Coins: 3");
-            alertDialog.setNegativeButton("Exit", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
+    public void buttonQuestMap(View v) {
+        final SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(Trade.this);
+        alertDialog.setTitle("Trade: Quest Map");
+        alertDialog.setMessage("Golden Coins: 3");
+        alertDialog.setNegativeButton("Exit", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        alertDialog.setPositiveButton("Craft", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                int coins_counter = sharedPref.getInt("coins", 0);
+                int quest_map_b = sharedPref.getInt("quest_map", 0);
+                if (coins_counter >= 3) {
+                    log.append("\n You traded for a quest map!");
+                    coins_counter -= 3;
+                    quest_map_b = 1;
+                    SharedPreferences.Editor editor = sharedPref.edit();
+                    editor.putInt("coins", coins_counter);
+                    editor.putInt("quest_map", quest_map_b);
+                    editor.apply();
+                    updateText();
+                    quest_map.setVisibility(View.INVISIBLE);
+                    quest_map.setEnabled(false);
+                } else {
+                    log.append("\n You don't have enough resources!");
                 }
-            });
-            alertDialog.setPositiveButton("Craft" , new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-                            int coins_counter = sharedPref.getInt("coins", 0);
-                            int quest_map_b = sharedPref.getInt("quest_map",0);
-                            if (coins_counter >= 3){
-                                log.append("\n You traded for a quest map!");
-                                coins_counter -= 3;
-                                quest_map_b = 1;
-                                SharedPreferences.Editor editor = sharedPref.edit();
-                                editor.putInt("coins", coins_counter);
-                                editor.putInt("quest_map", quest_map_b);
-                                editor.apply();
-                                updateText();
-                                quest_map.setVisibility(View.INVISIBLE);
-                                quest_map.setEnabled(false);
-                            }else{
-                                log.append("\n You don't have enough resources!");
-                            }
 
-                        }
+            }
 
-                        ;
+            ;
 
-                    });
-            AlertDialog alert = alertDialog.create();
-            alert.show();
-        }
-    public void buttonRustySword(View v){
+        });
+        AlertDialog alert = alertDialog.create();
+        alert.show();
+    }
+
+    public void buttonRustySword(View v) {
         final SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(Trade.this);
         alertDialog.setTitle("Trade: Rusty Sword");
@@ -201,11 +204,11 @@ public class Trade extends ActivityGroup {
                 dialog.dismiss();
             }
         });
-        alertDialog.setPositiveButton("Craft" , new DialogInterface.OnClickListener() {
+        alertDialog.setPositiveButton("Craft", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 int coins_counter = sharedPref.getInt("coins", 0);
-                int rusty_sword_b = sharedPref.getInt("rusty_sword",0);
-                if (coins_counter >= 7){
+                int rusty_sword_b = sharedPref.getInt("rusty_sword", 0);
+                if (coins_counter >= 7) {
                     log.append("\n You traded for a Rusty Sword!");
                     coins_counter -= 7;
                     rusty_sword_b = 1;
@@ -216,7 +219,7 @@ public class Trade extends ActivityGroup {
                     updateText();
                     rusty_sword.setVisibility(View.INVISIBLE);
                     rusty_sword.setEnabled(false);
-                }else{
+                } else {
                     log.append("\n You don't have enough resources!");
                 }
 
@@ -228,7 +231,8 @@ public class Trade extends ActivityGroup {
         AlertDialog alert = alertDialog.create();
         alert.show();
     }
-    public void buttonChainArmor(View v){
+
+    public void buttonChainArmor(View v) {
         final SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(Trade.this);
         alertDialog.setTitle("Trade: Chain Armor");
@@ -238,11 +242,11 @@ public class Trade extends ActivityGroup {
                 dialog.dismiss();
             }
         });
-        alertDialog.setPositiveButton("Craft" , new DialogInterface.OnClickListener() {
+        alertDialog.setPositiveButton("Craft", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 int coins_counter = sharedPref.getInt("coins", 0);
-                int chain_armor_b = sharedPref.getInt("chain_armor",0);
-                if (coins_counter >= 5){
+                int chain_armor_b = sharedPref.getInt("chain_armor", 0);
+                if (coins_counter >= 5) {
                     log.append("\n You traded for Chain Armor!");
                     coins_counter -= 5;
                     chain_armor_b = 1;
@@ -253,7 +257,7 @@ public class Trade extends ActivityGroup {
                     updateText();
                     chain_armor.setVisibility(View.INVISIBLE);
                     chain_armor.setEnabled(false);
-                }else{
+                } else {
                     log.append("\n You don't have enough resources!");
                 }
 
@@ -265,6 +269,6 @@ public class Trade extends ActivityGroup {
         AlertDialog alert = alertDialog.create();
         alert.show();
     }
-    }
+}
 
 

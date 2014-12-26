@@ -29,17 +29,19 @@
         android:layout_width="150dp"
         android:layout_height="100dp"
         android:textStyle="bold"
-        android:layout_alignParentBottom="true"
-        android:layout_alignLeft="@+id/stone"
-        android:layout_alignStart="@+id/stone"
-        />
+        android:editable="true"
+        android:layout_marginLeft="25dp"
+        android:layout_alignParentBottom="true" />
 
     <TextView
         android:id="@+id/storage"
-        android:layout_width="150dp"
-        android:layout_height="200dp"
+        android:layout_width="250dp"
+        android:layout_height="150dp"
         android:textStyle="bold"
-        android:layout_toEndOf="@+id/log"
-        android:layout_alignBottom="@+id/log"
-        android:layout_toRightOf="@+id/log" />
+        android:editable="true"
+        android:layout_marginRight="25dp"
+        android:background="@drawable/button_shape"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/log"
+        android:layout_toEndOf="@+id/log" />
 </RelativeLayout>

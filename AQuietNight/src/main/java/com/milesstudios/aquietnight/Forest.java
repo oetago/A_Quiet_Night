@@ -77,7 +77,6 @@ public class Forest extends FragmentActivity {
 
 
         wood = (Button) findViewById(R.id.wood);
-        cave_button = (Button) findViewById(R.id.cave_button);
         stone = (Button) findViewById(R.id.stone);
         leaves = (Button) findViewById(R.id.leaves);
         dirty_water = (Button) findViewById(R.id.dirty_water);
@@ -115,18 +114,18 @@ public class Forest extends FragmentActivity {
         final int leaf_canteen_b = sharedPref.getInt("leaf_canteen", 0);
         final int apple_counter = sharedPref.getInt("apples", 0);
         final String log_text = sharedPref.getString("log_text", "");
-        final TextView cave_tab_wmine  = (TextView) findViewById(R.id.cave_tab_wmine);
-        final TextView forest_tab_wmine  = (TextView) findViewById(R.id.forest_tab_wmine);
-        final TextView mine_tab  = (TextView) findViewById(R.id.mine_tab);
-        Boolean rebuild_mine_b = sharedPref.getBoolean("mine",false);
-        if(!rebuild_mine_b){
+        final TextView cave_tab_wmine = (TextView) findViewById(R.id.cave_tab_wmine);
+        final TextView forest_tab_wmine = (TextView) findViewById(R.id.forest_tab_wmine);
+        final TextView mine_tab = (TextView) findViewById(R.id.mine_tab);
+        Boolean rebuild_mine_b = sharedPref.getBoolean("mine", false);
+        if (!rebuild_mine_b) {
             cave_tab_wmine.setEnabled(false);
             cave_tab_wmine.setVisibility(View.INVISIBLE);
             forest_tab_wmine.setEnabled(false);
             forest_tab_wmine.setVisibility(View.INVISIBLE);
             mine_tab.setEnabled(false);
             mine_tab.setVisibility(View.INVISIBLE);
-        }else{
+        } else {
             cave_tab.setEnabled(false);
             cave_tab.setVisibility(View.INVISIBLE);
             forest_tab.setEnabled(false);
@@ -239,9 +238,9 @@ public class Forest extends FragmentActivity {
         int boiled_water_counter = sharedPref.getInt("boiled_water", 0);
         int apple_counter = sharedPref.getInt("apples", 0);
         int coin_counter = sharedPref.getInt("coins", 0);
-        int copper_counter = sharedPref.getInt("copper",0);
-        int r_copper_counter = sharedPref.getInt("r_copper",0);
-        int coal_counter = sharedPref.getInt("coal",0);
+        int copper_counter = sharedPref.getInt("copper", 0);
+        int r_copper_counter = sharedPref.getInt("r_copper", 0);
+        int coal_counter = sharedPref.getInt("coal", 0);
 
         storage.setText("\t Storage:");
         if (wood_counter >= 1) {
@@ -293,6 +292,7 @@ public class Forest extends FragmentActivity {
         updateDirtyWater();
         updateHunt();
     }
+
     public void updateWood() {
         final long wood_remaining;
         SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
@@ -365,7 +365,7 @@ public class Forest extends FragmentActivity {
                 };
                 wood_timer.start();
 
-            }else{
+            } else {
                 wood.setEnabled(true);
                 wood_bar.setVisibility(View.INVISIBLE);
             }
@@ -443,7 +443,7 @@ public class Forest extends FragmentActivity {
                     }
                 };
                 stone_timer.start();
-            }else{
+            } else {
                 stone.setEnabled(true);
                 stone_bar.setVisibility(View.INVISIBLE);
             }
@@ -672,7 +672,7 @@ public class Forest extends FragmentActivity {
                 }
             };
             wood_timer.start();
-        }else if(copper_axe_b){
+        } else if (copper_axe_b) {
             int wood_counter = sharedPref.getInt("wood", 0);
             SharedPreferences.Editor editor = sharedPref.edit();
             wood_counter = sharedPref.getInt("wood", 0);
@@ -729,7 +729,7 @@ public class Forest extends FragmentActivity {
 
     public void buttonStone(View v) {
         SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
-        int stone_pickb = sharedPref.getInt("stone_pick",0);
+        int stone_pickb = sharedPref.getInt("stone_pick", 0);
         Boolean copper_pick_b = sharedPref.getBoolean("copper_pick", false);
         if (stone_pickb == 0 && !copper_pick_b) {
             int stone_counter = sharedPref.getInt("stone", 0);
@@ -763,14 +763,14 @@ public class Forest extends FragmentActivity {
 
                     //Do what you want
                     s = 0;
-                    stone_bar.setProgress(l);
+                    stone_bar.setProgress(s);
 
                 }
             };
             stone_timer.start();
 
 
-        } else if(stone_pickb ==1 && !copper_pick_b) {
+        } else if (stone_pickb == 1 && !copper_pick_b) {
             int stone_counter = sharedPref.getInt("stone", 0);
             log.setText(" You gathered 2 stones from the ground \n" + log.getText());
             stone_counter += 2;
@@ -807,7 +807,7 @@ public class Forest extends FragmentActivity {
             };
             stone_timer.start();
 
-        }else if(copper_pick_b){
+        } else if (copper_pick_b) {
             int stone_counter = sharedPref.getInt("stone", 0);
             log.setText(" You gathered 3 stones from the ground \n" + log.getText());
             stone_counter += 3;
@@ -851,7 +851,7 @@ public class Forest extends FragmentActivity {
     public void buttonLeaves(View v) {
         SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
         int leaves_counter = sharedPref.getInt("leaves", 0);
-        log.append("\n You gathered 1 leaf from the ground");
+        log.setText(" You gathered 1 leaf! \n" + log.getText());
         // StartAnimations();
         leaves_counter += 1;
         leaves_bar.setVisibility(View.VISIBLE);
@@ -938,10 +938,10 @@ public class Forest extends FragmentActivity {
     public void buttonHunt(View v) {
         SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
         int rusty_sword_b = sharedPref.getInt("rusty_sword", 0);
-        if (food_counter < 20 && rusty_sword_b == 0) {
+        if (food_counter < 20) {
             if (rusty_sword_b == 0) {
                 int food_counter = sharedPref.getInt("food", 0);
-                log.append("\n You gathered 1 lb. of Food");
+                log.setText(" You gathered 1Lb of Food! \n" + log.getText());
                 food_counter += 1;
                 hunt_bar.setVisibility(View.VISIBLE);
                 hunt.setEnabled(false);
@@ -976,14 +976,9 @@ public class Forest extends FragmentActivity {
                 };
                 hunt_timer.start();
 
-
-            } else {
-                log.append("You can't hold any more Food!");
-            }
-        } else {
-            if (food_counter < 19 && rusty_sword_b == 1) {
+        } else if (food_counter < 19 && rusty_sword_b == 1) {
                 int food_counter = sharedPref.getInt("food", 0);
-                log.append("\n You gathered 2 lbs. of Food");
+                log.setText(" You gathered 2Lbs of Food! \n" + log.getText());
                 food_counter += 2;
                 hunt_bar.setVisibility(View.VISIBLE);
                 hunt.setEnabled(false);
@@ -1019,10 +1014,11 @@ public class Forest extends FragmentActivity {
                 hunt_timer.start();
 
             } else {
-                log.append("You can't hold anymore food!");
+                log.setText(" You can't hold anymore Food! \n" + log.getText());
             }
+        } else {
+            log.setText(" You can't hold anymore Food! \n" + log.getText());
         }
-
 
     }
 }
