@@ -13,6 +13,8 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.milesstudios.aquietnight.util.Helper;
+
 /**
  * Created by Ryanm14 on 9/12/2014.
  */
@@ -47,8 +49,6 @@ public class Buildings extends ActivityGroup {
         getActionBar().show();
         getActionBar().setDisplayHomeAsUpEnabled(true);
         final SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
-
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.buildings);
         log = (TextView) findViewById(R.id.log);
@@ -68,7 +68,6 @@ public class Buildings extends ActivityGroup {
         int stone_counter = sharedPref.getInt("stone", 0);
         int fireplace_b = sharedPref.getInt("fireplace", 0);
         int workshop_b = sharedPref.getInt("workshop", 0);
-        int trade_post_b = sharedPref.getInt("trade_post", 0);
         int stone_sword_b = sharedPref.getInt("stone_sword", 0);
         smithery_b = sharedPref.getBoolean("smithery", false);
         tannery_b = sharedPref.getBoolean("tannery", false);
@@ -82,11 +81,16 @@ public class Buildings extends ActivityGroup {
 
     }
 
-    private void updateButtons() {
+    public void both(){
+        updateText();
+        updateButtons();
+    }
+
+    public void updateButtons() {
         final SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
         int fireplace_b = sharedPref.getInt("fireplace", 0);
         int workshop_b = sharedPref.getInt("workshop", 0);
-        int trade_post_b = sharedPref.getInt("trade_post", 0);
+        boolean tradepost_b = sharedPref.getBoolean("tradepost", false);
         int stone_sword_b = sharedPref.getInt("stone_sword", 0);
         smithery_b = sharedPref.getBoolean("smithery", false);
         tannery_b = sharedPref.getBoolean("tannery", false);
@@ -120,7 +124,7 @@ public class Buildings extends ActivityGroup {
         if (workshop_b >= 1) {
             workshop.setVisibility(View.INVISIBLE);
         }
-        if (trade_post_b == 1) {
+        if (tradepost_b) {
             trade_post.setVisibility(View.INVISIBLE);
         }
         if (workshop_b == 0) {
@@ -131,7 +135,7 @@ public class Buildings extends ActivityGroup {
     }
 
     public void updateText() {
-        SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = this.getSharedPreferences("save-data", Context.MODE_PRIVATE);
         int wood_counter = sharedPref.getInt("wood", 0);
         int leaves_counter = sharedPref.getInt("leaves", 0);
         int stone_counter = sharedPref.getInt("stone", 0);
@@ -295,44 +299,12 @@ public class Buildings extends ActivityGroup {
 
     public void buttonTradePost(View v) {
         final SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(Buildings.this);
-        alertDialog.setTitle("Build: Trade Post");
-        alertDialog.setMessage("Wood: 12 \nLeaves: 7");
-        alertDialog.setNegativeButton("Exit", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
-        alertDialog.setPositiveButton("Build", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                int wood_counter = sharedPref.getInt("wood", 0);
-                int leaves_counter = sharedPref.getInt("leaves", 0);
-                int trade_post_b = sharedPref.getInt("trade_post", 0);
-                if (leaves_counter >= 7 && wood_counter >= 12) {
-                    //TODO Change later items required
-                    log.setText(" You built a Trade Post! \n" + log.getText());
-                    leaves_counter -= 7;
-                    wood_counter -= 12;
-                    trade_post_b = 1;
-                    trade_post.setEnabled(false);
-                    trade_post.setVisibility(View.INVISIBLE);
-                } else {
-                    log.setText(" You don't have enough resources! \n" + log.getText());
-                }
-                //Save counter
-                SharedPreferences.Editor editor = sharedPref.edit();
-                editor.putInt("wood", wood_counter);
-                editor.putInt("trade_post", trade_post_b);
-                editor.putInt("leaves", leaves_counter);
-                editor.apply();
-                updateText();
-                dialog.dismiss();
-            }
-        });
-        AlertDialog alert = alertDialog.create();
-        alert.show();
+        Helper helper = new Helper();
+        helper.build("Trade Post", "Wood: 1 \nLeaves: 2", "wood", 1, "stone", 2, "tradepost", this);
+        Boolean check = sharedPref.getBoolean("tradepost", false);
+        if(check){ log.setText("You built a Trade Post! \n" + log.getText());}
+        else{  log.setText(" You don't have enough resources! \n" + log.getText());}
     }
-
     public void buttonRebuildMine(View v) {
         final SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(Buildings.this);
