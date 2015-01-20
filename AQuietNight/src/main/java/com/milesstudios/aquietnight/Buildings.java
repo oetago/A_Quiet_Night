@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -24,6 +25,8 @@ public class Buildings extends ActivityGroup {
     Button fireplace, workshop, trade_post, rebuild_mine, smithery, tannery;
     TextView log, storage;
     Boolean mine_b, tannery_b, smithery_b;
+    private Handler counterHandler = new Handler();
+
 
 
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -77,7 +80,7 @@ public class Buildings extends ActivityGroup {
 
         updateText();
         updateButtons();
-
+        runTimer();
 
     }
 
@@ -96,8 +99,6 @@ public class Buildings extends ActivityGroup {
         tannery_b = sharedPref.getBoolean("tannery", false);
         Boolean forest_temple_b = sharedPref.getBoolean("forest_temple", false);
         mine_b = sharedPref.getBoolean("mine", false);
-
-
 
         if (!forest_temple_b) {
             rebuild_mine.setEnabled(false);
@@ -130,6 +131,9 @@ public class Buildings extends ActivityGroup {
         if (workshop_b == 0) {
             trade_post.setEnabled(false);
             fireplace.setEnabled(false);
+        }else{
+            trade_post.setEnabled(true);
+            fireplace.setEnabled(true);
         }
 
     }
@@ -299,11 +303,8 @@ public class Buildings extends ActivityGroup {
 
     public void buttonTradePost(View v) {
         final SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
-        Helper helper = new Helper();
+        Helper helper = new Helper(this);
         helper.build("Trade Post", "Wood: 1 \nLeaves: 2", "wood", 1, "stone", 2, "tradepost", this);
-        Boolean check = sharedPref.getBoolean("tradepost", false);
-        if(check){ log.setText("You built a Trade Post! \n" + log.getText());}
-        else{  log.setText(" You don't have enough resources! \n" + log.getText());}
     }
     public void buttonRebuildMine(View v) {
         final SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
@@ -425,7 +426,21 @@ public class Buildings extends ActivityGroup {
         alert.show();
     }
 
+    public void runTimer(){
+            counterHandler.postDelayed(TextViewChanger, 250);
+        }
+
+    private Runnable TextViewChanger = new Runnable(){
+        public void run() {
+            updateText();
+            updateButtons();
+            runTimer();
+        }
+    };
+
 
 }
+
+
 
 

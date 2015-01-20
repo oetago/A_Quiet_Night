@@ -6,17 +6,23 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.widget.TextView;
 
 import com.milesstudios.aquietnight.Buildings;
+import com.milesstudios.aquietnight.R;
 
 public class Helper extends Activity {
-
+    Context context;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
+    public Helper(Context context){
+        this.context=context;
     }
 
     public void build(String title, String message, final String r1, final int amount1, final String r2, final int amount2, final String output, Context context){
        AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
+       final TextView log = (TextView) ((Activity)context).findViewById(R.id.log);
        final SharedPreferences sharedPref = context.getSharedPreferences("save-data", Context.MODE_PRIVATE);
        final int r1_counter = sharedPref.getInt(r1, 0);
        final int r2_counter = sharedPref.getInt(r2, 0);
@@ -41,11 +47,10 @@ public class Helper extends Activity {
                    editor.apply();
                    dialog.dismiss();
                    Buildings b = new Buildings();
-                   b.both();
+                   log.setText("You built a Trade Post! \n" + log.getText());
                } else {
                  dialog.dismiss();
-                  Buildings b = new Buildings();
-                  b.both();
+                 log.setText(" You don't have enough resources! \n" + log.getText());
                }
            }
        });
