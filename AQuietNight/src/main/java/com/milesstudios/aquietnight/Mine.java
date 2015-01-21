@@ -11,6 +11,7 @@ import android.content.SharedPreferences;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.text.method.ScrollingMovementMethod;
 import android.view.MenuItem;
@@ -19,6 +20,8 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.milesstudios.aquietnight.util.Helper;
 
 //import com.google.android.gms.ads.AdRequest;
 //import com.google.android.gms.ads.AdView;
@@ -103,7 +106,7 @@ public class Mine extends FragmentActivity {
         final int apple_counter = sharedPref.getInt("apples", 0);
         final String log_text = sharedPref.getString("log_text", "");
         log.setText(log_text);
-        updateText();
+
 
         //"Tab Button"
         cave_tab_wmine.setOnClickListener(new View.OnClickListener() {
@@ -168,64 +171,18 @@ public class Mine extends FragmentActivity {
     }
 
     //Update Bars
-    public void updateText() {
-        SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
-        int wood_counter = sharedPref.getInt("wood", 0);
-        int leaves_counter = sharedPref.getInt("leaves", 0);
-        int stone_counter = sharedPref.getInt("stone", 0);
-        int hard_wood_counter = sharedPref.getInt("hard_wood", 0);
-        int dirty_water_counter = sharedPref.getInt("dirty_water", 0);
-        int food_counter = sharedPref.getInt("food", 0);
-        int cooked_food_counter = sharedPref.getInt("cooked_food", 0);
-        int boiled_water_counter = sharedPref.getInt("boiled_water", 0);
-        int apple_counter = sharedPref.getInt("apples", 0);
-        int coin_counter = sharedPref.getInt("coins", 0);
-        int copper_counter = sharedPref.getInt("copper", 0);
-        int r_copper_counter = sharedPref.getInt("r_copper", 0);
-        int coal_counter = sharedPref.getInt("coal", 0);
-
-        storage.setText("\t Storage:");
-        if (wood_counter >= 1) {
-            storage.append("\n Wood: " + wood_counter);
-        }
-        if (leaves_counter >= 1) {
-            storage.append("\n Leaves: " + leaves_counter);
-        }
-        if (stone_counter >= 1) {
-            storage.append("\n Stone: " + stone_counter);
-        }
-        if (copper_counter >= 1) {
-            storage.append("\n Raw Copper: " + copper_counter);
-        }
-        if (r_copper_counter >= 1) {
-            storage.append("\n Refined Copper: " + r_copper_counter);
-        }
-        if (coal_counter >= 1) {
-            storage.append("\n Coal: " + coal_counter);
-        }
-        if (dirty_water_counter >= 1) {
-            storage.append("\n Dirty Water: " + dirty_water_counter + "/20L");
-        }
-        if (food_counter >= 1) {
-            storage.append("\n Food: " + food_counter + "/12Lb");
-        }
-        if (cooked_food_counter >= 1) {
-            storage.append("\n Cooked Food: " + cooked_food_counter + "/12Lb");
-        }
-        if (boiled_water_counter >= 1) {
-            storage.append("\n Boiled Water: " + boiled_water_counter + "/20L");
-        }
-        if (apple_counter >= 1) {
-            storage.append("\n Apples: " + apple_counter);
-        }
-
-
-        if (coin_counter >= 1) {
-            storage.append("\n \n \n Coins: " + coin_counter);
-        }
-
-
+     private Handler counterHandler = new Handler();
+    Helper helper = new Helper(this);
+    public void runTimer() {
+        counterHandler.postDelayed(TextViewChanger, 250);
     }
+
+    private Runnable TextViewChanger = new Runnable() {
+        public void run() {
+            helper.updateText();
+            runTimer();
+        }
+    };
 
     public void updateBars() {
         updateCopper();
@@ -318,7 +275,7 @@ public class Mine extends FragmentActivity {
         editor.putInt("copper", copper_counter);
         editor.putLong("copper_systemtime", System.currentTimeMillis());
         editor.apply();
-        updateText();
+
         copper_timer = new CountDownTimer(18000, 180) {
 
 
@@ -356,7 +313,7 @@ public class Mine extends FragmentActivity {
         editor.apply();
         editor.putLong("coal_systemtime", System.currentTimeMillis());
         editor.apply();
-        updateText();
+
         coal_timer = new CountDownTimer(13000, 130) {
 
 

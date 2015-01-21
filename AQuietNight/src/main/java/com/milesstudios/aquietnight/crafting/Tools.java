@@ -106,7 +106,7 @@ public class Tools extends ActivityGroup {
         int stone_counter = sharedPref.getInt("stone", 0);
         int stone_axeb = sharedPref.getInt("stone_axe", 0);
         int stone_pickb = sharedPref.getInt("stone_pick", 0);
-        int workshop_b = sharedPref.getInt("workshop", 0);
+        boolean workshop_b = sharedPref.getBoolean("workshop", false);
 
         Boolean anvil_b = sharedPref.getBoolean("anvil", false);
         Boolean copper_pick_b = sharedPref.getBoolean("copper_pick", false);

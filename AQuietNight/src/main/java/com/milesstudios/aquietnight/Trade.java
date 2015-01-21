@@ -7,11 +7,14 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.milesstudios.aquietnight.util.Helper;
 
 /**
  * Created by Ryanm14 on 9/13/2014.
@@ -64,7 +67,7 @@ public class Trade extends ActivityGroup {
         int quest_map_b = sharedPref.getInt("quest_map", 0);
         int rusty_sword_b = sharedPref.getInt("rusty_sword", 0);
         int chain_armor_b = sharedPref.getInt("chain_armor", 0);
-        updateText();
+
 
         if (quest_map_b == 1) {
             quest_map.setVisibility(View.INVISIBLE);
@@ -81,64 +84,18 @@ public class Trade extends ActivityGroup {
     }
 
 
-    public void updateText() {
-        SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
-        int wood_counter = sharedPref.getInt("wood", 0);
-        int leaves_counter = sharedPref.getInt("leaves", 0);
-        int stone_counter = sharedPref.getInt("stone", 0);
-        int hard_wood_counter = sharedPref.getInt("hard_wood", 0);
-        int dirty_water_counter = sharedPref.getInt("dirty_water", 0);
-        int food_counter = sharedPref.getInt("food", 0);
-        int cooked_food_counter = sharedPref.getInt("cooked_food", 0);
-        int boiled_water_counter = sharedPref.getInt("boiled_water", 0);
-        int apple_counter = sharedPref.getInt("apples", 0);
-        int coin_counter = sharedPref.getInt("coins", 0);
-        int copper_counter = sharedPref.getInt("copper", 0);
-        int r_copper_counter = sharedPref.getInt("r_copper", 0);
-        int coal_counter = sharedPref.getInt("coal", 0);
-
-        storage.setText("\t Storage:");
-        if (wood_counter >= 1) {
-            storage.append("\n Wood: " + wood_counter);
-        }
-        if (leaves_counter >= 1) {
-            storage.append("\n Leaves: " + leaves_counter);
-        }
-        if (stone_counter >= 1) {
-            storage.append("\n Stone: " + stone_counter);
-        }
-        if (copper_counter >= 1) {
-            storage.append("\n Raw Copper: " + copper_counter);
-        }
-        if (r_copper_counter >= 1) {
-            storage.append("\n Refined Copper: " + r_copper_counter);
-        }
-        if (coal_counter >= 1) {
-            storage.append("\n Coal: " + coal_counter);
-        }
-        if (dirty_water_counter >= 1) {
-            storage.append("\n Dirty Water: " + dirty_water_counter + "/20L");
-        }
-        if (food_counter >= 1) {
-            storage.append("\n Food: " + food_counter + "/12Lb");
-        }
-        if (cooked_food_counter >= 1) {
-            storage.append("\n Cooked Food: " + cooked_food_counter + "/12Lb");
-        }
-        if (boiled_water_counter >= 1) {
-            storage.append("\n Boiled Water: " + boiled_water_counter + "/20L");
-        }
-        if (apple_counter >= 1) {
-            storage.append("\n Apples: " + apple_counter);
-        }
-
-
-        if (coin_counter >= 1) {
-            storage.append("\n \n \n Coins: " + coin_counter);
-        }
-
-
+     private Handler counterHandler = new Handler();
+    Helper helper = new Helper(this);
+    public void runTimer() {
+        counterHandler.postDelayed(TextViewChanger, 250);
     }
+
+    private Runnable TextViewChanger = new Runnable() {
+        public void run() {
+            helper.updateText();
+            runTimer();
+        }
+    };
 
     @Override
     public void onBackPressed() {
@@ -178,7 +135,7 @@ public class Trade extends ActivityGroup {
                     editor.putInt("coins", coins_counter);
                     editor.putInt("quest_map", quest_map_b);
                     editor.apply();
-                    updateText();
+
                     quest_map.setVisibility(View.INVISIBLE);
                     quest_map.setEnabled(false);
                 } else {
@@ -216,7 +173,7 @@ public class Trade extends ActivityGroup {
                     editor.putInt("coins", coins_counter);
                     editor.putInt("rusty_sword", rusty_sword_b);
                     editor.apply();
-                    updateText();
+
                     rusty_sword.setVisibility(View.INVISIBLE);
                     rusty_sword.setEnabled(false);
                 } else {
@@ -254,7 +211,7 @@ public class Trade extends ActivityGroup {
                     editor.putInt("coins", coins_counter);
                     editor.putInt("chain_armor", chain_armor_b);
                     editor.apply();
-                    updateText();
+
                     chain_armor.setVisibility(View.INVISIBLE);
                     chain_armor.setEnabled(false);
                 } else {

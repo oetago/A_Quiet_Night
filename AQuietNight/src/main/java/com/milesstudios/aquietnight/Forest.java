@@ -12,6 +12,7 @@ import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
@@ -22,6 +23,8 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+
+import com.milesstudios.aquietnight.util.Helper;
 
 import java.util.Random;
 
@@ -38,6 +41,8 @@ public class Forest extends FragmentActivity {
     TextView log, storage;
     ProgressBar wood_bar, leaves_bar, stone_bar, dirty_water_bar, hunt_bar;
     CountDownTimer wood_timer, leaves_timer, stone_timer, dirty_water_timer, hunt_timer;
+    private Handler counterHandler = new Handler();
+    Helper helper = new Helper(this);
 
 
     //For setting up back button
@@ -132,7 +137,6 @@ public class Forest extends FragmentActivity {
             forest_tab.setVisibility(View.INVISIBLE);
         }
         log.setText(log_text);
-        updateText();
 
 
         //"Tab Button"
@@ -177,7 +181,7 @@ public class Forest extends FragmentActivity {
             }
 
         });
-
+        runTimer();
     }
 
 
@@ -225,65 +229,6 @@ public class Forest extends FragmentActivity {
         super.onStart();
     }
 
-    //Update Bars
-    public void updateText() {
-        SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
-        int wood_counter = sharedPref.getInt("wood", 0);
-        int leaves_counter = sharedPref.getInt("leaves", 0);
-        int stone_counter = sharedPref.getInt("stone", 0);
-        int hard_wood_counter = sharedPref.getInt("hard_wood", 0);
-        int dirty_water_counter = sharedPref.getInt("dirty_water", 0);
-        int food_counter = sharedPref.getInt("food", 0);
-        int cooked_food_counter = sharedPref.getInt("cooked_food", 0);
-        int boiled_water_counter = sharedPref.getInt("boiled_water", 0);
-        int apple_counter = sharedPref.getInt("apples", 0);
-        int coin_counter = sharedPref.getInt("coins", 0);
-        int copper_counter = sharedPref.getInt("copper", 0);
-        int r_copper_counter = sharedPref.getInt("r_copper", 0);
-        int coal_counter = sharedPref.getInt("coal", 0);
-
-        storage.setText("\t Storage:");
-        if (wood_counter >= 1) {
-            storage.append("\n Wood: " + wood_counter);
-        }
-        if (leaves_counter >= 1) {
-            storage.append("\n Leaves: " + leaves_counter);
-        }
-        if (stone_counter >= 1) {
-            storage.append("\n Stone: " + stone_counter);
-        }
-        if (copper_counter >= 1) {
-            storage.append("\n Raw Copper: " + copper_counter);
-        }
-        if (r_copper_counter >= 1) {
-            storage.append("\n Refined Copper: " + r_copper_counter);
-        }
-        if (coal_counter >= 1) {
-            storage.append("\n Coal: " + coal_counter);
-        }
-        if (dirty_water_counter >= 1) {
-            storage.append("\n Dirty Water: " + dirty_water_counter + "/20L");
-        }
-        if (food_counter >= 1) {
-            storage.append("\n Food: " + food_counter + "/12Lb");
-        }
-        if (cooked_food_counter >= 1) {
-            storage.append("\n Cooked Food: " + cooked_food_counter + "/12Lb");
-        }
-        if (boiled_water_counter >= 1) {
-            storage.append("\n Boiled Water: " + boiled_water_counter + "/20L");
-        }
-        if (apple_counter >= 1) {
-            storage.append("\n Apples: " + apple_counter);
-        }
-
-
-        if (coin_counter >= 1) {
-            storage.append("\n \n \n Coins: " + coin_counter);
-        }
-
-
-    }
 
     public void updateBars() {
         updateLeaves();
@@ -585,7 +530,6 @@ public class Forest extends FragmentActivity {
             editor.putInt("wood", wood_counter);
             editor.putLong("wood_systemtime", System.currentTimeMillis());
             editor.apply();
-            updateText();
             apple = rng.nextInt(101);
             if (apple <= 20) {
                 int apple_counter = sharedPref.getInt("apples", 0);
@@ -594,7 +538,6 @@ public class Forest extends FragmentActivity {
                 editor.putInt("apples", apple_counter);
                 editor.apply();
                 log.setText(" You found an Apple! \n" + log.getText());
-                updateText();
 
             }
 
@@ -637,7 +580,6 @@ public class Forest extends FragmentActivity {
                 editor.putInt("apples", apple_counter);
                 editor.apply();
                 log.setText(" You found an Apple! \n" + log.getText());
-                updateText();
 
             }
 
@@ -646,7 +588,6 @@ public class Forest extends FragmentActivity {
             editor.putInt("wood", wood_counter);
             editor.putLong("wood_systemtime", System.currentTimeMillis());
             editor.apply();
-            updateText();
 
             wood_bar.setVisibility(View.VISIBLE);
             wood.setEnabled(false);
@@ -687,7 +628,6 @@ public class Forest extends FragmentActivity {
                 editor.putInt("apples", apple_counter);
                 editor.apply();
                 log.setText(" You found two Apples! \n" + log.getText());
-                updateText();
 
             }
 
@@ -696,7 +636,6 @@ public class Forest extends FragmentActivity {
             editor.putInt("wood", wood_counter);
             editor.putLong("wood_systemtime", System.currentTimeMillis());
             editor.apply();
-            updateText();
 
             wood_bar.setVisibility(View.VISIBLE);
             wood.setEnabled(false);
@@ -743,7 +682,6 @@ public class Forest extends FragmentActivity {
             editor.apply();
             stone_bar.setVisibility(View.VISIBLE);
             stone.setEnabled(false);
-            updateText();
 
             stone_timer = new CountDownTimer(22000, 220) {
 
@@ -782,7 +720,6 @@ public class Forest extends FragmentActivity {
             editor.apply();
             stone_bar.setVisibility(View.VISIBLE);
             stone.setEnabled(false);
-            updateText();
             stone_timer = new CountDownTimer(18000, 180) {
 
                 @Override
@@ -819,7 +756,6 @@ public class Forest extends FragmentActivity {
             editor.apply();
             stone_bar.setVisibility(View.VISIBLE);
             stone.setEnabled(false);
-            updateText();
 
             stone_timer = new CountDownTimer(18000, 180) {
 
@@ -862,7 +798,6 @@ public class Forest extends FragmentActivity {
         editor.apply();
         editor.putLong("leaves_systemtime", System.currentTimeMillis());
         editor.apply();
-        updateText();
         leaves_timer = new CountDownTimer(9000, 90) {
 
 
@@ -905,7 +840,6 @@ public class Forest extends FragmentActivity {
             editor.apply();
             editor.putLong("dirty_water_systemtime", System.currentTimeMillis());
             editor.apply();
-            updateText();
             dirty_water_timer = new CountDownTimer(13000, 130) {
 
 
@@ -951,7 +885,6 @@ public class Forest extends FragmentActivity {
                 editor.apply();
                 editor.putLong("food_systemtime", System.currentTimeMillis());
                 editor.apply();
-                updateText();
                 hunt_timer = new CountDownTimer(25000, 250) {
 
 
@@ -988,7 +921,6 @@ public class Forest extends FragmentActivity {
                 editor.apply();
                 editor.putLong("food_systemtime", System.currentTimeMillis());
                 editor.apply();
-                updateText();
                 hunt_timer = new CountDownTimer(25000, 250) {
 
 
@@ -1021,6 +953,17 @@ public class Forest extends FragmentActivity {
         }
 
     }
+
+    public void runTimer(){
+        counterHandler.postDelayed(TextViewChanger, 50);
+    }
+
+    private Runnable TextViewChanger = new Runnable(){
+        public void run() {
+            helper.
+            runTimer();
+        }
+    };
 }
 
 

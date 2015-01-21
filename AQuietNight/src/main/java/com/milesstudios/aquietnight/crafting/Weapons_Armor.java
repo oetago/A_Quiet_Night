@@ -103,7 +103,7 @@ public class Weapons_Armor extends ActivityGroup {
         int wood_counter = sharedPref.getInt("wood", 0);
         int leaves_counter = sharedPref.getInt("leaves", 0);
         int stone_counter = sharedPref.getInt("stone", 0);
-        int workshop_b = sharedPref.getInt("workshop", 0);
+        boolean workshop_b = sharedPref.getBoolean("workshop", false);
         int leaf_armor_b = sharedPref.getInt("leaf_armor", 0);
         int stone_sword_b = sharedPref.getInt("stone_sword", 0);
 

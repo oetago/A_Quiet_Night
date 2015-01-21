@@ -1,9 +1,7 @@
 package com.milesstudios.aquietnight;
 
 import android.app.ActivityGroup;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -20,12 +18,6 @@ import com.milesstudios.aquietnight.util.Helper;
  * Created by Ryanm14 on 9/12/2014.
  */
 public class Buildings extends ActivityGroup {
-
-    int wood_counter, leaves_counter, stone_counter, fireplace_b, workshop_b, trade_post_b;
-    Button fireplace, workshop, trade_post, rebuild_mine, smithery, tannery;
-    TextView log, storage;
-    Boolean mine_b, tannery_b, smithery_b;
-    private Handler counterHandler = new Handler();
 
 
 
@@ -54,51 +46,93 @@ public class Buildings extends ActivityGroup {
         final SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.buildings);
-        log = (TextView) findViewById(R.id.log);
-        storage = (TextView) findViewById(R.id.storage);
-        fireplace = (Button) findViewById(R.id.fireplace);
-        trade_post = (Button) findViewById(R.id.trade_post);
-        workshop = (Button) findViewById(R.id.workshop);
-        rebuild_mine = (Button) findViewById(R.id.rebuild_mine);
-        smithery = (Button) findViewById(R.id.smithery);
-        tannery = (Button) findViewById(R.id.tannery);
+        TextView log = (TextView) findViewById(R.id.log);
+        TextView storage = (TextView) findViewById(R.id.storage);
         log.setTextSize(11);
         storage.setTextSize(15);
         //Saving
         final String log_text = sharedPref.getString("log_text", "");
         log.setText(log_text);
-        int leaves_counter = sharedPref.getInt("leaves", 0);
-        int stone_counter = sharedPref.getInt("stone", 0);
-        int fireplace_b = sharedPref.getInt("fireplace", 0);
-        int workshop_b = sharedPref.getInt("workshop", 0);
-        int stone_sword_b = sharedPref.getInt("stone_sword", 0);
-        smithery_b = sharedPref.getBoolean("smithery", false);
-        tannery_b = sharedPref.getBoolean("tannery", false);
-        Boolean forest_temple_b = sharedPref.getBoolean("forest_temple", false);
-        mine_b = sharedPref.getBoolean("mine", false);
-
-
-        updateText();
-        updateButtons();
         runTimer();
-
-    }
-
-    public void both(){
-        updateText();
         updateButtons();
+
     }
+
+
+    @Override
+    public void onBackPressed() {
+        Intent openMain = new Intent(Buildings.this, Cave.class);
+        startActivity(openMain);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+    }
+
+    @Override
+    public void onPause() {
+        TextView log = (TextView) findViewById(R.id.log);
+        SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        String log_text = log.getText().toString();
+        editor.putString("log_text", log_text);
+        editor.apply();
+        super.onPause();
+    }
+
+    //Buttons
+    public void buttonFireplace(View v) {
+        helper.build("Fireplace", "Wood: 12 \nStone: 7", "wood", 12, "stone", 7, "fireplace", this);
+    }
+
+    public void buttonWorkshop(View v) {
+        helper.build("Workshop", "Wood: 3 \nStone: 2", "wood", 3, "stone", 2, "workshop", this);
+    }
+
+    public void buttonTradePost(View v) {
+        helper.build("Trade Post", "Wood: 12 \nLeaves: 7", "wood", 12, "leaves", 7, "tradepost", this);
+    }
+
+    public void buttonRebuildMine(View v) {
+        helper.build("Rebuild Mine", "Wood: 20 \nStone: 15", "wood", 20, "stone", 15, "rebuildmine", this);
+    }
+
+    public void buttonTannery(View v) {
+        helper.buildBigger("Tannery", "Wood: 10 \nStone: 15\nLeaves:10", "wood", 20, "stone", 15, "leaves", 10, "tannery", this);
+    }
+
+    public void buttonSmithery(View v) {
+        helper.build("Smithery", "Wood: 15 \nStone: 25", "wood", 15, "stone", 25, "smithery", this);
+    }
+    private Handler counterHandler = new Handler();
+    Helper helper = new Helper(this);
+    public void runTimer() {
+        counterHandler.postDelayed(TextViewChanger, 250);
+    }
+
+    private Runnable TextViewChanger = new Runnable() {
+        public void run() {
+            helper.updateText();
+            updateButtons();
+            runTimer();
+        }
+    };
 
     public void updateButtons() {
         final SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
-        int fireplace_b = sharedPref.getInt("fireplace", 0);
-        int workshop_b = sharedPref.getInt("workshop", 0);
+        boolean fireplace_b = sharedPref.getBoolean("fireplace", false);
+        boolean workshop_b = sharedPref.getBoolean("workshop", false);
         boolean tradepost_b = sharedPref.getBoolean("tradepost", false);
         int stone_sword_b = sharedPref.getInt("stone_sword", 0);
-        smithery_b = sharedPref.getBoolean("smithery", false);
-        tannery_b = sharedPref.getBoolean("tannery", false);
+        boolean smithery_b = sharedPref.getBoolean("smithery", false);
+        boolean tannery_b = sharedPref.getBoolean("tannery", false);
         Boolean forest_temple_b = sharedPref.getBoolean("forest_temple", false);
-        mine_b = sharedPref.getBoolean("mine", false);
+        boolean mine_b = sharedPref.getBoolean("mine", false);
+        TextView log = (TextView) findViewById(R.id.log);
+        TextView storage = (TextView) findViewById(R.id.storage);
+        Button fireplace = (Button) findViewById(R.id.fireplace);
+        Button trade_post = (Button) findViewById(R.id.trade_post);
+        Button workshop = (Button) findViewById(R.id.workshop);
+        Button rebuild_mine = (Button) findViewById(R.id.rebuild_mine);
+        Button smithery = (Button) findViewById(R.id.smithery);
+        Button tannery = (Button) findViewById(R.id.tannery);
 
         if (!forest_temple_b) {
             rebuild_mine.setEnabled(false);
@@ -118,327 +152,23 @@ public class Buildings extends ActivityGroup {
             smithery.setVisibility(View.INVISIBLE);
         }
 
-        if (fireplace_b == 1) {
+        if (fireplace_b) {
             fireplace.setVisibility(View.INVISIBLE);
-        }
-        //Fix later
-        if (workshop_b >= 1) {
-            workshop.setVisibility(View.INVISIBLE);
         }
         if (tradepost_b) {
             trade_post.setVisibility(View.INVISIBLE);
         }
-        if (workshop_b == 0) {
+        if (!workshop_b) {
             trade_post.setEnabled(false);
             fireplace.setEnabled(false);
-        }else{
+        } else {
             trade_post.setEnabled(true);
             fireplace.setEnabled(true);
-        }
-
-    }
-
-    public void updateText() {
-        SharedPreferences sharedPref = this.getSharedPreferences("save-data", Context.MODE_PRIVATE);
-        int wood_counter = sharedPref.getInt("wood", 0);
-        int leaves_counter = sharedPref.getInt("leaves", 0);
-        int stone_counter = sharedPref.getInt("stone", 0);
-        int hard_wood_counter = sharedPref.getInt("hard_wood", 0);
-        int dirty_water_counter = sharedPref.getInt("dirty_water", 0);
-        int food_counter = sharedPref.getInt("food", 0);
-        int cooked_food_counter = sharedPref.getInt("cooked_food", 0);
-        int boiled_water_counter = sharedPref.getInt("boiled_water", 0);
-        int apple_counter = sharedPref.getInt("apples", 0);
-        int coin_counter = sharedPref.getInt("coins", 0);
-        int copper_counter = sharedPref.getInt("copper", 0);
-        int r_copper_counter = sharedPref.getInt("r_copper", 0);
-        int coal_counter = sharedPref.getInt("coal", 0);
-
-        storage.setText("\t Storage:");
-        if (wood_counter >= 1) {
-            storage.append("\n Wood: " + wood_counter);
-        }
-        if (leaves_counter >= 1) {
-            storage.append("\n Leaves: " + leaves_counter);
-        }
-        if (stone_counter >= 1) {
-            storage.append("\n Stone: " + stone_counter);
-        }
-        if (copper_counter >= 1) {
-            storage.append("\n Raw Copper: " + copper_counter);
-        }
-        if (r_copper_counter >= 1) {
-            storage.append("\n Refined Copper: " + r_copper_counter);
-        }
-        if (coal_counter >= 1) {
-            storage.append("\n Coal: " + coal_counter);
-        }
-        if (dirty_water_counter >= 1) {
-            storage.append("\n Dirty Water: " + dirty_water_counter + "/20L");
-        }
-        if (food_counter >= 1) {
-            storage.append("\n Food: " + food_counter + "/12Lb");
-        }
-        if (cooked_food_counter >= 1) {
-            storage.append("\n Cooked Food: " + cooked_food_counter + "/12Lb");
-        }
-        if (boiled_water_counter >= 1) {
-            storage.append("\n Boiled Water: " + boiled_water_counter + "/20L");
-        }
-        if (apple_counter >= 1) {
-            storage.append("\n Apples: " + apple_counter);
-        }
-
-
-        if (coin_counter >= 1) {
-            storage.append("\n \n \n Coins: " + coin_counter);
+            workshop.setEnabled(false);
         }
 
 
     }
-
-    @Override
-    public void onBackPressed() {
-        Intent openMain = new Intent(Buildings.this, Cave.class);
-        startActivity(openMain);
-        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
-
-    }
-
-    @Override
-    public void onPause() {
-        SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
-        String log_text = log.getText().toString();
-        editor.putString("log_text", log_text);
-        editor.apply();
-        super.onPause();
-    }
-
-    //Buttons
-    public void buttonFireplace(View v) {
-        final SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(Buildings.this);
-        alertDialog.setTitle("Build: Bonfire");
-        alertDialog.setMessage("Wood: 12 \n Stone: 7");
-        alertDialog.setNegativeButton("Exit", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-
-        });
-        alertDialog.setPositiveButton("Build", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                int wood_counter = sharedPref.getInt("wood", 0);
-                int stone_counter = sharedPref.getInt("stone", 0);
-                int fireplace_b = sharedPref.getInt("fireplace", 0);
-                if (stone_counter >= 7 && wood_counter >= 12) {
-                    log.setText(" You lit a Bonfire! \n" + log.getText());
-                    stone_counter -= 7;
-                    wood_counter -= 12;
-                    fireplace_b = 1;
-                    fireplace.setEnabled(false);
-                    fireplace.setVisibility(View.INVISIBLE);
-                } else {
-                    log.setText(" You don't have enough resources! \n" + log.getText());
-                }
-
-
-                //Save counter
-                SharedPreferences.Editor editor = sharedPref.edit();
-                editor.putInt("wood", wood_counter);
-                editor.putInt("stone", stone_counter);
-                editor.putInt("fireplace", fireplace_b);
-                editor.apply();
-                updateText();
-                dialog.dismiss();
-            }
-
-        });
-        AlertDialog alert = alertDialog.create();
-        alert.show();
-
-
-    }
-
-    public void buttonWorkshop(View v) {
-        final SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(Buildings.this);
-        alertDialog.setTitle("Build: Workshop");
-        alertDialog.setMessage("3 Wood \n2 Stone");
-        alertDialog.setNegativeButton("Exit", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-
-        });
-        alertDialog.setPositiveButton("Build", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                int wood_counter = sharedPref.getInt("wood", 0);
-                int stone_counter = sharedPref.getInt("stone", 0);
-                int workshop_b = sharedPref.getInt("workshop", 0);
-                if (stone_counter >= 2 && wood_counter >= 3) {
-                    log.setText(" You built a Workshop! \n" + log.getText());
-                    stone_counter -= 2;
-                    wood_counter -= 3;
-                    workshop.setEnabled(false);
-                    workshop_b = 1;
-                } else {
-                    log.setText(" You don't have enough resources! \n" + log.getText());
-                }
-                //Save counter
-                SharedPreferences.Editor editor = sharedPref.edit();
-                editor.putInt("wood", wood_counter);
-                editor.putInt("stone", stone_counter);
-                editor.putInt("workshop", workshop_b);
-                editor.apply();
-                updateText();
-                dialog.dismiss();
-            }
-
-        });
-        AlertDialog alert = alertDialog.create();
-        alert.show();
-    }
-
-    public void buttonTradePost(View v) {
-        final SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
-        Helper helper = new Helper(this);
-        helper.build("Trade Post", "Wood: 1 \nLeaves: 2", "wood", 1, "stone", 2, "tradepost", this);
-    }
-    public void buttonRebuildMine(View v) {
-        final SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(Buildings.this);
-        alertDialog.setTitle("Build: Mine");
-        alertDialog.setMessage("Wood: 20 \n Stone: 15");
-        alertDialog.setNegativeButton("Exit", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
-        alertDialog.setPositiveButton("Build", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                int wood_counter = sharedPref.getInt("wood", 0);
-                int stone_counter = sharedPref.getInt("stone", 0);
-                if (stone_counter >= 15 && wood_counter >= 20) {
-                    //TODO Change later items required
-                    log.setText(" You rebuilt the Mine! \n" + log.getText());
-                    stone_counter -= 15;
-                    wood_counter -= 20;
-                    mine_b = true;
-                    rebuild_mine.setEnabled(false);
-                    rebuild_mine.setVisibility(View.INVISIBLE);
-                } else {
-                    log.setText(" You don't have enough resources! \n" + log.getText());
-                }
-                //Save counter
-                SharedPreferences.Editor editor = sharedPref.edit();
-                editor.putInt("wood", wood_counter);
-                editor.putBoolean("mine", mine_b);
-                editor.putInt("stone", stone_counter);
-                editor.apply();
-                updateText();
-                dialog.dismiss();
-            }
-        });
-        AlertDialog alert = alertDialog.create();
-        alert.show();
-    }
-
-    public void buttonTannery(View v) {
-        final SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(Buildings.this);
-        alertDialog.setTitle("Build: Tannery");
-        alertDialog.setMessage("Wood: 10 \n Stone: 15 \n Leaves: 10");
-        alertDialog.setNegativeButton("Exit", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
-        alertDialog.setPositiveButton("Build", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                int wood_counter = sharedPref.getInt("wood", 0);
-                int stone_counter = sharedPref.getInt("stone", 0);
-                int leaves_counter = sharedPref.getInt("leaves", 0);
-                if (stone_counter >= 15 && wood_counter >= 10 && leaves_counter >= 10) {
-                    //TODO Change later items required
-                    log.setText(" You built a Tannery! \n" + log.getText());
-                    stone_counter -= 15;
-                    wood_counter -= 10;
-                    leaves_counter -= 10;
-                    Boolean tannery_b = true;
-                    tannery.setEnabled(false);
-                    tannery.setVisibility(View.INVISIBLE);
-                } else {
-                    log.setText(" You built a Tannery! \n" + log.getText());
-                }
-                //Save counter
-                SharedPreferences.Editor editor = sharedPref.edit();
-                editor.putInt("wood", wood_counter);
-                editor.putBoolean("tannery", tannery_b);
-                editor.putInt("stone", stone_counter);
-                editor.putInt("leaves", leaves_counter);
-                editor.apply();
-                updateText();
-                dialog.dismiss();
-            }
-        });
-        AlertDialog alert = alertDialog.create();
-        alert.show();
-    }
-
-    public void buttonSmithery(View v) {
-        final SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(Buildings.this);
-        alertDialog.setTitle("Build: Smithery");
-        alertDialog.setMessage("Wood: 15 \n Stone: 25");
-        alertDialog.setNegativeButton("Exit", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
-        alertDialog.setPositiveButton("Build", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                int wood_counter = sharedPref.getInt("wood", 0);
-                int stone_counter = sharedPref.getInt("stone", 0);
-                if (stone_counter >= 25 && wood_counter >= 15) {
-                    //TODO Change later items required
-                    log.setText(" You lit a Smithery! \n" + log.getText());
-                    stone_counter -= 25;
-                    wood_counter -= 15;
-                    Boolean smithery_b = true;
-                    smithery.setEnabled(false);
-                    smithery.setVisibility(View.INVISIBLE);
-                } else {
-                    log.setText(" You don't have enough resources! \n" + log.getText());
-                }
-                //Save counter
-                SharedPreferences.Editor editor = sharedPref.edit();
-                editor.putInt("wood", wood_counter);
-                editor.putBoolean("smithery", smithery_b);
-                editor.putInt("stone", stone_counter);
-                editor.apply();
-                updateText();
-                dialog.dismiss();
-            }
-        });
-        AlertDialog alert = alertDialog.create();
-        alert.show();
-    }
-
-    public void runTimer(){
-            counterHandler.postDelayed(TextViewChanger, 250);
-        }
-
-    private Runnable TextViewChanger = new Runnable(){
-        public void run() {
-            updateText();
-            updateButtons();
-            runTimer();
-        }
-    };
-
-
 }
 
 

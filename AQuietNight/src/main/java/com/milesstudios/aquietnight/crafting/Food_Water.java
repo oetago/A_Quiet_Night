@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,6 +20,7 @@ import android.widget.TextView;
 
 import com.milesstudios.aquietnight.Cave;
 import com.milesstudios.aquietnight.R;
+import com.milesstudios.aquietnight.util.Helper;
 
 /**
  * Created by Ryan on 9/27/2014.
@@ -101,7 +103,7 @@ public class Food_Water extends ActivityGroup {
         int wood_counter = sharedPref.getInt("wood", 0);
         int leaves_counter = sharedPref.getInt("leaves", 0);
         int stone_counter = sharedPref.getInt("stone", 0);
-        int workshop_b = sharedPref.getInt("workshop", 0);
+        boolean workshop_b = sharedPref.getBoolean("workshop", false);
         int fireplace_b = sharedPref.getInt("fireplace", 0);
         int leaf_canteen_b = sharedPref.getInt("leaf_canteen", 0);
         int stone_sword_b = sharedPref.getInt("stone_sword", 0);
@@ -128,7 +130,7 @@ public class Food_Water extends ActivityGroup {
         }
         final String log_text = sharedPref.getString("log_text", "");
         log.setText(log_text);
-        updateText();
+
 
         //Saving Tab
         SharedPreferences.Editor editor = sharedPref.edit();
@@ -141,64 +143,19 @@ public class Food_Water extends ActivityGroup {
         editor.apply();
     }
 
-    public void updateText() {
-        SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
-        int wood_counter = sharedPref.getInt("wood", 0);
-        int leaves_counter = sharedPref.getInt("leaves", 0);
-        int stone_counter = sharedPref.getInt("stone", 0);
-        int hard_wood_counter = sharedPref.getInt("hard_wood", 0);
-        int dirty_water_counter = sharedPref.getInt("dirty_water", 0);
-        int food_counter = sharedPref.getInt("food", 0);
-        int cooked_food_counter = sharedPref.getInt("cooked_food", 0);
-        int boiled_water_counter = sharedPref.getInt("boiled_water", 0);
-        int apple_counter = sharedPref.getInt("apples", 0);
-        int coin_counter = sharedPref.getInt("coins", 0);
-        int copper_counter = sharedPref.getInt("copper", 0);
-        int r_copper_counter = sharedPref.getInt("r_copper", 0);
-        int coal_counter = sharedPref.getInt("coal", 0);
-
-        storage.setText("\t Storage:");
-        if (wood_counter >= 1) {
-            storage.append("\n Wood: " + wood_counter);
-        }
-        if (leaves_counter >= 1) {
-            storage.append("\n Leaves: " + leaves_counter);
-        }
-        if (stone_counter >= 1) {
-            storage.append("\n Stone: " + stone_counter);
-        }
-        if (copper_counter >= 1) {
-            storage.append("\n Raw Copper: " + copper_counter);
-        }
-        if (r_copper_counter >= 1) {
-            storage.append("\n Refined Copper: " + r_copper_counter);
-        }
-        if (coal_counter >= 1) {
-            storage.append("\n Coal: " + coal_counter);
-        }
-        if (dirty_water_counter >= 1) {
-            storage.append("\n Dirty Water: " + dirty_water_counter + "/20L");
-        }
-        if (food_counter >= 1) {
-            storage.append("\n Food: " + food_counter + "/12Lb");
-        }
-        if (cooked_food_counter >= 1) {
-            storage.append("\n Cooked Food: " + cooked_food_counter + "/12Lb");
-        }
-        if (boiled_water_counter >= 1) {
-            storage.append("\n Boiled Water: " + boiled_water_counter + "/20L");
-        }
-        if (apple_counter >= 1) {
-            storage.append("\n Apples: " + apple_counter);
-        }
-
-
-        if (coin_counter >= 1) {
-            storage.append("\n \n \n Coins: " + coin_counter);
-        }
-
-
+     private Handler counterHandler = new Handler();
+    Helper helper = new Helper(this);
+    public void runTimer() {
+        counterHandler.postDelayed(TextViewChanger, 250);
     }
+
+    private Runnable TextViewChanger = new Runnable() {
+        public void run() {
+            helper.updateText();
+
+            runTimer();
+        }
+    };
 
     @Override
     public void onBackPressed() {
@@ -248,7 +205,7 @@ public class Food_Water extends ActivityGroup {
                 editor.putInt("boiled_water", boiled_water_counter);
                 editor.putInt("dirty_water", dirty_water_counter);
                 editor.apply();
-                updateText();
+
             }
 
         });
@@ -272,7 +229,7 @@ public class Food_Water extends ActivityGroup {
                 editor.putInt("boiled_water", boiled_water_counter);
                 editor.putInt("dirty_water", dirty_water_counter);
                 editor.apply();
-                updateText();
+
             }
 
         });
@@ -311,7 +268,7 @@ public class Food_Water extends ActivityGroup {
                 editor.putInt("food", food_counter);
                 editor.putInt("cooked_food", cooked_food_counter);
                 editor.apply();
-                updateText();
+
             }
 
         });
@@ -335,7 +292,7 @@ public class Food_Water extends ActivityGroup {
                 editor.putInt("food", food_counter);
                 editor.putInt("cooked_food", cooked_food_counter);
                 editor.apply();
-                updateText();
+
             }
 
         });
@@ -369,7 +326,7 @@ public class Food_Water extends ActivityGroup {
                     editor.putInt("leaf_canteen", leaf_canteen_b);
                     editor.putInt("leaves", leaves_counter);
                     editor.apply();
-                    updateText();
+
                 } else {
                     log.setText(" You don't have enough resources! \n" + log.getText());
                 }
