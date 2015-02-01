@@ -86,6 +86,17 @@
         android:onClick="buttonTannery" />
 
 
+    <Button
+        android:id="@+id/storage_shed"
+        android:background="@drawable/button_shape"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:text="Storage Shed"
+        android:onClick="buttonStorageShed"
+        android:layout_above="@+id/workshop"
+        android:layout_alignLeft="@+id/storage"
+        android:layout_alignStart="@+id/storage" />
+
 
 
 

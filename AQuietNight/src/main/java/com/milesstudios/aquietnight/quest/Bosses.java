@@ -118,8 +118,6 @@ public class Bosses extends Activity {
         //  }
 
 
-
-
     }
 
     @Override
@@ -233,7 +231,7 @@ public class Bosses extends Activity {
             health = 15;
         }
 
-        enemycount_ft=0;
+        enemycount_ft = 0;
         if (enemycount_ft <= 4) {
             Random rng = new Random();
             int enemy = rng.nextInt(3) + 1;

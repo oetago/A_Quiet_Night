@@ -55,7 +55,7 @@ public class Quest_Main extends Activity {
         // Adapter
         SpinnerAdapter adapter =
                 ArrayAdapter.createFromResource(this, R.array.quest,
-                       R.layout.spinner_item);
+                        R.layout.spinner_item);
 
 // Callback
         ActionBar.OnNavigationListener callback = new ActionBar.OnNavigationListener() {
@@ -153,14 +153,14 @@ public class Quest_Main extends Activity {
         SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
 //        String log_text = log.getText().toString();
-  //      editor.putString("log_text",log_text);
-    //    editor.apply();
-       super.onPause();
+        //      editor.putString("log_text",log_text);
+        //    editor.apply();
+        super.onPause();
     }
 
     public void UpdateText() {
         SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
-        TextView storage = (TextView)findViewById(R.id.storage);
+        TextView storage = (TextView) findViewById(R.id.storage);
         int wood_counter = sharedPref.getInt("wood", 0);
         int leaves_counter = sharedPref.getInt("leaves", 0);
         int stone_counter = sharedPref.getInt("stone", 0);

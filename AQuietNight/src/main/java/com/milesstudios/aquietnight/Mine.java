@@ -171,8 +171,9 @@ public class Mine extends FragmentActivity {
     }
 
     //Update Bars
-     private Handler counterHandler = new Handler();
+    private Handler counterHandler = new Handler();
     Helper helper = new Helper(this);
+
     public void runTimer() {
         counterHandler.postDelayed(TextViewChanger, 250);
     }

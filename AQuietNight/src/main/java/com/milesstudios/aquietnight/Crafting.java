@@ -85,9 +85,9 @@ public class Crafting extends ActivityGroup {
 
             }
 
+
         };
 
-// Action Bar
         ActionBar actions = getActionBar();
         actions.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
         actions.setDisplayShowTitleEnabled(false);
@@ -98,19 +98,7 @@ public class Crafting extends ActivityGroup {
         storage = (TextView) findViewById(R.id.storage);
         log.setTextSize(11);
         storage.setTextSize(15);
-        //Saving
-        int wood_counter = sharedPref.getInt("wood", 0);
-        int leaves_counter = sharedPref.getInt("leaves", 0);
-        int stone_counter = sharedPref.getInt("stone", 0);
-        int stone_axeb = sharedPref.getInt("stone_axe", 0);
-        int stone_pickb = sharedPref.getInt("stone_pick", 0);
-        int leaf_armorb = sharedPref.getInt("leaf_armor", 0);
-        int hard_wood_counter = sharedPref.getInt("hard_wood", 0);
-        boolean workshop_b = sharedPref.getBoolean("workshop", false);
 
-
-
-        //Going back to crafting tab
         int weapons_armor = sharedPref.getInt("weapons_armor", 0);
         int food_water = sharedPref.getInt("food_water", 0);
         int tools = sharedPref.getInt("tools", 1);
@@ -125,11 +113,13 @@ public class Crafting extends ActivityGroup {
             startActivity(openTools);
         }
 
-
+        Intent openMain = new Intent(Crafting.this, Food_Water.class);
+        startActivity(openMain);
     }
 
-     private Handler counterHandler = new Handler();
+    private Handler counterHandler = new Handler();
     Helper helper = new Helper(this);
+
     public void runTimer() {
         counterHandler.postDelayed(TextViewChanger, 250);
     }

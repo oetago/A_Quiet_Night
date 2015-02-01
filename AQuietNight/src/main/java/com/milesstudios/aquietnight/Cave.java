@@ -85,7 +85,6 @@ public class Cave extends Activity {
         menu.setMenu(R.layout.menu);
 
 
-
         cave_tab.setPaintFlags(cave_tab.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         cave_tab.setTextSize(20);
         //forest_tab.setPaintFlags(forest_tab.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
@@ -134,7 +133,7 @@ public class Cave extends Activity {
             quests.setVisibility(View.INVISIBLE);
         }
 
-        int workshop_int = sharedPref.getInt("workshop_int",0);
+        int workshop_int = sharedPref.getInt("workshop_int", 0);
         if (!workshop_b) {
             crafting.setEnabled(false);
             crafting.setVisibility(View.INVISIBLE);
@@ -246,75 +245,9 @@ public class Cave extends Activity {
 
         });
 
-
+        runTimer();
     }
 
-    private void fullStorage() {
-        final TextView full_storage = (TextView) findViewById(R.id.full_storage);
-        SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
-        int wood_counter = sharedPref.getInt("wood", 0);
-        int leaves_counter = sharedPref.getInt("leaves", 0);
-        int stone_counter = sharedPref.getInt("stone", 0);
-        int hard_wood_counter = sharedPref.getInt("hard_wood", 0);
-        int dirty_water_counter = sharedPref.getInt("dirty_water", 0);
-        int food_counter = sharedPref.getInt("food", 0);
-        int cooked_food_counter = sharedPref.getInt("cooked_food", 0);
-        int boiled_water_counter = sharedPref.getInt("boiled_water", 0);
-        int apple_counter = sharedPref.getInt("apples", 0);
-        int coin_counter = sharedPref.getInt("coins", 0);
-        int copper_counter = sharedPref.getInt("copper", 0);
-        int r_copper_counter = sharedPref.getInt("r_copper", 0);
-        int coal_counter = sharedPref.getInt("coal", 0);
-
-        full_storage.setText("\t Full Storage:");
-        full_storage.append("\n Materials:");
-        if (wood_counter >= 1) {
-            full_storage.append("\n Wood: " + wood_counter);
-        }
-        if (leaves_counter >= 1) {
-            full_storage.append("\n Leaves: " + leaves_counter);
-        }
-        if (stone_counter >= 1) {
-            full_storage.append("\n Stone: " + stone_counter);
-        }
-        if (copper_counter >= 1) {
-            full_storage.append("\n Raw Copper: " + copper_counter);
-        }
-        if (r_copper_counter >= 1) {
-            full_storage.append("\n Refined Copper: " + r_copper_counter);
-        }
-        if (coal_counter >= 1) {
-            full_storage.append("\n Coal: " + coal_counter);
-        }
-
-        if (apple_counter >= 1) {
-            full_storage.append("\n Apples: " + apple_counter);
-        }
-
-        if (coin_counter >= 1) {
-            full_storage.append("\n Coins: " + coin_counter);
-        }
-
-        full_storage.append("\n \n Food & Water:");
-
-        if (dirty_water_counter >= 1) {
-            full_storage.append("\n Dirty Water: " + dirty_water_counter + "/20L");
-        }
-        if (food_counter >= 1) {
-            full_storage.append("\n Food: " + food_counter + "/12Lb");
-        }
-        if (cooked_food_counter >= 1) {
-            full_storage.append("\n Cooked Food: " + cooked_food_counter + "/12Lb");
-        }
-        if (boiled_water_counter >= 1) {
-            full_storage.append("\n Boiled Water: " + boiled_water_counter + "/20L");
-        }
-        full_storage.append("\n\n Weapons & Armor");
-        if (dirty_water_counter >= 1) {
-            full_storage.append("\n Dirty Water: " + dirty_water_counter + "/20L");
-        }
-
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -328,7 +261,6 @@ public class Cave extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         // Take appropriate action for each action item click
         switch (item.getItemId()) {
-
             case R.id.action_settings:
                 // help action
                 Clear_Data();
@@ -378,8 +310,9 @@ public class Cave extends Activity {
 
     }
 
-     private Handler counterHandler = new Handler();
+    private Handler counterHandler = new Handler();
     Helper helper = new Helper(this);
+
     public void runTimer() {
         counterHandler.postDelayed(TextViewChanger, 250);
     }

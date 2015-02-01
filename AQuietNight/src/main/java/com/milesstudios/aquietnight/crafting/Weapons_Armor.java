@@ -2,9 +2,7 @@ package com.milesstudios.aquietnight.crafting;
 
 import android.app.ActionBar;
 import android.app.ActivityGroup;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -20,14 +18,16 @@ import android.widget.TextView;
 
 import com.milesstudios.aquietnight.Cave;
 import com.milesstudios.aquietnight.R;
+import com.milesstudios.aquietnight.util.Helper;
 
 /**
  * Created by Ryan on 9/27/2014.
  */
 public class Weapons_Armor extends ActivityGroup {
-    int wood_counter, leaves_counter, stone_counter, stone_swordb, hard_wood_counter, workshop_b, boiled_water_counter, cooked_food_counter;
     Button stone_sword, leaf_armor;
     TextView log, storage;
+    Helper helper = new Helper(this);
+    private Handler counterHandler = new Handler();
 
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -47,15 +47,13 @@ public class Weapons_Armor extends ActivityGroup {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
         //Saving
         getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
         getActionBar().show();
         getActionBar().setDisplayHomeAsUpEnabled(true);
-        final SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
-        // Adapter
-        SpinnerAdapter adapter =
-                ArrayAdapter.createFromResource(this, R.array.weapons_armor,
-                        R.layout.spinner_item);
+        SpinnerAdapter adapter = ArrayAdapter.createFromResource(this, R.array.weapons_armor, R.layout.spinner_item);
 
 // Callback
         ActionBar.OnNavigationListener callback = new ActionBar.OnNavigationListener() {
@@ -71,24 +69,18 @@ public class Weapons_Armor extends ActivityGroup {
                     startActivity(openFood_Water);
                 }
                 if (items[position].equals("Tools")) {
-                    setContentView(R.layout.crafting_tools);
                     Intent openTools = new Intent(Weapons_Armor.this, Tools.class);
                     startActivity(openTools);
                 }
                 Log.d("NavigationItemSelected", items[position]);
                 return true;
-
             }
-
         };
 
-// Action Bar
         ActionBar actions = getActionBar();
         actions.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
         actions.setDisplayShowTitleEnabled(false);
         actions.setListNavigationCallbacks(adapter, callback);
-
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.crafting_weapons_armor);
         log = (TextView) findViewById(R.id.log);
@@ -99,133 +91,29 @@ public class Weapons_Armor extends ActivityGroup {
         storage.setTextSize(15);
         final String log_text = sharedPref.getString("log_text", "");
         log.setText(log_text);
-        //Saving
-        int wood_counter = sharedPref.getInt("wood", 0);
-        int leaves_counter = sharedPref.getInt("leaves", 0);
-        int stone_counter = sharedPref.getInt("stone", 0);
-        boolean workshop_b = sharedPref.getBoolean("workshop", false);
-        int leaf_armor_b = sharedPref.getInt("leaf_armor", 0);
-        int stone_sword_b = sharedPref.getInt("stone_sword", 0);
+        boolean leaf_armor_b = sharedPref.getBoolean("leaf_armor", false);
+        boolean stone_sword_b = sharedPref.getBoolean("stone_sword", false);
+        runTimer();
+        saveChoice();
+    }
 
-        if (stone_sword_b == 1) {
-            stone_sword.setEnabled(false);
-            stone_sword.setVisibility(View.INVISIBLE);
-        }
-        if (leaf_armor_b == 1 || stone_sword_b == 0) {
-            leaf_armor.setEnabled(false);
-            leaf_armor.setVisibility(View.INVISIBLE);
-        }
-        UpdateText();
-
-
-        stone_sword.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                // TODO Auto-generated method stub
-                stone_sword.setText("Wood: 3 \n Stone: 4");
-                new Handler().postDelayed(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        stone_sword.setText("Stone Sword");
-                    }
-                }, 3000L);
-                return true;
-
-            }
-        });
-
-
-        leaf_armor.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                // TODO Auto-generated method stub
-                leaf_armor.setText("Leaves: 8");
-                new Handler().postDelayed(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        leaf_armor.setText("Leaf Armor");
-                    }
-                }, 3000L);
-                return true;
-
-            }
-        });
-
-
+    public void saveChoice() {
+        SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         int food_water = 0;
-        int tools = 0;
-        int weapons_armor = 1;
+        int tools = 1;
+        int weapons_armor = 0;
         editor.putInt("food_water", food_water);
         editor.putInt("tools", tools);
         editor.putInt("weapons_armor", weapons_armor);
         editor.apply();
     }
 
-    public void UpdateText() {
-        SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
-        int wood_counter = sharedPref.getInt("wood", 0);
-        int leaves_counter = sharedPref.getInt("leaves", 0);
-        int stone_counter = sharedPref.getInt("stone", 0);
-        int hard_wood_counter = sharedPref.getInt("hard_wood", 0);
-        int dirty_water_counter = sharedPref.getInt("dirty_water", 0);
-        int food_counter = sharedPref.getInt("food", 0);
-        int cooked_food_counter = sharedPref.getInt("cooked_food", 0);
-        int boiled_water_counter = sharedPref.getInt("boiled_water", 0);
-        int apple_counter = sharedPref.getInt("apples", 0);
-        int coin_counter = sharedPref.getInt("coins", 0);
-        int copper_counter = sharedPref.getInt("copper", 0);
-        int r_copper_counter = sharedPref.getInt("r_copper", 0);
-        int coal_counter = sharedPref.getInt("coal", 0);
-
-        storage.setText("\t Storage:");
-        if (wood_counter >= 1) {
-            storage.append("\n Wood: " + wood_counter);
-        }
-        if (leaves_counter >= 1) {
-            storage.append("\n Leaves: " + leaves_counter);
-        }
-        if (stone_counter >= 1) {
-            storage.append("\n Stone: " + stone_counter);
-        }
-        if (copper_counter >= 1) {
-            storage.append("\n Raw Copper: " + copper_counter);
-        }
-        if (r_copper_counter >= 1) {
-            storage.append("\n Refined Copper: " + r_copper_counter);
-        }
-        if (coal_counter >= 1) {
-            storage.append("\n Coal: " + coal_counter);
-        }
-        if (dirty_water_counter >= 1) {
-            storage.append("\n Dirty Water: " + dirty_water_counter + "/20L");
-        }
-        if (food_counter >= 1) {
-            storage.append("\n Food: " + food_counter + "/12Lb");
-        }
-        if (cooked_food_counter >= 1) {
-            storage.append("\n Cooked Food: " + cooked_food_counter + "/12Lb");
-        }
-        if (boiled_water_counter >= 1) {
-            storage.append("\n Boiled Water: " + boiled_water_counter + "/20L");
-        }
-        if (apple_counter >= 1) {
-            storage.append("\n Apples: " + apple_counter);
-        }
-
-
-        if (coin_counter >= 1) {
-            storage.append("\n \n \n Coins: " + coin_counter);
-        }
-
-
-    }
-
     @Override
     public void onBackPressed() {
-
+        Intent openMain = new Intent(Weapons_Armor.this, Cave.class);
+        startActivity(openMain);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
     }
 
     @Override
@@ -239,80 +127,31 @@ public class Weapons_Armor extends ActivityGroup {
     }
 
     public void buttonStoneSword(View v) {
-        final SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(Weapons_Armor.this);
-        alertDialog.setTitle("Craft Stone Sword ");
-        alertDialog.setMessage("Wood: 3 \nStone: 4");
-        alertDialog.setNegativeButton("Exit", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
-        alertDialog.setPositiveButton("Craft", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                int wood_counter = sharedPref.getInt("wood", 0);
-                int stone_sword_b = sharedPref.getInt("stone_sword", 0);
-                int stone_counter = sharedPref.getInt("stone", 0);
-                if (wood_counter >= 3 && stone_counter >= 4) {
-                    log.setText(" You crafted a Stone Sword! \n" + log.getText());
-                    wood_counter -= 3;
-                    stone_counter -= 4;
-                    stone_sword_b = 1;
-                    stone_sword.setEnabled(false);
-                    stone_sword.setVisibility(View.INVISIBLE);
-                } else {
-                    log.setText(" You don't have enough resources! \n" + log.getText());
-                }
-                //Save counter
-                SharedPreferences.Editor editor = sharedPref.edit();
-                editor.putInt("wood", wood_counter);
-                editor.putInt("stone", stone_counter);
-                editor.putInt("stone_sword", stone_sword_b);
-                editor.apply();
-                UpdateText();
-
-            }
-
-        });
-        AlertDialog alert = alertDialog.create();
-        alert.show();
+        helper.build("Stone Sword", "Wood: 10 \nStone: 20", "wood", 10, "stone", 20, "stone_sword", this);
     }
 
     public void buttonLeafArmor(View v) {
-        final SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(Weapons_Armor.this);
-        alertDialog.setTitle("Craft Leaf Armor");
-        alertDialog.setMessage("Leaves: 8");
-        alertDialog.setNegativeButton("Exit", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
-        alertDialog.setPositiveButton("Craft", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                int leaf_counter = sharedPref.getInt("leaves", 0);
-                int leaf_armor_b = 0;
-                if (leaf_counter >= 8) {
-                    log.setText(" You crafted Leaf Armor! \n" + log.getText());
-                    leaf_counter -= 8;
-                    leaf_armor_b = 1;
-                    leaf_armor.setEnabled(false);
-                    leaf_armor.setVisibility(View.INVISIBLE);
-                } else {
-                    log.setText(" You don't have enough resources! \n" + log.getText());
-                }
-                //Save counter
-                SharedPreferences.Editor editor = sharedPref.edit();
-                editor.putInt("leaves", leaf_counter);
-                editor.putInt("leaf_armor", leaf_armor_b);
-                editor.apply();
-                UpdateText();
-            }
-        });
-        AlertDialog alert = alertDialog.create();
-        alert.show();
+        helper.build("Leaf Armor", "Leaves: 15", "leaves", 15, "leaf_armor", this);
     }
-}
+
+    public void runTimer() {
+        counterHandler.postDelayed(TextViewChanger, 250);
+    }
+
+    private Runnable TextViewChanger = new Runnable() {
+        public void run() {
+            helper.updateText();
+            runTimer();
+            updateButtons();
+        }
+    };
+
+    private void updateButtons() {
+        if(helper.buttonChecker("stone_sword")) stone_sword.setVisibility(View.GONE);
+        if(helper.buttonChecker("leaf_armor")) leaf_armor.setVisibility(View.GONE);
+        }
+    }
+
 
 
 

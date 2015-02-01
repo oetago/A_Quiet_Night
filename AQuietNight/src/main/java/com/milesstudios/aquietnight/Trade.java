@@ -84,8 +84,9 @@ public class Trade extends ActivityGroup {
     }
 
 
-     private Handler counterHandler = new Handler();
+    private Handler counterHandler = new Handler();
     Helper helper = new Helper(this);
+
     public void runTimer() {
         counterHandler.postDelayed(TextViewChanger, 250);
     }

@@ -16,17 +16,7 @@
         android:onClick="buttonStonePick"
         android:background="@drawable/button_shape"/>
 
-    <Button
-        android:id="@+id/anvil"
-        style="@drawable/button_shape"
-        android:layout_width="120dp"
-        android:layout_height="50dp"
-        android:text="Anvil"
-        android:onClick="buttonAnvil"
-        android:background="@drawable/button_shape"
-        android:layout_marginTop="20dp"
-        android:layout_below="@+id/copper_axe"
-        android:layout_alignLeft="@+id/copper_axe" />
+
 
     <Button
         android:id="@+id/stone_axe"
@@ -41,28 +31,28 @@
         android:onClick="buttonStoneAxe"
         android:background="@drawable/button_shape"/>
     <Button
-        android:id="@+id/copper_pick"
+        android:id="@+id/tin_pick"
         style="@drawable/button_shape"
         android:layout_width="120dp"
         android:layout_height="50dp"
-        android:text="Copper Pick"
-        android:onClick="buttonCopperPick"
+        android:text="Tin Pick"
+        android:onClick="buttonTinPick"
         android:background="@drawable/button_shape"
-        android:layout_below="@+id/stone_axe"
-        android:layout_marginTop="20dp"
-        android:layout_alignLeft="@+id/copper_axe" />
+        android:layout_above="@+id/stone_axe"
+        android:layout_alignLeft="@+id/stone_pick"
+        android:layout_alignStart="@+id/stone_pick" />
 
     <Button
-        android:id="@+id/copper_axe"
+        android:id="@+id/tin_axe"
         style="@drawable/button_shape"
         android:layout_width="120dp"
         android:layout_height="50dp"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="20dp"
-        android:layout_below="@id/copper_pick"
+        android:layout_below="@id/tin_pick"
         android:layout_weight="1"
-        android:text="Copper Axe"
-        android:onClick="buttonCopperAxe"
+        android:text="Tin Axe"
+        android:onClick="buttonTinAxe"
         android:background="@drawable/button_shape"/>
 
 
@@ -72,9 +62,7 @@
         android:layout_height="100dp"
         android:textStyle="bold"
         android:editable="true"
-        android:layout_alignParentBottom="true"
-        android:layout_alignLeft="@+id/anvil"
-        android:layout_alignStart="@+id/anvil" />
+        android:layout_alignParentBottom="true" />
 
     <TextView
         android:id="@+id/storage"
@@ -82,10 +70,11 @@
         android:layout_height="150dp"
         android:textStyle="bold"
         android:editable="true"
-        android:layout_marginRight="25dp"
         android:background="@drawable/button_shape"
-        android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@+id/log"
-        android:layout_toEndOf="@+id/log" />
+        android:layout_alignBottom="@+id/log"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_toEndOf="@+id/log"
+        android:layout_toRightOf="@+id/log" />
 
 </RelativeLayout>

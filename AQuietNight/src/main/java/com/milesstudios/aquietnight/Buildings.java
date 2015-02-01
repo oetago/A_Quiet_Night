@@ -18,8 +18,8 @@ import com.milesstudios.aquietnight.util.Helper;
  * Created by Ryanm14 on 9/12/2014.
  */
 public class Buildings extends ActivityGroup {
-
-
+    Helper helper = new Helper(this);
+    private Handler counterHandler = new Handler();
 
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -101,8 +101,7 @@ public class Buildings extends ActivityGroup {
     public void buttonSmithery(View v) {
         helper.build("Smithery", "Wood: 15 \nStone: 25", "wood", 15, "stone", 25, "smithery", this);
     }
-    private Handler counterHandler = new Handler();
-    Helper helper = new Helper(this);
+
     public void runTimer() {
         counterHandler.postDelayed(TextViewChanger, 250);
     }
@@ -115,18 +114,19 @@ public class Buildings extends ActivityGroup {
         }
     };
 
+    public void buttonStorageShed(View v) {
+        helper.build("Storage Shed", "Wood: 150 \nStone: 100", "wood", 150, "stone", 100, "storage_shed", this);
+    }
+
     public void updateButtons() {
         final SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
         boolean fireplace_b = sharedPref.getBoolean("fireplace", false);
         boolean workshop_b = sharedPref.getBoolean("workshop", false);
         boolean tradepost_b = sharedPref.getBoolean("tradepost", false);
-        int stone_sword_b = sharedPref.getInt("stone_sword", 0);
         boolean smithery_b = sharedPref.getBoolean("smithery", false);
         boolean tannery_b = sharedPref.getBoolean("tannery", false);
         Boolean forest_temple_b = sharedPref.getBoolean("forest_temple", false);
         boolean mine_b = sharedPref.getBoolean("mine", false);
-        TextView log = (TextView) findViewById(R.id.log);
-        TextView storage = (TextView) findViewById(R.id.storage);
         Button fireplace = (Button) findViewById(R.id.fireplace);
         Button trade_post = (Button) findViewById(R.id.trade_post);
         Button workshop = (Button) findViewById(R.id.workshop);
