@@ -143,31 +143,25 @@ public class Buildings extends ActivityGroup {
             tannery.setVisibility(View.INVISIBLE);
         }
         if (mine_b) {
-            rebuild_mine.setVisibility(View.INVISIBLE);
+            rebuild_mine.setEnabled(false);;
         }
         if (tannery_b) {
-            tannery.setVisibility(View.INVISIBLE);
+            tannery.setEnabled(false);;
         }
         if (smithery_b) {
-            smithery.setVisibility(View.INVISIBLE);
+            smithery.setEnabled(false);;
         }
 
         if (fireplace_b) {
-            fireplace.setVisibility(View.INVISIBLE);
+            fireplace.setEnabled(false);;
         }
         if (tradepost_b) {
-            trade_post.setVisibility(View.INVISIBLE);
+            trade_post.setEnabled(false);;
         }
         if (!workshop_b) {
             trade_post.setEnabled(false);
             fireplace.setEnabled(false);
-        } else {
-            trade_post.setEnabled(true);
-            fireplace.setEnabled(true);
-            workshop.setEnabled(false);
-        }
-
-
+        } 
     }
 }
 
