@@ -396,7 +396,7 @@ public class Helper extends Activity {
         int amethyst = sharedPref.getInt("amethyst", 0);
         int nickel = sharedPref.getInt("nickel", 0);
 
-        storage.setText(R.string.storage);
+        storage.setText("\t\t\t" + R.string.storage);
         if (wood_counter >= 1) {
             storage.append("\n Wood: " + wood_counter);
         }
@@ -446,7 +446,7 @@ public class Helper extends Activity {
             storage.append("\n Amethyst: " + amethyst);
         }
         if (coin_counter >= 1) {
-            storage.append("\n \n \n Coins: " + coin_counter);
+            storage.append("\n Coins: " + coin_counter);
         }
 
 
