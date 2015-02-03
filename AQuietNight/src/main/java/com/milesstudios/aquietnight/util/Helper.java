@@ -51,7 +51,7 @@ public class Helper extends Activity {
                     log.setText("You built a " + title + "! \n" + log.getText());
                 } else {
                     dialog.dismiss();
-                    log.setText(" You don't have enough resources! \n" + log.getText());
+                    log.setText("You don't have enough resources! \n" + log.getText());
                 }
             }
         });
@@ -84,7 +84,7 @@ public class Helper extends Activity {
                     log.setText("You built a " + title + "! \n" + log.getText());
                 } else {
                     dialog.dismiss();
-                    log.setText(" You don't have enough resources! \n" + log.getText());
+                    log.setText("You don't have enough resources! \n" + log.getText());
                 }
             }
         });
@@ -124,7 +124,7 @@ public class Helper extends Activity {
                     log.setText("You built a " + title + "! \n" + log.getText());
                 } else {
                     dialog.dismiss();
-                    log.setText(" You don't have enough resources! \n" + log.getText());
+                    log.setText("You don't have enough resources! \n" + log.getText());
                 }
             }
         });
@@ -153,16 +153,16 @@ public class Helper extends Activity {
             if (sharedPref.getBoolean("storage_shed", false) && special_counter <= 999) {
                 special_counter += sp_amount;
                 if (special.equals("apple")) {
-                    log.setText(" You found an apple! \n" + log.getText());
+                    log.setText("You found an apple! \n" + log.getText());
                 } else {
-                    log.setText(" You found a " + special + "! \n" + log.getText());
+                    log.setText("You found a " + special + "! \n" + log.getText());
                 }
             } else if (special_counter <= 249) {
                 special_counter += sp_amount;
                 if (special.equals("apple")) {
-                    log.setText(" You found an apple! \n" + log.getText());
+                    log.setText("You found an apple! \n" + log.getText());
                 } else {
-                    log.setText(" You found a " + special + "! \n" + log.getText());
+                    log.setText("You found a " + special + "! \n" + log.getText());
                 }
             } else {
             }
@@ -193,16 +193,16 @@ public class Helper extends Activity {
             if (sharedPref.getBoolean("storage_shed", false) && special_counter <= 999) {
                 special_counter += sp_amount;
                 if (special.equals("apple")) {
-                    log.setText(" You found an apple! \n" + log.getText());
+                    log.setText("You found an apple! \n" + log.getText());
                 } else {
-                    log.setText(" You found a " + special + "! \n" + log.getText());
+                    log.setText("You found a " + special + "! \n" + log.getText());
                 }
             } else if (special_counter <= 249) {
                 special_counter += sp_amount;
                 if (special.equals("apple")) {
-                    log.setText(" You found an apple! \n" + log.getText());
+                    log.setText("You found an apple! \n" + log.getText());
                 } else {
-                    log.setText(" You found a " + special + "! \n" + log.getText());
+                    log.setText("You found a " + special + "! \n" + log.getText());
                 }
             } else {
             }
@@ -216,16 +216,16 @@ public class Helper extends Activity {
             if (sharedPref.getBoolean("storage_shed", false) && special_counter2 <= 999) {
                 special_counter2 += sp_amount2;
                 if (special.equals("apple")) {
-                    log.setText(" You found an apple! \n" + log.getText());
+                    log.setText("You found an apple! \n" + log.getText());
                 } else {
-                    log.setText(" You found a " + special2 + "! \n" + log.getText());
+                    log.setText("You found a " + special2 + "! \n" + log.getText());
                 }
             } else if (special_counter2 <= 249) {
                 special_counter2 += sp_amount2;
                 if (special2.equals("apple")) {
-                    log.setText(" You found an apple! \n" + log.getText());
+                    log.setText("You found an apple! \n" + log.getText());
                 } else {
-                    log.setText(" You found a " + special2 + "! \n" + log.getText());
+                    log.setText("You found a " + special2 + "! \n" + log.getText());
                 }
             } else {
             }
@@ -255,16 +255,16 @@ public class Helper extends Activity {
             if (sharedPref.getBoolean("storage_shed", false) && special_counter <= 999) {
                 special_counter += sp_amount;
                 if (special.equals("apple")) {
-                    log.setText(" You found an apple! \n" + log.getText());
+                    log.setText("You found an apple! \n" + log.getText());
                 } else {
-                    log.setText(" You found a " + special + "! \n" + log.getText());
+                    log.setText("You found a " + special + "! \n" + log.getText());
                 }
             } else if (special_counter <= 249) {
                 special_counter += sp_amount;
                 if (special.equals("apple")) {
-                    log.setText(" You found an apple! \n" + log.getText());
+                    log.setText("You found an apple! \n" + log.getText());
                 } else {
-                    log.setText(" You found a " + special + "! \n" + log.getText());
+                    log.setText("You found a " + special + "! \n" + log.getText());
                 }
             } else {
             }
@@ -278,16 +278,16 @@ public class Helper extends Activity {
             if (sharedPref.getBoolean("storage_shed", false) && special_counter2 <= 999) {
                 special_counter2 += sp_amount2;
                 if (special2.equals("apple")) {
-                    log.setText(" You found an apple! \n" + log.getText());
+                    log.setText("You found an apple! \n" + log.getText());
                 } else {
-                    log.setText(" You found a " + special2 + "! \n" + log.getText());
+                    log.setText("You found a " + special2 + "! \n" + log.getText());
                 }
             } else if (special_counter2 <= 249) {
                 special_counter2 += sp_amount2;
                 if (special2.equals("apple")) {
-                    log.setText(" You found an apple! \n" + log.getText());
+                    log.setText("You found an apple! \n" + log.getText());
                 } else {
-                    log.setText(" You found a " + special2 + "! \n" + log.getText());
+                    log.setText("You found a " + special2 + "! \n" + log.getText());
                 }
             } else {
             }
@@ -301,16 +301,16 @@ public class Helper extends Activity {
             if (sharedPref.getBoolean("storage_shed", false) && special_counter3 <= 999) {
                 special_counter3 += sp_amount3;
                 if (special3.equals("apple")) {
-                    log.setText(" You found an apple! \n" + log.getText());
+                    log.setText("You found an apple! \n" + log.getText());
                 } else {
-                    log.setText(" You found a " + special3 + "! \n" + log.getText());
+                    log.setText("You found a " + special3 + "! \n" + log.getText());
                 }
             } else if (special_counter3 <= 249) {
                 special_counter3 += sp_amount3;
                 if (special3.equals("apple")) {
-                    log.setText(" You found an apple! \n" + log.getText());
+                    log.setText("You found an apple! \n" + log.getText());
                 } else {
-                    log.setText(" You found a " + special3 + "! \n" + log.getText());
+                    log.setText("You found a " + special3 + "! \n" + log.getText());
                 }
             } else {
             }
@@ -396,7 +396,7 @@ public class Helper extends Activity {
         int amethyst = sharedPref.getInt("amethyst", 0);
         int nickel = sharedPref.getInt("nickel", 0);
 
-        storage.setText("\t Storage:");
+        storage.setText(R.string.storage);
         if (wood_counter >= 1) {
             storage.append("\n Wood: " + wood_counter);
         }
