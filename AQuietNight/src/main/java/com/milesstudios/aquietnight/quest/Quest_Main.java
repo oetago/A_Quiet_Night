@@ -99,12 +99,12 @@ public class Quest_Main extends Activity {
         apple_collector_b = sharedPref.getBoolean("apple_collector", false);
         leaf_collector_b = sharedPref.getBoolean("leaf_collector", false);
         int hard_wood_counter = sharedPref.getInt("hard_wood", 0);
-        int stone_sword_b = sharedPref.getInt("stone_sword", 0);
-        int water_canteen_b = sharedPref.getInt("water_canteen", 0);
+        boolean stone_sword_b = sharedPref.getBoolean("stone_sword", false);
+        boolean water_canteen_b = sharedPref.getBoolean("water_canteen", false);
         final String log_text = sharedPref.getString("log_text", "");
         log.setText(log_text);
 
-        if (stone_sword_b == 0) {
+        if (!stone_sword_b) {
             hunter.setVisibility(View.INVISIBLE);
             hunter.setEnabled(false);
             leaf_collector.setVisibility(View.INVISIBLE);
@@ -131,7 +131,7 @@ public class Quest_Main extends Activity {
             purifier.setVisibility(View.INVISIBLE);
             purifier.setEnabled(false);
         }
-        if (water_canteen_b == 0) {
+        if (!water_canteen_b) {
             purifier.setVisibility(View.INVISIBLE);
             purifier.setEnabled(false);
         }

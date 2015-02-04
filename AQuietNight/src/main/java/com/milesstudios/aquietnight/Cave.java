@@ -12,7 +12,6 @@ import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.text.method.ScrollingMovementMethod;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -31,10 +30,9 @@ import com.milesstudios.aquietnight.util.ChangeLog;
 import com.milesstudios.aquietnight.util.Helper;
 
 public class Cave extends Activity {
-    Button buildings, trading, crafting, quests, forest_button, all_data;
-    int wood_counter, leaves_counter, stone_counter, start_counter, stone_axeb, stone_pickb, leaf_armorb, hard_wood_counter, workshop_b, trade_post_b;
+    Button buildings, trading, crafting, quests;
     TextView log, storage;
-    boolean storage_slide_b = false;
+    SlidingMenu menu;
 
 
     @Override
@@ -44,37 +42,29 @@ public class Cave extends Activity {
         setContentView(R.layout.cave);
         final SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
         buildings = (Button) findViewById(R.id.buildings);
+        SharedPreferences.Editor editor = sharedPref.edit();
         //TODO Fix version names
         ChangeLog cl = new ChangeLog(this);
-        if (cl.firstRun())
+        if (cl.firstRun()) {
             cl.getLogDialog().show();
-        //cl.getFullLogDialog().show();
-        //Tab
-        //Boolean mine_b = sharedPref.getBoolean("mine", false);
+        }
         crafting = (Button) findViewById(R.id.crafting);
         buildings = (Button) findViewById(R.id.buildings);
         trading = (Button) findViewById(R.id.trading);
         quests = (Button) findViewById(R.id.quests);
         log = (TextView) findViewById(R.id.log);
         storage = (TextView) findViewById(R.id.storage);
-        boolean tradepost_b = sharedPref.getBoolean("tradepost", false);
-        boolean workshop_b = sharedPref.getBoolean("workshop", false);
-        int quest_map_b = sharedPref.getInt("quest_map", 0);
+        int trading_post_counter = sharedPref.getInt("tradepostcounter", 0);
+        if (sharedPref.getBoolean("tradepost", false)) {
+            trading_post_counter++;
+            editor.putInt("tradepostcounter", trading_post_counter);
+            editor.apply();
+        }
         int start_counter = sharedPref.getInt("start_counter", 0);
-        Boolean forest_temple_b = sharedPref.getBoolean("forest_temple", false);
-        Boolean rebuildmine_b = sharedPref.getBoolean("rebuildmine", false);
         final Animation anim = AnimationUtils.loadAnimation(this, R.anim.log);
-        final Animation storage_anim_slide = AnimationUtils.loadAnimation(this, R.anim.storage_slide);
-        final Animation storage_anim_slide2 = AnimationUtils.loadAnimation(this, R.anim.storage_slide2);
-        SharedPreferences.Editor editor = sharedPref.edit();
+
         final TextView cave_tab = (TextView) findViewById(R.id.cave_tab);
         final TextView forest_tab = (TextView) findViewById(R.id.forest_tab);
-        final TextView cave_tab_wmine = (TextView) findViewById(R.id.cave_tab_wmine);
-        final TextView forest_tab_wmine = (TextView) findViewById(R.id.forest_tab_wmine);
-        final TextView mine_tab = (TextView) findViewById(R.id.mine_tab);
-
-        //fullStorage();
-        SlidingMenu menu;
         menu = new SlidingMenu(this);
         menu.setMode(SlidingMenu.LEFT);
         menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
@@ -83,81 +73,43 @@ public class Cave extends Activity {
         menu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
         menu.setBehindWidth(900);
         menu.setMenu(R.layout.menu);
-
-
         cave_tab.setPaintFlags(cave_tab.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         cave_tab.setTextSize(20);
-        //forest_tab.setPaintFlags(forest_tab.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         forest_tab.setTextSize(20);
         Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/TNRB.ttf");
         cave_tab.setTypeface(tf);
         forest_tab.setTypeface(tf);
         storage.setMovementMethod(new ScrollingMovementMethod());
-        // log.setMovementMethod(new ScrollingMovementMethod());
-        log.setTextSize(12);
+        log.setTextSize(14);
         storage.setTextSize(15);
-
-        if (!rebuildmine_b) {
-            cave_tab_wmine.setEnabled(false);
-            cave_tab_wmine.setVisibility(View.INVISIBLE);
-            forest_tab_wmine.setEnabled(false);
-            forest_tab_wmine.setVisibility(View.INVISIBLE);
-            mine_tab.setEnabled(false);
-            mine_tab.setVisibility(View.INVISIBLE);
-        } else {
-            cave_tab.setEnabled(false);
-            cave_tab.setVisibility(View.INVISIBLE);
-            forest_tab.setEnabled(false);
-            forest_tab.setVisibility(View.INVISIBLE);
-        }
-
-        boolean intro = false;
-        editor.putBoolean("intro", intro);
+        editor.putBoolean("intro", false);
         editor.apply();
 
-        if (trade_post_b == 0) {
-            trading.setVisibility(View.INVISIBLE);
-            trading.setEnabled(false);
-        } else if (trade_post_b == 1) {
-            trade_post_b += 1;
-            editor.putInt("trade_post", trade_post_b);
-            editor.apply();
+        if (trading_post_counter == 0) {
+            trading.setVisibility(View.GONE);
+        } else if (trading_post_counter == 1) {
             anim.reset();
             trading.clearAnimation();
             trading.startAnimation(anim);
-
         }
 
-        if (start_counter == 0) {
-            quests.setEnabled(false);
-            quests.setVisibility(View.INVISIBLE);
-        }
+            quests.setVisibility(View.GONE);
 
         int workshop_int = sharedPref.getInt("workshop_int", 0);
-        if (!workshop_b) {
-            crafting.setEnabled(false);
-            crafting.setVisibility(View.INVISIBLE);
-        } else if (workshop_int == 1) {
-            workshop_int += 1;
+        if (sharedPref.getBoolean("workshop", false)) {
+            workshop_int++;
             editor.putInt("workshop_int", workshop_int);
             editor.apply();
+        }
+        if (workshop_int == 0) {
+            crafting.setVisibility(View.GONE);
+        } else if (workshop_int == 1) {
             anim.reset();
             crafting.clearAnimation();
             crafting.startAnimation(anim);
-
         }
 
-        if (start_counter == 0) {
-            buildings.setEnabled(false);
-            buildings.setVisibility(View.INVISIBLE);
-            anim.reset();
-            log.setVisibility(View.INVISIBLE);
-            storage.setVisibility(View.INVISIBLE);
-        }
-        // if(mine == 0)
-        start_counter += 1;
-        editor.putInt("start_counter", start_counter);
-        editor.apply();
+
         final String log_text = sharedPref.getString("log_text", "");
         log.setText(log_text);
 
@@ -171,26 +123,6 @@ public class Cave extends Activity {
         adView.loadAd(adRequest);
 
         forest_tab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent openForest = new Intent(Cave.this, Forest.class);
-                startActivity(openForest);
-                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
-
-            }
-
-        });
-        mine_tab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent openForest = new Intent(Cave.this, Mine.class);
-                startActivity(openForest);
-                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
-
-            }
-
-        });
-        forest_tab_wmine.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent openForest = new Intent(Cave.this, Forest.class);
@@ -218,7 +150,7 @@ public class Cave extends Activity {
             public void onClick(View v) {
                 Intent openBuildings = new Intent(Cave.this, Buildings.class);
                 startActivity(openBuildings);
-                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
 
             }
 
@@ -229,7 +161,7 @@ public class Cave extends Activity {
             public void onClick(View v) {
                 Intent openTrade = new Intent(Cave.this, Trade.class);
                 startActivity(openTrade);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
 
             }
 
@@ -244,8 +176,8 @@ public class Cave extends Activity {
             }
 
         });
-
-        runTimer();
+        Helper helper = new Helper(this);
+        helper.updateText();
     }
 
 
@@ -285,7 +217,6 @@ public class Cave extends Activity {
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.clear();
         editor.apply();
-
         Intent openMain = new Intent(Cave.this, splash.class);
         startActivity(openMain);
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
@@ -310,19 +241,8 @@ public class Cave extends Activity {
 
     }
 
-    private Handler counterHandler = new Handler();
-    Helper helper = new Helper(this);
 
-    public void runTimer() {
-        counterHandler.postDelayed(TextViewChanger, 250);
-    }
 
-    private Runnable TextViewChanger = new Runnable() {
-        public void run() {
-            helper.updateText();
-            runTimer();
-        }
-    };
 
     @Override
     public void onBackPressed() {

@@ -27,18 +27,6 @@
         android:layout_alignStart="@+id/workshop"
         android:onClick="buttonFireplace"
         android:background="@drawable/button_shape"/>
-    <Button
-        android:id="@+id/rebuild_mine"
-        style="@drawable/button_shape"
-        android:layout_width="120dp"
-        android:layout_height="50dp"
-        android:text="Mine"
-        android:layout_below="@+id/trade_post"
-        android:layout_marginTop="10dp"
-        android:layout_alignLeft="@+id/workshop"
-        android:layout_alignStart="@+id/workshop"
-        android:onClick="buttonRebuildMine"
-        android:background="@drawable/button_shape"/>
 
     <Button
         android:id="@+id/workshop"
@@ -50,18 +38,6 @@
         android:layout_below="@id/fireplace"
         android:text="Workshop"
         android:onClick="buttonWorkshop"
-        android:background="@drawable/button_shape"/>
-
-    <Button
-        android:id="@+id/smithery"
-        style="@drawable/button_shape"
-        android:layout_width="120dp"
-        android:layout_height="50dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="10dp"
-        android:layout_below="@id/rebuild_mine"
-        android:text="Smithery"
-        android:onClick="buttonSmithery"
         android:background="@drawable/button_shape"/>
 
     <Button
@@ -79,11 +55,12 @@
         android:background="@drawable/button_shape"
         android:layout_width="120dp"
         android:layout_height="50dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="10dp"
-        android:layout_below="@id/smithery"
         android:text="Tannery"
-        android:onClick="buttonTannery" />
+        android:onClick="buttonTannery"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/storage_shed"
+        android:layout_alignLeft="@+id/storage_shed"
+        android:layout_alignStart="@+id/storage_shed" />
 
 
     <Button
@@ -92,11 +69,11 @@
         android:layout_width="120dp"
         android:layout_height="50dp"
         android:text="Storage Shed"
+        android:layout_marginTop="10dp"
         android:onClick="buttonStorageShed"
-        android:layout_above="@+id/workshop"
-        android:layout_alignLeft="@+id/storage"
-        android:layout_alignStart="@+id/storage" />
-
+        android:layout_below="@+id/trade_post"
+        android:layout_alignLeft="@+id/trade_post"
+        android:layout_alignStart="@+id/trade_post" />
 
 
 
@@ -112,7 +89,9 @@
         android:textStyle="bold"
         android:editable="true"
         android:layout_marginLeft="25dp"
-        android:layout_alignParentBottom="true" />
+        android:layout_alignParentBottom="true"
+        android:layout_alignTop="@+id/storage"
+        android:layout_marginBottom="10dp"/>
 
     <TextView
         android:id="@+id/storage"
@@ -124,6 +103,7 @@
         android:background="@drawable/button_shape"
         android:layout_alignParentBottom="true"
         android:layout_toRightOf="@+id/log"
-        android:layout_toEndOf="@+id/log" />
+        android:layout_toEndOf="@+id/log"
+        android:layout_marginBottom="10dp"/>
 
 </RelativeLayout>

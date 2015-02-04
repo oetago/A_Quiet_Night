@@ -93,8 +93,9 @@ public class Weapons_Armor extends ActivityGroup {
         log.setText(log_text);
         boolean leaf_armor_b = sharedPref.getBoolean("leaf_armor", false);
         boolean stone_sword_b = sharedPref.getBoolean("stone_sword", false);
-        runTimer();
         saveChoice();
+        helper.updateText();
+        helper.updateButtons();
     }
 
     public void saveChoice() {
@@ -134,23 +135,8 @@ public class Weapons_Armor extends ActivityGroup {
         helper.build("Leaf Armor", "Leaves: 15", "leaves", 15, "leaf_armor", this);
     }
 
-    public void runTimer() {
-        counterHandler.postDelayed(TextViewChanger, 250);
-    }
+}
 
-    private Runnable TextViewChanger = new Runnable() {
-        public void run() {
-            helper.updateText();
-            runTimer();
-            updateButtons();
-        }
-    };
-
-    private void updateButtons() {
-        if(helper.buttonChecker("stone_sword")) stone_sword.setVisibility(View.GONE);
-        if(helper.buttonChecker("leaf_armor")) leaf_armor.setVisibility(View.GONE);
-        }
-    }
 
 
 

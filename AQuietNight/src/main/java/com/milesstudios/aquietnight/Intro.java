@@ -1,7 +1,9 @@
 package com.milesstudios.aquietnight;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -59,8 +61,15 @@ public class Intro extends Activity {
                 // If inreaches maximum reset it
                 if (currentIndex == messageCount) {
                     intro_text.clearAnimation();
-                    final Intent openMain_Screen = new Intent(Intro.this, Cave.class);
-                    startActivity(openMain_Screen);
+                    SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
+                    if(sharedPref.getInt("start_counter", 0) == 0) {
+                        Intent openMain_Screen = new Intent(Intro.this, Forest.class);
+                        startActivity(openMain_Screen);
+                    }else{
+                        Intent openMain_Screen = new Intent(Intro.this, Cave.class);
+                        startActivity(openMain_Screen);
+                    }
+
                     //overridePendingTransition(R.anim.fadeout, R.anim.fadein);
                     // intro_text.setText(textToShow[currentIndex]);
                 } else {

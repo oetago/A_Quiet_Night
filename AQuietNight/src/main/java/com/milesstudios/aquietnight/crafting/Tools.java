@@ -150,8 +150,7 @@ public class Tools extends ActivityGroup {
     }
 
     public void buttonStoneAxe(View v) {
-        helper.build("Stone Axe", "Wood: 15 \nStone: 10", "wood", 25, "stone", 25, "stone_axe", this);
-
+        helper.build("Stone Axe", "Wood: 25 \nStone: 25", "wood", 25, "stone", 25, "stone_axe", this);
     }
 
     public void buttonStonePick(View v) {

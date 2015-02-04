@@ -28,12 +28,16 @@ public class Buildings extends ActivityGroup {
                 // Do whatever you want, e.g. finish()
                 Intent openMain = new Intent(Buildings.this, Cave.class);
                 startActivity(openMain);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
                 break;
 
             default:
                 return super.onOptionsItemSelected(item);
         }
+
+        //smooth trans for crafting, fix layout
+
+
         return false;
     }
 
@@ -50,12 +54,24 @@ public class Buildings extends ActivityGroup {
         TextView storage = (TextView) findViewById(R.id.storage);
         log.setTextSize(11);
         storage.setTextSize(15);
-        //Saving
+
         final String log_text = sharedPref.getString("log_text", "");
         log.setText(log_text);
-        runTimer();
-        updateButtons();
+        helper.updateButtons();
+        helper.updateText();
 
+        if(!sharedPref.getBoolean("workshop",false)){
+            Button bonfire = (Button)findViewById(R.id.fireplace);
+            Button workshop = (Button)findViewById(R.id.workshop);
+            Button tradepost = (Button)findViewById(R.id.trade_post);
+            Button tannery = (Button)findViewById(R.id.tannery);
+            Button storageshed = (Button)findViewById(R.id.storage_shed);
+            bonfire.setEnabled(false);
+            workshop.setEnabled(false);
+            tradepost.setEnabled(false);
+            tannery.setEnabled(false);
+            storageshed.setEnabled(false);
+        }
     }
 
 
@@ -79,11 +95,11 @@ public class Buildings extends ActivityGroup {
 
     //Buttons
     public void buttonFireplace(View v) {
-        helper.build("Fireplace", "Wood: 12 \nStone: 7", "wood", 12, "stone", 7, "fireplace", this);
+        helper.build("Bonfire", "Wood: 30 \nStone: 20", "wood", 30, "stone", 20, "bonfire", this);
     }
 
     public void buttonWorkshop(View v) {
-        helper.build("Workshop", "Wood: 3 \nStone: 2", "wood", 3, "stone", 2, "workshop", this);
+        helper.build("Workshop", "Wood: 10 \nStone: 10", "wood", 10, "stone", 10, "workshop", this);
     }
 
     public void buttonTradePost(View v) {
@@ -102,67 +118,11 @@ public class Buildings extends ActivityGroup {
         helper.build("Smithery", "Wood: 15 \nStone: 25", "wood", 15, "stone", 25, "smithery", this);
     }
 
-    public void runTimer() {
-        counterHandler.postDelayed(TextViewChanger, 250);
-    }
-
-    private Runnable TextViewChanger = new Runnable() {
-        public void run() {
-            helper.updateText();
-            updateButtons();
-            runTimer();
-        }
-    };
-
     public void buttonStorageShed(View v) {
         helper.build("Storage Shed", "Wood: 150 \nStone: 100", "wood", 150, "stone", 100, "storage_shed", this);
     }
 
-    public void updateButtons() {
-        final SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
-        boolean fireplace_b = sharedPref.getBoolean("fireplace", false);
-        boolean workshop_b = sharedPref.getBoolean("workshop", false);
-        boolean tradepost_b = sharedPref.getBoolean("tradepost", false);
-        boolean smithery_b = sharedPref.getBoolean("smithery", false);
-        boolean tannery_b = sharedPref.getBoolean("tannery", false);
-        Boolean forest_temple_b = sharedPref.getBoolean("forest_temple", false);
-        boolean mine_b = sharedPref.getBoolean("mine", false);
-        Button fireplace = (Button) findViewById(R.id.fireplace);
-        Button trade_post = (Button) findViewById(R.id.trade_post);
-        Button workshop = (Button) findViewById(R.id.workshop);
-        Button rebuild_mine = (Button) findViewById(R.id.rebuild_mine);
-        Button smithery = (Button) findViewById(R.id.smithery);
-        Button tannery = (Button) findViewById(R.id.tannery);
 
-        if (!forest_temple_b) {
-            rebuild_mine.setEnabled(false);
-            rebuild_mine.setVisibility(View.INVISIBLE);
-            smithery.setEnabled(false);
-            smithery.setVisibility(View.INVISIBLE);
-            tannery.setEnabled(false);
-            tannery.setVisibility(View.INVISIBLE);
-        }
-        if (mine_b) {
-            rebuild_mine.setEnabled(false);;
-        }
-        if (tannery_b) {
-            tannery.setEnabled(false);;
-        }
-        if (smithery_b) {
-            smithery.setEnabled(false);;
-        }
-
-        if (fireplace_b) {
-            fireplace.setEnabled(false);;
-        }
-        if (tradepost_b) {
-            trade_post.setEnabled(false);;
-        }
-        if (!workshop_b) {
-            trade_post.setEnabled(false);
-            fireplace.setEnabled(false);
-        } 
-    }
 }
 
 

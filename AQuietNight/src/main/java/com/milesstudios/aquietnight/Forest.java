@@ -66,49 +66,25 @@ public class Forest extends FragmentActivity {
         //Declare Textviews
         log = (TextView) findViewById(R.id.log);
         storage = (TextView) findViewById(R.id.storage);
-
-
-        Button wood = (Button) findViewById(R.id.wood);
-        Button stone = (Button) findViewById(R.id.stone);
         Button dirty_water = (Button) findViewById(R.id.dirty_water);
         Button hunt = (Button) findViewById(R.id.hunt);
-
         //Setup TextSize and display Storage
         storage.setMovementMethod(new ScrollingMovementMethod());
         log.setTextSize(12);
         storage.setTextSize(15);
-
-        final TextView cave_tab = (TextView) findViewById(R.id.cave_tab);
-        final TextView forest_tab = (TextView) findViewById(R.id.forest_tab);
+         TextView cave_tab = (TextView) findViewById(R.id.cave_tab);
+         TextView forest_tab = (TextView) findViewById(R.id.forest_tab);
         cave_tab.setTextSize(20);
         forest_tab.setPaintFlags(forest_tab.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         forest_tab.setTextSize(20);
         Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/TNRB.ttf");
         cave_tab.setTypeface(tf);
         forest_tab.setTypeface(tf);
+        helper.updateText();
 
         //Gets crafting and buildings
-        final boolean stone_sword_b = sharedPref.getBoolean("stone_sword", false);
-        final boolean leaf_canteen_b = sharedPref.getBoolean("leaf_canteen", false);
         final String log_text = sharedPref.getString("log_text", "");
-        final TextView cave_tab_wmine = (TextView) findViewById(R.id.cave_tab_wmine);
-        final TextView forest_tab_wmine = (TextView) findViewById(R.id.forest_tab_wmine);
-        final TextView mine_tab = (TextView) findViewById(R.id.mine_tab);
-        if (!sharedPref.getBoolean("mine", false)) {
-            cave_tab_wmine.setEnabled(false);
-            cave_tab_wmine.setVisibility(View.INVISIBLE);
-            forest_tab_wmine.setEnabled(false);
-            forest_tab_wmine.setVisibility(View.INVISIBLE);
-            mine_tab.setEnabled(false);
-            mine_tab.setVisibility(View.INVISIBLE);
-        } else {
-            cave_tab.setEnabled(false);
-            cave_tab.setVisibility(View.INVISIBLE);
-            forest_tab.setEnabled(false);
-            forest_tab.setVisibility(View.INVISIBLE);
-        }
         log.setText(log_text);
-
 
         //"Tab Button"
         cave_tab.setOnClickListener(new View.OnClickListener() {
@@ -122,35 +98,14 @@ public class Forest extends FragmentActivity {
 
         });
 
-        if (leaf_canteen_b) {
+        if (!sharedPref.getBoolean("leaf_canteen", false)) {
             dirty_water.setVisibility(View.GONE);
         }
-        if (stone_sword_b) {
+        if (!sharedPref.getBoolean("stone_sword", false)) {
             hunt.setVisibility(View.GONE);
 
         }
-        mine_tab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent openForest = new Intent(Forest.this, Mine.class);
-                startActivity(openForest);
-                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
-
-            }
-
-        });
-        cave_tab_wmine.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent openForest = new Intent(Forest.this, Cave.class);
-                startActivity(openForest);
-                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
-
-            }
-
-        });
-        runTimer();
-        wood.setBackground(getResources().getDrawable(R.drawable.buttonselector));
+        helper.updateText();
     }
 
 
@@ -161,6 +116,7 @@ public class Forest extends FragmentActivity {
         String log_text = log.getText().toString();
         editor.putString("log_text", log_text);
         editor.apply();
+        finish();
         super.onPause();
     }
 
@@ -182,22 +138,24 @@ public class Forest extends FragmentActivity {
         SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
         if (sharedPref.getBoolean("tin_axe", false)) {
             helper.collect("wood", 1, "apple", 1, 200, "leaves", 10, 200, "amber", 1, 10);
-        } else if (sharedPref.getInt("stone_axe", 0) == 1) {
-            helper.collect("wood", 1, "apple", 1, 150, "leaves", 4, 200);
+        } else if (sharedPref.getBoolean("stone_axe", false)) {
+            helper.collect("wood", 1, "apple", 1, 150, "leaves", 2, 200);
         } else {
             helper.collect("wood", 1, "apple", 1, 10);
         }
+        helper.updateText();
     }
 
     public void buttonStone(View v) {
         SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
         if (sharedPref.getBoolean("tin_pick", false)) {
             helper.collect("stone", 1, "amethyst", 1, 3, "bismuth", 1, 25, "tin", 3, 35);
-        } else if (sharedPref.getInt("stone_pick", 0) == 1) {
+        } else if (sharedPref.getBoolean("stone_pick", false)) {
             helper.collect("stone", 1, "tin", 1, 20, "bismuth", 1, 10);
         } else {
             helper.collect("stone", 1);
         }
+        helper.updateText();
     }
 
     public void buttonDirtyWater(View v) {
@@ -208,18 +166,10 @@ public class Forest extends FragmentActivity {
     public void buttonHunt(View v) {
         SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
         helper.collectL("Raw Food", "raw_food", 1);
+        helper.updateText();
     }
 
-    public void runTimer() {
-        counterHandler.postDelayed(TextViewChanger, 50);
-    }
 
-    private Runnable TextViewChanger = new Runnable() {
-        public void run() {
-            helper.updateText();
-            runTimer();
-        }
-    };
 }
 
 
