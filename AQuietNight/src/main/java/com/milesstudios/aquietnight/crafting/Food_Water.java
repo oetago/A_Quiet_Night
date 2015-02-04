@@ -159,7 +159,7 @@ public class Food_Water extends ActivityGroup {
     }
 
     public void buttonLeafCanteen(View v) {
-        helper.build("LeafCanteen", "Leaves: 10", "leaves", 10, "leaf_canteen", this);
+        helper.build("Leaf Canteen", "Leaves: 10", "leaves", 10, "leaf_canteen", this);
     }
 
     public void runTimer() {
