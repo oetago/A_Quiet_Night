@@ -99,10 +99,10 @@ public class Forest extends FragmentActivity {
         });
 
         if (!sharedPref.getBoolean("leaf_canteen", false)) {
-            dirty_water.setVisibility(View.GONE);
+            dirty_water.setVisibility(View.INVISIBLE);
         }
         if (!sharedPref.getBoolean("stone_sword", false)) {
-            hunt.setVisibility(View.GONE);
+            hunt.setVisibility(View.INVISIBLE);
 
         }
         helper.updateText();
