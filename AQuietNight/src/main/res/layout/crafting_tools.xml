@@ -38,9 +38,8 @@
         android:text="Tin Pick"
         android:onClick="buttonTinPick"
         android:background="@drawable/button_shape"
-        android:layout_above="@+id/stone_axe"
-        android:layout_alignLeft="@+id/stone_pick"
-        android:layout_alignStart="@+id/stone_pick" />
+        android:layout_below="@id/stone_axe"
+        android:layout_alignLeft="@+id/stone_pick" />
 
     <Button
         android:id="@+id/tin_axe"
