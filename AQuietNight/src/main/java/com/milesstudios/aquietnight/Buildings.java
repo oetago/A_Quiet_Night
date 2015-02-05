@@ -67,7 +67,6 @@ public class Buildings extends ActivityGroup {
             Button tannery = (Button)findViewById(R.id.tannery);
             Button storageshed = (Button)findViewById(R.id.storage_shed);
             bonfire.setEnabled(false);
-            workshop.setEnabled(false);
             tradepost.setEnabled(false);
             tannery.setEnabled(false);
             storageshed.setEnabled(false);
