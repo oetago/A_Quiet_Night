@@ -71,7 +71,7 @@ public class Buildings extends ActivityGroup {
             tannery.setEnabled(false);
             storageshed.setEnabled(false);
         }
-        if(!sharedPref.getBoolean("stonepick",false)){
+        if(!sharedPref.getBoolean("stone_pick",false)){
             Button tradepost = (Button)findViewById(R.id.trade_post);
             Button tannery = (Button)findViewById(R.id.tannery);
             tradepost.setEnabled(false);
