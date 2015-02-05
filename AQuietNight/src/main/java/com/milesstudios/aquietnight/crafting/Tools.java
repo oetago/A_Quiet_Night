@@ -99,21 +99,17 @@ public class Tools extends ActivityGroup {
         Boolean forest_temple_b = sharedPref.getBoolean("forest_temple", false);
         log.setText(log_text);
 
-        if (tinaxe || !forest_temple_b) {
-            tin_pick.setVisibility(View.GONE);
-        }
-        if (tinpick || !forest_temple_b) {
+        if (tinaxe) {
             tin_axe.setVisibility(View.GONE);
+        }
+        if (tinpick) {
+            tin_pick.setVisibility(View.GONE);
         }
         if (stone_axeb) {
             stone_axe.setVisibility(View.GONE);
-        } else {
-            tin_axe.setVisibility(View.GONE);
         }
         if (stone_pickb) {
             stone_pick.setVisibility(View.GONE);
-        } else {
-            tin_pick.setVisibility(View.GONE);
         }
         saveChoice();
         runTimer();
