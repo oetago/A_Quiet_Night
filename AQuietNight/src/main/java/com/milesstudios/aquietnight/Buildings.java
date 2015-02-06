@@ -60,23 +60,7 @@ public class Buildings extends ActivityGroup {
         helper.updateButtons();
         helper.updateText();
 
-        if(!sharedPref.getBoolean("workshop",false)){
-            Button bonfire = (Button)findViewById(R.id.fireplace);
-            Button workshop = (Button)findViewById(R.id.workshop);
-            Button tradepost = (Button)findViewById(R.id.trade_post);
-            Button tannery = (Button)findViewById(R.id.tannery);
-            Button storageshed = (Button)findViewById(R.id.storage_shed);
-            bonfire.setEnabled(false);
-            tradepost.setEnabled(false);
-            tannery.setEnabled(false);
-            storageshed.setEnabled(false);
-        }
-        if(!sharedPref.getBoolean("stone_pick",false)){
-            Button tradepost = (Button)findViewById(R.id.trade_post);
-            Button tannery = (Button)findViewById(R.id.tannery);
-            tradepost.setEnabled(false);
-            tannery.setEnabled(false);
-        }
+
     }
 
 
@@ -104,7 +88,7 @@ public class Buildings extends ActivityGroup {
     }
 
     public void buttonWorkshop(View v) {
-        helper.build("Workshop", "Wood: 10 \nStone: 10", "wood", 10, "stone", 10, "workshop", this);
+        helper.buildUpdate("Workshop", "Wood: 10 \nStone: 10", "wood", 10, "stone", 10, "workshop", this);
     }
 
     public void buttonTradePost(View v) {

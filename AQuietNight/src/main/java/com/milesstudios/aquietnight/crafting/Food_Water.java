@@ -102,16 +102,16 @@ public class Food_Water extends ActivityGroup {
             cook_food.setEnabled(true);
             cook_food.setVisibility(View.VISIBLE);
         } else {
-            cook_food.setVisibility(View.GONE);
+            cook_food.setVisibility(View.INVISIBLE);
         }
         if (!fireplace_b || leaf_canteen_b) {
-            boil_water.setVisibility(View.GONE);
+            boil_water.setVisibility(View.INVISIBLE);
         }
         if (stone_sword_b) {
-            leaf_canteen.setVisibility(View.GONE);
+            leaf_canteen.setVisibility(View.INVISIBLE);
         }
         if (leaf_canteen_b) {
-            leaf_canteen.setVisibility(View.GONE);
+            leaf_canteen.setVisibility(View.INVISIBLE);
         }
         final String log_text = sharedPref.getString("log_text", "");
         log.setText(log_text);

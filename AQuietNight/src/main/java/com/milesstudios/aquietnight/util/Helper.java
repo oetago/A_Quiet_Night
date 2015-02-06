@@ -4,12 +4,14 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.milesstudios.aquietnight.Buildings;
 import com.milesstudios.aquietnight.R;
 
 import java.util.Random;
@@ -58,6 +60,46 @@ public class Helper extends Activity {
                     log.setText("You don't have enough resources! \n" + log.getText());
                 }
             }
+        });
+        AlertDialog alert = alertDialog.create();
+        alert.show();
+    }
+
+    public void buildUpdate(final String title, String message, final String r1, final int amount1, final String r2, final int amount2, final String output, Context context) {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
+        final TextView log = (TextView) ((Activity) context).findViewById(R.id.log);
+        final SharedPreferences sharedPref = context.getSharedPreferences("save-data", Context.MODE_PRIVATE);
+        final SharedPreferences.Editor editor = sharedPref.edit();
+        final int r1_counter = sharedPref.getInt(r1, 0);
+        final int r2_counter = sharedPref.getInt(r2, 0);
+        alertDialog.setTitle("Build: " + title);
+        alertDialog.setMessage(message);
+        alertDialog.setNegativeButton("Exit", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        alertDialog.setPositiveButton("Build", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                if (r1_counter >= amount1 && r2_counter >= amount2) {
+                    int r1_counter_save = r1_counter - amount1;
+                    int r2_counter_save = r2_counter - amount2;
+                    editor.putInt(r1, r1_counter_save);
+                    editor.putInt(r2, r2_counter_save);
+                    editor.putBoolean(output, true);
+                    editor.apply();
+                    dialog.dismiss();
+                    log.setText("You built a " + title + "! \n" + log.getText());
+                    updateText();
+                    updateButtonsBuildings();
+                } else {
+                    dialog.dismiss();
+                    log.setText("You don't have enough resources! \n" + log.getText());
+                }
+            }
+
+
         });
         AlertDialog alert = alertDialog.create();
         alert.show();
@@ -463,49 +505,70 @@ public class Helper extends Activity {
 
     }
 
-
     public void updateButtons() {
         //VERY SLOPPY DON'T COPY ME
         final SharedPreferences sharedPref = context.getSharedPreferences("save-data", Context.MODE_PRIVATE);
-        final SharedPreferences.Editor editor = sharedPref.edit();
-        if (sharedPref.getBoolean("bonfire", false)) {
-            ((Activity) context).findViewById(R.id.fireplace).setEnabled(false);
-        }
-        if (sharedPref.getBoolean("workshop", false)) {
-            Button workshop = (Button) ((Activity) context).findViewById(R.id.workshop);
-            workshop.setEnabled(false);
-        }
-        if (sharedPref.getBoolean("storage_shed", false)) {
-            Button t = (Button) ((Activity) context).findViewById(R.id.storage_shed);
-            t.setEnabled(false);
-        }
-        if (sharedPref.getBoolean("tradepost", false)) {
-            Button t = (Button) ((Activity) context).findViewById(R.id.trade_post);
-            t.setEnabled(false);
-        }
+        Button leafcanteen = (Button) ((Activity) context).findViewById(R.id.leaf_canteen);
+
         if (sharedPref.getBoolean("leaf_canteen", false)) {
-            Button t = (Button) ((Activity) context).findViewById(R.id.leaf_canteen);
-            t.setVisibility(View.GONE);
+            leafcanteen.setVisibility(View.INVISIBLE);
         }
         if (sharedPref.getBoolean("stone_sword", false)) {
             Button t = (Button) ((Activity) context).findViewById(R.id.stone_sword);
-            t.setVisibility(View.GONE);
+            t.setVisibility(View.INVISIBLE);
         }
         if (sharedPref.getBoolean("leaf_armor", false)) {
             Button t = (Button) ((Activity) context).findViewById(R.id.leaf_armor);
-            t.setVisibility(View.GONE);
+            t.setVisibility(View.INVISIBLE);
         }
         if (sharedPref.getBoolean("stone_pick", false)) {
             Button t = (Button) ((Activity) context).findViewById(R.id.stone_pick);
-            t.setVisibility(View.GONE);
+            t.setVisibility(View.INVISIBLE);
         }
         if (sharedPref.getBoolean("stone_axe", false)) {
             Button t = (Button) ((Activity) context).findViewById(R.id.stone_axe);
-            t.setVisibility(View.GONE);
+            t.setVisibility(View.INVISIBLE);
         }
     }
 
+public void updateButtonsBuildings(){
+    final SharedPreferences sharedPref = context.getSharedPreferences("save-data", Context.MODE_PRIVATE);
+    Button bonfire = (Button) ((Activity) context).findViewById(R.id.fireplace);
+    Button workshop = (Button) ((Activity)context).findViewById(R.id.workshop);
+    Button tradepost = (Button) ((Activity) context).findViewById(R.id.trade_post);
+    Button leafcanteen = (Button) ((Activity) context).findViewById(R.id.leaf_canteen);
+    Button tannery = (Button)((Activity) context).findViewById(R.id.tannery);
+    Button storageshed = (Button)((Activity) context).findViewById(R.id.storage_shed);
+    if(!sharedPref.getBoolean("workshop",false)){
+        bonfire.setEnabled(false);
+        tradepost.setEnabled(false);
+        tannery.setEnabled(false);
+        storageshed.setEnabled(false);
+    }else{
+        bonfire.setEnabled(true);
+        tradepost.setEnabled(true);
+        tannery.setEnabled(true);
+        storageshed.setEnabled(true);
+    }
+    if(!sharedPref.getBoolean("stone_pick",false)){
+        tradepost.setEnabled(false);
+        tannery.setEnabled(false);
+    }
+    if (sharedPref.getBoolean("bonfire", false)) {
+        bonfire.setEnabled(false);
+    }
+    if (sharedPref.getBoolean("workshop", false)) {
 
+        workshop.setEnabled(false);
+    }
+    if (sharedPref.getBoolean("storage_shed", false)) {
+
+        storageshed.setEnabled(false);
+    }
+    if (sharedPref.getBoolean("tradepost", false)) {
+        tradepost.setEnabled(false);
+    }
+}
 }
 
 

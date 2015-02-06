@@ -100,16 +100,16 @@ public class Tools extends ActivityGroup {
         log.setText(log_text);
 
         if (tinaxe) {
-            tin_axe.setVisibility(View.GONE);
+            tin_axe.setVisibility(View.INVISIBLE);
         }
         if (tinpick) {
-            tin_pick.setVisibility(View.GONE);
+            tin_pick.setVisibility(View.INVISIBLE);
         }
         if (stone_axeb) {
-            stone_axe.setVisibility(View.GONE);
+            stone_axe.setVisibility(View.INVISIBLE);
         }
         if (stone_pickb) {
-            stone_pick.setVisibility(View.GONE);
+            stone_pick.setVisibility(View.INVISIBLE);
         }
         saveChoice();
         runTimer();

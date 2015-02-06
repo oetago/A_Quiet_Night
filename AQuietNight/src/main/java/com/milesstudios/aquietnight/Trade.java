@@ -74,10 +74,10 @@ public class Trade extends ActivityGroup {
             quest_map.setEnabled(false);
         }
         if (rusty_sword_b == 1) {
-            rusty_sword.setVisibility(View.GONE);
+            rusty_sword.setVisibility(View.INVISIBLE);
         }
         if (chain_armor_b == 1) {
-            chain_armor.setVisibility(View.GONE);
+            chain_armor.setVisibility(View.INVISIBLE);
         }
 
 

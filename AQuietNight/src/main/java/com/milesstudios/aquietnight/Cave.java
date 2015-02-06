@@ -86,14 +86,14 @@ public class Cave extends Activity {
         editor.apply();
 
         if (trading_post_counter == 0) {
-            trading.setVisibility(View.GONE);
+            trading.setVisibility(View.INVISIBLE);
         } else if (trading_post_counter == 1) {
             anim.reset();
             trading.clearAnimation();
             trading.startAnimation(anim);
         }
 
-            quests.setVisibility(View.GONE);
+            quests.setVisibility(View.INVISIBLE);
 
         int workshop_int = sharedPref.getInt("workshop_int", 0);
         if (sharedPref.getBoolean("workshop", false)) {
@@ -102,7 +102,7 @@ public class Cave extends Activity {
             editor.apply();
         }
         if (workshop_int == 0) {
-            crafting.setVisibility(View.GONE);
+            crafting.setVisibility(View.INVISIBLE);
         } else if (workshop_int == 1) {
             anim.reset();
             crafting.clearAnimation();
