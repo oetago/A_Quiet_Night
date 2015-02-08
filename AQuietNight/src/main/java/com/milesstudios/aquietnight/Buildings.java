@@ -9,7 +9,6 @@ import android.os.Handler;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.milesstudios.aquietnight.util.Helper;
@@ -57,7 +56,7 @@ public class Buildings extends ActivityGroup {
 
         final String log_text = sharedPref.getString("log_text", "");
         log.setText(log_text);
-        helper.updateButtons();
+        helper.updateButtons("Buildings");
         helper.updateText();
 
 
@@ -84,31 +83,31 @@ public class Buildings extends ActivityGroup {
 
     //Buttons
     public void buttonFireplace(View v) {
-        helper.build("Bonfire", "Wood: 30 \nStone: 20", "wood", 30, "stone", 20, "bonfire", this);
+        helper.build("Bonfire", "Wood: 30 \nStone: 20", "wood", 30, "stone", 20, "bonfire", this,"Buildings");
     }
 
     public void buttonWorkshop(View v) {
-        helper.buildUpdate("Workshop", "Wood: 10 \nStone: 10", "wood", 10, "stone", 10, "workshop", this);
+        helper.build("Workshop", "Wood: 10 \nStone: 10", "wood", 10, "stone", 10, "workshop", this,"Buildings");
     }
 
     public void buttonTradePost(View v) {
-        helper.build("Trade Post", "Wood: 12 \nLeaves: 7", "wood", 12, "leaves", 7, "tradepost", this);
+        helper.build("Trade Post", "Wood: 12 \nLeaves: 7", "wood", 12, "leaves", 7, "tradepost", this,"Buildings");
     }
 
     public void buttonRebuildMine(View v) {
-        helper.build("Rebuild Mine", "Wood: 20 \nStone: 15", "wood", 20, "stone", 15, "rebuildmine", this);
+        helper.build("Rebuild Mine", "Wood: 20 \nStone: 15", "wood", 20, "stone", 15, "rebuildmine", this,"Buildings");
     }
 
     public void buttonTannery(View v) {
-        helper.buildBigger("Tannery", "Wood: 10 \nStone: 15\nLeaves:10", "wood", 20, "stone", 15, "leaves", 10, "tannery", this);
+        helper.build("Tannery", "Wood: 45 \nStone: 20\nLeaves:20", "wood", 45, "stone", 20, "leaves", 20, "tannery", this,"Buildings");
     }
 
     public void buttonSmithery(View v) {
-        helper.build("Smithery", "Wood: 15 \nStone: 25", "wood", 15, "stone", 25, "smithery", this);
+        helper.build("Smithery", "Wood: 15 \nStone: 25", "wood", 15, "stone", 25, "smithery", this,"Buildings");
     }
 
     public void buttonStorageShed(View v) {
-        helper.build("Storage Shed", "Wood: 150 \nStone: 100", "wood", 150, "stone", 100, "storage_shed", this);
+        helper.build("Storage Shed", "Wood: 150 \nStone: 100\nLeaves: 75", "wood", 150, "stone", 100, "leaves", 75, "storage_shed", this,"Buildings");
     }
 
 

@@ -30,7 +30,7 @@ import com.milesstudios.aquietnight.util.ChangeLog;
 import com.milesstudios.aquietnight.util.Helper;
 
 public class Cave extends Activity {
-    Button buildings, trading, crafting, quests;
+    Button buildings, trading, crafting, quests,village;
     TextView log, storage;
     SlidingMenu menu;
 
@@ -50,8 +50,8 @@ public class Cave extends Activity {
         }
         crafting = (Button) findViewById(R.id.crafting);
         buildings = (Button) findViewById(R.id.buildings);
-        trading = (Button) findViewById(R.id.trading);
         quests = (Button) findViewById(R.id.quests);
+        village = (Button) findViewById(R.id.village);
         log = (TextView) findViewById(R.id.log);
         storage = (TextView) findViewById(R.id.storage);
         int trading_post_counter = sharedPref.getInt("tradepostcounter", 0);
@@ -85,14 +85,13 @@ public class Cave extends Activity {
         editor.putBoolean("intro", false);
         editor.apply();
 
-        if (trading_post_counter == 0) {
+       /* if (trading_post_counter == 0) {
             trading.setVisibility(View.INVISIBLE);
         } else if (trading_post_counter == 1) {
             anim.reset();
             trading.clearAnimation();
             trading.startAnimation(anim);
-        }
-
+        } */
             quests.setVisibility(View.INVISIBLE);
 
         int workshop_int = sharedPref.getInt("workshop_int", 0);
@@ -156,16 +155,7 @@ public class Cave extends Activity {
 
         });
 
-        trading.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent openTrade = new Intent(Cave.this, Trade.class);
-                startActivity(openTrade);
-                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
 
-            }
-
-        });
         quests.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -173,6 +163,16 @@ public class Cave extends Activity {
                 startActivity(openQuest);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
 
+            }
+
+        });
+
+        village.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent openQuest = new Intent(Cave.this, Village.class);
+                startActivity(openQuest);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
             }
 
         });

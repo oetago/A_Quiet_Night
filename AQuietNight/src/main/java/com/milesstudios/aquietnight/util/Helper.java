@@ -4,14 +4,14 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.milesstudios.aquietnight.Buildings;
 import com.milesstudios.aquietnight.R;
 
 import java.util.Random;
@@ -27,7 +27,7 @@ public class Helper extends Activity {
         this.context = context;
     }
 
-    public void build(final String title, String message, final String r1, final int amount1, final String r2, final int amount2, final String output, Context context) {
+    public void build(final String title, String message, final String r1, final int amount1, final String r2, final int amount2, final String output, Context context,final String update) {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
         final TextView log = (TextView) ((Activity) context).findViewById(R.id.log);
         final SharedPreferences sharedPref = context.getSharedPreferences("save-data", Context.MODE_PRIVATE);
@@ -54,7 +54,7 @@ public class Helper extends Activity {
                     dialog.dismiss();
                     log.setText("You built a " + title + "! \n" + log.getText());
                     updateText();
-                    updateButtons();
+                    updateButtons(update);
                 } else {
                     dialog.dismiss();
                     log.setText("You don't have enough resources! \n" + log.getText());
@@ -64,83 +64,41 @@ public class Helper extends Activity {
         AlertDialog alert = alertDialog.create();
         alert.show();
     }
-
-    public void buildUpdate(final String title, String message, final String r1, final int amount1, final String r2, final int amount2, final String output, Context context) {
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
-        final TextView log = (TextView) ((Activity) context).findViewById(R.id.log);
-        final SharedPreferences sharedPref = context.getSharedPreferences("save-data", Context.MODE_PRIVATE);
-        final SharedPreferences.Editor editor = sharedPref.edit();
-        final int r1_counter = sharedPref.getInt(r1, 0);
-        final int r2_counter = sharedPref.getInt(r2, 0);
-        alertDialog.setTitle("Build: " + title);
-        alertDialog.setMessage(message);
-        alertDialog.setNegativeButton("Exit", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
-
-        alertDialog.setPositiveButton("Build", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                if (r1_counter >= amount1 && r2_counter >= amount2) {
-                    int r1_counter_save = r1_counter - amount1;
-                    int r2_counter_save = r2_counter - amount2;
-                    editor.putInt(r1, r1_counter_save);
-                    editor.putInt(r2, r2_counter_save);
-                    editor.putBoolean(output, true);
-                    editor.apply();
+    public void build (final String title, String message,final String r1, final int amount1,final String output, Context context,final String update){
+            AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
+            final TextView log = (TextView) ((Activity) context).findViewById(R.id.log);
+            final SharedPreferences sharedPref = context.getSharedPreferences("save-data", Context.MODE_PRIVATE);
+            final int r1_counter = sharedPref.getInt(r1, 0);
+            alertDialog.setTitle("Build: " + title);
+            alertDialog.setMessage(message);
+            alertDialog.setNegativeButton("Exit", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
-                    log.setText("You built a " + title + "! \n" + log.getText());
-                    updateText();
-                    updateButtonsBuildings();
-                } else {
-                    dialog.dismiss();
-                    log.setText("You don't have enough resources! \n" + log.getText());
                 }
-            }
+            });
 
-
-        });
-        AlertDialog alert = alertDialog.create();
-        alert.show();
-    }
-
-    public void build(final String title, String message, final String r1, final int amount1, final String output, Context context) {
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
-        final TextView log = (TextView) ((Activity) context).findViewById(R.id.log);
-        final SharedPreferences sharedPref = context.getSharedPreferences("save-data", Context.MODE_PRIVATE);
-        final int r1_counter = sharedPref.getInt(r1, 0);
-        alertDialog.setTitle("Build: " + title);
-        alertDialog.setMessage(message);
-        alertDialog.setNegativeButton("Exit", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
-
-        alertDialog.setPositiveButton("Build", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                if (r1_counter >= amount1) {
-                    int r1_counter_save = r1_counter - amount1;
-                    SharedPreferences.Editor editor = sharedPref.edit();
-                    editor.putInt(r1, r1_counter_save);
-                    editor.putBoolean(output, true);
-                    editor.apply();
-                    dialog.dismiss();
-                    updateText();
-                    updateButtons();
-                    log.setText("You built a " + title + "! \n" + log.getText());
-                } else {
-                    dialog.dismiss();
-                    log.setText("You don't have enough resources! \n" + log.getText());
+            alertDialog.setPositiveButton("Build", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    if (r1_counter >= amount1) {
+                        int r1_counter_save = r1_counter - amount1;
+                        SharedPreferences.Editor editor = sharedPref.edit();
+                        editor.putInt(r1, r1_counter_save);
+                        editor.putBoolean(output, true);
+                        editor.apply();
+                        dialog.dismiss();
+                        updateText();
+                        updateButtons(update);
+                        log.setText("You built a " + title + "! \n" + log.getText());
+                    } else {
+                        dialog.dismiss();
+                        log.setText("You don't have enough resources! \n" + log.getText());
+                    }
                 }
-            }
-        });
-        AlertDialog alert = alertDialog.create();
-        alert.show();
-    }
-
-    public void buildBigger(final String title, String message, final String r1, final int amount1, final String r2, final int amount2, final String r3, final int amount3, final String output, Context context) {
+            });
+            AlertDialog alert = alertDialog.create();
+            alert.show();
+        }
+    public void build(final String title, String message, final String r1, final int amount1, final String r2, final int amount2, final String r3, final int amount3, final String output, Context context, final String update) {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
         final TextView log = (TextView) ((Activity) context).findViewById(R.id.log);
         final SharedPreferences sharedPref = context.getSharedPreferences("save-data", Context.MODE_PRIVATE);
@@ -171,7 +129,45 @@ public class Helper extends Activity {
                     dialog.dismiss();
                     log.setText("You built a " + title + "! \n" + log.getText());
                     updateText();
-                    updateButtons();
+                    updateButtons(update);
+                } else {
+                    dialog.dismiss();
+                    log.setText("You don't have enough resources! \n" + log.getText());
+                }
+            }
+        });
+        AlertDialog alert = alertDialog.create();
+        alert.show();
+    }
+
+    public void buildVillage(final String title, String message, final String r1, final int amount1, final String r2, final int amount2, final String output, Context context) {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
+        final TextView log = (TextView) ((Activity) context).findViewById(R.id.log);
+        final SharedPreferences sharedPref = context.getSharedPreferences("save-data", Context.MODE_PRIVATE);
+        final SharedPreferences.Editor editor = sharedPref.edit();
+        final int r1_counter = sharedPref.getInt(r1, 0);
+        final int r2_counter = sharedPref.getInt(r2, 0);
+        alertDialog.setTitle("Build: " + title);
+        alertDialog.setMessage(message);
+        alertDialog.setNegativeButton("Exit", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        alertDialog.setPositiveButton("Build", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                if (r1_counter >= amount1 && r2_counter >= amount2) {
+                    int r1_counter_save = r1_counter - amount1;
+                    int r2_counter_save = r2_counter - amount2;
+                    editor.putInt(r1, r1_counter_save);
+                    editor.putInt(r2, r2_counter_save);
+                    editor.putInt(output, sharedPref.getInt(output, 0) + 1);
+                    editor.apply();
+                    dialog.dismiss();
+                    log.setText("You built a " + title + "! \n" + log.getText());
+                    updatePopulation();
+                    updateText();
                 } else {
                     dialog.dismiss();
                     log.setText("You don't have enough resources! \n" + log.getText());
@@ -202,19 +198,8 @@ public class Helper extends Activity {
             int special_counter = sharedPref.getInt(special, 0);
             if (sharedPref.getBoolean("storage_shed", false) && special_counter <= 999) {
                 special_counter += sp_amount;
-                if (special.equals("apple")) {
-                    log.setText("You found an apple! \n" + log.getText());
-                } else {
-                    log.setText("You found a " + special + "! \n" + log.getText());
-                }
             } else if (special_counter <= 249) {
                 special_counter += sp_amount;
-                if (special.equals("apple")) {
-                    log.setText("You found an apple! \n" + log.getText());
-                } else {
-                    log.setText("You found a " + special + "! \n" + log.getText());
-                }
-            } else {
             }
             editor.putInt(special, special_counter);
             editor.apply();
@@ -242,19 +227,8 @@ public class Helper extends Activity {
             int special_counter = sharedPref.getInt(special, 0);
             if (sharedPref.getBoolean("storage_shed", false) && special_counter <= 999) {
                 special_counter += sp_amount;
-                if (special.equals("apple")) {
-                    log.setText("You found an apple! \n" + log.getText());
-                } else {
-                    log.setText("You found a " + special + "! \n" + log.getText());
-                }
             } else if (special_counter <= 249) {
                 special_counter += sp_amount;
-                if (special.equals("apple")) {
-                    log.setText("You found an apple! \n" + log.getText());
-                } else {
-                    log.setText("You found a " + special + "! \n" + log.getText());
-                }
-            } else {
             }
             editor.putInt(special, special_counter);
             editor.apply();
@@ -265,19 +239,8 @@ public class Helper extends Activity {
             int special_counter2 = sharedPref.getInt(special2, 0);
             if (sharedPref.getBoolean("storage_shed", false) && special_counter2 <= 999) {
                 special_counter2 += sp_amount2;
-                if (special.equals("apple")) {
-                    log.setText("You found an apple! \n" + log.getText());
-                } else {
-                    log.setText("You found a " + special2 + "! \n" + log.getText());
-                }
             } else if (special_counter2 <= 249) {
                 special_counter2 += sp_amount2;
-                if (special2.equals("apple")) {
-                    log.setText("You found an apple! \n" + log.getText());
-                } else {
-                    log.setText("You found a " + special2 + "! \n" + log.getText());
-                }
-            } else {
             }
             editor.putInt(special2, special_counter2);
             editor.apply();
@@ -304,19 +267,9 @@ public class Helper extends Activity {
             int special_counter = sharedPref.getInt(special, 0);
             if (sharedPref.getBoolean("storage_shed", false) && special_counter <= 999) {
                 special_counter += sp_amount;
-                if (special.equals("apple")) {
-                    log.setText("You found an apple! \n" + log.getText());
-                } else {
-                    log.setText("You found a " + special + "! \n" + log.getText());
-                }
+
             } else if (special_counter <= 249) {
                 special_counter += sp_amount;
-                if (special.equals("apple")) {
-                    log.setText("You found an apple! \n" + log.getText());
-                } else {
-                    log.setText("You found a " + special + "! \n" + log.getText());
-                }
-            } else {
             }
             editor.putInt(special, special_counter);
             editor.apply();
@@ -327,42 +280,19 @@ public class Helper extends Activity {
             int special_counter2 = sharedPref.getInt(special2, 0);
             if (sharedPref.getBoolean("storage_shed", false) && special_counter2 <= 999) {
                 special_counter2 += sp_amount2;
-                if (special2.equals("apple")) {
-                    log.setText("You found an apple! \n" + log.getText());
-                } else {
-                    log.setText("You found a " + special2 + "! \n" + log.getText());
-                }
             } else if (special_counter2 <= 249) {
                 special_counter2 += sp_amount2;
-                if (special2.equals("apple")) {
-                    log.setText("You found an apple! \n" + log.getText());
-                } else {
-                    log.setText("You found a " + special2 + "! \n" + log.getText());
-                }
-            } else {
             }
             editor.putInt(special2, special_counter2);
             editor.apply();
-
         }
 
         if (rng.nextInt(1001) <= chance3) {
             int special_counter3 = sharedPref.getInt(special3, 0);
             if (sharedPref.getBoolean("storage_shed", false) && special_counter3 <= 999) {
                 special_counter3 += sp_amount3;
-                if (special3.equals("apple")) {
-                    log.setText("You found an apple! \n" + log.getText());
-                } else {
-                    log.setText("You found a " + special3 + "! \n" + log.getText());
-                }
             } else if (special_counter3 <= 249) {
                 special_counter3 += sp_amount3;
-                if (special3.equals("apple")) {
-                    log.setText("You found an apple! \n" + log.getText());
-                } else {
-                    log.setText("You found a " + special3 + "! \n" + log.getText());
-                }
-            } else {
             }
             editor.putInt(special3, special_counter3);
             editor.apply();
@@ -381,7 +311,6 @@ public class Helper extends Activity {
             counter += amount;
         } else if (counter <= 249) {
             counter += amount;
-        } else {
         }
         editor.putInt(item, counter);
         editor.apply();
@@ -398,7 +327,6 @@ public class Helper extends Activity {
             counter += amount;
         } else if (counter <= 24) {
             counter += amount;
-        } else {
         }
         editor.putInt(item, counter);
         editor.apply();
@@ -407,9 +335,10 @@ public class Helper extends Activity {
 
     public void fandW(String item, int amount, String output, int need) {
         final SharedPreferences sharedPref = context.getSharedPreferences("save-data", Context.MODE_PRIVATE);
+        final TextView log = (TextView) ((Activity) context).findViewById(R.id.log);
         final SharedPreferences.Editor editor = sharedPref.edit();
         int wood = sharedPref.getInt("wood", 0);
-        int output_test = sharedPref.getInt("output", 0);
+        int output_test = sharedPref.getInt(output, 0);
         int counter = sharedPref.getInt(item, 0);
         if (sharedPref.getBoolean("storage_shed", false) && output_test <= 54 && wood >= need) {
             output_test += need;
@@ -419,8 +348,11 @@ public class Helper extends Activity {
             output_test += need;
             counter -= amount;
             wood -= need;
-        } else {
+        }else{
+            log.setText("You don't have enough resources! \n" + log.getText());
         }
+
+
         editor.putInt(item, counter);
         editor.putInt(output, output_test);
         editor.putInt("wood", wood);
@@ -428,21 +360,28 @@ public class Helper extends Activity {
         updateText();
     }
 
+    public void updateButtons(String update) {
+        if (update.equals("Food_Water")) foodWater();
+        else if (update.equals("Tools")) tools();
+        else if (update.equals("Weapons_Armor")) weaponsArmor();
+        else if (update.equals("Buildings")) buildings();
+        //else if (update.equals("Trade")) updateBT.trade();
+
+    }
+
     public void updateText() {
-        final TextView storage = (TextView) ((Activity) context).findViewById(R.id.storage);
-        final SharedPreferences sharedPref = context.getSharedPreferences("save-data", Context.MODE_PRIVATE);
+        TextView storage = (TextView) ((Activity) context).findViewById(R.id.storage);
+        SharedPreferences sharedPref = context.getSharedPreferences("save-data", Context.MODE_PRIVATE);
         int wood_counter = sharedPref.getInt("wood", 0);
         int leaves_counter = sharedPref.getInt("leaves", 0);
         int stone_counter = sharedPref.getInt("stone", 0);
         int amber = sharedPref.getInt("amber", 0);
         int dirty_water_counter = sharedPref.getInt("dirty_water", 0);
-        int food_counter = sharedPref.getInt("raw_food", 0);
-        int cooked_food_counter = sharedPref.getInt("cooked_food", 0);
+        int raw_food = sharedPref.getInt("raw_food", 0);
+        int cooked_food = sharedPref.getInt("cooked_food", 0);
         int boiled_water_counter = sharedPref.getInt("boiled_water", 0);
         int apple_counter = sharedPref.getInt("apple", 0);
         int coin_counter = sharedPref.getInt("coins", 0);
-        int copper_counter = sharedPref.getInt("copper", 0);
-        int r_copper_counter = sharedPref.getInt("r_copper", 0);
         int coal_counter = sharedPref.getInt("coal", 0);
         int tin = sharedPref.getInt("tin", 0);
         int bismuth = sharedPref.getInt("bismuth", 0);
@@ -459,23 +398,15 @@ public class Helper extends Activity {
         if (stone_counter >= 1) {
             storage.append("\n Stone: " + stone_counter);
         }
-        if (copper_counter >= 1) {
-            storage.append("\n Raw Copper: " + copper_counter);
-        }
-        if (r_copper_counter >= 1) {
-            storage.append("\n Refined Copper: " + r_copper_counter);
-        }
-        if (coal_counter >= 1) {
-            storage.append("\n Coal: " + coal_counter);
-        }
+
         if (dirty_water_counter >= 1) {
             storage.append("\n Dirty Water: " + dirty_water_counter);
         }
-        if (food_counter >= 1) {
-            storage.append("\n Food: " + food_counter);
+        if (raw_food >= 1) {
+            storage.append("\n Raw Meat: " + raw_food);
         }
-        if (cooked_food_counter >= 1) {
-            storage.append("\n Cooked Food: " + cooked_food_counter);
+        if (cooked_food >= 1) {
+            storage.append("\n Cooked Meat: " + cooked_food);
         }
         if (boiled_water_counter >= 1) {
             storage.append("\n Boiled Water: " + boiled_water_counter);
@@ -505,71 +436,128 @@ public class Helper extends Activity {
 
     }
 
-    public void updateButtons() {
-        //VERY SLOPPY DON'T COPY ME
+    public void tools() {
         final SharedPreferences sharedPref = context.getSharedPreferences("save-data", Context.MODE_PRIVATE);
-        Button leafcanteen = (Button) ((Activity) context).findViewById(R.id.leaf_canteen);
+        Button stonepick = (Button) ((Activity) context).findViewById(R.id.stone_pick);
+        Button stoneaxe = (Button) ((Activity) context).findViewById(R.id.stone_axe);
+        Button tinpick = (Button) ((Activity) context).findViewById(R.id.tin_pick);
+        Button tinaxe = (Button) ((Activity) context).findViewById(R.id.tin_axe);
+
+        if(!sharedPref.getBoolean("stone_pick", false)){
+            tinpick.setVisibility(View.GONE);
+            tinaxe.setVisibility(View.GONE);
+        }
+        if (sharedPref.getBoolean("stone_pick", false)) {
+            stonepick.setVisibility(View.GONE);
+        }
+        if (sharedPref.getBoolean("stone_axe", false)) {
+            stoneaxe.setVisibility(View.GONE);
+        }
+        if (sharedPref.getBoolean("tin_pick", false)) {
+            tinpick.setVisibility(View.GONE);
+        }
+        if (sharedPref.getBoolean("tin_axe", false)) {
+            tinaxe.setVisibility(View.GONE);
+        }
+    }
+
+    public void foodWater() {
+        final SharedPreferences sharedPref = context.getSharedPreferences("save-data", Context.MODE_PRIVATE);
+        final SharedPreferences.Editor editor = sharedPref.edit();
 
         if (sharedPref.getBoolean("leaf_canteen", false)) {
-            leafcanteen.setVisibility(View.INVISIBLE);
+            Button t = (Button) ((Activity) context).findViewById(R.id.leaf_canteen);
+            t.setVisibility(View.GONE);
+
         }
+    }
+
+    public void buildings() {
+        final SharedPreferences sharedPref = context.getSharedPreferences("save-data", Context.MODE_PRIVATE);
+        Button bonfire = (Button) ((Activity) context).findViewById(R.id.fireplace);
+        Button workshop = (Button) ((Activity) context).findViewById(R.id.workshop);
+        Button tradepost = (Button) ((Activity) context).findViewById(R.id.trade_post);
+        Button tannery = (Button) ((Activity) context).findViewById(R.id.tannery);
+        Button storageshed = (Button) ((Activity) context).findViewById(R.id.storage_shed);
+
+
+        if (!sharedPref.getBoolean("workshop", false)) {
+            bonfire.setVisibility(View.GONE);
+            tradepost.setVisibility(View.GONE);
+            tannery.setVisibility(View.GONE);
+            storageshed.setVisibility(View.GONE);
+        }else{
+            bonfire.setVisibility(View.VISIBLE);
+        }
+
+
+        if (!sharedPref.getBoolean("stone_axe", false)) {
+            tradepost.setVisibility(View.GONE);
+            tannery.setVisibility(View.GONE);
+        }
+        if (sharedPref.getBoolean("bonfire", false)) {
+            bonfire.setVisibility(View.GONE);
+        }
+        if (sharedPref.getBoolean("workshop", false)) {
+            workshop.setVisibility(View.GONE);
+        }
+        if (sharedPref.getBoolean("storage_shed", false)) {
+            storageshed.setVisibility(View.GONE);
+        }
+        if (sharedPref.getBoolean("tradepost", false)) {
+            tradepost.setVisibility(View.GONE);
+        }
+        if (sharedPref.getBoolean("tannery", false)) {
+            tannery.setVisibility(View.GONE);
+        }
+    }
+
+    public void weaponsArmor(){
+        final SharedPreferences sharedPref = context.getSharedPreferences("save-data", Context.MODE_PRIVATE);
+        final SharedPreferences.Editor editor = sharedPref.edit();
         if (sharedPref.getBoolean("stone_sword", false)) {
             Button t = (Button) ((Activity) context).findViewById(R.id.stone_sword);
-            t.setVisibility(View.INVISIBLE);
+            t.setVisibility(View.GONE);
         }
         if (sharedPref.getBoolean("leaf_armor", false)) {
             Button t = (Button) ((Activity) context).findViewById(R.id.leaf_armor);
-            t.setVisibility(View.INVISIBLE);
-        }
-        if (sharedPref.getBoolean("stone_pick", false)) {
-            Button t = (Button) ((Activity) context).findViewById(R.id.stone_pick);
-            t.setVisibility(View.INVISIBLE);
-        }
-        if (sharedPref.getBoolean("stone_axe", false)) {
-            Button t = (Button) ((Activity) context).findViewById(R.id.stone_axe);
-            t.setVisibility(View.INVISIBLE);
-        }
+            t.setVisibility(View.GONE);
+        }}
+
+    public void updatePopulation() {
+        final SharedPreferences sharedPref = context.getSharedPreferences("save-data", Context.MODE_PRIVATE);
+        TextView pop = (TextView) ((Activity) context).findViewById(R.id.population);
+        int max = 3 * sharedPref.getInt("shack",0) + 10 * sharedPref.getInt("house",0);
+        int ava = max - sharedPref.getInt("lumber_jack",0) - sharedPref.getInt("miner",0);
+        pop.setText(" Max Population: " + max);
+        pop.append("\n Available Workers: "+ ava);
+        pop.append("\n Lumber Jacks: " + sharedPref.getInt("lumber_jack",0));
+        pop.append("\n Miners : " + sharedPref.getInt("miner",0));
     }
 
-public void updateButtonsBuildings(){
-    final SharedPreferences sharedPref = context.getSharedPreferences("save-data", Context.MODE_PRIVATE);
-    Button bonfire = (Button) ((Activity) context).findViewById(R.id.fireplace);
-    Button workshop = (Button) ((Activity)context).findViewById(R.id.workshop);
-    Button tradepost = (Button) ((Activity) context).findViewById(R.id.trade_post);
-    Button leafcanteen = (Button) ((Activity) context).findViewById(R.id.leaf_canteen);
-    Button tannery = (Button)((Activity) context).findViewById(R.id.tannery);
-    Button storageshed = (Button)((Activity) context).findViewById(R.id.storage_shed);
-    if(!sharedPref.getBoolean("workshop",false)){
-        bonfire.setEnabled(false);
-        tradepost.setEnabled(false);
-        tannery.setEnabled(false);
-        storageshed.setEnabled(false);
-    }else{
-        bonfire.setEnabled(true);
-        tradepost.setEnabled(true);
-        tannery.setEnabled(true);
-        storageshed.setEnabled(true);
-    }
-    if(!sharedPref.getBoolean("stone_pick",false)){
-        tradepost.setEnabled(false);
-        tannery.setEnabled(false);
-    }
-    if (sharedPref.getBoolean("bonfire", false)) {
-        bonfire.setEnabled(false);
-    }
-    if (sharedPref.getBoolean("workshop", false)) {
+    public void updateWorkers(){
+        final SharedPreferences sharedPref = context.getSharedPreferences("save-data", Context.MODE_PRIVATE);
+        final SharedPreferences.Editor editor = sharedPref.edit();
 
-        workshop.setEnabled(false);
-    }
-    if (sharedPref.getBoolean("storage_shed", false)) {
+        CountDownTimer mCountDownTimer = new CountDownTimer(5000, 10) {
 
-        storageshed.setEnabled(false);
-    }
-    if (sharedPref.getBoolean("tradepost", false)) {
-        tradepost.setEnabled(false);
+            @Override
+            public void onTick(long millisUntilFinished) {
+
+            }
+
+            @Override
+            public void onFinish() {
+                double lumberjacks = sharedPref.getInt("lumber_jack",0) * 0.2;
+                double miners = sharedPref.getInt("miner",0) * 0.2;
+                editor.putInt("wood",sharedPref.getInt("wood",0) + (int)lumberjacks);
+                editor.putInt("stone",sharedPref.getInt("stone",0) + (int)miners);
+                editor.apply();
+                Log.v("Helper", "ljs = " + lumberjacks + " miners = " + miners);
+                updateText();
+                updateWorkers();
+            }
+        }.start();
+
     }
 }
-}
-
-
-

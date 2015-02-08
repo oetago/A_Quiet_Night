@@ -43,7 +43,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".Trade" android:label="Trading Post">
+        <activity android:name=".Village" android:label="Village">
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>

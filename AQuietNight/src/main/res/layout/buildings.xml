@@ -3,14 +3,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp">
     <TextView
         android:id="@+id/build_text"
         android:layout_width="50dp"
         android:layout_height="25dp"
-        android:layout_alignLeft="@+id/fireplace"
-        android:layout_alignRight="@+id/fireplace"
-        android:layout_alignEnd="@+id/fireplace"
         android:textStyle="bold"
         android:layout_marginTop="10dp"
         android:text="Build:"
@@ -22,9 +23,6 @@
         android:layout_width="120dp"
         android:layout_height="50dp"
         android:text="Bonfire"
-        android:layout_below="@+id/build_text"
-        android:layout_alignLeft="@+id/workshop"
-        android:layout_alignStart="@+id/workshop"
         android:onClick="buttonFireplace"
         android:background="@drawable/button_shape"/>
 
@@ -33,9 +31,7 @@
         style="@drawable/button_shape"
         android:layout_width="120dp"
         android:layout_height="50dp"
-        android:layout_marginLeft="20dp"
         android:layout_marginTop="10dp"
-        android:layout_below="@id/fireplace"
         android:text="Workshop"
         android:onClick="buttonWorkshop"
         android:background="@drawable/button_shape"/>
@@ -45,10 +41,8 @@
         android:background="@drawable/button_shape"
         android:layout_width="120dp"
         android:layout_height="50dp"
-        android:layout_marginLeft="20dp"
         android:layout_marginTop="10dp"
-        android:layout_below="@id/workshop"
-        android:text="Trade Post"
+        android:text="Village Foundation"
         android:onClick="buttonTradePost" />
     <Button
         android:id="@+id/tannery"
@@ -57,10 +51,7 @@
         android:layout_height="50dp"
         android:text="Tannery"
         android:onClick="buttonTannery"
-        android:layout_marginTop="10dp"
-        android:layout_below="@+id/storage_shed"
-        android:layout_alignLeft="@+id/storage_shed"
-        android:layout_alignStart="@+id/storage_shed" />
+        android:layout_marginTop="10dp" />
 
 
     <Button
@@ -70,12 +61,9 @@
         android:layout_height="50dp"
         android:text="Storage Shed"
         android:layout_marginTop="10dp"
-        android:onClick="buttonStorageShed"
-        android:layout_below="@+id/trade_post"
-        android:layout_alignLeft="@+id/trade_post"
-        android:layout_alignStart="@+id/trade_post" />
+        android:onClick="buttonStorageShed" />
 
-
+       </LinearLayout>
 
 
 
@@ -90,8 +78,8 @@
         android:editable="true"
         android:layout_marginLeft="25dp"
         android:layout_alignParentBottom="true"
-        android:layout_alignTop="@+id/storage"
-        android:layout_marginBottom="10dp"/>
+        android:layout_marginBottom="10dp"
+        android:layout_alignTop="@+id/storage" />
 
     <TextView
         android:id="@+id/storage"

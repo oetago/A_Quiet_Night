@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="125dp"
+        android:layout_height="wrap_content"
+        android:text="Population:"
+        android:id="@+id/population"
+        android:textStyle="bold"
+        android:background="@drawable/button_shape"
+        android:layout_alignParentTop="true"
+        android:layout_alignRight="@+id/storage"
+        android:layout_alignEnd="@+id/storage"
+        android:layout_marginTop="43dp" />
+    <TextView
+        android:layout_width="75dp"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:background="@drawable/button_shape"
+        android:text="Lumber Jack"
+        android:textStyle="bold"
+        android:id="@+id/lumberjack_text"
+        android:layout_alignTop="@+id/population"
+        android:layout_toRightOf="@+id/lumberjack_minus"
+        android:layout_toEndOf="@+id/lumberjack_minus" />
+
+    <Button
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:text="+"
+        android:background="@drawable/button_shape"
+        android:id="@+id/lumberjack_plus"
+        android:layout_alignTop="@+id/lumberjack_text"
+        android:layout_toRightOf="@+id/lumberjack_text"
+        android:layout_toEndOf="@+id/lumberjack_text"
+        android:onClick="lumberJackPlus"/>
+
+    <Button
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:text="-"
+        android:layout_marginLeft="10dp"
+        android:background="@drawable/button_shape"
+        android:id="@+id/lumberjack_minus"
+        android:layout_alignTop="@+id/lumberjack_text"
+        android:layout_alignParentLeft="true"
+        android:onClick="lumberJackMinus"
+        android:layout_alignParentStart="true"
+        android:layout_alignBottom="@+id/lumberjack_text" />
+
+
+    <TextView
+        android:layout_width="75dp"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:background="@drawable/button_shape"
+        android:text="Miner"
+        android:textStyle="bold"
+        android:id="@+id/miner_text"
+        android:layout_below="@+id/population"
+        android:layout_toRightOf="@+id/miner_minus"
+        android:layout_toEndOf="@+id/miner_minus" />
+
+    <Button
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:text="+"
+        android:background="@drawable/button_shape"
+        android:id="@+id/miner_plus"
+        android:onClick="minerPlus"
+        android:layout_alignTop="@+id/miner_text"
+        android:layout_alignLeft="@+id/lumberjack_plus"
+        android:layout_alignStart="@+id/lumberjack_plus" />
+
+    <Button
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:text="-"
+        android:onClick="minerMinus"
+        android:id="@+id/miner_minus"
+        android:background="@drawable/button_shape"
+        android:layout_alignTop="@+id/miner_text"
+        android:layout_alignLeft="@+id/lumberjack_minus"
+        android:layout_alignStart="@+id/lumberjack_minus"
+        android:layout_alignBottom="@+id/miner_text" />
+
+
+
+
+
+
+
+    <TextView
+        android:id="@+id/log"
+        android:layout_width="150dp"
+        android:layout_height="100dp"
+        android:textStyle="bold"
+        android:editable="true"
+        android:layout_marginLeft="25dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignTop="@+id/storage" />
+
+    <TextView
+        android:id="@+id/storage"
+        android:layout_width="250dp"
+        android:layout_height="150dp"
+        android:textStyle="bold"
+        android:editable="true"
+        android:layout_marginBottom="5dp"
+        android:layout_marginRight="25dp"
+        android:background="@drawable/button_shape"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/log"
+        android:layout_toEndOf="@+id/log" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:text="Shack"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/button_shape"
+        android:id="@+id/shack"
+        android:onClick="shack"
+        android:layout_below="@id/population"
+        android:layout_alignLeft="@+id/population"
+        android:layout_alignRight="@+id/population" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:text="House"
+        android:background="@drawable/button_shape"
+        android:id="@+id/house"
+        android:onClick="house"
+        android:layout_below="@+id/shack"
+        android:layout_marginTop="10dp"
+        android:layout_alignRight="@+id/shack"
+        android:layout_alignLeft="@+id/shack" />
+
+
+</RelativeLayout>

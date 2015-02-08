@@ -70,7 +70,7 @@ public class Forest extends FragmentActivity {
         Button hunt = (Button) findViewById(R.id.hunt);
         //Setup TextSize and display Storage
         storage.setMovementMethod(new ScrollingMovementMethod());
-        log.setTextSize(12);
+        log.setTextSize(14);
         storage.setTextSize(15);
          TextView cave_tab = (TextView) findViewById(R.id.cave_tab);
          TextView forest_tab = (TextView) findViewById(R.id.forest_tab);
@@ -151,7 +151,7 @@ public class Forest extends FragmentActivity {
         if (sharedPref.getBoolean("tin_pick", false)) {
             helper.collect("stone", 1, "amethyst", 1, 3, "bismuth", 1, 25, "tin", 3, 35);
         } else if (sharedPref.getBoolean("stone_pick", false)) {
-            helper.collect("stone", 1, "tin", 1, 20, "bismuth", 1, 10);
+            helper.collect("stone", 1, "tin", 1, 45, "bismuth", 1, 10);
         } else {
             helper.collect("stone", 1);
         }

@@ -55,7 +55,7 @@
         android:text="Crafting" />
 
     <Button
-        android:id="@+id/trading"
+        android:id="@+id/village"
         android:layout_width="150dp"
         android:layout_height="100dp"
         android:layout_marginLeft="20dp"
@@ -63,7 +63,7 @@
         android:layout_weight="1"
         android:background="@drawable/button_shape"
         android:layout_below="@id/buildings"
-        android:text="Trading" />
+        android:text="Village" />
 
 
     <Button
@@ -73,7 +73,7 @@
         android:layout_marginLeft="5dp"
         android:layout_marginTop="25dp"
         android:layout_weight="1"
-        android:layout_toRightOf="@id/trading"
+        android:layout_toRightOf="@id/village"
         android:layout_below="@id/buildings"
         android:text="Quests"
         android:background="@drawable/button_shape" />

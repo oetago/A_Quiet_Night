@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,10 +24,8 @@ import com.milesstudios.aquietnight.util.Helper;
  */
 public class Tools extends ActivityGroup {
     Button stone_axe, stone_pick;
-    Boolean copper_axe_b, copper_pick_b;
     TextView log, storage;
     Helper helper = new Helper(this);
-    private Handler counterHandler = new Handler();
 
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -55,7 +52,7 @@ public class Tools extends ActivityGroup {
         getActionBar().show();
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
-        SpinnerAdapter adapter = ArrayAdapter.createFromResource(this, R.array.tools_labels, R.layout.spinner_item);
+        SpinnerAdapter adapter = ArrayAdapter.createFromResource(this, R.array.tools, R.layout.spinner_item);
         ActionBar.OnNavigationListener callback = new ActionBar.OnNavigationListener() {
             String[] items = getResources().getStringArray(R.array.tools); // List items from res
 
@@ -66,10 +63,12 @@ public class Tools extends ActivityGroup {
                 if (items[position].equals("Weapons and Armor")) {
                     Intent openWeapons_Armor = new Intent(Tools.this, Weapons_Armor.class);
                     startActivity(openWeapons_Armor);
+                    overridePendingTransition(0,0);
                 }
                 if (items[position].equals("Food and Water")) {
                     Intent openFood_Water = new Intent(Tools.this, Food_Water.class);
                     startActivity(openFood_Water);
+                    overridePendingTransition(0,0);
                 }
                 Log.d("NavigationItemSelected", items[position]);
                 return true;
@@ -85,34 +84,13 @@ public class Tools extends ActivityGroup {
         setContentView(R.layout.crafting_tools);
         log = (TextView) findViewById(R.id.log);
         storage = (TextView) findViewById(R.id.storage);
-        stone_axe = (Button) findViewById(R.id.stone_axe);
-        stone_pick = (Button) findViewById(R.id.stone_pick);
-        Button tin_pick = (Button) findViewById(R.id.tin_pick);
-        Button tin_axe = (Button) findViewById(R.id.tin_axe);
         log.setTextSize(11);
         storage.setTextSize(15);
-        boolean stone_axeb = sharedPref.getBoolean("stone_axe", false);
-        boolean stone_pickb = sharedPref.getBoolean("stone_pick", false);
-        boolean tinaxe = sharedPref.getBoolean("tin_axe", false);
-        boolean tinpick = sharedPref.getBoolean("tin_pick", false);
         final String log_text = sharedPref.getString("log_text", "");
-        Boolean forest_temple_b = sharedPref.getBoolean("forest_temple", false);
         log.setText(log_text);
-
-        if (tinaxe) {
-            tin_axe.setVisibility(View.INVISIBLE);
-        }
-        if (tinpick) {
-            tin_pick.setVisibility(View.INVISIBLE);
-        }
-        if (stone_axeb) {
-            stone_axe.setVisibility(View.INVISIBLE);
-        }
-        if (stone_pickb) {
-            stone_pick.setVisibility(View.INVISIBLE);
-        }
+        helper.updateText();
+        helper.updateButtons("Tools");
         saveChoice();
-        runTimer();
     }
 
     public void saveChoice() {
@@ -146,31 +124,21 @@ public class Tools extends ActivityGroup {
     }
 
     public void buttonStoneAxe(View v) {
-        helper.build("Stone Axe", "Wood: 25 \nStone: 25", "wood", 25, "stone", 25, "stone_axe", this);
+        helper.build("Stone Axe", "Wood: 25 \nStone: 25", "wood", 25, "stone", 25, "stone_axe", this,"Tools");
     }
 
     public void buttonStonePick(View v) {
-        helper.build("Stone Pick", "Wood: 20 \nStone: 20", "wood", 20, "stone", 20, "stone_pick", this);
+        helper.build("Stone Pick", "Wood: 20 \nStone: 20", "wood", 20, "stone", 20, "stone_pick", this,"Tools");
     }
 
     public void buttonTinPick(View v) {
-        helper.build("Tin Pick", "Wood: 35 \nTin: 10", "wood", 35, "stone", 10, "tin_pick", this);
+        helper.build("Tin Pick", "Wood: 35 \nTin: 10", "wood", 35, "stone", 10, "tin_pick", this,"Tools");
     }
 
     public void buttonTinAxe(View v) {
-        helper.build("Tin Axe", "Wood: 25 \nTin: 5", "wood", 35, "stone", 10, "tin_axe", this);
+        helper.build("Tin Axe", "Wood: 25 \nTin: 5", "wood", 25, "stone", 5, "tin_axe", this,"Tools");
     }
 
-    public void runTimer() {
-        counterHandler.postDelayed(TextViewChanger, 250);
-    }
-
-    private Runnable TextViewChanger = new Runnable() {
-        public void run() {
-            helper.updateText();
-            runTimer();
-        }
-    };
 }
 
 

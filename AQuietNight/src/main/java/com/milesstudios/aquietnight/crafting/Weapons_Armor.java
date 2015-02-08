@@ -67,10 +67,12 @@ public class Weapons_Armor extends ActivityGroup {
                 if (items[position].equals("Food and Water")) {
                     Intent openFood_Water = new Intent(Weapons_Armor.this, Food_Water.class);
                     startActivity(openFood_Water);
+                    overridePendingTransition(0,0);
                 }
                 if (items[position].equals("Tools")) {
                     Intent openTools = new Intent(Weapons_Armor.this, Tools.class);
                     startActivity(openTools);
+                    overridePendingTransition(0,0);
                 }
                 Log.d("NavigationItemSelected", items[position]);
                 return true;
@@ -95,15 +97,15 @@ public class Weapons_Armor extends ActivityGroup {
         boolean stone_sword_b = sharedPref.getBoolean("stone_sword", false);
         saveChoice();
         helper.updateText();
-        helper.updateButtons();
+        helper.updateButtons("Weapons_Armor");
     }
 
     public void saveChoice() {
         SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         int food_water = 0;
-        int tools = 1;
-        int weapons_armor = 0;
+        int tools = 0;
+        int weapons_armor = 1;
         editor.putInt("food_water", food_water);
         editor.putInt("tools", tools);
         editor.putInt("weapons_armor", weapons_armor);
@@ -128,11 +130,11 @@ public class Weapons_Armor extends ActivityGroup {
     }
 
     public void buttonStoneSword(View v) {
-        helper.build("Stone Sword", "Wood: 10 \nStone: 20", "wood", 10, "stone", 20, "stone_sword", this);
+        helper.build("Stone Sword", "Wood: 10 \nStone: 20", "wood", 10, "stone", 20, "stone_sword", this,"Weapons_Armor");
     }
 
     public void buttonLeafArmor(View v) {
-        helper.build("Leaf Armor", "Leaves: 15", "leaves", 15, "leaf_armor", this);
+        helper.build("Leaf Armor", "Leaves: 15", "leaves", 15, "leaf_armor", this,"Weapons_Armor");
     }
 
 }
