@@ -123,12 +123,15 @@ public class Forest extends FragmentActivity {
     @Override
     public void onBackPressed() {
         Intent openMain = new Intent(Forest.this, Cave.class);
+        openMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(openMain);
+
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
     }
 
     @Override
     protected void onStop() {
+        finish();
         super.onStop();
     }
 
@@ -168,6 +171,17 @@ public class Forest extends FragmentActivity {
         helper.collectL("Raw Food", "raw_food", 1);
         helper.updateText();
     }
+
+    public void runTimer() {
+        counterHandler.postDelayed(TextViewChanger, 5000);
+    }
+
+    private Runnable TextViewChanger = new Runnable() {
+        public void run() {
+            helper.updateText();
+            runTimer();
+        }
+    };
 
 
 }

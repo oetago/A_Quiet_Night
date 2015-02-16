@@ -35,6 +35,7 @@ public class Weapons_Armor extends ActivityGroup {
             case android.R.id.home:
                 // Do whatever you want, e.g. finish()
                 Intent openMain = new Intent(Weapons_Armor.this, Cave.class);
+                openMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(openMain);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
                 break;
@@ -66,11 +67,13 @@ public class Weapons_Armor extends ActivityGroup {
                 }
                 if (items[position].equals("Food and Water")) {
                     Intent openFood_Water = new Intent(Weapons_Armor.this, Food_Water.class);
+                    openFood_Water.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(openFood_Water);
                     overridePendingTransition(0,0);
                 }
                 if (items[position].equals("Tools")) {
                     Intent openTools = new Intent(Weapons_Armor.this, Tools.class);
+                    openTools.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(openTools);
                     overridePendingTransition(0,0);
                 }
@@ -98,6 +101,7 @@ public class Weapons_Armor extends ActivityGroup {
         saveChoice();
         helper.updateText();
         helper.updateButtons("Weapons_Armor");
+        runTimer();
     }
 
     public void saveChoice() {
@@ -115,6 +119,7 @@ public class Weapons_Armor extends ActivityGroup {
     @Override
     public void onBackPressed() {
         Intent openMain = new Intent(Weapons_Armor.this, Cave.class);
+        openMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(openMain);
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
     }
@@ -126,6 +131,7 @@ public class Weapons_Armor extends ActivityGroup {
         String log_text = log.getText().toString();
         editor.putString("log_text", log_text);
         editor.apply();
+        finish();
         super.onPause();
     }
 
@@ -136,7 +142,16 @@ public class Weapons_Armor extends ActivityGroup {
     public void buttonLeafArmor(View v) {
         helper.build("Leaf Armor", "Leaves: 15", "leaves", 15, "leaf_armor", this,"Weapons_Armor");
     }
+    public void runTimer() {
+        counterHandler.postDelayed(TextViewChanger, 5000);
+    }
 
+    private Runnable TextViewChanger = new Runnable() {
+        public void run() {
+            helper.updateText();
+            runTimer();
+        }
+    };
 }
 
 

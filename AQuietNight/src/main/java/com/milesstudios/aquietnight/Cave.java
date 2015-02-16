@@ -29,11 +29,14 @@ import com.milesstudios.aquietnight.quest.Quest_Main;
 import com.milesstudios.aquietnight.util.ChangeLog;
 import com.milesstudios.aquietnight.util.Helper;
 
+import java.util.logging.Handler;
+
 public class Cave extends Activity {
     Button buildings, trading, crafting, quests,village;
     TextView log, storage;
     SlidingMenu menu;
-
+    Helper helper = new Helper(this);
+    private android.os.Handler counterHandler = new android.os.Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +51,7 @@ public class Cave extends Activity {
         if (cl.firstRun()) {
             cl.getLogDialog().show();
         }
+        runTimer();
         crafting = (Button) findViewById(R.id.crafting);
         buildings = (Button) findViewById(R.id.buildings);
         quests = (Button) findViewById(R.id.quests);
@@ -125,6 +129,7 @@ public class Cave extends Activity {
             @Override
             public void onClick(View v) {
                 Intent openForest = new Intent(Cave.this, Forest.class);
+                openForest.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(openForest);
                 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
 
@@ -136,6 +141,7 @@ public class Cave extends Activity {
             @Override
             public void onClick(View v) {
                 Intent openCrafting = new Intent(Cave.this, Crafting.class);
+                openCrafting.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(openCrafting);
                 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
 
@@ -148,6 +154,7 @@ public class Cave extends Activity {
             @Override
             public void onClick(View v) {
                 Intent openBuildings = new Intent(Cave.this, Buildings.class);
+                openBuildings.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(openBuildings);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
 
@@ -160,6 +167,7 @@ public class Cave extends Activity {
             @Override
             public void onClick(View v) {
                 Intent openQuest = new Intent(Cave.this, Quest_Main.class);
+                openQuest.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(openQuest);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
 
@@ -171,6 +179,7 @@ public class Cave extends Activity {
             @Override
             public void onClick(View v) {
                 Intent openQuest = new Intent(Cave.this, Village.class);
+                openQuest.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(openQuest);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
             }
@@ -242,16 +251,6 @@ public class Cave extends Activity {
     }
 
 
-
-
-    @Override
-    public void onBackPressed() {
-        Intent openMain = new Intent(Cave.this, Cave.class);
-        startActivity(openMain);
-        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
-
-    }
-
     public void sendEmail() {
         Intent intent = new Intent(Intent.ACTION_SENDTO); // it's not ACTION_SEND
         intent.setType("text/plain");
@@ -261,6 +260,15 @@ public class Cave extends Activity {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); // this will make such that when user returns to your app, your app is displayed, instead of the email app.
         startActivity(intent);
     }
+    public void runTimer() {
+        counterHandler.postDelayed(TextViewChanger, 5000);
+    }
 
+    private Runnable TextViewChanger = new Runnable() {
+        public void run() {
+            helper.updateText();
+            runTimer();
+        }
+    };
 
 }

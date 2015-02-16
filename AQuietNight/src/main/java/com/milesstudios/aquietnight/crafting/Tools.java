@@ -26,6 +26,7 @@ public class Tools extends ActivityGroup {
     Button stone_axe, stone_pick;
     TextView log, storage;
     Helper helper = new Helper(this);
+    private android.os.Handler counterHandler = new android.os.Handler();
 
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -33,6 +34,7 @@ public class Tools extends ActivityGroup {
             case android.R.id.home:
                 // Do whatever you want, e.g. finish()
                 Intent openMain = new Intent(Tools.this, Cave.class);
+                openMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(openMain);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
                 break;

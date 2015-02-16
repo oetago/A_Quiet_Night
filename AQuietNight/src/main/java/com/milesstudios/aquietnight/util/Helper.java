@@ -340,11 +340,11 @@ public class Helper extends Activity {
         int wood = sharedPref.getInt("wood", 0);
         int output_test = sharedPref.getInt(output, 0);
         int counter = sharedPref.getInt(item, 0);
-        if (sharedPref.getBoolean("storage_shed", false) && output_test <= 54 && wood >= need) {
+        if (sharedPref.getBoolean("storage_shed", false) && output_test <= 54 && wood >= need && counter > 0) {
             output_test += need;
             counter -= amount;
             wood -= need;
-        } else if (output_test <= 24 && wood >= need) {
+        } else if (output_test <= 24 && wood >= need && counter > 0) {
             output_test += need;
             counter -= amount;
             wood -= need;
@@ -533,6 +533,11 @@ public class Helper extends Activity {
         pop.append("\n Available Workers: "+ ava);
         pop.append("\n Lumber Jacks: " + sharedPref.getInt("lumber_jack",0));
         pop.append("\n Miners : " + sharedPref.getInt("miner",0));
+        pop.append("\n");
+        double lumberjacks = sharedPref.getInt("lumber_jack",0) * 0.2;
+        pop.append(" Wood + " + (int)lumberjacks +" - 5s");
+        double miners = sharedPref.getInt("miner",0) * 0.2;
+        pop.append("\n Stone + " + (int)miners +" - 5s");
     }
 
     public void updateWorkers(){
@@ -548,16 +553,31 @@ public class Helper extends Activity {
 
             @Override
             public void onFinish() {
-                double lumberjacks = sharedPref.getInt("lumber_jack",0) * 0.2;
-                double miners = sharedPref.getInt("miner",0) * 0.2;
-                editor.putInt("wood",sharedPref.getInt("wood",0) + (int)lumberjacks);
-                editor.putInt("stone",sharedPref.getInt("stone",0) + (int)miners);
+                if (sharedPref.getBoolean("storage_shed", false) && sharedPref.getInt("wood",0) <= 999) {
+                    double lumberjacks = sharedPref.getInt("lumber_jack",0) * 0.2;
+                    editor.putInt("wood",sharedPref.getInt("wood",0) + (int)lumberjacks);
+                } else if (sharedPref.getInt("wood",0) <= 249) {
+                    double lumberjacks = sharedPref.getInt("lumber_jack",0) * 0.2;
+                    editor.putInt("wood",sharedPref.getInt("wood",0) + (int)lumberjacks);
+                    Log.v("Helper", "ljs = " + lumberjacks);
+                }
+
+                if (sharedPref.getBoolean("storage_shed", false) && sharedPref.getInt("stone",0) <= 999) {
+                    double miners = sharedPref.getInt("miner",0) * 0.2;
+                    editor.putInt("stone",sharedPref.getInt("stone",0) + (int)miners);
+                } else if (sharedPref.getInt("stone",0) <= 249) {
+                    double miners = sharedPref.getInt("miner",0) * 0.2;
+                    editor.putInt("stone",sharedPref.getInt("stone",0) + (int)miners);
+                    Log.v("Helper"," miners = " + miners);
+                }
                 editor.apply();
-                Log.v("Helper", "ljs = " + lumberjacks + " miners = " + miners);
                 updateText();
                 updateWorkers();
             }
         }.start();
 
     }
+
+
+
 }

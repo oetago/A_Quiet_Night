@@ -26,6 +26,7 @@ public class Buildings extends ActivityGroup {
             case android.R.id.home:
                 // Do whatever you want, e.g. finish()
                 Intent openMain = new Intent(Buildings.this, Cave.class);
+                openMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(openMain);
                 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
                 break;
@@ -58,7 +59,7 @@ public class Buildings extends ActivityGroup {
         log.setText(log_text);
         helper.updateButtons("Buildings");
         helper.updateText();
-
+        runTimer();
 
     }
 
@@ -66,6 +67,7 @@ public class Buildings extends ActivityGroup {
     @Override
     public void onBackPressed() {
         Intent openMain = new Intent(Buildings.this, Cave.class);
+        openMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(openMain);
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
     }
@@ -77,6 +79,7 @@ public class Buildings extends ActivityGroup {
         SharedPreferences.Editor editor = sharedPref.edit();
         String log_text = log.getText().toString();
         editor.putString("log_text", log_text);
+        finish();
         editor.apply();
         super.onPause();
     }
@@ -109,7 +112,16 @@ public class Buildings extends ActivityGroup {
     public void buttonStorageShed(View v) {
         helper.build("Storage Shed", "Wood: 150 \nStone: 100\nLeaves: 75", "wood", 150, "stone", 100, "leaves", 75, "storage_shed", this,"Buildings");
     }
+    public void runTimer() {
+        counterHandler.postDelayed(TextViewChanger, 5000);
+    }
 
+    private Runnable TextViewChanger = new Runnable() {
+        public void run() {
+            helper.updateText();
+            runTimer();
+        }
+    };
 
 }
 

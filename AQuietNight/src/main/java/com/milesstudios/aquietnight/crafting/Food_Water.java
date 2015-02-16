@@ -18,17 +18,20 @@ import com.milesstudios.aquietnight.Cave;
 import com.milesstudios.aquietnight.R;
 import com.milesstudios.aquietnight.util.Helper;
 
+import java.util.logging.Handler;
+
 /**
  * Created by Ryan on 9/27/2014.
  */
 public class Food_Water extends ActivityGroup {
     Helper helper = new Helper(this);
     TextView log;
-
+    private android.os.Handler counterHandler = new android.os.Handler();
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
                 Intent openMain = new Intent(Food_Water.this, Cave.class);
+                openMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(openMain);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
                 break;
@@ -57,11 +60,13 @@ public class Food_Water extends ActivityGroup {
                 }
                 if (items[position].equals("Weapons and Armor")) {
                     Intent openWepaons_Armor = new Intent(Food_Water.this, Weapons_Armor.class);
+                    openWepaons_Armor.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(openWepaons_Armor);
                     overridePendingTransition(0,0);
                 }
                 if (items[position].equals("Tools")) {
                     Intent openTools = new Intent(Food_Water.this, Tools.class);
+                    openTools.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(openTools);
                     overridePendingTransition(0,0);
                 }
@@ -95,6 +100,7 @@ public class Food_Water extends ActivityGroup {
     @Override
     public void onBackPressed() {
         Intent openMain = new Intent(Food_Water.this, Cave.class);
+        openMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(openMain);
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
     }
@@ -118,6 +124,7 @@ public class Food_Water extends ActivityGroup {
         String log_text = log.getText().toString();
         editor.putString("log_text", log_text);
         editor.apply();
+        finish();
         super.onPause();
     }
 
@@ -132,6 +139,16 @@ public class Food_Water extends ActivityGroup {
     public void buttonLeafCanteen(View v) {
         helper.build("Leaf Canteen", "Leaves: 10", "leaves", 10, "leaf_canteen", this,"Food_Water");
     }
+    public void runTimer() {
+        counterHandler.postDelayed(TextViewChanger, 5000);
+    }
+
+    private Runnable TextViewChanger = new Runnable() {
+        public void run() {
+            helper.updateText();
+            runTimer();
+        }
+    };
 
 
 

@@ -20,6 +20,7 @@ public class Village extends ActivityGroup {
 
     TextView log;
     Helper helper = new Helper(this);
+    private android.os.Handler counterHandler = new android.os.Handler();
 
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -61,7 +62,7 @@ public class Village extends ActivityGroup {
     @Override
     public void onBackPressed() {
         Intent openMain = new Intent(Village.this, Cave.class);
-        openMain.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        openMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(openMain);
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
     }
