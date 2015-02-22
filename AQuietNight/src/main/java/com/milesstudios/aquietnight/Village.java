@@ -43,6 +43,7 @@ public class Village extends ActivityGroup {
     protected void onCreate(Bundle savedInstanceState) {
         //Saving
         SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
         getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
         getActionBar().show();
         getActionBar().setDisplayHomeAsUpEnabled(true);
@@ -56,7 +57,9 @@ public class Village extends ActivityGroup {
         helper.updatePopulation();
         final String log_text = sharedPref.getString("log_text", "");
         log.setText(log_text);
-        helper.updateWorkers();
+        runTimer();
+
+
     }
 
     @Override
@@ -140,11 +143,26 @@ public class Village extends ActivityGroup {
     }
 
     public void shack(View v) {
-        helper.buildVillage("Shack","Wood: 10 \nStone: 10","wood",10,"stone",10,"shack",this);
+        SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
+        int shacks = sharedPref.getInt("shack",0);
+        helper.buildVillage("Shack","Wood: " + (10 + shacks * 5) +"\nStone: " + (10 + shacks * 5),"wood",10 + shacks * 5,"stone",10 + shacks * 5,"shack",this);
     }
     public void house(View v) {
-        helper.buildVillage("House","Wood: 25 \nStone: 25","wood",25,"stone",25,"house",this);
+        SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
+        int houses = sharedPref.getInt("house",0);
+        helper.buildVillage("House","Wood: " + (25 + houses * 10) +"\nStone: " + (25 + houses * 10),"wood",25 + houses * 10,"stone",25 + houses * 10,"house",this);
     }
+
+    public void runTimer() {
+        counterHandler.postDelayed(TextViewChanger, 5000);
+    }
+
+    private Runnable TextViewChanger = new Runnable() {
+        public void run() {
+            helper.updateText();
+            runTimer();
+        }
+    };
 
 }
 

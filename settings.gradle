@@ -1,2 +1,2 @@
-include ':AQuietNight', ':slidingmenu'
+include ':AQuietNight', ':slidingmenu', ':loading', ':library', ':loadingtext'
 

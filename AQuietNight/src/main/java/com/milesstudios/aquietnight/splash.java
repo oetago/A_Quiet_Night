@@ -11,6 +11,8 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 
+import com.milesstudios.aquietnight.util.Helper;
+
 public class splash extends ActionBarActivity {
 
     MediaPlayer SplashSong;
@@ -22,7 +24,10 @@ public class splash extends ActionBarActivity {
         setContentView(R.layout.splash2);
         SplashSong = MediaPlayer.create(splash.this, R.raw.splash_sound);
         SplashSong.start();
-
+        Helper helper = new Helper(this);
+        SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        helper.updateWorkers();
         Thread timer = new Thread() {
             public void run() {
                 try {
@@ -40,7 +45,6 @@ public class splash extends ActionBarActivity {
                         startActivity(openMain_Screen);
                     }
                     finish();
-                    // Finished already with the finish not from on pause
                 }
             }
         };
@@ -51,11 +55,9 @@ public class splash extends ActionBarActivity {
 
     @Override
     protected void onPause() {
-        // TODO Auto-generated method stub
         super.onPause();
         SplashSong.release();
         finish();
-        //Already Finished Splash but not song
     }
 
 

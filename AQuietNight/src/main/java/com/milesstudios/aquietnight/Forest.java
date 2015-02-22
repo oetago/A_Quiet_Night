@@ -20,6 +20,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.milesstudios.aquietnight.util.ChangeLog;
 import com.milesstudios.aquietnight.util.Helper;
 
 //import com.google.android.gms.ads.AdRequest;
@@ -61,7 +62,10 @@ public class Forest extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.forest);
         final SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
-
+        ChangeLog cl = new ChangeLog(this);
+        if (cl.firstRun()) {
+            cl.getLogDialog().show();
+        }
 
         //Declare Textviews
         log = (TextView) findViewById(R.id.log);

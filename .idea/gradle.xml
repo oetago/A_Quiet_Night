@@ -10,6 +10,9 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/AQuietNight" />
+            <option value="$PROJECT_DIR$/library" />
+            <option value="$PROJECT_DIR$/loading" />
+            <option value="$PROJECT_DIR$/loadingtext" />
             <option value="$PROJECT_DIR$/slidingmenu" />
           </set>
         </option>

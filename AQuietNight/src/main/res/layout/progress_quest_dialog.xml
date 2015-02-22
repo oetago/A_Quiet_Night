@@ -5,43 +5,23 @@
     android:background="#ff848484"
     android:orientation="vertical">
 
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="75dp"
-        android:text=""
-        android:id="@+id/title2"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
 
     <TextView
+        android:id="@+id/name"
         android:layout_width="fill_parent"
         android:layout_height="50dp"
-        android:text="Progress:"
-        android:textSize="25dp"
-        android:id="@+id/textView"
-        android:layout_below="@+id/title2"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-    <ProgressBar
-        android:id="@+id/bosses_bar"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/textView"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="75dp"
+        android:gravity="center"
         android:text=""
-        android:id="@+id/anim"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true" />
+        android:textSize="25dp" />
+
+    <com.daimajia.numberprogressbar.NumberProgressBar
+        android:id="@+id/number_progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_below="@id/name"
+        />
+
 
 </RelativeLayout>

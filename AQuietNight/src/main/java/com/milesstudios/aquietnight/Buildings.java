@@ -93,8 +93,8 @@ public class Buildings extends ActivityGroup {
         helper.build("Workshop", "Wood: 10 \nStone: 10", "wood", 10, "stone", 10, "workshop", this,"Buildings");
     }
 
-    public void buttonTradePost(View v) {
-        helper.build("Trade Post", "Wood: 12 \nLeaves: 7", "wood", 12, "leaves", 7, "tradepost", this,"Buildings");
+    public void buttonVillage(View v) {
+        helper.build("Village Foundation", "Stone: 100 \nLeaves: 50\nCooked Food: 15", "stone", 100, "leaves", 50,"cooked_food",15, "village", this,"Buildings");
     }
 
     public void buttonRebuildMine(View v) {

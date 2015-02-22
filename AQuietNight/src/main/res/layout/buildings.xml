@@ -36,14 +36,7 @@
         android:onClick="buttonWorkshop"
         android:background="@drawable/button_shape"/>
 
-    <Button
-        android:id="@+id/trade_post"
-        android:background="@drawable/button_shape"
-        android:layout_width="120dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="10dp"
-        android:text="Village Foundation"
-        android:onClick="buttonTradePost" />
+
     <Button
         android:id="@+id/tannery"
         android:background="@drawable/button_shape"
@@ -62,13 +55,16 @@
         android:text="Storage Shed"
         android:layout_marginTop="10dp"
         android:onClick="buttonStorageShed" />
+        <Button
+            android:id="@+id/village"
+            android:background="@drawable/button_shape"
+            android:layout_width="120dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:text="Village Foundation"
+            android:onClick="buttonVillage" />
 
        </LinearLayout>
-
-
-
-
-
 
     <TextView
         android:id="@+id/log"

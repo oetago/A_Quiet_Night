@@ -18,8 +18,6 @@ import com.milesstudios.aquietnight.Cave;
 import com.milesstudios.aquietnight.R;
 import com.milesstudios.aquietnight.util.Helper;
 
-import java.util.logging.Handler;
-
 /**
  * Created by Ryan on 9/27/2014.
  */
@@ -129,11 +127,11 @@ public class Food_Water extends ActivityGroup {
     }
 
     public void buttonBoilWater(View v) {
-        helper.fandW("dirty_water", 1, "boiled_water", 2);
+        helper.fandW("dirty_water", 1, "boiled_water", 1);
     }
 
     public void buttonCookFood(View v) {
-        helper.fandW("raw_food", 1, "cooked_food", 2);
+        helper.fandW("raw_food", 1, "cooked_food", 1);
     }
 
     public void buttonLeafCanteen(View v) {

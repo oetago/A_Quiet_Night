@@ -25,11 +25,8 @@ import android.widget.TextView;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
-import com.milesstudios.aquietnight.quest.Quest_Main;
-import com.milesstudios.aquietnight.util.ChangeLog;
+import com.milesstudios.aquietnight.quest.Bosses;
 import com.milesstudios.aquietnight.util.Helper;
-
-import java.util.logging.Handler;
 
 public class Cave extends Activity {
     Button buildings, trading, crafting, quests,village;
@@ -46,11 +43,6 @@ public class Cave extends Activity {
         final SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
         buildings = (Button) findViewById(R.id.buildings);
         SharedPreferences.Editor editor = sharedPref.edit();
-        //TODO Fix version names
-        ChangeLog cl = new ChangeLog(this);
-        if (cl.firstRun()) {
-            cl.getLogDialog().show();
-        }
         runTimer();
         crafting = (Button) findViewById(R.id.crafting);
         buildings = (Button) findViewById(R.id.buildings);
@@ -89,14 +81,32 @@ public class Cave extends Activity {
         editor.putBoolean("intro", false);
         editor.apply();
 
-       /* if (trading_post_counter == 0) {
-            trading.setVisibility(View.INVISIBLE);
-        } else if (trading_post_counter == 1) {
+        int village_int = sharedPref.getInt("village_int", 0);
+        if (sharedPref.getBoolean("village", false)) {
+            village_int++;
+            editor.putInt("village_int", village_int);
+            editor.apply();
+        }
+        if (village_int == 0) {
+            village.setVisibility(View.INVISIBLE);
+        } else if (village_int == 1) {
             anim.reset();
-            trading.clearAnimation();
-            trading.startAnimation(anim);
-        } */
+            village.clearAnimation();
+            village.startAnimation(anim);
+        }
+        int quests_int = sharedPref.getInt("quests_int", 0);
+        if (sharedPref.getInt("forest_text", 0) == 3) {
+            quests_int++;
+            editor.putInt("quests_int", quests_int);
+            editor.apply();
+        }
+        if (quests_int == 0) {
             quests.setVisibility(View.INVISIBLE);
+        } else if (quests_int == 1) {
+            anim.reset();
+            quests.clearAnimation();
+            quests.startAnimation(anim);
+        }
 
         int workshop_int = sharedPref.getInt("workshop_int", 0);
         if (sharedPref.getBoolean("workshop", false)) {
@@ -166,7 +176,7 @@ public class Cave extends Activity {
         quests.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent openQuest = new Intent(Cave.this, Quest_Main.class);
+                Intent openQuest = new Intent(Cave.this, Bosses.class);
                 openQuest.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(openQuest);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);

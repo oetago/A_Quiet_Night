@@ -1,0 +1,175 @@
+-- Merging decision tree log ---
+manifest
+ADDED from AndroidManifest.xml:1:1
+	package
+		ADDED from AndroidManifest.xml:2:5
+		INJECTED from AndroidManifest.xml:0:0
+		INJECTED from AndroidManifest.xml:0:0
+	android:versionName
+		ADDED from AndroidManifest.xml:3:5
+		INJECTED from AndroidManifest.xml:0:0
+		INJECTED from AndroidManifest.xml:0:0
+	xmlns:android
+		ADDED from AndroidManifest.xml:1:11
+	android:versionCode
+		INJECTED from AndroidManifest.xml:0:0
+		INJECTED from AndroidManifest.xml:0:0
+application
+ADDED from AndroidManifest.xml:5:5
+MERGED from com.android.support:appcompat-v7:20.0.0:17:5
+MERGED from com.android.support:support-v4:20.0.0:17:5
+MERGED from com.google.android.gms:play-services:6.1.71:16:5
+MERGED from com.android.support:support-v4:20.0.0:17:5
+MERGED from com.android.support:support-v4:20.0.0:17:5
+	android:screenOrientation
+		ADDED from AndroidManifest.xml:10:9
+	android:label
+		ADDED from AndroidManifest.xml:8:9
+	android:allowBackup
+		ADDED from AndroidManifest.xml:6:9
+	android:icon
+		ADDED from AndroidManifest.xml:7:9
+	android:theme
+		ADDED from AndroidManifest.xml:9:9
+meta-data#com.google.android.gms.version
+ADDED from AndroidManifest.xml:12:9
+	android:value
+		ADDED from AndroidManifest.xml:13:13
+	android:name
+		ADDED from AndroidManifest.xml:12:20
+activity#com.google.android.gms.ads.AdActivity
+ADDED from AndroidManifest.xml:15:9
+	android:configChanges
+		ADDED from AndroidManifest.xml:16:13
+	android:theme
+		ADDED from AndroidManifest.xml:17:13
+	android:name
+		ADDED from AndroidManifest.xml:15:19
+activity#com.milesstudios.aquietnight.splash
+ADDED from AndroidManifest.xml:19:12
+	android:label
+		ADDED from AndroidManifest.xml:19:45
+	android:name
+		ADDED from AndroidManifest.xml:19:22
+intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
+ADDED from AndroidManifest.xml:21:13
+action#android.intent.action.MAIN
+ADDED from AndroidManifest.xml:22:17
+	android:name
+		ADDED from AndroidManifest.xml:22:25
+category#android.intent.category.LAUNCHER
+ADDED from AndroidManifest.xml:23:17
+	android:name
+		ADDED from AndroidManifest.xml:23:27
+activity#com.milesstudios.aquietnight.Cave
+ADDED from AndroidManifest.xml:26:9
+	android:label
+		ADDED from AndroidManifest.xml:26:40
+	android:name
+		ADDED from AndroidManifest.xml:26:19
+intent-filter#android.intent.category.DEFAULT
+ADDED from AndroidManifest.xml:27:13
+category#android.intent.category.DEFAULT
+ADDED from AndroidManifest.xml:28:17
+	android:name
+		ADDED from AndroidManifest.xml:28:27
+activity#com.milesstudios.aquietnight.Forest
+ADDED from AndroidManifest.xml:31:9
+	android:label
+		ADDED from AndroidManifest.xml:31:42
+	android:name
+		ADDED from AndroidManifest.xml:31:19
+activity#com.milesstudios.aquietnight.Crafting
+ADDED from AndroidManifest.xml:36:9
+	android:label
+		ADDED from AndroidManifest.xml:36:44
+	android:name
+		ADDED from AndroidManifest.xml:36:19
+activity#com.milesstudios.aquietnight.Buildings
+ADDED from AndroidManifest.xml:41:9
+	android:label
+		ADDED from AndroidManifest.xml:41:45
+	android:name
+		ADDED from AndroidManifest.xml:41:19
+activity#com.milesstudios.aquietnight.Trade
+ADDED from AndroidManifest.xml:46:9
+	android:label
+		ADDED from AndroidManifest.xml:46:41
+	android:name
+		ADDED from AndroidManifest.xml:46:19
+activity#com.milesstudios.aquietnight.quest.Quest_Main
+ADDED from AndroidManifest.xml:51:9
+	android:label
+		ADDED from AndroidManifest.xml:51:52
+	android:name
+		ADDED from AndroidManifest.xml:51:19
+activity#com.milesstudios.aquietnight.crafting.Tools
+ADDED from AndroidManifest.xml:56:9
+	android:label
+		ADDED from AndroidManifest.xml:56:50
+	android:name
+		ADDED from AndroidManifest.xml:56:19
+activity#com.milesstudios.aquietnight.crafting.Food_Water
+ADDED from AndroidManifest.xml:61:9
+	android:label
+		ADDED from AndroidManifest.xml:61:55
+	android:name
+		ADDED from AndroidManifest.xml:61:19
+activity#com.milesstudios.aquietnight.crafting.Weapons_Armor
+ADDED from AndroidManifest.xml:66:9
+	android:label
+		ADDED from AndroidManifest.xml:66:58
+	android:name
+		ADDED from AndroidManifest.xml:66:19
+activity#com.milesstudios.aquietnight.quest.Bosses
+ADDED from AndroidManifest.xml:71:9
+	android:label
+		ADDED from AndroidManifest.xml:71:48
+	android:name
+		ADDED from AndroidManifest.xml:71:19
+activity#com.milesstudios.aquietnight.Intro
+ADDED from AndroidManifest.xml:76:9
+	android:name
+		ADDED from AndroidManifest.xml:76:19
+activity#com.milesstudios.aquietnight.Mine
+ADDED from AndroidManifest.xml:81:9
+	android:name
+		ADDED from AndroidManifest.xml:81:19
+activity#com.milesstudios.aquietnight.quest.forest_temple.Acorn
+ADDED from AndroidManifest.xml:86:9
+	android:name
+		ADDED from AndroidManifest.xml:86:19
+activity#com.milesstudios.aquietnight.quest.forest_temple.Sapling
+ADDED from AndroidManifest.xml:91:9
+	android:name
+		ADDED from AndroidManifest.xml:91:19
+activity#com.milesstudios.aquietnight.quest.forest_temple.Branch
+ADDED from AndroidManifest.xml:96:9
+	android:name
+		ADDED from AndroidManifest.xml:96:19
+activity#com.milesstudios.aquietnight.quest.forest_temple.Mother_Tree
+ADDED from AndroidManifest.xml:101:9
+	android:name
+		ADDED from AndroidManifest.xml:101:19
+uses-permission#android.permission.ACCESS_NETWORK_STATE
+ADDED from AndroidManifest.xml:111:5
+	android:name
+		ADDED from AndroidManifest.xml:111:22
+uses-permission#android.permission.INTERNET
+ADDED from AndroidManifest.xml:112:5
+	android:name
+		ADDED from AndroidManifest.xml:112:22
+uses-sdk
+INJECTED from AndroidManifest.xml:0:0 reason: use-sdk injection requested
+MERGED from com.android.support:appcompat-v7:20.0.0:16:5
+MERGED from com.android.support:support-v4:20.0.0:16:5
+MERGED from com.google.android.gms:play-services:6.1.71:15:5
+MERGED from com.android.support:support-v4:20.0.0:16:5
+MERGED from AQuietNight:slidingmenu:unspecified:7:5
+MERGED from com.android.support:support-v4:20.0.0:16:5
+	android:targetSdkVersion
+		INJECTED from AndroidManifest.xml:0:0
+		INJECTED from AndroidManifest.xml:0:0
+	android:minSdkVersion
+		INJECTED from AndroidManifest.xml:0:0
+		INJECTED from AndroidManifest.xml:0:0
