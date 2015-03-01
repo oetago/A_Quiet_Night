@@ -39,7 +39,7 @@ public class Crafting extends ActivityGroup {
         } else if (tools == 1) {
             Intent openTools = new Intent(Crafting.this, Tools.class);
             startActivity(openTools);
-        }else{
+        } else {
             Intent openFood_Water = new Intent(Crafting.this, Food_Water.class);
             startActivity(openFood_Water);
         }

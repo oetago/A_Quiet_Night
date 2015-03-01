@@ -29,9 +29,14 @@ import com.milesstudios.aquietnight.util.Helper;
 
 public class Forest extends FragmentActivity {
     TextView log, storage;
-    private Handler counterHandler = new Handler();
     Helper helper = new Helper(this);
-
+    private Handler counterHandler = new Handler();
+    private Runnable TextViewChanger = new Runnable() {
+        public void run() {
+            helper.updateText();
+            runTimer();
+        }
+    };
 
     //For setting up back button
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -76,8 +81,8 @@ public class Forest extends FragmentActivity {
         storage.setMovementMethod(new ScrollingMovementMethod());
         log.setTextSize(14);
         storage.setTextSize(15);
-         TextView cave_tab = (TextView) findViewById(R.id.cave_tab);
-         TextView forest_tab = (TextView) findViewById(R.id.forest_tab);
+        TextView cave_tab = (TextView) findViewById(R.id.cave_tab);
+        TextView forest_tab = (TextView) findViewById(R.id.forest_tab);
         cave_tab.setTextSize(20);
         forest_tab.setPaintFlags(forest_tab.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         forest_tab.setTextSize(20);
@@ -112,7 +117,6 @@ public class Forest extends FragmentActivity {
         helper.updateText();
     }
 
-
     @Override
     public void onPause() {
         SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
@@ -138,7 +142,6 @@ public class Forest extends FragmentActivity {
         finish();
         super.onStop();
     }
-
 
     //Buttons
     public void buttonWood(View v) {
@@ -172,20 +175,13 @@ public class Forest extends FragmentActivity {
 
     public void buttonHunt(View v) {
         SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
-        helper.collectL("Raw Food", "raw_food", 1);
+        helper.collectF("Raw Food", "raw_food", 1);
         helper.updateText();
     }
 
     public void runTimer() {
         counterHandler.postDelayed(TextViewChanger, 5000);
     }
-
-    private Runnable TextViewChanger = new Runnable() {
-        public void run() {
-            helper.updateText();
-            runTimer();
-        }
-    };
 
 
 }

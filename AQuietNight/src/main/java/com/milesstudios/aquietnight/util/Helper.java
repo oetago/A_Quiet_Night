@@ -20,12 +20,12 @@ public class Helper extends Activity {
     Context context;
     int counter;
 
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
     public Helper(Context context) {
         this.context = context;
+    }
+
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
     }
 
     public void build(final String title, String message, final String r1, final int amount1, final String r2, final int amount2, final String output, Context context, final String update) {
@@ -326,9 +326,24 @@ public class Helper extends Activity {
         Random rng = new Random();
         final SharedPreferences.Editor editor = sharedPref.edit();
         int counter = sharedPref.getInt(item, 0);
-        if (sharedPref.getBoolean("storage_shed", false) && counter <= 54) {
+        if (sharedPref.getBoolean("storage_shed", false) && counter <= 25) {
             counter += amount;
-        } else if (counter <= 24) {
+        } else if (counter <= 15) {
+            counter += amount;
+        }
+        editor.putInt(item, counter);
+        editor.apply();
+        updateText();
+    }
+    public void collectF(String title, String item, int amount) {
+        final SharedPreferences sharedPref = context.getSharedPreferences("save-data", Context.MODE_PRIVATE);
+        final TextView log = (TextView) ((Activity) context).findViewById(R.id.log);
+        Random rng = new Random();
+        final SharedPreferences.Editor editor = sharedPref.edit();
+        int counter = sharedPref.getInt(item, 0);
+        if (sharedPref.getBoolean("storage_shed", false) && counter <= 15) {
+            counter += amount;
+        } else if (counter <= 10) {
             counter += amount;
         }
         editor.putInt(item, counter);
@@ -343,19 +358,42 @@ public class Helper extends Activity {
         int wood = sharedPref.getInt("wood", 0);
         int output_test = sharedPref.getInt(output, 0);
         int counter = sharedPref.getInt(item, 0);
-        if (sharedPref.getBoolean("storage_shed", false) && output_test <= 54 && wood >= need && counter > 0) {
+        if (sharedPref.getBoolean("storage_shed", false) && output_test <= 25 && wood >= need && counter > 0) {
             output_test += need;
             counter -= amount;
             wood -= need;
-        } else if (output_test <= 24 && wood >= need && counter > 0) {
+        } else if (output_test <= 15 && wood >= need && counter > 0) {
             output_test += need;
             counter -= amount;
             wood -= need;
         } else {
             log.setText("You don't have enough resources! \n" + log.getText());
         }
+        editor.putInt(item, counter);
+        editor.putInt(output, output_test);
+        editor.putInt("wood", wood);
+        editor.apply();
+        updateText();
+    }
 
-
+    public void fandW2(String item, int amount, String output, int need) {
+        final SharedPreferences sharedPref = context.getSharedPreferences("save-data", Context.MODE_PRIVATE);
+        final TextView log = (TextView) ((Activity) context).findViewById(R.id.log);
+        final SharedPreferences.Editor editor = sharedPref.edit();
+        int wood = sharedPref.getInt("wood", 0);
+        int output_test = sharedPref.getInt(output, 0);
+        int counter = sharedPref.getInt(item, 0);
+        if (sharedPref.getBoolean("storage_shed", false) && output_test <= 15 && wood >= need && counter > 0) {
+            output_test += need;
+            counter -= amount;
+            wood -= need;
+        } else if (output_test <= 10 && wood >= need && counter > 0) {
+            output_test += need;
+            counter -= amount;
+            wood -= need;
+        } else {
+            log.setText("You don't have enough resources! \n" + log.getText());
+        }
         editor.putInt(item, counter);
         editor.putInt(output, output_test);
         editor.putInt("wood", wood);

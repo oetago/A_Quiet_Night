@@ -21,6 +21,12 @@ public class Village extends ActivityGroup {
     TextView log;
     Helper helper = new Helper(this);
     private android.os.Handler counterHandler = new android.os.Handler();
+    private Runnable TextViewChanger = new Runnable() {
+        public void run() {
+            helper.updateText();
+            runTimer();
+        }
+    };
 
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -74,7 +80,7 @@ public class Village extends ActivityGroup {
     public void onPause() {
         SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
-        log = (TextView)findViewById(R.id.log);
+        log = (TextView) findViewById(R.id.log);
         String log_text = log.getText().toString();
         editor.putString("log_text", log_text);
         editor.apply();
@@ -85,84 +91,78 @@ public class Village extends ActivityGroup {
     public void lumberJackPlus(View v) {
         SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
-        log = (TextView)findViewById(R.id.log);
-        int max = 3 * sharedPref.getInt("shack",0) + 10 * sharedPref.getInt("house",0);
-        int ava = max - sharedPref.getInt("lumber_jack",0) - sharedPref.getInt("miner",0);
-        if(ava > 0) {
+        log = (TextView) findViewById(R.id.log);
+        int max = 3 * sharedPref.getInt("shack", 0) + 10 * sharedPref.getInt("house", 0);
+        int ava = max - sharedPref.getInt("lumber_jack", 0) - sharedPref.getInt("miner", 0);
+        if (ava > 0) {
             int lumberjack_counter = sharedPref.getInt("lumber_jack", 0);
             editor.putInt("lumber_jack", lumberjack_counter + 1);
             editor.apply();
             helper.updatePopulation();
-        }else{
+        } else {
             log.setText("Not enough available Workers!\n" + log.getText());
         }
     }
 
-
-
     public void lumberJackMinus(View v) {
         SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
-        log = (TextView)findViewById(R.id.log);
-        int lumberjack_counter = sharedPref.getInt("lumber_jack",0);
-        if(lumberjack_counter > 0) {
+        log = (TextView) findViewById(R.id.log);
+        int lumberjack_counter = sharedPref.getInt("lumber_jack", 0);
+        if (lumberjack_counter > 0) {
             editor.putInt("lumber_jack", lumberjack_counter - 1);
             editor.apply();
             helper.updatePopulation();
-        }else{
+        } else {
             log.setText("There are no Lumber Jacks to remove!\n" + log.getText());
         }
     }
+
     public void minerPlus(View v) {
         SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
-        log = (TextView)findViewById(R.id.log);
-        int max = 3 * sharedPref.getInt("shack",0) + 10 * sharedPref.getInt("house",0);
-        int ava = max - sharedPref.getInt("lumber_jack",0) - sharedPref.getInt("miner",0);
-        if(ava > 0) {
+        log = (TextView) findViewById(R.id.log);
+        int max = 3 * sharedPref.getInt("shack", 0) + 10 * sharedPref.getInt("house", 0);
+        int ava = max - sharedPref.getInt("lumber_jack", 0) - sharedPref.getInt("miner", 0);
+        if (ava > 0) {
             int miner_counter = sharedPref.getInt("miner", 0);
             editor.putInt("miner", miner_counter + 1);
             editor.apply();
             helper.updatePopulation();
-        }else{
+        } else {
             log.setText("Not enough available workers!\n" + log.getText());
         }
     }
+
     public void minerMinus(View v) {
         SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
-        log = (TextView)findViewById(R.id.log);
-        int miner_counter = sharedPref.getInt("miner",0);
-        if(miner_counter > 0) {
+        log = (TextView) findViewById(R.id.log);
+        int miner_counter = sharedPref.getInt("miner", 0);
+        if (miner_counter > 0) {
             editor.putInt("miner", miner_counter - 1);
             editor.apply();
             helper.updatePopulation();
-        }else{
+        } else {
             log.setText("There are no Miners to remove!\n" + log.getText());
         }
     }
 
     public void shack(View v) {
         SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
-        int shacks = sharedPref.getInt("shack",0);
-        helper.buildVillage("Shack","Wood: " + (10 + shacks * 5) +"\nStone: " + (10 + shacks * 5),"wood",10 + shacks * 5,"stone",10 + shacks * 5,"shack",this);
+        int shacks = sharedPref.getInt("shack", 0);
+        helper.buildVillage("Shack", "Wood: " + (10 + shacks * 5) + "\nStone: " + (10 + shacks * 5), "wood", 10 + shacks * 5, "stone", 10 + shacks * 5, "shack", this);
     }
+
     public void house(View v) {
         SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
-        int houses = sharedPref.getInt("house",0);
-        helper.buildVillage("House","Wood: " + (25 + houses * 10) +"\nStone: " + (25 + houses * 10),"wood",25 + houses * 10,"stone",25 + houses * 10,"house",this);
+        int houses = sharedPref.getInt("house", 0);
+        helper.buildVillage("House", "Wood: " + (25 + houses * 10) + "\nStone: " + (25 + houses * 10), "wood", 25 + houses * 10, "stone", 25 + houses * 10, "house", this);
     }
 
     public void runTimer() {
         counterHandler.postDelayed(TextViewChanger, 5000);
     }
-
-    private Runnable TextViewChanger = new Runnable() {
-        public void run() {
-            helper.updateText();
-            runTimer();
-        }
-    };
 
 }
 

@@ -12,8 +12,7 @@
         android:background="@drawable/button_shape"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:onClick="Stab"/>
+        android:layout_alignParentStart="true"/>
     <TextView
         android:layout_width="135dp"
         android:layout_height="75dp"
@@ -32,7 +31,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:onClick="Swing"/>
+        android:onClick="swing"/>
     <TextView
         android:layout_width="135dp"
         android:layout_height="75dp"
@@ -48,15 +47,13 @@
         android:background="@drawable/button_shape"
         android:id="@+id/strong"
         android:layout_above="@id/swing"
-        android:layout_margin="10dp"
-        android:onClick="Strong"/>
+        android:layout_margin="10dp"/>
     <Button
         android:layout_width="150dp"
         android:layout_height="75dp"
         android:text="Eat"
         android:background="@drawable/button_shape"
         android:id="@+id/eat"
-        android:onClick="eat"
         android:layout_alignBottom="@+id/strong_bar"
         android:layout_alignLeft="@+id/swing"
         android:layout_alignStart="@+id/swing" />
@@ -85,12 +82,13 @@
 
     <ProgressBar
         android:id="@+id/enemy_health_bar"
-        style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="145dp"
+        style="?android:attr/progressBarStyleHorizontal"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/enemy"
         android:layout_alignLeft="@+id/quest_storage"
-        android:layout_alignStart="@+id/quest_storage" />
+        android:layout_alignStart="@+id/quest_storage"
+        android:indeterminate="false" />
 
     <ProgressBar
         android:id="@+id/player_health_bar"
@@ -132,5 +130,39 @@
         android:layout_alignBottom="@+id/eat"
         android:layout_alignRight="@+id/eat"
         android:layout_alignEnd="@+id/eat" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/enemyname"
+        android:layout_above="@+id/enemy_health_bar"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="10dp"
+        android:layout_alignLeft="@+id/enemy_health_bar"
+        android:layout_alignStart="@+id/enemy_health_bar" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:id="@+id/enemyhealthtext"
+        android:layout_below="@+id/enemyname"
+        android:layout_alignRight="@+id/quest_storage"
+        android:layout_alignEnd="@+id/quest_storage"
+        android:layout_marginRight="25dp"
+        android:layout_marginEnd="25dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:id="@+id/playerhealthtext"
+        android:layout_alignBottom="@+id/player_health_bar"
+        android:layout_alignLeft="@+id/strong_bar"
+        android:layout_alignStart="@+id/strong_bar"
+        android:layout_marginLeft="24dp"
+        android:layout_marginStart="24dp" />
 
 </RelativeLayout>

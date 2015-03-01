@@ -3,70 +3,48 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-
-    <TextView
-        android:id="@+id/quest_text"
-        android:layout_width="50dp"
-        android:layout_height="25dp"
-        android:layout_alignLeft="@+id/forest_temple"
-        android:layout_alignRight="@+id/forest_temple"
-        android:layout_alignEnd="@+id/forest_temple"
+    <LinearLayout
+        android:layout_above="@+id/log"
+        android:layout_width="fill_parent"
+        android:id="@+id/Linear"
+        android:layout_height="fill_parent"
+        android:layout_marginLeft="20dp"
         android:layout_marginTop="20dp"
-        android:textStyle="bold"
-        android:text="Quests:"
-        android:layout_alignParentTop="true" />
+        android:layout_marginBottom="20dp"
+        android:layout_toLeftOf="@+id/storage"
+        android:layout_toStartOf="@+id/storage">
+        <Button
+            android:text="Forest Temple"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_shape"
+            android:id="@+id/ft"/>
 
-    <Button
-        android:id="@+id/forest_temple"
-        style="@drawable/button_shape"
-        android:layout_width="200dp"
-        android:layout_height="50dp"
-        android:layout_weight="1"
-        android:text="Forest Temple"
-        android:layout_below="@+id/quest_text"
-        android:onClick="buttonForestTemple"
-        android:background="@drawable/button_shape"/>
-
-
-
-
-
-
-
-
-
-
+        </LinearLayout>
 
 
     <TextView
         android:id="@+id/log"
         android:layout_width="150dp"
         android:layout_height="100dp"
-        android:fontFamily="sans-serif-bold"
+        android:textStyle="bold"
+        android:editable="true"
+        android:layout_marginLeft="25dp"
         android:layout_alignParentBottom="true"
-        android:layout_alignLeft="@+id/stone"
-        android:layout_alignStart="@+id/stone"
-        />
+        android:layout_alignTop="@+id/storage" />
 
     <TextView
         android:id="@+id/storage"
-        android:layout_width="150dp"
-        android:layout_height="200dp"
+        android:layout_width="250dp"
+        android:layout_height="150dp"
         android:textStyle="bold"
-        android:layout_toEndOf="@+id/log"
-        android:layout_alignBottom="@+id/log"
-        android:layout_toRightOf="@+id/log" />
+        android:editable="true"
+        android:layout_marginBottom="5dp"
+        android:layout_marginRight="25dp"
+        android:background="@drawable/button_shape"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/log"
+        android:layout_toEndOf="@+id/log" />
 
-    <TextView
-        android:id="@+id/percent_forest_temple"
-        android:layout_width="100dp"
-        android:layout_height="50dp"
-        android:textStyle="bold"
-        android:layout_alignBottom="@+id/forest_temple"
-        android:layout_toRightOf="@+id/quest_text"
-        android:layout_toEndOf="@+id/quest_text"
-        android:layout_alignRight="@+id/storage"
-        android:layout_alignEnd="@+id/storage"
-        android:layout_below="@+id/quest_text" />
 
 </RelativeLayout>

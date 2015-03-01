@@ -25,6 +25,13 @@ public class Food_Water extends ActivityGroup {
     Helper helper = new Helper(this);
     TextView log;
     private android.os.Handler counterHandler = new android.os.Handler();
+    private Runnable TextViewChanger = new Runnable() {
+        public void run() {
+            helper.updateText();
+            runTimer();
+        }
+    };
+
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
@@ -60,13 +67,13 @@ public class Food_Water extends ActivityGroup {
                     Intent openWepaons_Armor = new Intent(Food_Water.this, Weapons_Armor.class);
                     openWepaons_Armor.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(openWepaons_Armor);
-                    overridePendingTransition(0,0);
+                    overridePendingTransition(0, 0);
                 }
                 if (items[position].equals("Tools")) {
                     Intent openTools = new Intent(Food_Water.this, Tools.class);
                     openTools.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(openTools);
-                    overridePendingTransition(0,0);
+                    overridePendingTransition(0, 0);
                 }
                 Log.d("NavigationItemSelected", items[position]);
                 return true;
@@ -131,23 +138,16 @@ public class Food_Water extends ActivityGroup {
     }
 
     public void buttonCookFood(View v) {
-        helper.fandW("raw_food", 1, "cooked_food", 1);
+        helper.fandW2("raw_food", 1, "cooked_food", 1);
     }
 
     public void buttonLeafCanteen(View v) {
-        helper.build("Leaf Canteen", "Leaves: 10", "leaves", 10, "leaf_canteen", this,"Food_Water");
+        helper.build("Leaf Canteen", "Leaves: 10", "leaves", 10, "leaf_canteen", this, "Food_Water");
     }
+
     public void runTimer() {
         counterHandler.postDelayed(TextViewChanger, 5000);
     }
-
-    private Runnable TextViewChanger = new Runnable() {
-        public void run() {
-            helper.updateText();
-            runTimer();
-        }
-    };
-
 
 
 }

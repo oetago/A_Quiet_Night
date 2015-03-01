@@ -19,6 +19,12 @@ import com.milesstudios.aquietnight.util.Helper;
 public class Buildings extends ActivityGroup {
     Helper helper = new Helper(this);
     private Handler counterHandler = new Handler();
+    private Runnable TextViewChanger = new Runnable() {
+        public void run() {
+            helper.updateText();
+            runTimer();
+        }
+    };
 
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -53,6 +59,7 @@ public class Buildings extends ActivityGroup {
         TextView log = (TextView) findViewById(R.id.log);
         TextView storage = (TextView) findViewById(R.id.storage);
         log.setTextSize(11);
+
         storage.setTextSize(15);
 
         final String log_text = sharedPref.getString("log_text", "");
@@ -62,7 +69,6 @@ public class Buildings extends ActivityGroup {
         runTimer();
 
     }
-
 
     @Override
     public void onBackPressed() {
@@ -86,42 +92,36 @@ public class Buildings extends ActivityGroup {
 
     //Buttons
     public void buttonFireplace(View v) {
-        helper.build("Bonfire", "Wood: 30 \nStone: 20", "wood", 30, "stone", 20, "bonfire", this,"Buildings");
+        helper.build("Bonfire", "Wood: 30 \nStone: 20", "wood", 30, "stone", 20, "bonfire", this, "Buildings");
     }
 
     public void buttonWorkshop(View v) {
-        helper.build("Workshop", "Wood: 10 \nStone: 10", "wood", 10, "stone", 10, "workshop", this,"Buildings");
+        helper.build("Workshop", "Wood: 10 \nStone: 10", "wood", 10, "stone", 10, "workshop", this, "Buildings");
     }
 
     public void buttonVillage(View v) {
-        helper.build("Village Foundation", "Stone: 100 \nLeaves: 50\nCooked Food: 15", "stone", 100, "leaves", 50,"cooked_food",15, "village", this,"Buildings");
+        helper.build("Village Foundation", "Stone: 100 \nLeaves: 50\nCooked Food: 15", "stone", 100, "leaves", 50, "cooked_food", 15, "village", this, "Buildings");
     }
 
     public void buttonRebuildMine(View v) {
-        helper.build("Rebuild Mine", "Wood: 20 \nStone: 15", "wood", 20, "stone", 15, "rebuildmine", this,"Buildings");
+        helper.build("Rebuild Mine", "Wood: 20 \nStone: 15", "wood", 20, "stone", 15, "rebuildmine", this, "Buildings");
     }
 
     public void buttonTannery(View v) {
-        helper.build("Tannery", "Wood: 45 \nStone: 20\nLeaves:20", "wood", 45, "stone", 20, "leaves", 20, "tannery", this,"Buildings");
+        helper.build("Tannery", "Wood: 45 \nStone: 20\nLeaves:20", "wood", 45, "stone", 20, "leaves", 20, "tannery", this, "Buildings");
     }
 
     public void buttonSmithery(View v) {
-        helper.build("Smithery", "Wood: 15 \nStone: 25", "wood", 15, "stone", 25, "smithery", this,"Buildings");
+        helper.build("Smithery", "Wood: 15 \nStone: 25", "wood", 15, "stone", 25, "smithery", this, "Buildings");
     }
 
     public void buttonStorageShed(View v) {
-        helper.build("Storage Shed", "Wood: 150 \nStone: 100\nLeaves: 75", "wood", 150, "stone", 100, "leaves", 75, "storage_shed", this,"Buildings");
+        helper.build("Storage Shed", "Wood: 150 \nStone: 100\nLeaves: 75", "wood", 150, "stone", 100, "leaves", 75, "storage_shed", this, "Buildings");
     }
+
     public void runTimer() {
         counterHandler.postDelayed(TextViewChanger, 5000);
     }
-
-    private Runnable TextViewChanger = new Runnable() {
-        public void run() {
-            helper.updateText();
-            runTimer();
-        }
-    };
 
 }
 

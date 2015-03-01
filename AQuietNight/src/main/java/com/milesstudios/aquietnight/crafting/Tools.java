@@ -65,12 +65,12 @@ public class Tools extends ActivityGroup {
                 if (items[position].equals("Weapons and Armor")) {
                     Intent openWeapons_Armor = new Intent(Tools.this, Weapons_Armor.class);
                     startActivity(openWeapons_Armor);
-                    overridePendingTransition(0,0);
+                    overridePendingTransition(0, 0);
                 }
                 if (items[position].equals("Food and Water")) {
                     Intent openFood_Water = new Intent(Tools.this, Food_Water.class);
                     startActivity(openFood_Water);
-                    overridePendingTransition(0,0);
+                    overridePendingTransition(0, 0);
                 }
                 Log.d("NavigationItemSelected", items[position]);
                 return true;
@@ -126,19 +126,19 @@ public class Tools extends ActivityGroup {
     }
 
     public void buttonStoneAxe(View v) {
-        helper.build("Stone Axe", "Wood: 25 \nStone: 25", "wood", 25, "stone", 25, "stone_axe", this,"Tools");
+        helper.build("Stone Axe", "Wood: 25 \nStone: 25", "wood", 25, "stone", 25, "stone_axe", this, "Tools");
     }
 
     public void buttonStonePick(View v) {
-        helper.build("Stone Pick", "Wood: 20 \nStone: 20", "wood", 20, "stone", 20, "stone_pick", this,"Tools");
+        helper.build("Stone Pick", "Wood: 20 \nStone: 20", "wood", 20, "stone", 20, "stone_pick", this, "Tools");
     }
 
     public void buttonTinPick(View v) {
-        helper.build("Tin Pick", "Wood: 35 \nTin: 10", "wood", 35, "stone", 10, "tin_pick", this,"Tools");
+        helper.build("Tin Pick", "Wood: 35 \nTin: 10", "wood", 35, "stone", 10, "tin_pick", this, "Tools");
     }
 
     public void buttonTinAxe(View v) {
-        helper.build("Tin Axe", "Wood: 25 \nTin: 5", "wood", 25, "stone", 5, "tin_axe", this,"Tools");
+        helper.build("Tin Axe", "Wood: 25 \nTin: 5", "wood", 25, "stone", 5, "tin_axe", this, "Tools");
     }
 
 }

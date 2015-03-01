@@ -48,7 +48,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".quest.Quest_Main" android:label="Quests">
+        <activity android:name=".Quest" android:label="Quests">
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
@@ -83,17 +83,12 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".quest.forest_temple.Acorn">
+        <activity android:name=".Fight">
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".quest.forest_temple.Sapling">
-            <intent-filter>
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".quest.forest_temple.Branch">
+        <activity android:name=".Ending">
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>

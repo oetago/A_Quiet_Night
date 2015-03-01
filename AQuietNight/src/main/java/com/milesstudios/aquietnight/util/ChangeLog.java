@@ -34,13 +34,15 @@ import java.io.InputStreamReader;
 
 public class ChangeLog {
 
-    private final Context context;
-    private String lastVersion, thisVersion;
-
     // this is the key for storing the version name in SharedPreferences
     private static final String VERSION_KEY = "PREFS_VERSION_KEY";
-
     private static final String NO_VERSION = "";
+    private static final String EOCL = "END_OF_CHANGE_LOG";
+    private static final String TAG = "ChangeLog";
+    private final Context context;
+    private String lastVersion, thisVersion;
+    private Listmode listMode = Listmode.NONE;
+    private StringBuffer sb = null;
 
     /**
      * Constructor
@@ -204,17 +206,6 @@ public class ChangeLog {
         return this.getLog(true);
     }
 
-    /**
-     * modes for HTML-Lists (bullet, numbered)
-     */
-    private enum Listmode {
-        NONE, ORDERED, UNORDERED,
-    }
-
-    private Listmode listMode = Listmode.NONE;
-    private StringBuffer sb = null;
-    private static final String EOCL = "END_OF_CHANGE_LOG";
-
     private String getLog(boolean full) {
         // read changelog.txt file
         sb = new StringBuffer();
@@ -308,8 +299,6 @@ public class ChangeLog {
         this.listMode = Listmode.NONE;
     }
 
-    private static final String TAG = "ChangeLog";
-
     /**
      * manually set the last version name - for testing purposes only
      *
@@ -317,5 +306,12 @@ public class ChangeLog {
      */
     public void dontuseSetLastVersion(String lastVersion) {
         this.lastVersion = lastVersion;
+    }
+
+    /**
+     * modes for HTML-Lists (bullet, numbered)
+     */
+    private enum Listmode {
+        NONE, ORDERED, UNORDERED,
     }
 }

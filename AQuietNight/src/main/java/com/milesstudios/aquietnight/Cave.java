@@ -25,15 +25,20 @@ import android.widget.TextView;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
-import com.milesstudios.aquietnight.quest.Bosses;
 import com.milesstudios.aquietnight.util.Helper;
 
 public class Cave extends Activity {
-    Button buildings, trading, crafting, quests,village;
+    Button buildings, trading, crafting, quests, village;
     TextView log, storage;
     SlidingMenu menu;
     Helper helper = new Helper(this);
     private android.os.Handler counterHandler = new android.os.Handler();
+    private Runnable TextViewChanger = new Runnable() {
+        public void run() {
+            helper.updateText();
+            runTimer();
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -176,7 +181,7 @@ public class Cave extends Activity {
         quests.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent openQuest = new Intent(Cave.this, Bosses.class);
+                Intent openQuest = new Intent(Cave.this, Quest.class);
                 openQuest.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(openQuest);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
@@ -184,7 +189,8 @@ public class Cave extends Activity {
             }
 
         });
-
+        quests.setEnabled(true);
+        quests.setVisibility(View.VISIBLE);
         village.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -199,7 +205,6 @@ public class Cave extends Activity {
         helper.updateText();
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -207,6 +212,8 @@ public class Cave extends Activity {
 
         return super.onCreateOptionsMenu(menu);
     }
+
+    // Delete Shared Prefernces
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -228,8 +235,6 @@ public class Cave extends Activity {
                 return super.onOptionsItemSelected(item);
         }
     }
-
-    // Delete Shared Prefernces
 
     public void Clear_Data() {
         SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
@@ -260,7 +265,6 @@ public class Cave extends Activity {
 
     }
 
-
     public void sendEmail() {
         Intent intent = new Intent(Intent.ACTION_SENDTO); // it's not ACTION_SEND
         intent.setType("text/plain");
@@ -270,15 +274,9 @@ public class Cave extends Activity {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); // this will make such that when user returns to your app, your app is displayed, instead of the email app.
         startActivity(intent);
     }
+
     public void runTimer() {
         counterHandler.postDelayed(TextViewChanger, 5000);
     }
-
-    private Runnable TextViewChanger = new Runnable() {
-        public void run() {
-            helper.updateText();
-            runTimer();
-        }
-    };
 
 }

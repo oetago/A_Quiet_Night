@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.milesstudios.aquietnight.Cave;
 import com.milesstudios.aquietnight.R;
+import com.milesstudios.aquietnight.reference.SharedPref;
 import com.milesstudios.aquietnight.util.Helper;
 
 /**
@@ -28,6 +29,12 @@ public class Weapons_Armor extends ActivityGroup {
     TextView log, storage;
     Helper helper = new Helper(this);
     private Handler counterHandler = new Handler();
+    private Runnable TextViewChanger = new Runnable() {
+        public void run() {
+            helper.updateText();
+            runTimer();
+        }
+    };
 
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -69,13 +76,13 @@ public class Weapons_Armor extends ActivityGroup {
                     Intent openFood_Water = new Intent(Weapons_Armor.this, Food_Water.class);
                     openFood_Water.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(openFood_Water);
-                    overridePendingTransition(0,0);
+                    overridePendingTransition(0, 0);
                 }
                 if (items[position].equals("Tools")) {
                     Intent openTools = new Intent(Weapons_Armor.this, Tools.class);
                     openTools.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(openTools);
-                    overridePendingTransition(0,0);
+                    overridePendingTransition(0, 0);
                 }
                 Log.d("NavigationItemSelected", items[position]);
                 return true;
@@ -136,22 +143,16 @@ public class Weapons_Armor extends ActivityGroup {
     }
 
     public void buttonStoneSword(View v) {
-        helper.build("Stone Sword", "Wood: 10 \nStone: 20", "wood", 10, "stone", 20, "stone_sword", this,"Weapons_Armor");
+        helper.build("Stone Sword", "Wood: 10 \nStone: 20", "wood", 10, "stone", 20, SharedPref.STONE_SWORD, this, "Weapons_Armor");
     }
 
     public void buttonLeafArmor(View v) {
-        helper.build("Leaf Armor", "Leaves: 15", "leaves", 15, "leaf_armor", this,"Weapons_Armor");
+        helper.build("Leaf Armor", "Leaves: 15", "leaves", 15, "leaf_armor", this, "Weapons_Armor");
     }
+
     public void runTimer() {
         counterHandler.postDelayed(TextViewChanger, 5000);
     }
-
-    private Runnable TextViewChanger = new Runnable() {
-        public void run() {
-            helper.updateText();
-            runTimer();
-        }
-    };
 }
 
 

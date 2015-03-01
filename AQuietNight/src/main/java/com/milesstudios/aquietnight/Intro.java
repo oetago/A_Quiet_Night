@@ -20,13 +20,13 @@ import android.widget.ViewSwitcher;
  * Created by Ryan on 10/24/2014.
  */
 public class Intro extends Activity {
-    private TextSwitcher intro_text;
     Button buttonNext;
     String textToShow[] = {"You stood up against Valeon’s evil king. Rose up against a tyrannicl regime.", "But you were exiled. You were disgraced. Defeated.", "Forced to wander the wilderness. With only a cave as your home.",
             "But you will take back what is right.", "You will fix what is wrong. And you will take the crown.", "But until then, here you are. You slowly come to your senses.", "The early light blinds your eyes. "};
     int messageCount = textToShow.length;
     // to keep current Index of text
     int currentIndex = 0;
+    private TextSwitcher intro_text;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,10 +62,10 @@ public class Intro extends Activity {
                 if (currentIndex == messageCount) {
                     intro_text.clearAnimation();
                     SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
-                    if(sharedPref.getInt("start_counter", 0) == 0) {
+                    if (sharedPref.getInt("start_counter", 0) == 0) {
                         Intent openMain_Screen = new Intent(Intro.this, Forest.class);
                         startActivity(openMain_Screen);
-                    }else{
+                    } else {
                         Intent openMain_Screen = new Intent(Intro.this, Cave.class);
                         startActivity(openMain_Screen);
                     }
