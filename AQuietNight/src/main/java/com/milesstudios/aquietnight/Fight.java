@@ -22,9 +22,9 @@ import java.util.Random;
  */
 public class Fight extends Activity {
     ProgressBar playerh, enemyh, strongb, swingb, eatb, stabb;
-    TextView player, enemy, log, enemy_name,enemy_progress_text,player_progress_text,storage;
+    TextView player, enemy, log, enemy_name, enemy_progress_text, player_progress_text, storage;
     Button swing, stab, eat, strong;
-    int player_health, enemy_health, sword, boiled_water, cooked_food, player_health_max,q=0;
+    int player_health, enemy_health, sword, boiled_water, cooked_food, player_health_max, q = 0;
     SharedPreferences sharedPref;
     CountDownTimer enemy_attack_timer;
 
@@ -51,7 +51,7 @@ public class Fight extends Activity {
         enemy_name = (TextView) findViewById(R.id.enemyname);
         enemy_progress_text = (TextView) findViewById(R.id.enemyhealthtext);
         player_progress_text = (TextView) findViewById(R.id.playerhealthtext);
-        player_health = sharedPref.getInt(SharedPref.PLAYER_HEALTH,0);
+        player_health = sharedPref.getInt(SharedPref.PLAYER_HEALTH, 0);
         storage = (TextView) findViewById(R.id.quest_storage);
 
         //Setup
@@ -77,11 +77,11 @@ public class Fight extends Activity {
         enemy_progress_text.setText(enemy_health + "/" + enemy_health);
         player_progress_text.setText(player_health + "/" + Monster.getPlayerMax());
         checkButtons();
-            enemyAttackNormal();
+        enemyAttackNormal();
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putBoolean("attack", true);
         editor.apply();
-        //CRashes
+        //Crashes
         stab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -109,7 +109,7 @@ public class Fight extends Activity {
 
 
     public void enemyAttackNormal() {
-        if(sharedPref.getBoolean("attack",false)) {
+        if (sharedPref.getBoolean("attack", false)) {
             Random rng = new Random();
             int attack = rng.nextInt(1) + 1; //Chance to attack every 5 seconds
             if (attack == 1) { //Add multiple attacks
@@ -122,7 +122,7 @@ public class Fight extends Activity {
                 playerDead();
                 q++;
                 log.setText("You took " + Monster.getDamage() + " dmg! \n" + log.getText());
-                 enemy_attack_timer = new CountDownTimer(3000, 20) {
+                enemy_attack_timer = new CountDownTimer(3000, 20) {
                     @Override
                     public void onTick(long millisUntilFinishedl) {
                     }
@@ -134,7 +134,7 @@ public class Fight extends Activity {
                 };
                 enemy_attack_timer.start();
             } else {
-                enemy_attack_timer  = new CountDownTimer(2000, 20) {
+                enemy_attack_timer = new CountDownTimer(2000, 20) {
                     @Override
                     public void onTick(long millisUntilFinishedl) {
                     }
@@ -149,18 +149,18 @@ public class Fight extends Activity {
         }
     }
 
-    public void playerDead(){
+    public void playerDead() {
         if (player_health <= 0) {
             Log.d("Fight", "Died:" + player_health);
             SharedPreferences.Editor editor = sharedPref.edit();
             editor.putInt(SharedPref.PLAYER_HEALTH, player_health_max);
-            editor.putBoolean("attack",false);
+            editor.putBoolean("attack", false);
             editor.putBoolean(SharedPref.FOREST_TEMPLE, false);
             editor.apply();
             Intent youlose = new Intent(Fight.this, Ending.class);
             youlose.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(youlose);
-            if(q>0) {
+            if (q > 0) {
                 enemy_attack_timer.cancel();
             }
             finish();
@@ -178,7 +178,7 @@ public class Fight extends Activity {
     public void checkButtons() {
         if (cooked_food <= 0) {
             eat.setEnabled(false);
-        }else{
+        } else {
             eat.setEnabled(true);
         }
         if (boiled_water <= 0) {
@@ -186,7 +186,7 @@ public class Fight extends Activity {
             strong.setEnabled(false);
         } else if (boiled_water == 1) {
             strong.setEnabled(false);
-        }else{
+        } else {
             stab.setEnabled(true);
             strong.setEnabled(true);
         }
@@ -354,10 +354,10 @@ public class Fight extends Activity {
             SharedPreferences.Editor editor = sharedPref.edit();
             editor.putInt(SharedPref.BOILED_WATER, boiled_water);
             editor.putInt(SharedPref.COOKED_FOOD, cooked_food);
-            editor.putInt(SharedPref.PLAYER_HEALTH,player_health);
-            editor.putBoolean("attack",true);
+            editor.putInt(SharedPref.PLAYER_HEALTH, player_health);
+            editor.putBoolean("attack", true);
             editor.apply();
-            if(q>0) {
+            if (q > 0) {
                 enemy_attack_timer.cancel();
             }
             Monster.addEncounter();
@@ -413,5 +413,10 @@ public class Fight extends Activity {
         editor.apply();
         finish();
         super.onPause();
+    }
+
+    @Override
+    public void onBackPressed() {
+
     }
 }

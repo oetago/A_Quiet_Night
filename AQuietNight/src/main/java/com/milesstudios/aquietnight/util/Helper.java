@@ -326,24 +326,25 @@ public class Helper extends Activity {
         Random rng = new Random();
         final SharedPreferences.Editor editor = sharedPref.edit();
         int counter = sharedPref.getInt(item, 0);
-        if (sharedPref.getBoolean("storage_shed", false) && counter <= 25) {
+        if (sharedPref.getBoolean("storage_shed", false) && counter <= 24) {
             counter += amount;
-        } else if (counter <= 15) {
+        } else if (counter <= 14) {
             counter += amount;
         }
         editor.putInt(item, counter);
         editor.apply();
         updateText();
     }
+
     public void collectF(String title, String item, int amount) {
         final SharedPreferences sharedPref = context.getSharedPreferences("save-data", Context.MODE_PRIVATE);
         final TextView log = (TextView) ((Activity) context).findViewById(R.id.log);
         Random rng = new Random();
         final SharedPreferences.Editor editor = sharedPref.edit();
         int counter = sharedPref.getInt(item, 0);
-        if (sharedPref.getBoolean("storage_shed", false) && counter <= 15) {
+        if (sharedPref.getBoolean("storage_shed", false) && counter <= 14) {
             counter += amount;
-        } else if (counter <= 10) {
+        } else if (counter <= 9) {
             counter += amount;
         }
         editor.putInt(item, counter);
@@ -367,7 +368,7 @@ public class Helper extends Activity {
             counter -= amount;
             wood -= need;
         } else {
-            log.setText("You don't have enough resources! \n" + log.getText());
+            log.setText("You don't have enough resources, or you have no space! \n" + log.getText());
         }
         editor.putInt(item, counter);
         editor.putInt(output, output_test);
@@ -392,7 +393,7 @@ public class Helper extends Activity {
             counter -= amount;
             wood -= need;
         } else {
-            log.setText("You don't have enough resources! \n" + log.getText());
+            log.setText("You don't have enough resources, or you have no space! \n" + log.getText());
         }
         editor.putInt(item, counter);
         editor.putInt(output, output_test);
@@ -428,16 +429,18 @@ public class Helper extends Activity {
         int bismuth = sharedPref.getInt("bismuth", 0);
         int amethyst = sharedPref.getInt("amethyst", 0);
         int nickel = sharedPref.getInt("nickel", 0);
+        double lumberjacks = sharedPref.getInt("lumber_jack", 0) * 0.2;
+        double miners = sharedPref.getInt("miner", 0) * 0.2;
 
         storage.setText(" Storage:");
         if (wood_counter >= 1) {
-            storage.append("\n Wood: " + wood_counter);
+            storage.append("\n Wood: " + wood_counter + "   + " + (int) lumberjacks + " - 5s");
         }
         if (leaves_counter >= 1) {
             storage.append("\n Leaves: " + leaves_counter);
         }
         if (stone_counter >= 1) {
-            storage.append("\n Stone: " + stone_counter);
+            storage.append("\n Stone: " + stone_counter + "   + " + (int) miners + " - 5s");
         }
 
         if (dirty_water_counter >= 1) {

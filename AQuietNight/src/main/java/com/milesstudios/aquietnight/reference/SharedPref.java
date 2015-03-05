@@ -16,11 +16,12 @@ public class SharedPref {
     public static final String TIN = "tin";
     public static final String BISMUTH = "bismuth";
     public static final String AMETHYST = "amethyst";
-    public static final String NICKEL =  "nickel";
-    public static final String PLAYER_HEALTH =  "player_health";
-    public static final String STONE_SWORD =  "stone_sword";
+    public static final String NICKEL = "nickel";
+    public static final String PLAYER_HEALTH = "player_health";
+    public static final String STONE_SWORD = "stone_sword";
     public static final String TIN_SWORD = "tin_sword";
     public static final String FOREST_TEMPLE = "forest_temple";
     public static final String TIN_ARMOR = "tin_armor";
     public static final String LEAF_ARMOR = "leaf_armor";
+    public static final String VILLAGE = "village";
 }

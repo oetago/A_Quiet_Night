@@ -11,6 +11,7 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 
+import com.milesstudios.aquietnight.reference.SharedPref;
 import com.milesstudios.aquietnight.util.Helper;
 
 public class splash extends ActionBarActivity {
@@ -27,7 +28,9 @@ public class splash extends ActionBarActivity {
         Helper helper = new Helper(this);
         SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
-        helper.updateWorkers();
+        if (sharedPref.getBoolean(SharedPref.VILLAGE, false)) {
+            helper.updateWorkers();
+        }
         Thread timer = new Thread() {
             public void run() {
                 try {

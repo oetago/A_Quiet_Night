@@ -9,8 +9,10 @@ import android.os.Handler;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.TextView;
 
+import com.milesstudios.aquietnight.reference.SharedPref;
 import com.milesstudios.aquietnight.util.Helper;
 
 /**
@@ -58,6 +60,7 @@ public class Buildings extends ActivityGroup {
         setContentView(R.layout.buildings);
         TextView log = (TextView) findViewById(R.id.log);
         TextView storage = (TextView) findViewById(R.id.storage);
+        Button tannery = (Button) findViewById(R.id.tannery);
         log.setTextSize(11);
 
         storage.setTextSize(15);
@@ -67,6 +70,7 @@ public class Buildings extends ActivityGroup {
         helper.updateButtons("Buildings");
         helper.updateText();
         runTimer();
+        tannery.setVisibility(View.GONE);
 
     }
 
@@ -100,7 +104,8 @@ public class Buildings extends ActivityGroup {
     }
 
     public void buttonVillage(View v) {
-        helper.build("Village Foundation", "Stone: 100 \nLeaves: 50\nCooked Food: 15", "stone", 100, "leaves", 50, "cooked_food", 15, "village", this, "Buildings");
+        helper.build("Village Foundation", "Stone: 100 \nLeaves: 50\nCooked Food: 10", "stone", 100, "leaves", 50, "cooked_food", 10, SharedPref.VILLAGE, this, "Buildings");
+        helper.updateWorkers();
     }
 
     public void buttonRebuildMine(View v) {

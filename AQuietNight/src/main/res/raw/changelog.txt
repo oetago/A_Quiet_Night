@@ -19,36 +19,10 @@
     </style>
   </head>
   <body>
-  $ 2
-    % Version A 0.03
-    _ 2014-11-24
-    * Quest Update
-  	    * Quests have new graphics
-  	    * Added Death
-  	    * Added Wait time
-  	    * Cleaned up small bugs
-  	    *
 $ 1
-  % Version A 0.02 
-  _ 2014-11-11
-    * New AlertDialogs
-    * Intro story (Ty Tose!)
-	* Optimzed Buttons in Code
-	* More Quests
-	* A Change Log!
-	* New animations
-	* More Quests
-	* Coins
-	* Quests to start out
-	* New Quests Xml
-	* New Sword/Armor
-	* More Items and Buildings
-	* Added feedback
-	* Better Distr.
-$ 0.01
-  % Version A 0.01
-  _ 2014-10-0
-    * Previous App
+  % Version B 0.11
+  _ 2015-3-1
+    * 1st Closed Beta of the App
 
 $ END_OF_CHANGE_LOG
   </body>

@@ -18,12 +18,10 @@ public class Ending extends Activity {
         setContentView(R.layout.blank);
         TextView ham = (TextView) findViewById(R.id.ending);
         SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
-        if(sharedPref.getBoolean(SharedPref.FOREST_TEMPLE,false)){
-            ham.setText("You WONN111!11DEAAWDWA");
-        }
-        else{
+        if (sharedPref.getBoolean(SharedPref.FOREST_TEMPLE, false)) {
+            ham.setText("You won! Thanks for trying the app this is only beta 0.1, and is just the base of the app!");
+        } else {
             ham.setText("You lose LOL");
         }
-
     }
 }

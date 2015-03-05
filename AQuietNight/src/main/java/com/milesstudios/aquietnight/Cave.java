@@ -98,6 +98,7 @@ public class Cave extends Activity {
             anim.reset();
             village.clearAnimation();
             village.startAnimation(anim);
+
         }
         int quests_int = sharedPref.getInt("quests_int", 0);
         if (sharedPref.getInt("forest_text", 0) == 3) {
@@ -184,13 +185,12 @@ public class Cave extends Activity {
                 Intent openQuest = new Intent(Cave.this, Quest.class);
                 openQuest.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(openQuest);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
 
             }
 
         });
-        quests.setEnabled(true);
-        quests.setVisibility(View.VISIBLE);
+
         village.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -277,6 +277,11 @@ public class Cave extends Activity {
 
     public void runTimer() {
         counterHandler.postDelayed(TextViewChanger, 5000);
+    }
+
+    @Override
+    public void onBackPressed() {
+
     }
 
 }
