@@ -25,5 +25,6 @@ before_install:
 before_script:
     # Make sure the emulator has started before running tests
     - ./wait_for_emulator
+    - chmod +x gradlew
 
 script: mvn install -Pintegration-tests -Dandroid.device=test
