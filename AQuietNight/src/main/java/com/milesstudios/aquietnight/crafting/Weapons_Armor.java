@@ -103,8 +103,6 @@ public class Weapons_Armor extends ActivityGroup {
         storage.setTextSize(15);
         final String log_text = sharedPref.getString("log_text", "");
         log.setText(log_text);
-        boolean leaf_armor_b = sharedPref.getBoolean("leaf_armor", false);
-        boolean stone_sword_b = sharedPref.getBoolean("stone_sword", false);
         saveChoice();
         helper.updateText();
         helper.updateButtons("Weapons_Armor");
@@ -143,11 +141,15 @@ public class Weapons_Armor extends ActivityGroup {
     }
 
     public void buttonStoneSword(View v) {
-        helper.build("Stone Sword", "Wood: 10 \nStone: 20", "wood", 10, "stone", 20, SharedPref.STONE_SWORD, this, "Weapons_Armor");
+        helper.build("Shortsword", "Wood: 30 \nStone: 40", "wood", 30, "stone", 40, SharedPref.STONE_SWORD, this, "Weapons_Armor");
     }
 
     public void buttonLeafArmor(View v) {
-        helper.build("Leaf Armor", "Leaves: 15", "leaves", 15, "leaf_armor", this, "Weapons_Armor");
+        helper.build("Leaf Tunic", "Leaves: 35", "leaves", 35, SharedPref.LEAF_ARMOR, this, "Weapons_Armor");
+    }
+
+    public void buttonLeatherTunic(View v) {
+        helper.build("Leather Tunic", "Hide: 45", SharedPref.HIDE, 45, SharedPref.LEATHER_TUNIC, this, "Weapons_Armor");
     }
 
     public void runTimer() {

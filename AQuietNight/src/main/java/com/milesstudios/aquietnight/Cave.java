@@ -42,7 +42,6 @@ public class Cave extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cave);
         final SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
@@ -61,7 +60,7 @@ public class Cave extends Activity {
             editor.putInt("tradepostcounter", trading_post_counter);
             editor.apply();
         }
-        int start_counter = sharedPref.getInt("start_counter", 0);
+
         final Animation anim = AnimationUtils.loadAnimation(this, R.anim.log);
 
         final TextView cave_tab = (TextView) findViewById(R.id.cave_tab);
@@ -72,7 +71,7 @@ public class Cave extends Activity {
         menu.setShadowWidth(5);
         menu.setFadeDegree(0.0f);
         menu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
-        menu.setBehindWidth(900);
+        menu.setBehindWidth(600);
         menu.setMenu(R.layout.menu);
         cave_tab.setPaintFlags(cave_tab.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         cave_tab.setTextSize(20);
@@ -81,7 +80,7 @@ public class Cave extends Activity {
         cave_tab.setTypeface(tf);
         forest_tab.setTypeface(tf);
         storage.setMovementMethod(new ScrollingMovementMethod());
-        log.setTextSize(14);
+        log.setTextSize(11);
         storage.setTextSize(15);
         editor.putBoolean("intro", false);
         editor.apply();
@@ -178,7 +177,6 @@ public class Cave extends Activity {
 
         });
 
-
         quests.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -225,7 +223,7 @@ public class Cave extends Activity {
                 return true;
             case R.id.action_data:
                 // help action
-                AllData();
+                ///AllData();
                 return true;
             case R.id.action_share:
                 sendEmail();
@@ -246,24 +244,6 @@ public class Cave extends Activity {
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
     }
 
-    public void AllData() {
-        SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putInt("workshop", 1);
-        editor.putInt("furnace", 1);
-        editor.putInt("quest_map", 1);
-        editor.putInt("wood", 999999);
-        editor.putInt("stone", 999999);
-        editor.putInt("leaves", 999999);
-        editor.putInt("boiled_water", 99999);
-        editor.putInt("cooked_food", 99999);
-        editor.putInt("dirty_water", 999999);
-        editor.putInt("food", 99999);
-        editor.putInt("trade_post", 1);
-        editor.putInt("apples", 99999);
-        editor.apply();
-
-    }
 
     public void sendEmail() {
         Intent intent = new Intent(Intent.ACTION_SENDTO); // it's not ACTION_SEND

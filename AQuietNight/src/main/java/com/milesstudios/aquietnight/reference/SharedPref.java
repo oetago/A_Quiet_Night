@@ -24,4 +24,10 @@ public class SharedPref {
     public static final String TIN_ARMOR = "tin_armor";
     public static final String LEAF_ARMOR = "leaf_armor";
     public static final String VILLAGE = "village";
+    public static final String LEAD = "lead";
+    public static final String TANNERY = "tannery";
+    public static final String SMELTERY = "smeltery";
+    public static final String HIDE = "hide";
+    public static final String BONES = "bones";
+    public static final String LEATHER_TUNIC = "leather_tunic";
 }

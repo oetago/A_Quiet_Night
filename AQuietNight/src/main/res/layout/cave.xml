@@ -83,7 +83,6 @@
         android:id="@+id/log"
         android:layout_width="150dp"
         android:layout_height="100dp"
-        android:textStyle="bold"
         android:layout_marginLeft="25dp"
         android:editable="true"
         android:layout_above="@+id/ad"

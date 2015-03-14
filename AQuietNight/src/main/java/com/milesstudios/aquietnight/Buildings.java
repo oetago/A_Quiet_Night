@@ -96,28 +96,25 @@ public class Buildings extends ActivityGroup {
 
     //Buttons
     public void buttonFireplace(View v) {
-        helper.build("Bonfire", "Wood: 30 \nStone: 20", "wood", 30, "stone", 20, "bonfire", this, "Buildings");
+        helper.build("Bonfire", "Wood: 50 \nStone: 45", "wood", 50, "stone", 45, "bonfire", this, "Buildings");
     }
 
     public void buttonWorkshop(View v) {
-        helper.build("Workshop", "Wood: 10 \nStone: 10", "wood", 10, "stone", 10, "workshop", this, "Buildings");
+        helper.build("Workshop", "Wood: 30\nStone: 30", "wood", 30, "stone", 30, "workshop", this, "Buildings");
     }
 
     public void buttonVillage(View v) {
-        helper.build("Village Foundation", "Stone: 100 \nLeaves: 50\nCooked Food: 10", "stone", 100, "leaves", 50, "cooked_food", 10, SharedPref.VILLAGE, this, "Buildings");
+        helper.build("Village Foundation", "Stone: 135 \nLeaves: 90\nCooked Food: 10", SharedPref.STONE, 135, SharedPref.LEAVES, 90, "cooked_food", 10, SharedPref.VILLAGE, this, "Buildings");
         helper.updateWorkers();
     }
 
-    public void buttonRebuildMine(View v) {
-        helper.build("Rebuild Mine", "Wood: 20 \nStone: 15", "wood", 20, "stone", 15, "rebuildmine", this, "Buildings");
-    }
 
     public void buttonTannery(View v) {
-        helper.build("Tannery", "Wood: 45 \nStone: 20\nLeaves:20", "wood", 45, "stone", 20, "leaves", 20, "tannery", this, "Buildings");
+        helper.build("Tannery", "Wood: 75 \nStone: 45\nLead:5", SharedPref.WOOD, 75, SharedPref.STONE, 45, SharedPref.LEAD, 5, SharedPref.TANNERY, this, "Buildings");
     }
 
-    public void buttonSmithery(View v) {
-        helper.build("Smithery", "Wood: 15 \nStone: 25", "wood", 15, "stone", 25, "smithery", this, "Buildings");
+    public void buttonSmeltery(View v) {
+        helper.build("Smeltery", "Stone: 85\nLead: 10", SharedPref.STONE, 85, SharedPref.LEAD, 10, SharedPref.SMELTERY, this, "Buildings");
     }
 
     public void buttonStorageShed(View v) {

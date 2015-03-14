@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.milesstudios.aquietnight.R;
+import com.milesstudios.aquietnight.reference.SharedPref;
 
 import java.util.Random;
 
@@ -423,14 +424,14 @@ public class Helper extends Activity {
         int cooked_food = sharedPref.getInt("cooked_food", 0);
         int boiled_water_counter = sharedPref.getInt("boiled_water", 0);
         int apple_counter = sharedPref.getInt("apple", 0);
-        int coin_counter = sharedPref.getInt("coins", 0);
-        int coal_counter = sharedPref.getInt("coal", 0);
         int tin = sharedPref.getInt("tin", 0);
         int bismuth = sharedPref.getInt("bismuth", 0);
         int amethyst = sharedPref.getInt("amethyst", 0);
         int nickel = sharedPref.getInt("nickel", 0);
         double lumberjacks = sharedPref.getInt("lumber_jack", 0) * 0.2;
         double miners = sharedPref.getInt("miner", 0) * 0.2;
+        int hide = sharedPref.getInt(SharedPref.HIDE, 0);
+        int bones = sharedPref.getInt(SharedPref.BONES, 0);
 
         storage.setText(" Storage:");
         if (wood_counter >= 1) {
@@ -473,8 +474,11 @@ public class Helper extends Activity {
         if (amethyst >= 1) {
             storage.append("\n Amethyst: " + amethyst);
         }
-        if (coin_counter >= 1) {
-            storage.append("\n Coins: " + coin_counter);
+        if (hide >= 1) {
+            storage.append("\n Hide: " + hide);
+        }
+        if (bones >= 1) {
+            storage.append("\n Bones: " + bones);
         }
 
 
@@ -497,10 +501,10 @@ public class Helper extends Activity {
         if (sharedPref.getBoolean("stone_axe", false)) {
             stoneaxe.setVisibility(View.GONE);
         }
-        if (sharedPref.getBoolean("tin_pick", false)) {
+        if (sharedPref.getBoolean("tin_pick", false) || !sharedPref.getBoolean(SharedPref.SMELTERY, false)) {
             tinpick.setVisibility(View.GONE);
         }
-        if (sharedPref.getBoolean("tin_axe", false)) {
+        if (sharedPref.getBoolean("tin_axe", false) || !sharedPref.getBoolean(SharedPref.SMELTERY, false)) {
             tinaxe.setVisibility(View.GONE);
         }
     }
@@ -558,13 +562,16 @@ public class Helper extends Activity {
 
     public void weaponsArmor() {
         final SharedPreferences sharedPref = context.getSharedPreferences("save-data", Context.MODE_PRIVATE);
-        final SharedPreferences.Editor editor = sharedPref.edit();
         if (sharedPref.getBoolean("stone_sword", false)) {
             Button t = (Button) ((Activity) context).findViewById(R.id.stone_sword);
             t.setVisibility(View.GONE);
         }
         if (sharedPref.getBoolean("leaf_armor", false)) {
             Button t = (Button) ((Activity) context).findViewById(R.id.leaf_armor);
+            t.setVisibility(View.GONE);
+        }
+        if (sharedPref.getBoolean(SharedPref.LEATHER_TUNIC, false) || !sharedPref.getBoolean(SharedPref.TANNERY, false)) {
+            Button t = (Button) ((Activity) context).findViewById(R.id.leather_tunic);
             t.setVisibility(View.GONE);
         }
     }

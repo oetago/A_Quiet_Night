@@ -20,6 +20,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.milesstudios.aquietnight.reference.SharedPref;
 import com.milesstudios.aquietnight.util.ChangeLog;
 import com.milesstudios.aquietnight.util.Helper;
 
@@ -30,6 +31,8 @@ import com.milesstudios.aquietnight.util.Helper;
 public class Forest extends FragmentActivity {
     TextView log, storage;
     Helper helper = new Helper(this);
+    SharedPreferences sharedPref;
+    SharedPreferences.Editor editor;
     private Handler counterHandler = new Handler();
     private Runnable TextViewChanger = new Runnable() {
         public void run() {
@@ -66,11 +69,12 @@ public class Forest extends FragmentActivity {
         //Decalres xml layout and id's and saving
         super.onCreate(savedInstanceState);
         setContentView(R.layout.forest);
-        final SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
         ChangeLog cl = new ChangeLog(this);
         if (cl.firstRun()) {
             cl.getLogDialog().show();
         }
+        sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
+        editor = sharedPref.edit();
 
         //Declare Textviews
         log = (TextView) findViewById(R.id.log);
@@ -119,8 +123,6 @@ public class Forest extends FragmentActivity {
 
     @Override
     public void onPause() {
-        SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
         String log_text = log.getText().toString();
         editor.putString("log_text", log_text);
         editor.apply();
@@ -133,7 +135,6 @@ public class Forest extends FragmentActivity {
         Intent openMain = new Intent(Forest.this, Cave.class);
         openMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(openMain);
-
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
     }
 
@@ -145,7 +146,6 @@ public class Forest extends FragmentActivity {
 
     //Buttons
     public void buttonWood(View v) {
-        SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
         if (sharedPref.getBoolean("tin_axe", false)) {
             helper.collect("wood", 1, "apple", 1, 200, "leaves", 10, 200, "amber", 1, 10);
         } else if (sharedPref.getBoolean("stone_axe", false)) {
@@ -157,11 +157,10 @@ public class Forest extends FragmentActivity {
     }
 
     public void buttonStone(View v) {
-        SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
         if (sharedPref.getBoolean("tin_pick", false)) {
-            helper.collect("stone", 1, "amethyst", 1, 3, "bismuth", 1, 25, "tin", 3, 35);
+            helper.collect("stone", 1, "amethyst", 1, 3, "tin", 1, 25, "lead", 3, 35);
         } else if (sharedPref.getBoolean("stone_pick", false)) {
-            helper.collect("stone", 1, "tin", 1, 45, "bismuth", 1, 10);
+            helper.collect("stone", 1, "lead", 1, 45, "tin", 1, 10);
         } else {
             helper.collect("stone", 1);
         }
@@ -169,13 +168,12 @@ public class Forest extends FragmentActivity {
     }
 
     public void buttonDirtyWater(View v) {
-        SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
         helper.collectL("dirty water", "dirty_water", 1);
     }
 
     public void buttonHunt(View v) {
-        SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("save-data", Context.MODE_PRIVATE);
         helper.collectF("Raw Food", "raw_food", 1);
+        helper.collect(SharedPref.HIDE, 1, SharedPref.BONES, 5, 45);
         helper.updateText();
     }
 

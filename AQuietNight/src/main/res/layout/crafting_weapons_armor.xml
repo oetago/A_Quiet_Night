@@ -1,50 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="120dp"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
         android:layout_marginTop="20dp"
-        android:layout_marginLeft="20dp">
-    <Button
-        android:id="@+id/leaf_armor"
-        style="@drawable/button_shape"
-        android:layout_width="120dp"
-        android:layout_height="50dp"
-        android:text="Leaf Armor"
-        android:onClick="buttonLeafArmor"
-        android:background="@drawable/button_shape"/>
-    <Button
-        android:id="@+id/stone_sword"
-        style="@drawable/button_shape"
-        android:layout_width="120dp"
-        android:layout_height="65dp"
-        android:layout_marginTop="10dp"
-        android:text="Stone Sword"
-        android:onClick="buttonStoneSword"
-        android:background="@drawable/button_shape"/>
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/leaf_armor"
+            style="@drawable/button_shape"
+            android:layout_width="120dp"
+            android:layout_height="50dp"
+            android:background="@drawable/button_shape"
+            android:onClick="buttonLeafArmor"
+            android:text="Leaf Tunic" />
+
+        <Button
+            android:id="@+id/stone_sword"
+            style="@drawable/button_shape"
+            android:layout_width="120dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/button_shape"
+            android:onClick="buttonStoneSword"
+            android:text="Shortsword" />
+
+        <Button
+            android:id="@+id/leather_tunic"
+            style="@drawable/button_shape"
+            android:layout_width="120dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/button_shape"
+            android:onClick="buttonLeatherTunic"
+            android:text="Leather Tunic" />
     </LinearLayout>
 
     <TextView
         android:id="@+id/log"
         android:layout_width="150dp"
         android:layout_height="100dp"
-        android:textStyle="bold"
-        android:editable="true"
+        android:layout_alignParentBottom="true"
         android:layout_marginLeft="25dp"
-        android:layout_alignParentBottom="true" />
+        android:editable="true"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/storage"
         android:layout_width="250dp"
         android:layout_height="150dp"
-        android:textStyle="bold"
-        android:editable="true"
-        android:layout_marginRight="25dp"
-        android:background="@drawable/button_shape"
         android:layout_alignParentBottom="true"
+        android:layout_marginRight="25dp"
+        android:layout_toEndOf="@+id/log"
         android:layout_toRightOf="@+id/log"
-        android:layout_toEndOf="@+id/log" />
+        android:background="@drawable/button_shape"
+        android:editable="true"
+        android:textStyle="bold" />
 </RelativeLayout>
