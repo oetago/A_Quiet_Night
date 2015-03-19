@@ -21,8 +21,9 @@ import android.widget.ViewSwitcher;
  */
 public class Intro extends Activity {
     Button buttonNext;
-    String textToShow[] = {"You stood up against Valeon’s evil king. Rose up against a tyrannicl regime.", "But you were exiled. You were disgraced. Defeated.", "Forced to wander the wilderness. With only a cave as your home.",
-            "But you will take back what is right.", "You will fix what is wrong. And you will take the crown.", "But until then, here you are. You slowly come to your senses.", "The early light blinds your eyes. "};
+    //String textToShow[] = {"You stood up against Valeon’s evil king. Rose up against a tyrannicl regime.", "But you were exiled. You were disgraced. Defeated.", "Forced to wander the wilderness. With only a cave as your home.",
+    // "But you will take back what is right.", "You will fix what is wrong. And you will take the crown.", "But until then, here you are. You slowly come to your senses.", "The early light blinds your eyes. "};
+    String textToShow[] = {"The early light blinds your eyes"};
     int messageCount = textToShow.length;
     // to keep current Index of text
     int currentIndex = 0;

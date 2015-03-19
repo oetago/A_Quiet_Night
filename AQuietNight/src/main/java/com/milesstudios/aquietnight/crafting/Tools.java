@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.milesstudios.aquietnight.Cave;
 import com.milesstudios.aquietnight.R;
+import com.milesstudios.aquietnight.reference.SharedPref;
 import com.milesstudios.aquietnight.util.Helper;
 
 /**
@@ -93,6 +94,7 @@ public class Tools extends ActivityGroup {
         helper.updateText();
         helper.updateButtons("Tools");
         saveChoice();
+
     }
 
     public void saveChoice() {
@@ -134,12 +136,21 @@ public class Tools extends ActivityGroup {
     }
 
     public void buttonTinPick(View v) {
-        helper.build("Tin Pick", "Wood: 35 \nTin: 10", "wood", 35, "stone", 10, "tin_pick", this, "Tools");
+        helper.build("Tin Pick", "Wood: 35 \nTin: 15", "wood", 35, SharedPref.TIN, 15, "tin_pick", this, "Tools");
     }
 
     public void buttonTinAxe(View v) {
-        helper.build("Tin Axe", "Wood: 25 \nTin: 5", "wood", 25, "stone", 5, "tin_axe", this, "Tools");
+        helper.build("Tin Axe", "Wood: 25 \nTin: 10", "wood", 25, SharedPref.TIN, 10, "tin_axe", this, "Tools");
     }
+
+    public void buttonLeadAxe(View v) {
+        helper.build("Lead Axe", "Wood: 50 \nLead: 10", "wood", 50, SharedPref.LEAD, 10, SharedPref.LEAD_AXE, this, "Tools");
+    }
+
+    public void buttonLeadPick(View v) {
+        helper.build("Tin Axe", "Wood: 55 \nLead: 15", "wood", 55, SharedPref.LEAD, 15, SharedPref.LEAD_PICK, this, "Tools");
+    }
+
 
 }
 

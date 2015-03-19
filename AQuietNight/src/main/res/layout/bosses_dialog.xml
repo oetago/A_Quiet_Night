@@ -4,63 +4,63 @@
     android:layout_width="fill_parent"
     android:layout_height="225dp"
     android:background="#3E80B4"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
 
     <TextView
+        android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="25dp"
-        android:text="Wood Chopper"
-        android:id="@+id/title"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
         android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:text="Wood Chopper"
         android:textColor="@android:color/white"
         android:textSize="20dp"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
 
     <TextView
+        android:id="@+id/desc"
         android:layout_width="fill_parent"
         android:layout_height="75dp"
-        android:text=""
-        android:id="@+id/desc"
-        android:textColor="#5DBCD2"
+        android:layout_above="@+id/accept"
         android:layout_below="@+id/title"
-        android:layout_marginTop="21dp"
-        android:layout_marginRight="25dp"
         android:layout_marginLeft="100dp"
-        android:layout_above="@+id/accept" />
+        android:layout_marginRight="25dp"
+        android:layout_marginTop="21dp"
+        android:text=""
+        android:textColor="#5DBCD2" />
 
     <Button
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:text="Exit"
         android:id="@+id/decline"
-        android:textColor="#5DBCD2"
-        android:background="@android:color/white"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <Button
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:text="Procceed"
-        android:id="@+id/accept"
-        android:textColor="#5DBCD2"
-        android:background="@android:color/white"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-
-    <ImageView
-        android:layout_width="75dp"
-        android:layout_height="75dp"
-        android:id="@+id/imageView2"
-        android:layout_alignTop="@+id/desc"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:background="@drawable/test"/>
+        android:background="@android:color/white"
+        android:text="Exit"
+        android:textColor="#5DBCD2" />
+
+    <Button
+        android:id="@+id/accept"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:background="@android:color/white"
+        android:text="Procceed"
+        android:textColor="#5DBCD2" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/desc"
+        android:background="@drawable/test" />
 
 </RelativeLayout>

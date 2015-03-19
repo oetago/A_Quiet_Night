@@ -1,64 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
     <LinearLayout
-        android:orientation="vertical"
+        android:id="@+id/linearLayout"
         android:layout_width="125dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:layout_marginLeft="20dp"
-        android:id="@+id/linearLayout">
+        android:layout_marginTop="20dp"
+        android:orientation="vertical">
 
 
-    <Button
-        android:id="@+id/leaf_canteen"
-        style="@drawable/button_shape"
-        android:layout_width="125dp"
-        android:layout_height="50dp"
-        android:text="Leaf Canteen"
-        android:background="@drawable/button_shape"
-        android:onClick="buttonLeafCanteen"/>
+        <Button
+            android:id="@+id/leaf_canteen"
+            style="@drawable/button_shape"
+            android:layout_width="125dp"
+            android:layout_height="50dp"
+            android:background="@drawable/button_shape"
+            android:onClick="buttonLeafCanteen"
+            android:text="Leaf Canteen" />
 
     </LinearLayout>
+
     <TextView
         android:id="@+id/log"
         android:layout_width="150dp"
         android:layout_height="100dp"
-        android:textStyle="bold"
-        android:editable="true"
-        android:layout_marginLeft="25dp"
         android:layout_alignParentBottom="true"
-        android:layout_alignTop="@+id/storage" />
+        android:layout_alignTop="@+id/storage"
+        android:layout_marginLeft="25dp"
+        android:editable="true"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/storage"
         android:layout_width="250dp"
         android:layout_height="150dp"
-        android:textStyle="bold"
-        android:editable="true"
-        android:layout_marginRight="25dp"
-        android:background="@drawable/button_shape"
         android:layout_alignParentBottom="true"
+        android:layout_marginRight="25dp"
+        android:layout_toEndOf="@+id/log"
         android:layout_toRightOf="@+id/log"
-        android:layout_toEndOf="@+id/log" />
+        android:background="@drawable/button_shape"
+        android:editable="true"
+        android:textStyle="bold" />
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="120dp"
         android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
         android:layout_alignTop="@+id/linearLayout"
         android:layout_marginRight="40dp"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true">
+        android:orientation="vertical">
+
         <Button
             android:id="@+id/boil_water"
             style="@drawable/button_shape"
             android:layout_width="120dp"
             android:layout_height="50dp"
-            android:text="Boil Water"
+            android:background="@drawable/button_shape"
             android:onClick="buttonBoilWater"
-            android:background="@drawable/button_shape"/>
+            android:text="Boil Water" />
 
         <Button
             android:id="@+id/cook_food"
@@ -66,9 +70,9 @@
             android:layout_width="120dp"
             android:layout_height="50dp"
             android:layout_marginTop="10dp"
-            android:text="Cook Food"
             android:background="@drawable/button_shape"
-            android:onClick="buttonCookFood"/>
-        </LinearLayout>
+            android:onClick="buttonCookFood"
+            android:text="Cook Food" />
+    </LinearLayout>
 
 </RelativeLayout>

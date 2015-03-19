@@ -2,129 +2,122 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/gather_text"
         android:layout_width="50dp"
         android:layout_height="25dp"
-        android:layout_alignLeft="@+id/wood"
-        android:layout_alignRight="@+id/wood"
         android:layout_alignEnd="@+id/wood"
+        android:layout_alignLeft="@+id/wood"
+        android:layout_alignParentTop="true"
+        android:layout_alignRight="@+id/wood"
         android:layout_marginTop="60dp"
-        android:textStyle="bold"
         android:text="Gather:"
-        android:layout_alignParentTop="true" />
+        android:textStyle="bold" />
 
     <Button
-        android:minWidth="100dp"
         android:id="@+id/wood"
-        android:background="@drawable/buttonselector"
         style="@drawable/button_shape"
         android:layout_width="140dp"
         android:layout_height="50dp"
-        android:layout_weight="1"
-        android:text="Wood"
-        android:layout_below="@+id/gather_text"
-        android:layout_alignLeft="@+id/stone"
-        android:layout_alignStart="@+id/stone"
-        android:layout_alignRight="@+id/stone"
         android:layout_alignEnd="@+id/stone"
-        android:onClick="buttonWood"/>
+        android:layout_alignLeft="@+id/stone"
+        android:layout_alignRight="@+id/stone"
+        android:layout_alignStart="@+id/stone"
+        android:layout_below="@+id/gather_text"
+        android:layout_weight="1"
+        android:background="@drawable/buttonselector"
+        android:minWidth="100dp"
+        android:onClick="buttonWood"
+        android:text="Wood" />
 
     <Button
         android:id="@+id/stone"
         style="@drawable/button_shape"
         android:layout_width="125dp"
         android:layout_height="50dp"
+        android:layout_below="@id/wood"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="20dp"
-        android:layout_below="@id/wood"
         android:layout_weight="1"
-        android:text="Stone"
         android:background="@drawable/buttonselector"
-        android:onClick="buttonStone"/>
+        android:onClick="buttonStone"
+        android:text="Stone" />
 
     <Button
         android:id="@+id/dirty_water"
         style="@drawable/button_shape"
         android:layout_width="125dp"
         android:layout_height="50dp"
-        android:layout_weight="1"
-        android:text="Dirty Water"
-        android:background="@drawable/buttonselector"
-        android:layout_toEndOf="@+id/log"
         android:layout_alignTop="@+id/wood"
+        android:layout_toEndOf="@+id/log"
         android:layout_toRightOf="@+id/log"
-        android:onClick="buttonDirtyWater"/>
+        android:layout_weight="1"
+        android:background="@drawable/buttonselector"
+        android:onClick="buttonDirtyWater"
+        android:text="Dirty Water" />
+
     <Button
         android:id="@+id/hunt"
         android:layout_width="125dp"
         android:layout_height="50dp"
+        android:layout_alignLeft="@+id/dirty_water"
+        android:layout_alignStart="@+id/dirty_water"
+        android:layout_alignTop="@+id/stone"
         android:layout_weight="1"
-        android:text="Hunt"
         android:background="@drawable/buttonselector"
         android:onClick="buttonHunt"
-        android:layout_alignTop="@+id/stone"
-        android:layout_alignLeft="@+id/dirty_water"
-        android:layout_alignStart="@+id/dirty_water" />
-
-
-
-
-
-
-
-
+        android:text="Hunt" />
 
 
     <TextView
         android:id="@+id/log"
         android:layout_width="150dp"
         android:layout_height="100dp"
-        android:textStyle="bold"
-        android:editable="true"
-        android:layout_marginLeft="25dp"
         android:layout_alignParentBottom="true"
-        android:layout_alignTop="@+id/storage" />
+        android:layout_alignTop="@+id/storage"
+        android:layout_marginLeft="25dp"
+        android:editable="true"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/storage"
         android:layout_width="250dp"
         android:layout_height="150dp"
-        android:textStyle="bold"
-        android:editable="true"
+        android:layout_alignParentBottom="true"
         android:layout_marginBottom="5dp"
         android:layout_marginRight="25dp"
-        android:background="@drawable/button_shape"
-        android:layout_alignParentBottom="true"
+        android:layout_toEndOf="@+id/log"
         android:layout_toRightOf="@+id/log"
-        android:layout_toEndOf="@+id/log" />
+        android:background="@drawable/button_shape"
+        android:editable="true"
+        android:textStyle="bold" />
 
     <TextView
+        android:id="@+id/cave_tab"
         android:layout_width="150dp"
         android:layout_height="50dp"
-        android:text="A Damp Cave"
-        android:id="@+id/cave_tab"
-        android:clickable="true"
-        android:textStyle="bold"
-        android:gravity="center"
-        android:layout_marginTop="10dp"
-        android:layout_alignParentTop="true"
+        android:layout_alignEnd="@+id/gather_text"
         android:layout_alignLeft="@+id/wood"
-        android:layout_alignStart="@+id/wood"
+        android:layout_alignParentTop="true"
         android:layout_alignRight="@+id/gather_text"
-        android:layout_alignEnd="@+id/gather_text" />
+        android:layout_alignStart="@+id/wood"
+        android:layout_marginTop="10dp"
+        android:clickable="true"
+        android:gravity="center"
+        android:text="A Damp Cave"
+        android:textStyle="bold" />
 
     <TextView
+        android:id="@+id/forest_tab"
         android:layout_width="180dp"
         android:layout_height="50dp"
-        android:text="A Warm Forest"
-        android:id="@+id/forest_tab"
-        android:textStyle="bold"
-        android:gravity="center"
         android:layout_alignTop="@+id/cave_tab"
+        android:layout_toEndOf="@+id/gather_text"
         android:layout_toRightOf="@+id/gather_text"
-        android:layout_toEndOf="@+id/gather_text" />
+        android:gravity="center"
+        android:text="A Warm Forest"
+        android:textStyle="bold" />
 
 </RelativeLayout>

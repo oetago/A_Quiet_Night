@@ -157,7 +157,7 @@ public class Fight extends Activity {
             editor.putBoolean("attack", false);
             editor.putBoolean(SharedPref.FOREST_TEMPLE, false);
             editor.apply();
-            Intent youlose = new Intent(Fight.this, Ending.class);
+            Intent youlose = new Intent(Fight.this, Cave.class);
             youlose.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(youlose);
             if (q > 0) {
@@ -168,7 +168,7 @@ public class Fight extends Activity {
     }
 
     public int getSword() {
-        if (sharedPref.getBoolean(SharedPref.TIN_SWORD, false)) {
+        if (sharedPref.getBoolean(SharedPref.LEAD_SWORD, false)) {
             return 2;
         } else {
             return 1;
@@ -399,7 +399,7 @@ public class Fight extends Activity {
             SharedPreferences.Editor editor = sharedPref.edit();
             editor.putBoolean(SharedPref.FOREST_TEMPLE, true);
             editor.apply();
-            Intent openHome = new Intent(this, Ending.class);
+            Intent openHome = new Intent(this, Cave.class);
             openMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(openHome);
         }

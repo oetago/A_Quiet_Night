@@ -3,16 +3,16 @@
 
 
     <string-array name="tools">
-    <item>Tools</item>
-    <item>Weapons and Armor</item>
-    <item>Food and Water</item>
+        <item>Tools</item>
+        <item>Weapons and Armor</item>
+        <item>Food and Water</item>
     </string-array>
 
-        <string-array name="tools_labels">
-            <item ><FONT COLOR="#fffbfff9"><b>Tools</b></FONT></item>
-            <item ><FONT COLOR="#fffbfff9"><b>Weapons and Armor</b></FONT></item>
-            <item ><FONT COLOR="#fffbfff9"><b>Food and Water</b></FONT></item>
-        </string-array>
+    <string-array name="tools_labels">
+        <item><FONT COLOR="#fffbfff9"><b>Tools</b></FONT></item>
+        <item><FONT COLOR="#fffbfff9"><b>Weapons and Armor</b></FONT></item>
+        <item><FONT COLOR="#fffbfff9"><b>Food and Water</b></FONT></item>
+    </string-array>
 
 
     <string-array name="crafting">
@@ -21,12 +21,11 @@
         <item>Food and Water</item>
         <item>Tools</item>
     </string-array>
-        <string-array name="crafting_labels" >
-            <item ><FONT COLOR="#fffbfff9"><b>Tools</b></FONT></item>
-            <item ><FONT COLOR="#fffbfff9"><b>Weapons and Armor</b></FONT></item>
-            <item ><FONT COLOR="#fffbfff9"><b>Food and Water</b></FONT></item>
-        </string-array>
-
+    <string-array name="crafting_labels">
+        <item><FONT COLOR="#fffbfff9"><b>Tools</b></FONT></item>
+        <item><FONT COLOR="#fffbfff9"><b>Weapons and Armor</b></FONT></item>
+        <item><FONT COLOR="#fffbfff9"><b>Food and Water</b></FONT></item>
+    </string-array>
 
 
     <string-array name="food_water">
@@ -34,11 +33,11 @@
         <item>Weapons and Armor</item>
         <item>Tools</item>
     </string-array>
-        <string-array name="food_water_labels" >
-            <item ><FONT COLOR="#fffbfff9"><b>Food and Water</b></FONT></item>
-            <item ><FONT COLOR="#fffbfff9"><b>Weapons and Armor</b></FONT></item>
-            <item ><FONT COLOR="#fffbfff9"><b>Tools</b></FONT></item>
-        </string-array>
+    <string-array name="food_water_labels">
+        <item><FONT COLOR="#fffbfff9"><b>Food and Water</b></FONT></item>
+        <item><FONT COLOR="#fffbfff9"><b>Weapons and Armor</b></FONT></item>
+        <item><FONT COLOR="#fffbfff9"><b>Tools</b></FONT></item>
+    </string-array>
 
 
     <string-array name="weapons_armor">
@@ -47,11 +46,11 @@
         <item>Tools</item>
 
     </string-array>
-        <string-array name="weapons_armor_labels" >
-            <item ><FONT COLOR="#fffbfff9"><b>Weapons and Armor</b></FONT></item>
-            <item ><FONT COLOR="#fffbfff9"><b>Food and Water</b></FONT></item>
-            <item ><FONT COLOR="#fffbfff9"><b>Tools</b></FONT></item>
-        </string-array>
+    <string-array name="weapons_armor_labels">
+        <item><FONT COLOR="#fffbfff9"><b>Weapons and Armor</b></FONT></item>
+        <item><FONT COLOR="#fffbfff9"><b>Food and Water</b></FONT></item>
+        <item><FONT COLOR="#fffbfff9"><b>Tools</b></FONT></item>
+    </string-array>
 
     <string-array name="quest">
         <item>Quests</item>

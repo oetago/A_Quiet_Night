@@ -158,7 +158,7 @@ public class Forest extends FragmentActivity {
 
     public void buttonStone(View v) {
         if (sharedPref.getBoolean("tin_pick", false)) {
-            helper.collect("stone", 1, "amethyst", 1, 3, "tin", 1, 25, "lead", 3, 35);
+            helper.collect("stone", 1, "amethyst", 1, 3, "tin", 1, 25, "lead", 3, 80);
         } else if (sharedPref.getBoolean("stone_pick", false)) {
             helper.collect("stone", 1, "lead", 1, 45, "tin", 1, 10);
         } else {

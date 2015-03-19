@@ -30,4 +30,8 @@ public class SharedPref {
     public static final String HIDE = "hide";
     public static final String BONES = "bones";
     public static final String LEATHER_TUNIC = "leather_tunic";
+    public static final String LEAD_PICK = "lead_pick";
+    public static final String LEAD_AXE = "lead_axe";
+    public static final String LEAD_CHEST_PLATE = "lead_chest_plate";
+    public static final String LEAD_SWORD = "lead_sword";
 }

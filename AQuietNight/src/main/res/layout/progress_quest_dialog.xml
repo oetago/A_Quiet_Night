@@ -20,8 +20,7 @@
         android:id="@+id/number_progress_bar"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
-        android:layout_below="@id/name"
-        />
+        android:layout_below="@id/name" />
 
 
 </RelativeLayout>

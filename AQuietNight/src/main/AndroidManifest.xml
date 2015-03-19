@@ -9,10 +9,12 @@
         android:screenOrientation="portrait"
         android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
 
-        <meta-data android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version"/>
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
 
-        <activity android:name="com.google.android.gms.ads.AdActivity"
+        <activity
+            android:name="com.google.android.gms.ads.AdActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
             android:theme="@android:style/Theme.Translucent" />/>
 
@@ -21,7 +23,7 @@
             android:label="A Quiet Night"
             android:screenOrientation="portrait">
 
-        <intent-filter>
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
@@ -30,7 +32,7 @@
             android:name=".Cave"
             android:label="A Damp Cave"
             android:screenOrientation="portrait">
-        <intent-filter>
+            <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -38,7 +40,7 @@
             android:name=".Forest"
             android:label="Forest"
             android:screenOrientation="portrait">
-        <intent-filter>
+            <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -46,7 +48,7 @@
             android:name=".Crafting"
             android:label="Crafting"
             android:screenOrientation="portrait">
-        <intent-filter>
+            <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -54,7 +56,7 @@
             android:name=".Buildings"
             android:label="Buildings"
             android:screenOrientation="portrait">
-        <intent-filter>
+            <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -62,7 +64,7 @@
             android:name=".Village"
             android:label="Village"
             android:screenOrientation="portrait">
-        <intent-filter>
+            <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -70,7 +72,7 @@
             android:name=".Quest"
             android:label="Quests"
             android:screenOrientation="portrait">
-        <intent-filter>
+            <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -78,7 +80,7 @@
             android:name=".crafting.Tools"
             android:label="Tools"
             android:screenOrientation="portrait">
-        <intent-filter>
+            <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -86,7 +88,7 @@
             android:name=".crafting.Food_Water"
             android:label="Food and Water"
             android:screenOrientation="portrait">
-        <intent-filter>
+            <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -94,7 +96,7 @@
             android:name=".crafting.Weapons_Armor"
             android:label="Weapons and Armor"
             android:screenOrientation="portrait">
-        <intent-filter>
+            <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -102,35 +104,35 @@
             android:name=".quest.Bosses"
             android:label="Bosses"
             android:screenOrientation="portrait">
-        <intent-filter>
+            <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
             android:name=".Intro"
             android:screenOrientation="portrait">
-        <intent-filter>
+            <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
             android:name=".Mine"
             android:screenOrientation="portrait">
-        <intent-filter>
+            <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
             android:name=".Fight"
             android:screenOrientation="portrait">
-        <intent-filter>
+            <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
             android:name=".Ending"
             android:screenOrientation="portrait">
-        <intent-filter>
+            <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -142,16 +144,15 @@
         <activity
             android:name=".quest.Loading"
             android:screenOrientation="portrait">
-        <intent-filter>
+            <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
 
 
+    </application>
 
-</application>
-
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>

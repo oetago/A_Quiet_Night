@@ -39,6 +39,26 @@
             android:background="@drawable/button_shape"
             android:onClick="buttonLeatherTunic"
             android:text="Leather Tunic" />
+
+        <Button
+            android:id="@+id/lead_chest_plate"
+            style="@drawable/button_shape"
+            android:layout_width="120dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/button_shape"
+            android:onClick="leadChestPlate"
+            android:text="Lead Chest Plate" />
+
+        <Button
+            android:id="@+id/lead_sword"
+            style="@drawable/button_shape"
+            android:layout_width="120dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/button_shape"
+            android:onClick="leadSword"
+            android:text="Lead Zweihänder" />
     </LinearLayout>
 
     <TextView

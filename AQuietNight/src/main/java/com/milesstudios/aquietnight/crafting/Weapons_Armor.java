@@ -149,11 +149,19 @@ public class Weapons_Armor extends ActivityGroup {
     }
 
     public void buttonLeatherTunic(View v) {
-        helper.build("Leather Tunic", "Hide: 45", SharedPref.HIDE, 45, SharedPref.LEATHER_TUNIC, this, "Weapons_Armor");
+        helper.build("Leather Tunic", "Hide: 30", SharedPref.HIDE, 45, SharedPref.LEATHER_TUNIC, this, "Weapons_Armor");
     }
 
     public void runTimer() {
         counterHandler.postDelayed(TextViewChanger, 5000);
+    }
+
+    public void leadChestPlate(View view) {
+        helper.build("Lead Chest Plate", "Lead: 20", SharedPref.LEAD, 20, SharedPref.LEAD_CHEST_PLATE, this, "Weapons_Armor");
+    }
+
+    public void leadSword(View view) {
+        helper.build("Lead Zweihänder", "Wood: 60 \nLead: 25", "wood", 60, SharedPref.LEAD, 25, SharedPref.LEAD_SWORD, this, "Weapons_Armor");
     }
 }
 

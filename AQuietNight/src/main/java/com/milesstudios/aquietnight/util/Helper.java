@@ -408,7 +408,6 @@ public class Helper extends Activity {
         else if (update.equals("Tools")) tools();
         else if (update.equals("Weapons_Armor")) weaponsArmor();
         else if (update.equals("Buildings")) buildings();
-        //else if (update.equals("Trade")) updateBT.trade();
 
     }
 
@@ -432,53 +431,103 @@ public class Helper extends Activity {
         double miners = sharedPref.getInt("miner", 0) * 0.2;
         int hide = sharedPref.getInt(SharedPref.HIDE, 0);
         int bones = sharedPref.getInt(SharedPref.BONES, 0);
+        if (sharedPref.getBoolean(SharedPref.VILLAGE, false)) {
 
-        storage.setText(" Storage:");
-        if (wood_counter >= 1) {
-            storage.append("\n Wood: " + wood_counter + "   + " + (int) lumberjacks + " - 5s");
-        }
-        if (leaves_counter >= 1) {
-            storage.append("\n Leaves: " + leaves_counter);
-        }
-        if (stone_counter >= 1) {
-            storage.append("\n Stone: " + stone_counter + "   + " + (int) miners + " - 5s");
-        }
+            storage.setText(" Storage:");
+            if (wood_counter >= 1) {
+                storage.append("\n Wood: " + wood_counter + "   + " + (int) lumberjacks + " - 5s");
+            }
+            if (leaves_counter >= 1) {
+                storage.append("\n Leaves: " + leaves_counter);
+            }
+            if (stone_counter >= 1) {
+                storage.append("\n Stone: " + stone_counter + "   + " + (int) miners + " - 5s");
+            }
 
-        if (dirty_water_counter >= 1) {
-            storage.append("\n Dirty Water: " + dirty_water_counter);
-        }
-        if (raw_food >= 1) {
-            storage.append("\n Raw Meat: " + raw_food);
-        }
-        if (cooked_food >= 1) {
-            storage.append("\n Cooked Meat: " + cooked_food);
-        }
-        if (boiled_water_counter >= 1) {
-            storage.append("\n Boiled Water: " + boiled_water_counter);
-        }
-        if (apple_counter >= 1) {
-            storage.append("\n Apples: " + apple_counter);
-        }
-        if (amber >= 1) {
-            storage.append("\n Amber: " + amber);
-        }
-        if (tin >= 1) {
-            storage.append("\n Tin: " + tin);
-        }
-        if (bismuth >= 1) {
-            storage.append("\n Bismuth: " + bismuth);
-        }
-        if (nickel >= 1) {
-            storage.append("\n Nickel: " + nickel);
-        }
-        if (amethyst >= 1) {
-            storage.append("\n Amethyst: " + amethyst);
-        }
-        if (hide >= 1) {
-            storage.append("\n Hide: " + hide);
-        }
-        if (bones >= 1) {
-            storage.append("\n Bones: " + bones);
+            if (dirty_water_counter >= 1) {
+                storage.append("\n Dirty Water: " + dirty_water_counter);
+            }
+            if (raw_food >= 1) {
+                storage.append("\n Raw Meat: " + raw_food);
+            }
+            if (cooked_food >= 1) {
+                storage.append("\n Cooked Meat: " + cooked_food);
+            }
+            if (boiled_water_counter >= 1) {
+                storage.append("\n Boiled Water: " + boiled_water_counter);
+            }
+            if (apple_counter >= 1) {
+                storage.append("\n Apples: " + apple_counter);
+            }
+            if (amber >= 1) {
+                storage.append("\n Amber: " + amber);
+            }
+            if (tin >= 1) {
+                storage.append("\n Tin: " + tin);
+            }
+            if (bismuth >= 1) {
+                storage.append("\n Bismuth: " + bismuth);
+            }
+            if (nickel >= 1) {
+                storage.append("\n Nickel: " + nickel);
+            }
+            if (amethyst >= 1) {
+                storage.append("\n Amethyst: " + amethyst);
+            }
+            if (hide >= 1) {
+                storage.append("\n Hide: " + hide);
+            }
+            if (bones >= 1) {
+                storage.append("\n Bones: " + bones);
+            }
+        } else {
+            storage.setText(" Storage:");
+            if (wood_counter >= 1) {
+                storage.append("\n Wood: " + wood_counter);
+            }
+            if (leaves_counter >= 1) {
+                storage.append("\n Leaves: " + leaves_counter);
+            }
+            if (stone_counter >= 1) {
+                storage.append("\n Stone: " + stone_counter);
+            }
+
+            if (dirty_water_counter >= 1) {
+                storage.append("\n Dirty Water: " + dirty_water_counter);
+            }
+            if (raw_food >= 1) {
+                storage.append("\n Raw Meat: " + raw_food);
+            }
+            if (cooked_food >= 1) {
+                storage.append("\n Cooked Meat: " + cooked_food);
+            }
+            if (boiled_water_counter >= 1) {
+                storage.append("\n Boiled Water: " + boiled_water_counter);
+            }
+            if (apple_counter >= 1) {
+                storage.append("\n Apples: " + apple_counter);
+            }
+            if (amber >= 1) {
+                storage.append("\n Amber: " + amber);
+            }
+            if (tin >= 1) {
+                storage.append("\n Tin: " + tin);
+            }
+            if (bismuth >= 1) {
+                storage.append("\n Bismuth: " + bismuth);
+            }
+            if (nickel >= 1) {
+                storage.append("\n Nickel: " + nickel);
+            }
+            if (amethyst >= 1) {
+                storage.append("\n Amethyst: " + amethyst);
+            }
+            if (hide >= 1) {
+                storage.append("\n Hide: " + hide);
+            }
+            if (bones >= 1) {
+                storage.append("\n Bones: " + bones);
+            }
         }
 
 
@@ -490,21 +539,25 @@ public class Helper extends Activity {
         Button stoneaxe = (Button) ((Activity) context).findViewById(R.id.stone_axe);
         Button tinpick = (Button) ((Activity) context).findViewById(R.id.tin_pick);
         Button tinaxe = (Button) ((Activity) context).findViewById(R.id.tin_axe);
+        Button leadpick = (Button) ((Activity) context).findViewById(R.id.lead_pick);
+        Button leadaxe = (Button) ((Activity) context).findViewById(R.id.lead_axe);
 
-        if (!sharedPref.getBoolean("stone_pick", false)) {
-            tinpick.setVisibility(View.GONE);
-            tinaxe.setVisibility(View.GONE);
-        }
         if (sharedPref.getBoolean("stone_pick", false)) {
             stonepick.setVisibility(View.GONE);
         }
         if (sharedPref.getBoolean("stone_axe", false)) {
             stoneaxe.setVisibility(View.GONE);
         }
-        if (sharedPref.getBoolean("tin_pick", false) || !sharedPref.getBoolean(SharedPref.SMELTERY, false)) {
+        if (sharedPref.getBoolean("tin_pick", false) || !sharedPref.getBoolean(SharedPref.SMELTERY, false) || !sharedPref.getBoolean(SharedPref.FOREST_TEMPLE, false)) {
             tinpick.setVisibility(View.GONE);
         }
-        if (sharedPref.getBoolean("tin_axe", false) || !sharedPref.getBoolean(SharedPref.SMELTERY, false)) {
+        if (sharedPref.getBoolean("tin_axe", false) || !sharedPref.getBoolean(SharedPref.SMELTERY, false) || !sharedPref.getBoolean(SharedPref.FOREST_TEMPLE, false)) {
+            tinaxe.setVisibility(View.GONE);
+        }
+        if (sharedPref.getBoolean(SharedPref.LEAD_AXE, false) || !sharedPref.getBoolean(SharedPref.SMELTERY, false) || !sharedPref.getBoolean(SharedPref.FOREST_TEMPLE, false) || !sharedPref.getBoolean("tin_pick", false)) {
+            tinaxe.setVisibility(View.GONE);
+        }
+        if (sharedPref.getBoolean(SharedPref.LEAD_PICK, false) || !sharedPref.getBoolean(SharedPref.SMELTERY, false) || !sharedPref.getBoolean(SharedPref.FOREST_TEMPLE, false) || !sharedPref.getBoolean("tin_pick", false)) {
             tinaxe.setVisibility(View.GONE);
         }
     }
@@ -527,6 +580,7 @@ public class Helper extends Activity {
         Button village = (Button) ((Activity) context).findViewById(R.id.village);
         Button tannery = (Button) ((Activity) context).findViewById(R.id.tannery);
         Button storageshed = (Button) ((Activity) context).findViewById(R.id.storage_shed);
+        Button smelt = (Button) ((Activity) context).findViewById(R.id.smeltery);
 
 
         if (!sharedPref.getBoolean("workshop", false)) {
@@ -534,6 +588,7 @@ public class Helper extends Activity {
             village.setVisibility(View.GONE);
             tannery.setVisibility(View.GONE);
             storageshed.setVisibility(View.GONE);
+            smelt.setVisibility(View.GONE);
         } else {
             bonfire.setVisibility(View.VISIBLE);
         }
@@ -558,6 +613,9 @@ public class Helper extends Activity {
         if (sharedPref.getBoolean("tannery", false)) {
             tannery.setVisibility(View.GONE);
         }
+        if (sharedPref.getBoolean(SharedPref.SMELTERY, false)) {
+            smelt.setVisibility(View.GONE);
+        }
     }
 
     public void weaponsArmor() {
@@ -572,6 +630,14 @@ public class Helper extends Activity {
         }
         if (sharedPref.getBoolean(SharedPref.LEATHER_TUNIC, false) || !sharedPref.getBoolean(SharedPref.TANNERY, false)) {
             Button t = (Button) ((Activity) context).findViewById(R.id.leather_tunic);
+            t.setVisibility(View.GONE);
+        }
+        if (sharedPref.getBoolean(SharedPref.LEAD_CHEST_PLATE, false) || !sharedPref.getBoolean(SharedPref.SMELTERY, false) || !sharedPref.getBoolean(SharedPref.LEATHER_TUNIC, false)) {
+            Button t = (Button) ((Activity) context).findViewById(R.id.lead_chest_plate);
+            t.setVisibility(View.GONE);
+        }
+        if (sharedPref.getBoolean(SharedPref.LEAD_SWORD, false) || !sharedPref.getBoolean(SharedPref.SMELTERY, false) || !sharedPref.getBoolean(SharedPref.TIN_SWORD, false)) {
+            Button t = (Button) ((Activity) context).findViewById(R.id.lead_sword);
             t.setVisibility(View.GONE);
         }
     }

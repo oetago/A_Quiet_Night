@@ -2,49 +2,51 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical">
+
     <LinearLayout
-        android:layout_above="@+id/log"
-        android:layout_width="fill_parent"
         android:id="@+id/Linear"
+        android:layout_width="fill_parent"
         android:layout_height="fill_parent"
+        android:layout_above="@+id/log"
+        android:layout_marginBottom="20dp"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
         android:layout_toLeftOf="@+id/storage"
         android:layout_toStartOf="@+id/storage">
+
         <Button
-            android:text="Forest Temple"
+            android:id="@+id/ft"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/button_shape"
-            android:id="@+id/ft"/>
+            android:text="Forest Temple" />
 
-        </LinearLayout>
+    </LinearLayout>
 
 
     <TextView
         android:id="@+id/log"
         android:layout_width="150dp"
         android:layout_height="100dp"
-        android:textStyle="bold"
-        android:editable="true"
-        android:layout_marginLeft="25dp"
         android:layout_alignParentBottom="true"
-        android:layout_alignTop="@+id/storage" />
+        android:layout_alignTop="@+id/storage"
+        android:layout_marginLeft="25dp"
+        android:editable="true"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/storage"
         android:layout_width="250dp"
         android:layout_height="150dp"
-        android:textStyle="bold"
-        android:editable="true"
+        android:layout_alignParentBottom="true"
         android:layout_marginBottom="5dp"
         android:layout_marginRight="25dp"
-        android:background="@drawable/button_shape"
-        android:layout_alignParentBottom="true"
+        android:layout_toEndOf="@+id/log"
         android:layout_toRightOf="@+id/log"
-        android:layout_toEndOf="@+id/log" />
+        android:background="@drawable/button_shape"
+        android:editable="true"
+        android:textStyle="bold" />
 
 
 </RelativeLayout>
