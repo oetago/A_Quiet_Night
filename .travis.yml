@@ -9,8 +9,7 @@ android:
         - sys-img-armeabi-v7a-android-21
 before_script:
     - chmod +x gradlew
-script:
-    - ./gradlew build check
+
 after_success:
     - echo "Done!" 
 
