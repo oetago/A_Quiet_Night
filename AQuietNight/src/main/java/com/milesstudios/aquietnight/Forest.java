@@ -20,6 +20,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.facebook.stetho.Stetho;
 import com.milesstudios.aquietnight.reference.SharedPref;
 import com.milesstudios.aquietnight.util.ChangeLog;
 import com.milesstudios.aquietnight.util.Helper;
@@ -63,8 +64,14 @@ public class Forest extends FragmentActivity {
 
         //Acitivates Action Bar
         getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
-        getActionBar().show();
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+        //  getActionBar().show();
+        //  getActionBar().setDisplayHomeAsUpEnabled(true);
+
+        Stetho.initialize(
+                Stetho.newInitializerBuilder(this)
+                        .enableWebKitInspector(
+                                Stetho.defaultInspectorModulesProvider(this))
+                        .build());
 
         //Decalres xml layout and id's and saving
         super.onCreate(savedInstanceState);

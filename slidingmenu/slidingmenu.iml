@@ -17,6 +17,7 @@
         <option name="COMPILE_JAVA_TEST_TASK_NAME" value="compileDebugTestSources" />
         <option name="TEST_SOURCE_GEN_TASK_NAME" value="generateDebugTestSources" />
         <option name="ALLOW_USER_CONFIGURATION" value="false" />
+        <option name="RES_FOLDERS_RELATIVE_PATH" value="file://$MODULE_DIR$/res" />
         <option name="LIBRARY_PROJECT" value="true" />
       </configuration>
     </facet>
